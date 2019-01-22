@@ -1,5 +1,4 @@
-import { Reducer } from "redux";
-import { EXAMPLE_STRING } from "./action";
+import { EXAMPLE_STRING } from './action';
 
 export interface IExampleState {
   item1: string;
@@ -7,7 +6,7 @@ export interface IExampleState {
 }
 
 const initialState = {
-  item1: "example",
+  item1: 'example',
   nr1: 1,
 };
 
@@ -15,11 +14,11 @@ export const exampleReducer = (
   state: IExampleState = initialState,
   action: any,
   ): IExampleState => {
-    const { type, payload } = action;
-    switch (type) {
-      case EXAMPLE_STRING:
-        return {...state, [payload]: payload};
-      default:
-        return state;
-    }
+  const { type, payload } = action;
+  switch (type) {
+    case EXAMPLE_STRING:
+      return { ...state, [payload]: payload };
+    default:
+      return state;
+  }
 };

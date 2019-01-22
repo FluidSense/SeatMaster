@@ -1,5 +1,13 @@
 {
-  "extends": ["tslint:recommended", "tslint-react"],
+  "extends": ["tslint:recommended", "tslint-react","tslint-config-airbnb"],
+  "rules": {
+    "variable-name": [
+        true,
+        "ban-keywords",
+        "check-format",
+        "allow-pascal-case"
+    ]
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",

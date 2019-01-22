@@ -1,5 +1,5 @@
 
-export const EXAMPLE_STRING = "EXAMPLE_HAPPENED";
+export const EXAMPLE_STRING = 'EXAMPLE_HAPPENED';
 
 export interface IExampleAction {
   type: typeof EXAMPLE_STRING;
