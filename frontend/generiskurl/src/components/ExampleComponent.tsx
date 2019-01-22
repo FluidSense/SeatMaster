@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface IExampleProps {
-  initAction: any;
+  initAction: () => any;
 }
 
 export const ExampleComponent: React.FunctionComponent<IExampleProps> = (props) => {
