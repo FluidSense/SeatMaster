@@ -1,13 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 import { FunctionComponent } from "react";
 
-type ExampleProps = {
-  initAction: any,
+interface IExampleProps {
+  initAction: any;
 }
 
-export const ExampleComponent:FunctionComponent<ExampleProps> = (props) => {
+export const ExampleComponent: FunctionComponent<IExampleProps> = (props) => {
 
   props.initAction();
 
   return <h1>Test</h1>;
-}
+};

@@ -1,12 +1,14 @@
-import { compose, applyMiddleware, createStore, combineReducers } from "redux";
-import thunkMiddleware from 'redux-thunk';
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import thunkMiddleware from "redux-thunk";
 import { exampleReducer } from "./example/reducer";
 
 export const reducers = combineReducers({
   example: exampleReducer,
-})
+});
 
 declare global {
+  // disable ts next line since extending already existing Window
+  // tslint:disable-next-line:interface-name
   interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any; }
 }
 

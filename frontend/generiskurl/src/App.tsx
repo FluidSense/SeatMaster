@@ -1,8 +1,8 @@
-import * as React from 'react';
-import './App.css';
+import * as React from "react";
+import "./App.css";
 
-import logo from './logo.svg';
-import ExampleContainer from './components/ExampleContainer';
+import ExampleContainer from "./components/ExampleContainer";
+import logo from "./logo.svg";
 
 class App extends React.Component {
   public render() {
