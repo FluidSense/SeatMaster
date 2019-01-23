@@ -11,18 +11,21 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
 
-@app.route("/",methods=["GET"])
+
+@app.route("/", methods=["GET"])
 def display():
     result = Showcase.query.all()
     return ", ".join(str(e.id) for e in result)
 
-@app.route("/post",methods=["POST"])
+
+@app.route("/post", methods=["POST"])
 def reveerb():
     if request.form:
         thing = Showcase(name=request.form.get("name"))
         db.session.add(thing)
         db.session.commit()
         return Response(request.form, status=201)
+
 
 @app.route("/update", methods=["PUT"])
 def skateboards():
@@ -36,6 +39,7 @@ def skateboards():
         db.session.commit()
         return Response("OK", status=202)
 
+
 @app.route("/delete", methods=["DELETE"])
 def tea():
     if request.data:
@@ -48,6 +52,7 @@ def tea():
         db.session.delete(dbthing)
         db.session.commit()
         return Response("DELETED", status=202)
+
 
 if __name__ == '__main__':
     app.run()
