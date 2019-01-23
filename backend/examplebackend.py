@@ -48,3 +48,6 @@ def tea():
         db.session.delete(dbthing)
         db.session.commit()
         return Response("DELETED", status=202)
+
+if __name__ == '__main__':
+    app.run()
