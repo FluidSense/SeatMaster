@@ -1,3 +1,6 @@
+flake8
 flask
+flask-cors
+Flask-Migrate
 Flask-SQLAlchemy
-pylint
+psycopg2-binary
