@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy .orm import sessionmaker
+from examplebackend import app
 
-engine = create_engine("postgresql://testusr:password@postgres:5432/testdb")
+engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
 
 Session = sessionmaker(bind=engine)
 

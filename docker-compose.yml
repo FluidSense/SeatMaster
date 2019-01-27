@@ -3,10 +3,7 @@ services:
   postgres:
     restart: always
     image: postgres:10
-    environment:
-      - POSTGRES_USER=testusr #${POSTGRES_USER}
-      - POSTGRES_PASSWORD=password #${POSTGRES_PASSWORD}
-      - POSTGRES_DB=testdb #${POSTGRES_DB}
+    env_file: ./backend/.env
     volumes:
       - ./postgres-data/postgres:/var/lib/postgresql/data
     ports:

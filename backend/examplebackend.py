@@ -1,9 +1,17 @@
 import json
+import os
 from flask import Flask, Response, request, abort
 from shared import db
 from models.showcase import Showcase
 
-database_file = "postgresql://bachelor_usr:07idistudadm@localhost:5432/bachelor"
+#You can change these values in the .env-file
+USER = os.getenv("POSTGRES_USER")
+PASSWORD = os.getenv("POSTGRES_PASSWORD")
+DB = os.getenv("POSTGRES_DB")
+HOST = os.getenv("POSTGRES_HOST")
+
+#The f is for string insertion
+database_file = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DB}"
 
 app = Flask(__name__)
 
