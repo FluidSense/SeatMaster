@@ -2,6 +2,7 @@ import json
 import os
 from flask import Flask, Response, request, abort
 from shared import db
+from flask_migrate import Migrate
 from models.showcase import Showcase
 
 #You can change these values in the .env-file
@@ -18,7 +19,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
-
+migrate = Migrate(app, db)
 
 @app.route("/", methods=["GET"])
 def display():
@@ -37,7 +38,7 @@ def reveerb():
 
 @app.route("/update", methods=["PUT"])
 def skateboards():
-    if request.method == "PUT" and request.data:
+    if request.data:
         data = json.loads(request.data)
         if not data.get("id") or not data.get("name"):
             return abort(400)

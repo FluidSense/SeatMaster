@@ -13,9 +13,12 @@ services:
     build:
       context: backend
       dockerfile: Dockerfile.backend
-    entrypoint: python /app/examplebackend.py
+    entrypoint: bash /app/entrypoint.sh
+    depends_on:
+      - postgres
     #entrypoint: ping 8.8.8.8 
     ports:
       - 5000:5000
     volumes:
       - ./backend:/app
+
