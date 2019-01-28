@@ -20,6 +20,8 @@
     "test": "echo 'aahhh thats hot'",
     "lint": "./node_modules/tslint/bin/tslint --project '.'",
     "lint:fix": "./node_modules/tslint/bin/tslint --project '.' --fix",
+    "winlint": "tslint --project .",
+    "winlint:fix": "tslint --project .",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
