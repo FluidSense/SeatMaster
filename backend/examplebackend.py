@@ -3,12 +3,13 @@ from flask import Flask, Response, request, abort
 from flask_migrate import Migrate
 from shared import db
 from flask_cors import CORS
-from models.showcase import Showcase
+from models import *
+from controllers import * 
 
 database_file = "postgresql://bachelor_usr:07idistudadm@localhost:5432/bachelor"
 
 app = Flask(__name__)
-
+app.register_blueprint(applicationSeason, url_prefix="/season")
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
@@ -18,7 +19,7 @@ CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
 
 @app.route("/", methods=["GET"])
 def display():
-    result = Showcase.query.all()
+    result = db.session.query(Showcase).all()
     return ", ".join(str(e.id) for e in result)
 
 
