@@ -20,15 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "echo 'aahhh thats hot'",
-<<<<<<< HEAD
-    "lint": "./node_modules/tslint/bin/tslint --project '.'",
-    "lint:fix": "./node_modules/tslint/bin/tslint --project '.' --fix",
-    "winlint": "tslint --project .",
-    "winlint:fix": "tslint --project .",
-=======
     "lint": "tslint --project .",
     "lint:fix": "tslint --project . --fix",
->>>>>>> master
     "eject": "react-scripts eject"
   },
   "devDependencies": {
