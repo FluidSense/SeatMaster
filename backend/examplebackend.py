@@ -2,6 +2,7 @@ import json
 from flask import Flask, Response, request, abort
 from flask_migrate import Migrate
 from shared import db
+from flask_cors import CORS
 from models.showcase import Showcase
 
 database_file = "postgresql://bachelor_usr:07idistudadm@localhost:5432/bachelor"
@@ -12,6 +13,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
 migrate = Migrate(app, db)
+CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
 
 
 @app.route("/", methods=["GET"])
