@@ -18,8 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "echo 'aahhh thats hot'",
-    "lint": "./node_modules/tslint/bin/tslint --project '.'",
-    "lint:fix": "./node_modules/tslint/bin/tslint --project '.' --fix",
+    "lint": "tslint --project .",
+    "lint:fix": "tslint --project . --fix",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
