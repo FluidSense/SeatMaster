@@ -1,7 +1,6 @@
 from shared import db
 from datetime import datetime
 
-
 class ApplicationSeason(db.Model):
     __tablename__ = "application_season"
     id = db.Column("application_season_id", db.Integer, primary_key=True)
@@ -10,4 +9,14 @@ class ApplicationSeason(db.Model):
     acceptStart = db.Column("acceptstart", db.DateTime, default=datetime.today())
     acceptEnd = db.Column("acceptend", db.DateTime, nullable=False)
 
+    def __init__(self, start, end, acceptstart, acceptend):
+        self.start = start
+        self.end = end
+        self.acceptStart = acceptstart
+        self.acceptEnd = acceptend
+
+    def to_json(self):
+        return {"start":self.start,"end":self.end,"acceptStart":self.acceptStart,"acceptEnd":self.acceptEnd}
+    def __str__(self):
+        return str(self.__class__) + ":" + str(self.__dict__)
 
