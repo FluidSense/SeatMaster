@@ -1,22 +1,25 @@
 import * as React from 'react';
 import './App.css';
 
-import ExampleContainer from './components/ExampleContainer';
-import logoSvg from './logo.svg';
+import { ApplicationComponent } from './components/Application/ApplicationComponent';
+import { HomeComponent } from './components/Home/HomeComponent';
+import { LoginComponent } from './components/Login/LoginComponent';
+
+import {
+  HashRouter,
+  Route,
+} from 'react-router-dom';
 
 class App extends React.Component {
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logoSvg} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <ExampleContainer/>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
+      <HashRouter>
+        <div className="App">
+          <Route path="/" component={HomeComponent} />
+          <Route path="/login" component={LoginComponent} />
+          <Route path="/application" component={ApplicationComponent} />
+        </div>
+      </HashRouter>
     );
   }
 }
