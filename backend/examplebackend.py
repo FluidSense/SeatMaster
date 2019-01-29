@@ -1,12 +1,20 @@
 import json
+import os
 from flask import Flask, Response, request, abort
-from flask_migrate import Migrate
 from shared import db
+from flask_migrate import Migrate
 from flask_cors import CORS
 from models import *
 from controllers import * 
 
-database_file = "postgresql://bachelor_usr:07idistudadm@localhost:5432/bachelor"
+#You can change these values in the .env-file
+USER = os.getenv("POSTGRES_USER")
+PASSWORD = os.getenv("POSTGRES_PASSWORD")
+DB = os.getenv("POSTGRES_DB")
+HOST = os.getenv("POSTGRES_HOST")
+
+#The f is for string insertion
+database_file = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DB}"
 
 app = Flask(__name__)
 app.register_blueprint(applicationSeason, url_prefix="/season")
@@ -15,7 +23,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 db.init_app(app)
 migrate = Migrate(app, db)
 CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
-
 
 @app.route("/", methods=["GET"])
 def display():
@@ -60,4 +67,4 @@ def tea():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
