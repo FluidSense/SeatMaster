@@ -13,7 +13,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
 migrate = Migrate(app, db)
-CORS(app, resources={r"*":{"origins":"http://localhost:3000"}})
+CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
+
+
 @app.route("/", methods=["GET"])
 def display():
     result = Showcase.query.all()
