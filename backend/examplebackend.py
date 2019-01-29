@@ -3,6 +3,7 @@ import os
 from flask import Flask, Response, request, abort
 from shared import db
 from flask_migrate import Migrate
+from flask_cors import CORS
 from models.showcase import Showcase
 
 #You can change these values in the .env-file
@@ -20,6 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
 migrate = Migrate(app, db)
+CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
 
 @app.route("/", methods=["GET"])
 def display():
