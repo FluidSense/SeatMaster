@@ -21,7 +21,7 @@ services:
     entrypoint: bash /app/entrypoint.sh
     depends_on:
         postgres:
-          condition: service_started #service_healthy
+          condition: service_healthy
     ports:
       - 5000:5000
     volumes:
