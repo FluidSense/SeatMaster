@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import KnappBase from 'nav-frontend-knapper';
 
@@ -11,9 +11,9 @@ export const ApplicationComponent: React.FunctionComponent<IExampleProps> = (pro
   return (
     <div>
       <h1>My application</h1>
-      <NavLink to="/">
+      <Link to="/">
         <KnappBase type="hoved" htmlType="button">Submit</KnappBase>
-      </NavLink>
+      </Link>
     </div>
   );
 };

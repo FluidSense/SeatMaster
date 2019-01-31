@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import KnappBase from 'nav-frontend-knapper';
 
@@ -9,8 +9,8 @@ interface IExampleProps {
 
 export const LoginComponent: React.FunctionComponent<IExampleProps> = (props) => {
   return (
-    <NavLink to="/">
+    <Link to="/">
       <KnappBase type="hoved" htmlType="button">Log in</KnappBase>
-    </NavLink>
+    </Link>
   );
 };

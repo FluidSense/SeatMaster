@@ -6,20 +6,21 @@ import { HomeComponent } from './components/Home/HomeComponent';
 import { LoginComponent } from './components/Login/LoginComponent';
 
 import {
-  HashRouter,
   Route,
+  Router,
 } from 'react-router-dom';
+import history from './components/History';
 
 class App extends React.Component {
   public render() {
     return (
-      <HashRouter>
+      <Router history={history}>
         <div className="App">
           <Route exact={true} path="/" component={HomeComponent} />
           <Route path="/login" component={LoginComponent} />
           <Route path="/application" component={ApplicationComponent} />
         </div>
-      </HashRouter>
+      </Router>
     );
   }
 }
