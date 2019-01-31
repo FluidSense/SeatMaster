@@ -1,0 +1,32 @@
+version: '2.1'
+services:
+  postgres:
+    restart: always
+    image: postgres:10
+    env_file: ./backend/.env
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    restart: always
+    build:
+      context: backend
+      dockerfile: Dockerfile.backend
+    entrypoint: bash /app/entrypoint.sh
+    depends_on:
+        postgres:
+          condition: service_started #service_healthy
+    ports:
+      - 5000:5000
+    volumes:
+      - ./backend:/app
+
+volumes: 
+    data:
+        external: true
