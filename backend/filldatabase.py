@@ -1,4 +1,4 @@
-from models import *
+from models import ApplicationSeason, Showcase
 from database import Session, engine, Base
 from datetime import datetime, timedelta
 
