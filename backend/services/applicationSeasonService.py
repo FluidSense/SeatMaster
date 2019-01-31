@@ -11,4 +11,4 @@ def getCurrentOrNext():
    #     if diff < lowestDiff:
    #         lowestDiff = diff
    #         currentClosest = season
-    return min(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today)
+    return min(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today(), default=None)
