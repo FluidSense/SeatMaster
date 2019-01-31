@@ -9,12 +9,11 @@ class ApplicationSeason(db.Model):
     applicationPeriodStart = db.Column("applicationperiodstart", db.DateTime, default=datetime.today())
     applicationPeriodEnd = db.Column("applicationperiodend", db.DateTime, nullable=False)
 
-    def __init__(self, start, end, acceptstart, acceptend):
+    def __init__(self, start, end, applicationPeriodStart, applicationPeriodEnd):
         self.start = start
         self.end = end
-        self.applicationPeriodStart = acceptstart
-        self.applicationPeriodEnd = acceptend
-
+        self.applicationPeriodStart = applicationPeriodStart
+        self.applicationPeriodEnd = applicationPeriodEnd
     def to_json(self):
         return {
             "start":self.start,
