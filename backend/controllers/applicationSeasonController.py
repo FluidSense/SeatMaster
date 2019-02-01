@@ -3,6 +3,7 @@ from services import applicationSeasonService
 
 applicationSeason = Blueprint('applicationSeason', __name__)
 
+
 @applicationSeason.route("/getSeason")
 def getCurrentSeason():
     currApplication = applicationSeasonService.getCurrentOrNext()
