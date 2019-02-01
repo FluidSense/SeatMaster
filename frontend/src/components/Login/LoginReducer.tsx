@@ -1,20 +1,20 @@
-import { SET_USER_DATA } from './Strings';
+import { ACTION_NONE, SET_USER_DATA } from './Strings';
 
 export interface ILoginState {
-  comments: string | null;
-  id: number | null;
-  status: string | null;
-  user: {
+  comments?: string;
+  id?: number;
+  status: string;
+  user?: {
     id: number;
     username: string;
-  } | null;
+  };
 }
 
 const initialState = {
-  comments: null,
-  id: null,
-  status: null,
-  user: null,
+  comments: undefined,
+  id: undefined,
+  status: ACTION_NONE,
+  user: undefined,
 };
 
 export const loginReducer = (
