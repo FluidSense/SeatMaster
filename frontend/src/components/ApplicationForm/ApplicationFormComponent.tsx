@@ -5,15 +5,22 @@ import KnappBase from 'nav-frontend-knapper';
 import { Checkbox, Input, Select, SkjemaGruppe, TextareaControlled } from 'nav-frontend-skjema';
 
 interface IProps {
+  username: string;
   fullname: string;
   email: string;
   phone: string;
+  status: string;
 }
 
 export const ApplicationFormComponent: React.FunctionComponent<IProps> = (props) => {
   return (
-    <form method="POST" action="http://192.168.99.100:5000/registerApplication" target="_blank">
+    <form
+      method="POST"
+      action="http://192.168.99.100:5000/application/registerApplication"
+      target="_blank"
+    >
       <SkjemaGruppe title="Personal information">
+        <input type="hidden" name="username" value={props.username} />
         <Input
           label="Full name"
           bredde="XXL"
@@ -33,6 +40,13 @@ export const ApplicationFormComponent: React.FunctionComponent<IProps> = (props)
           bredde="M"
           name="phone"
           value={props.phone}
+          disabled={true}
+        />
+        <Input
+          label="Master status"
+          bredde="M"
+          name="status"
+          value={props.status}
           disabled={true}
         />
       </SkjemaGruppe>
@@ -64,9 +78,17 @@ export const ApplicationFormComponent: React.FunctionComponent<IProps> = (props)
           defaultValue=""
           maxLength={500}
           minLength={10}
+          name="needs"
           disabled={true}
         />
       </SkjemaGruppe>
+      <TextareaControlled
+        label="Additional comments"
+        defaultValue=""
+        maxLength={500}
+        minLength={10}
+        name="comments"
+      />
       <KnappBase type="hoved" htmlType="submit" autoDisableVedSpinner={true}>Submit</KnappBase>
     </form>
   );
