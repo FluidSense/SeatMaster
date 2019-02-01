@@ -10,7 +10,7 @@ export const ApplicationComponent: React.FunctionComponent<IExampleProps> = (pro
   return (
     <div>
       <h1>My application</h1>
-      <ApplicationFormComponent username="loff"/>
+      <ApplicationFormComponent fullname="Loffen Lofferino" email="yo@yo.no" phone="45234512"/>
     </div>
   );
 };
