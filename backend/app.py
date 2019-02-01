@@ -5,6 +5,7 @@ from shared import db
 from flask_migrate import Migrate
 from flask_cors import CORS
 from models.showcase import Showcase
+from controllers.applicationSeasonController import applicationSeason
 
 #You can change these values in the .env-file
 USER = os.getenv("POSTGRES_USER")
@@ -16,7 +17,7 @@ HOST = os.getenv("POSTGRES_HOST")
 database_file = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DB}"
 
 app = Flask(__name__)
-
+app.register_blueprint(applicationSeason, url_prefix="/season")
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db.init_app(app)
@@ -25,7 +26,7 @@ CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
 
 @app.route("/", methods=["GET"])
 def display():
-    result = Showcase.query.all()
+    result = db.session.query(Showcase).all()
     return ", ".join(str(e.id) for e in result)
 
 
