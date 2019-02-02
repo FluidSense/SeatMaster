@@ -3,14 +3,22 @@ import { Link } from 'react-router-dom';
 
 import KnappBase from 'nav-frontend-knapper';
 
-interface IExampleProps {
-  initAction: () => any;
+interface ILoginProps {
+  fetchUserData: (userId: number) => any;
 }
 
-export const LoginComponent: React.FunctionComponent<IExampleProps> = (props) => {
+export const LoginComponent: React.FunctionComponent<ILoginProps> = (props) => {
+  const { fetchUserData } = props;
+  const onClickAction = () => fetchUserData(1);
   return (
     <Link to="/">
-      <KnappBase type="hoved" htmlType="button">Log in</KnappBase>
+      <KnappBase
+        type="hoved"
+        htmlType="button"
+        onClick={onClickAction}
+      >
+        Log in
+      </KnappBase>
     </Link>
   );
 };
