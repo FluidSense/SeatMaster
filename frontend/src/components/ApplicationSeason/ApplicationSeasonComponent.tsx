@@ -3,8 +3,12 @@ import React, { Fragment } from 'react';
 import { ETIKETT_YELLOW, SEASON_CLOSED, SEASON_END, SEASON_START } from './Strings';
 
 interface IApplicationSeasonState {
-  seasonStart: Date;
-  seasonEnd: Date;
+  applicationSeason: {
+    applicationPeriodEnd: string;
+    applicationPeriodStart: string;
+    start: string;
+    end: string;
+  };
 }
 
 type validPreText = typeof SEASON_START | typeof SEASON_END;
@@ -27,8 +31,11 @@ const NavEtikett = (seasonStatus: string) => {
 };
 
 const ApplicationSeasonComponent: React.FunctionComponent<IApplicationSeasonState> = (props) => {
-  const { seasonEnd, seasonStart } = props;
+  if (props.applicationSeason === undefined) return null;
+  const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
   const currentTime = new Date();
+  const seasonStart = new Date(applicationPeriodStart);
+  const seasonEnd = new Date(applicationPeriodEnd);
   const seasonEndComponent = currentTime < seasonEnd
     ? NavEtikett(formatSeasonString(SEASON_END, seasonEnd)) : NavEtikett(SEASON_CLOSED);
   const seasonStartComponent = currentTime < seasonStart

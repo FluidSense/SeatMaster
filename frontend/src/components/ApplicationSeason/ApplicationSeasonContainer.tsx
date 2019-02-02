@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import ApplicationSeasonComponent from './ApplicationSeasonComponent';
 
-const mapStateToProps = (state: any, ownProps: any) => ({
-  seasonEnd: ownProps.seasonEnd,
-  seasonStart: ownProps.seasonStart,
+// FIXME state should not be any, WIP.
+const mapStateToProps = (state: any) => ({
+  applicationSeason: state.home.applicationSeason,
 });
 
 const ApplicationSeasonContainer = connect(

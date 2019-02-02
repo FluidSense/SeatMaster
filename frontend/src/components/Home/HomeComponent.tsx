@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import ApplicationSeasonContainer from '../ApplicationSeason/ApplicationSeasonContainer';
 import ApplicationStatusContainer from '../ApplicationStatus/ApplicationStatusContainer';
 
 import KnappBase from 'nav-frontend-knapper';
 
 interface IExampleProps {
-  initAction: () => any;
+  fetchSeason: () => any;
 }
 
 export const HomeComponent: React.FunctionComponent<IExampleProps> = (props) => {
+  const { fetchSeason } = props;
+  fetchSeason();
   return (
     <div>
       <h1>My status</h1>
       <ApplicationStatusContainer />
+      <ApplicationSeasonContainer />
       <Link to="/application">
         <KnappBase type="hoved" htmlType="button">New application</KnappBase>
       </Link>
