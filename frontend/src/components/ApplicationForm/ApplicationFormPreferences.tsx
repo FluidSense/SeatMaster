@@ -18,7 +18,7 @@ export const ApplicationFormPreferences: React.FunctionComponent<{}> = (props) =
         name="partner"
         key="partner"
       />
-      <Input label="Partner username" bredde="M" disabled={true} />
+      <Input label="Partner username" bredde="M" name="partner_name" disabled={true} />
       <Checkbox
         label="I would like to keep my seat from the previous semester"
         name="keep_seat"
