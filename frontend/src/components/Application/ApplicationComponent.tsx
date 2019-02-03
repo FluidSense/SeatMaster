@@ -20,3 +20,5 @@ export const ApplicationComponent: React.FunctionComponent<IExampleProps> = (pro
     </div>
   );
 };
+
+export default ApplicationComponent;

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { exampleActionHappened } from '../../state/example/action';
 import { fetchUserData } from './LoginActions';
 import { LoginComponent } from './LoginComponent';
 

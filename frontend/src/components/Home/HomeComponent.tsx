@@ -17,3 +17,5 @@ export const HomeComponent: React.FunctionComponent<IExampleProps> = (props) => 
     </div>
   );
 };
+
+export default HomeComponent;
