@@ -5,11 +5,11 @@ import ApplicationStatusContainer from '../ApplicationStatus/ApplicationStatusCo
 
 import KnappBase from 'nav-frontend-knapper';
 
-interface IExampleProps {
+interface IHomeProps {
   fetchSeason: () => any;
 }
 
-export const HomeComponent: React.FunctionComponent<IExampleProps> = (props) => {
+export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
   const { fetchSeason } = props;
   fetchSeason();
   return (

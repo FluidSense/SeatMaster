@@ -3,7 +3,7 @@ import ApplicationSeasonComponent from './ApplicationSeasonComponent';
 
 // FIXME state should not be any, WIP.
 const mapStateToProps = (state: any) => ({
-  applicationSeason: state.home.applicationSeason,
+  applicationSeason: state.applicationSeason.applicationSeason,
 });
 
 const ApplicationSeasonContainer = connect(
