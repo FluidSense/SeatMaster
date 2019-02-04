@@ -10,8 +10,6 @@ interface IHomeProps {
 }
 
 export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
-  const { fetchSeason } = props;
-  fetchSeason();
   return (
     <div>
       <h1>My status</h1>

@@ -2,7 +2,8 @@ import EtikettBase from 'nav-frontend-etiketter';
 import React, { Fragment } from 'react';
 import { ETIKETT_YELLOW, SEASON_CLOSED, SEASON_END, SEASON_START } from './Strings';
 
-interface IApplicationSeasonState {
+interface IApplicationSeasonProps {
+  fetchSeason: () => any;
   applicationSeason: {
     applicationPeriodEnd: string;
     applicationPeriodStart: string;
@@ -30,7 +31,9 @@ const NavEtikett = (seasonStatus: string) => {
   );
 };
 
-const ApplicationSeasonComponent: React.FunctionComponent<IApplicationSeasonState> = (props) => {
+const ApplicationSeasonComponent: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
+  const { fetchSeason } = props;
+  fetchSeason();
   if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
   const currentTime = new Date();
