@@ -22,16 +22,16 @@ class _ApplicationSeasonContainer extends React.Component<any, any> {
 
 // FIXME state should not be any, WIP.
 const mapStateToProps = (state: any) => ({
-  applicationSeason: state.applicationSeason.applicationSeason,
+  applicationSeason: state.applicationSeason,
 });
 
-const mapDipsatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any >) => ({
   fetchSeason: () => dispatch(fetchApplicationSeasonData()),
 });
 
 const ApplicationSeasonContainer = connect(
   mapStateToProps,
-  mapDipsatchToProps,
+  mapDispatchToProps,
 )(_ApplicationSeasonContainer);
 
 export default ApplicationSeasonContainer;
