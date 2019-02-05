@@ -900,19 +900,27 @@ body {
     transform: rotate(360deg);
   }
 }
-.panel {
-  background-color: #FFF;
-  display: block;
-  padding: 1rem 1rem 1rem 1rem;
-  border-radius: 4px;
+.etikett--advarsel {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #e3b0a8;
 }
-.panel--stor {
-  background-color: #FFF;
-  display: block;
-  padding: 1rem 1rem 1rem 1rem;
-  border-radius: 4px;
-  padding: 1.25rem 1rem 1.25rem 1rem;
+.etikett--suksess {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #9bd0b0;
 }
-.panel--border {
-  border: 1px solid #C6C2BF;
+.etikett--fokus {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #ffd399;
+}
+.etikett--info {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #B7B1A9;
 }

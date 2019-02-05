@@ -1,8 +1,14 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { loginReducer } from './components/Login/LoginReducer';
+import { applicationSeasonReducer } from './components/ApplicationSeason/ApplicationSeasonReducer';
+import { ILoginState, loginReducer } from './components/Login/LoginReducer';
+
+export interface IStore {
+  userInformation: ILoginState;
+}
 
 export const reducers = combineReducers({
+  applicationSeason: applicationSeasonReducer,
   userInformation: loginReducer,
 });
 
