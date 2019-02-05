@@ -2,10 +2,10 @@ import { SET_APPLICATION_SEASON } from './Strings';
 
 export interface IApplicationSeasonState {
   applicationSeason?: {
-    applicationPeriodEnd: string;
-    applicationPeriodStart: string;
-    start: string;
-    end: string;
+    applicationPeriodEnd: Date;
+    applicationPeriodStart: Date;
+    start: Date;
+    end: Date;
   };
 }
 
@@ -19,9 +19,22 @@ export const applicationSeasonReducer = (
   ): IApplicationSeasonState => {
   const { type, payload } = action;
   switch (type) {
-    case SET_APPLICATION_SEASON: {
-      return { ...state, applicationSeason: payload };
-    }
+    case SET_APPLICATION_SEASON:
+      const {
+        applicationPeriodEnd,
+        applicationPeriodStart,
+        start,
+        end,
+      } = payload;
+      return {
+        ...state,
+        applicationSeason: {
+          applicationPeriodEnd: new Date(applicationPeriodEnd),
+          applicationPeriodStart: new Date(applicationPeriodStart),
+          end: new Date(end),
+          start: new Date(start),
+        },
+      };
     default:
       return state;
   }
