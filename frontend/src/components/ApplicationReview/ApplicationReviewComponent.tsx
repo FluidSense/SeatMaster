@@ -42,7 +42,7 @@ const ApplicationReviewComponent: React.FunctionComponent<IProps> = (props) => {
   if (status === ACTION_NONE) return newApplicationLink;
   return (
     <div>
-      <Container>
+      <Fragment>
         <Column lg="12">
           <Row className="10">
             {infoPanel('Name', 'Pål Larsen')}
@@ -77,7 +77,7 @@ const ApplicationReviewComponent: React.FunctionComponent<IProps> = (props) => {
               {EDIT}
             </KnappBase>
         </Column>
-      </Container>
+      </Fragment>
     </div>
   );
 };

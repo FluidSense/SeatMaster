@@ -1,14 +1,14 @@
+import { Column, Container, Row } from 'nav-frontend-grid';
 import * as React from 'react';
-import './App.css';
-import ApplicationComponent from './components/Application/ApplicationComponent';
-import HomeComponent from './components/Home/HomeComponent';
-import LoginContainer from './components/Login/LoginContainer';
 import {
   Route,
   Router,
 } from 'react-router-dom';
+import './App.css';
+import ApplicationComponent from './components/Application/ApplicationComponent';
 import history from './components/History';
-import { Container, Column, Row } from 'nav-frontend-grid';
+import HomeComponent from './components/Home/HomeComponent';
+import LoginContainer from './components/Login/LoginContainer';
 
 class App extends React.Component {
   public render() {
@@ -16,15 +16,15 @@ class App extends React.Component {
       <Router history={history}>
         <Container>
           <Row className="">
-            <Column lg="3"></Column>
-            <Column lg="6">
+            <Column lg="2" />
+            <Column lg="8">
               <div className="App">
                 <Route exact={true} path="/" component={HomeComponent} />
                 <Route path="/login" component={LoginContainer} />
                 <Route path="/application" component={ApplicationComponent} />
               </div>
             </Column>
-            <Column lg="3"></Column>
+            <Column lg="2" />
           </Row>
         </Container>
       </Router>
