@@ -19,6 +19,9 @@ def getApplicationByUser(userid):
 @application.route("/registerApplication", methods=["POST"])
 def registerNewApplication():
     if request.is_json:
-        responseText, successCode = applicationService.registerApplication(request.get_json())
+        applicationText = form.get("applicationtext")
+        username = form.get("username")
+        partnerId = form.get("partner_id")
+        responseText, successCode = applicationService.registerApplication(applicationText, username, partner_id)
         return Response(responseText, successCode)
     return abort(400)

@@ -10,6 +10,8 @@ class Application(db.Model):
     comments = db.Column("comments", db.String(100))
     userid = db.Column(db.Integer, db.ForeignKey("users.userid"))
     user = db.relationship("User", uselist=False, cascade="all, delete", back_populates="application")
+    partnerUsername = db.Column("applies_with", db.String(50), nullable=True)
+    partnerApplication = db.relationship("Application", uselist=False, cascade="all, delete", nullable=True)
 
     def __init__(self, status, applicationtext, user):
         self.status = status
@@ -26,3 +28,4 @@ class Application(db.Model):
 
     def __str__(self):
         return json.dumps(self.to_json())
+    

@@ -11,20 +11,28 @@ def getApplicationById(id):
 
 
 def getApplicationByUserId(userid):
-    userApplication = db.session.query(Application).filter(Application.userid == userid).first()
+    userApplication = db.session.query(Application).filter(Application.User.id == userid).first()
     return userApplication
 
 
-def registerApplication(form):
-    status = form.get('status')
-    applicationText = form.get("applicationtext")
-    user = form.get("username")
+def getApplicationByUsername(username):
+    userApplication = db.session.query(Application).filter(Application.User.username == username).first()
+    return userApplication
+
+
+def registerApplication(status, applicationText, username, partnerId):
     try:
-        user = db.session.query(User).filter_by(username=user).one()
-        application = Application(status, applicationText, user)
+        user = db.session.query(User).filter_by(username=username).one()
+        application = Application(status, applicationText, user, partnerId)
         db.session.add(application)
         db.session.commit()
         return json.dumps(form), 201
     except SQLAlchemyError as err:
         print(err)
         return "", 400
+
+# makes relation between two applications if their userids match
+def connectApplication(application):
+    partnerApplication = getApplicationByUsername(application.partnerUsername)
+    if(partnerApplication.partnerUsername == application.User.username):
+        application.partnerApplication = partnerApplication

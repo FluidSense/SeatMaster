@@ -19,3 +19,4 @@ class User(db.Model):
 
     def __str__(self):
         return json.dumps(self.to_json())
+    
