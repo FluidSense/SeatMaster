@@ -1,14 +1,10 @@
 import EtikettBase from 'nav-frontend-etiketter';
 import React, { Fragment } from 'react';
+import { IApplicationSeason } from './ApplicationSeasonReducer';
 import { ETIKETT_YELLOW, SEASON_CLOSED, SEASON_END, SEASON_START } from './Strings';
 
 interface IApplicationSeasonProps {
-  applicationSeason: {
-    applicationPeriodEnd: Date;
-    applicationPeriodStart: Date;
-    start: Date;
-    end: Date;
-  };
+  applicationSeason: IApplicationSeason;
 }
 
 type validPreText = typeof SEASON_START | typeof SEASON_END;

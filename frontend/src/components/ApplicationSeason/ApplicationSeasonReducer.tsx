@@ -1,22 +1,26 @@
+import { AnyAction } from 'redux';
 import { SET_APPLICATION_SEASON } from './Strings';
 
-export interface IApplicationSeasonState {
-  applicationSeason?: {
-    applicationPeriodEnd: Date;
-    applicationPeriodStart: Date;
-    start: Date;
-    end: Date;
-  };
+export interface IApplicationSeason {
+  applicationPeriodEnd: Date;
+  applicationPeriodStart: Date;
+  start: Date;
+  end: Date;
 }
 
+const minDate = new Date(1970);
+
 export const initialState = {
-  applicationSeason: undefined,
+  applicationPeriodEnd: minDate,
+  applicationPeriodStart: minDate,
+  end: minDate,
+  start: minDate,
 };
 
 export const applicationSeasonReducer = (
-  state: IApplicationSeasonState = initialState,
-  action: any,
-  ): IApplicationSeasonState => {
+  state: IApplicationSeason = initialState,
+  action: AnyAction,
+  ): IApplicationSeason => {
   const { type, payload } = action;
   switch (type) {
     case SET_APPLICATION_SEASON:
@@ -28,12 +32,10 @@ export const applicationSeasonReducer = (
       } = payload;
       return {
         ...state,
-        applicationSeason: {
-          applicationPeriodEnd: new Date(applicationPeriodEnd),
-          applicationPeriodStart: new Date(applicationPeriodStart),
-          end: new Date(end),
-          start: new Date(start),
-        },
+        applicationPeriodEnd: new Date(applicationPeriodEnd),
+        applicationPeriodStart: new Date(applicationPeriodStart),
+        end: new Date(end),
+        start: new Date(start),
       };
     default:
       return state;

@@ -1,10 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { AnyAction } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { fetchApplicationSeasonData } from './ApplicationSeasonActions';
 import ApplicationSeasonComponent from './ApplicationSeasonComponent';
+import { IApplicationSeason } from './ApplicationSeasonReducer';
 
-class _ApplicationSeasonContainer extends React.Component<any, any> {
+interface IState {
+  fetchSeason: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
+  applicationSeason: IApplicationSeason;
+}
+
+// tslint:disable-next-line:class-name
+class _ApplicationSeasonContainer extends React.Component<IState, {}> {
   public componentDidMount = () => {
     const { fetchSeason } = this.props;
     fetchSeason();
