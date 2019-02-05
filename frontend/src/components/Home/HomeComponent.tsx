@@ -10,10 +10,9 @@ interface IHomeProps {
 
 export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
   return (
-    <div>
       <Container>
-        <Row className="mx-10">
-          <Column lg="8">
+        <Row className="justify-content-center">
+          <Column lg="6">
             <h1>My status</h1>
           </Column>
         </Row>
@@ -32,7 +31,6 @@ export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
           </Column>
         </Row>
       </Container>
-    </div>
   );
 };
 
