@@ -1,8 +1,10 @@
+import KnappBase from 'nav-frontend-knapper';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
 import { ILoginState } from '../Login/LoginReducer';
 import ApplicationReviewComponent from './ApplicationReviewComponent';
+import { EDIT } from './Strings';
 
 interface IStateProps {
   applicationInfo: ILoginState;

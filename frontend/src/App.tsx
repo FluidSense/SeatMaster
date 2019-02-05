@@ -18,11 +18,11 @@ class App extends React.Component {
           <Row className="">
             <Column lg="2" />
             <Column lg="8">
-              <div className="App">
-                <Route exact={true} path="/" component={HomeComponent} />
-                <Route path="/login" component={LoginContainer} />
-                <Route path="/application" component={ApplicationComponent} />
-              </div>
+            <div className="App">
+              <Route exact={true} path="/" component={HomeComponent} />
+              <Route path="/login" component={LoginContainer} />
+              <Route path="/application" component={ApplicationComponent} />
+            </div>
             </Column>
             <Column lg="2" />
           </Row>

@@ -1,4 +1,4 @@
-import { Container, Column, Row } from 'nav-frontend-grid';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import KnappBase from 'nav-frontend-knapper';
 import PanelBase from 'nav-frontend-paneler';
 import React, { Fragment } from 'react';
@@ -37,48 +37,56 @@ interface IProps {
   applicationInfo: ILoginState;
 }
 
+const userInfo = () => (
+    <Fragment>
+      <Row className="10">
+        {infoPanel(NAME, 'Pål Larsen')}
+      </Row>
+      <Row className="3">
+        <Column lg="6">
+          {infoPanel(EMAIL, 'paalar@kul.no')}
+        </Column>
+        <Column lg="6">
+          {infoPanel(PHONE, '12345678')}
+        </Column>
+      </Row>
+    </Fragment>
+);
+
+const roomInfo = () => (
+  <Fragment>
+    <Row className="2">
+      <Column lg="4">
+        {infoPanel(PARTNER, 'Peter Rydberg')}
+      </Column>
+      <Column lg="4">
+        {infoPanel(PREFFERED_ROOM, 'Big one')}
+      </Column>
+      <Column lg="4">
+        {infoPanel(SEAT_ROLLOVER, 'Requested')}
+      </Column>
+    </Row>
+  </Fragment>
+);
+
 const ApplicationReviewComponent: React.FunctionComponent<IProps> = (props) => {
   const { status } = props.applicationInfo;
   if (status === ACTION_NONE) return newApplicationLink;
   return (
-    <div>
-      <Fragment>
-        <Column lg="12">
-          <Row className="10">
-            {infoPanel('Name', 'Pål Larsen')}
-          </Row>
-          <Row className="3">
-            <Column lg="6">
-              {infoPanel('E-mail', 'paalar@kul.no')}
-            </Column>
-            <Column lg="6">
-              {infoPanel('Phone', '12345678')}
-            </Column>
-          </Row>
-          <Row className="2">
-            <Column lg="4">
-              {infoPanel('Partner', 'Peter Rydberg')}
-            </Column>
-            <Column lg="4">
-              {infoPanel('Preferred Room', 'Big one')}
-            </Column>
-            <Column lg="4">
-              {infoPanel('Seat rollover', 'Requested')}
-            </Column>
-          </Row>
-          <Row className="">
-            <Column lg="12">
-              {infoPanel('Needs', 'Lorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum bedi boopLorem ipsum schm schmoobedi boopLorem ipsum schmoobedi boop.')}
-            </Column>
-          </Row>
-            <KnappBase
-              type="hoved"
-            >
-              {EDIT}
-            </KnappBase>
-        </Column>
-      </Fragment>
-    </div>
+    <Fragment>
+        {userInfo()}
+        {roomInfo()}
+        <Row className="">
+          <Column lg="12">
+            {infoPanel(NEEDS, 'Lorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum schmoobedi boopLorem ipsum bedi boopLorem ipsum schm schmoobedi boopLorem ipsum schmoobedi boop.')}
+          </Column>
+        </Row>
+        <KnappBase
+          type="hoved"
+        >
+          {EDIT}
+        </KnappBase>
+    </Fragment>
   );
 };
 

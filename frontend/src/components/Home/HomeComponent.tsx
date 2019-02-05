@@ -16,8 +16,8 @@ export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
       </Row>
       <Row className="status-info">
         <ApplicationStatusContainer />
-        <ApplicationSeasonContainer />
       </Row>
+      <ApplicationSeasonContainer />
       <Row className="review">
         <ApplicationReviewContainer />
       </Row>
