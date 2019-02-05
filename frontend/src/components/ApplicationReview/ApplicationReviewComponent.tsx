@@ -18,14 +18,14 @@ import {
 
 const infoPanel = (title: string, text: string) => (
   <div>
-    <h3>{title}</h3>
+    <h3><b>{title}</b></h3>
     <PanelBase>
       {text}
     </PanelBase>
   </div>
 );
 
-const newApplication = (
+const newApplicationLink = (
   <KnappBase
     type="hoved"
   >
@@ -39,10 +39,15 @@ interface IProps {
 
 const ApplicationReviewComponent: React.FunctionComponent<IProps> = (props) => {
   const { status } = props.applicationInfo;
-  if (status === ACTION_NONE) return newApplication;
+  if (status === ACTION_NONE) return newApplicationLink;
   return (
     <div>
       {infoPanel('Name', 'Pål Larsen')}
+      <KnappBase
+        type="hoved"
+      >
+        {EDIT}
+      </KnappBase>
     </div>
   );
 };
