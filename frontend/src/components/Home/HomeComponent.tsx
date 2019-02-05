@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import ApplicationReviewContainer from '../ApplicationReview/ApplicationReviewContainer';
 import ApplicationSeasonContainer from '../ApplicationSeason/ApplicationSeasonContainer';
 import ApplicationStatusContainer from '../ApplicationStatus/ApplicationStatusContainer';
-
-import KnappBase from 'nav-frontend-knapper';
 
 interface IHomeProps {
   fetchSeason: () => any;
@@ -15,9 +13,7 @@ export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
       <h1>My status</h1>
       <ApplicationStatusContainer />
       <ApplicationSeasonContainer />
-      <Link to="/application">
-        <KnappBase type="hoved" htmlType="button">New application</KnappBase>
-      </Link>
+      <ApplicationReviewContainer />
     </div>
   );
 };
