@@ -1,4 +1,5 @@
 import EtikettBase from 'nav-frontend-etiketter';
+import { Row, Column } from 'nav-frontend-grid';
 import React, { Fragment } from 'react';
 import { IApplicationSeason } from './ApplicationSeasonReducer';
 import { ETIKETT_YELLOW, SEASON_CLOSED, SEASON_END, SEASON_START } from './Strings';
@@ -36,8 +37,12 @@ const ApplicationSeasonComponent: React.FunctionComponent<IApplicationSeasonProp
    ? NavEtikett(formatSeasonString(SEASON_START, applicationPeriodStart)) : null;
   return(
     <Fragment>
-      {seasonStartComponent}
-      {seasonEndComponent}
+      <Column>
+        {seasonStartComponent}
+      </Column>
+      <Column>
+        {seasonEndComponent}
+      </Column>
     </Fragment>
   );
 };
