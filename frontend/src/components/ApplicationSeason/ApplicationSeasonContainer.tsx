@@ -6,13 +6,18 @@ import { fetchApplicationSeasonData } from './ApplicationSeasonActions';
 import ApplicationSeasonComponent from './ApplicationSeasonComponent';
 import { IApplicationSeason } from './ApplicationSeasonReducer';
 
-interface IState {
-  fetchSeason: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
+interface IStateProps {
   applicationSeason: IApplicationSeason;
 }
 
+interface IDispatchProps {
+  fetchSeason: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
+}
+
+type Props = IStateProps & IDispatchProps;
+
 // tslint:disable-next-line:class-name
-class _ApplicationSeasonContainer extends React.Component<IState, {}> {
+class _ApplicationSeasonContainer extends React.Component<Props, {}> {
   public componentDidMount = () => {
     const { fetchSeason } = this.props;
     fetchSeason();
@@ -28,8 +33,7 @@ class _ApplicationSeasonContainer extends React.Component<IState, {}> {
   }
 }
 
-// FIXME state should not be any, WIP.
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IStateProps) => ({
   applicationSeason: state.applicationSeason,
 });
 
