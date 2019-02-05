@@ -1,6 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { loginReducer } from './components/Login/LoginReducer';
+import { ILoginState, loginReducer } from './components/Login/LoginReducer';
+
+export interface IStore {
+  userInformation: ILoginState;
+}
 
 export const reducers = combineReducers({
   userInformation: loginReducer,

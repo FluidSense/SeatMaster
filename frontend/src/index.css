@@ -900,3 +900,27 @@ body {
     transform: rotate(360deg);
   }
 }
+.etikett--advarsel {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #e3b0a8;
+}
+.etikett--suksess {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #9bd0b0;
+}
+.etikett--fokus {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #ffd399;
+}
+.etikett--info {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #B7B1A9;
+}
