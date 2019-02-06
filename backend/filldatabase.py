@@ -1,4 +1,4 @@
-from models import ApplicationSeason, Showcase, User, Application
+from models import ApplicationSeason,  User, Application
 from services import applicationService
 from database import Session, engine, Base
 from datetime import datetime, timedelta
@@ -13,9 +13,6 @@ session.add(the_annoying_user)
 session.add(the_annoyinger_user)
 session.commit()
 test_user = session.query(User).filter_by(username="usrnam").first()
-print("got test user:", test_user)
-a_test_application = Application("Submitted", "Lorem Ipsum", test_user)
-session.add(a_test_application)
 
 starttime = datetime.now() + timedelta(days=+5)
 endtime = starttime + timedelta(days=+150)
@@ -24,10 +21,10 @@ acceptend = starttime + timedelta(days=+7)
 
 some_applicationseason = ApplicationSeason(starttime, endtime, acceptstart, acceptend)
 
-application1 = applicationService.registerApplication("status","sadsda",the_annoying_user.username, the_annoyinger_user.username)
-
-
-application2 = applicationService.registerApplication("status","sadsda",the_annoyinger_user.username, the_annoying_user.username)
+application1 = applicationService.registerApplication(
+    "status", "sadsda", the_annoying_user.username, the_annoyinger_user.username)
+application2 = applicationService.registerApplication(
+    "status", "sadsda", the_annoyinger_user.username, the_annoying_user.username)
 
 session.add(some_applicationseason)
 session.commit()

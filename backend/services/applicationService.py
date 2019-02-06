@@ -2,7 +2,6 @@ from models.application import Application
 from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
-import json
 
 
 def getApplicationById(id):
@@ -20,6 +19,8 @@ def getApplicationByUsername(username):
     return userApplication
 
 # TODO application should not be registered with username, it should verify the user.
+
+
 def registerApplication(applicationText, username, partnerId):
     connectApplication(getApplicationByUsername("usrnam"))
     try:
@@ -43,4 +44,3 @@ def connectApplication(application):
         partnerApplication.partnerApplication = application
         db.session.add(application, partnerApplication)
         db.session.commit()
-
