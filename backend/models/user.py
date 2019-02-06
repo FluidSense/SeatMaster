@@ -8,10 +8,12 @@ class User(db.Model):
         "userid",
         db.Integer,
         primary_key=True)
+
     username = db.Column(
         "username",
         db.String(30),
         unique=True)
+
     application = db.relationship(
         "Application",
         uselist=False,

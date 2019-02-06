@@ -25,10 +25,10 @@ def registerApplication(applicationText, username, partnerId):
     connectApplication(getApplicationByUsername("usrnam"))
     try:
         user = db.session.query(User).filter_by(username=username).one()
-        application = Application("good", applicationText, user, partnerId)
+        application = Application("Unprocessed", applicationText, user, partnerId)
         db.session.add(application)
         db.session.commit()
-        return "", 201
+        return application.to_json, 201
     except SQLAlchemyError as err:
         print(err)
         return "", 400
