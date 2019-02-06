@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Input, SkjemaGruppe } from 'nav-frontend-skjema';
 
-interface IProps {
+interface IStateProps {
   username: string;
   fullname: string;
   email: string;
@@ -10,7 +10,7 @@ interface IProps {
   status: string;
 }
 
-export const ApplicationFormPersonal: React.FunctionComponent<IProps> = (props) => {
+export const ApplicationFormPersonal: React.FunctionComponent<IStateProps> = (props) => {
   return (
     <SkjemaGruppe title="Personal information">
       <input type="hidden" name="username" value={props.username} />

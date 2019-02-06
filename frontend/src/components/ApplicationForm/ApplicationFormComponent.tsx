@@ -5,7 +5,7 @@ import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
 
-interface IProps {
+interface IStateProps {
   username: string;
   fullname: string;
   email: string;
@@ -13,12 +13,22 @@ interface IProps {
   status: string;
 }
 
-export const ApplicationFormComponent: React.FunctionComponent<IProps> = (props) => {
+interface IDispatchProps {
+  sendApplicationFormData: () => any;
+  updateApplicationFormData: (item: React.FormEvent) => any;
+}
+
+type Props = IStateProps & IDispatchProps;
+
+export const ApplicationFormComponent: React.FunctionComponent<Props> = (props) => {
+  const { updateApplicationFormData, sendApplicationFormData } = props;
+  const onSubmitForm = () => sendApplicationFormData();
   return (
     <form
       method="POST"
       action="http://192.168.99.100:5000/application/registerApplication"
       target="_blank"
+      onSubmit={onSubmitForm}
     >
       <ApplicationFormPersonal
         username={props.username}
@@ -27,8 +37,8 @@ export const ApplicationFormComponent: React.FunctionComponent<IProps> = (props)
         phone={props.phone}
         status={props.status}
       />
-      <ApplicationFormPreferences />
-      <ApplicationFormComments />
+      <ApplicationFormPreferences updateApplicationFormData={updateApplicationFormData} />
+      <ApplicationFormComments updateApplicationFormData={updateApplicationFormData} />
       <KnappBase type="hoved" htmlType="submit" autoDisableVedSpinner={true}>Submit</KnappBase>
     </form>
   );
