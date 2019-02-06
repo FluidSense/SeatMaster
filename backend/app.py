@@ -17,14 +17,32 @@ HOST = os.getenv("POSTGRES_HOST")
 # The f is for string insertion
 database_file = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DB}"
 
-app = Flask(__name__)
-app.register_blueprint(application)
-app.register_blueprint(applicationSeason, url_prefix="/season")
-app.config["SQLALCHEMY_DATABASE_URI"] = database_file
-
+'''
 db.init_app(app)
-migrate = Migrate(app, db)
-CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
+'''
+migrate = Migrate()
+
+def create_app(config_filename=None):
+    app = Flask(__name__)
+    if config_filename:
+        app.config.from_pyfile(config_filename)
+    init_extensions(app)
+    register_blueprints(app)
+    return app
+
+def init_extensions(app):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+    db.init_app(app)
+    migrate.init_app(app, db)
+    CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
+
+def register_blueprints(app):
+    app.register_blueprint(application)
+    app.register_blueprint(applicationSeason, url_prefix="/season")
+
+
+app = create_app()
+
 
 
 @app.route("/", methods=["GET"])
