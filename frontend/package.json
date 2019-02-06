@@ -38,7 +38,8 @@
     "build:css": "less-watch-compiler --run-once --config less.json",
     "start": "npm-run-all -p start:*",
     "build": "npm run build:css && npm run build:js",
-    "test": "echo 'aahhh thats hot'",
+    "test": "react-scripts test",
+    "test:u": "react-scripts test -u",
     "lint": "tslint --project .",
     "lint:fix": "tslint --project . --fix",
     "eject": "react-scripts eject"
