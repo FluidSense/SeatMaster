@@ -4,9 +4,18 @@ import json
 
 class User(db.Model):
     __tablename__ = "users"
-    id = db.Column("userid", db.Integer, primary_key=True)
-    username = db.Column("username", db.String(30), unique=True)
-    application = db.relationship("Application", uselist=False, back_populates="user")
+    id = db.Column(
+        "userid",
+        db.Integer,
+        primary_key=True)
+    username = db.Column(
+        "username",
+        db.String(30),
+        unique=True)
+    application = db.relationship(
+        "Application",
+        uselist=False,
+        back_populates="user")
 
     def __init__(self, username):
         self.username = username
