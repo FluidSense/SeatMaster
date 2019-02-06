@@ -1,8 +1,5 @@
-from models.application import Application
 from models.user import User
 from shared import db
-from sqlalchemy.exc import SQLAlchemyError
-import json
 
 
 def getUserByUsername(username):
@@ -12,4 +9,4 @@ def getUserByUsername(username):
 
 def getApplicationByStudentNumber(studentNumber):
     user = db.session.query(User).filter(studentNumber=studentNumber).first()
-    return userApplication
+    return user

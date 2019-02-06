@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, jsonify, request, abort
 from services import applicationService
+import json
 
 application = Blueprint("application", __name__, url_prefix="/application")
 
@@ -19,9 +20,10 @@ def getApplicationByUser(userid):
 @application.route("/registerApplication", methods=["POST"])
 def registerNewApplication():
     if request.is_json:
-        applicationText = form.get("applicationtext")
+        form = request.get_json()
+        applicationText = form.get("applicationText")
         username = form.get("username")
-        partnerId = form.get("partner_id")
-        responseText, successCode = applicationService.registerApplication(applicationText, username, partner_id)
-        return Response(responseText, successCode)
+        partnerId = form.get("partnerId")
+        responseText, successCode = applicationService.registerApplication(applicationText, username, partnerId)
+        return Response(json.dumps(form), successCode)
     return abort(400)
