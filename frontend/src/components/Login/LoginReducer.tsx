@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import { ACTION_NONE, SET_USER_DATA } from './Strings';
 
 export interface ILoginState {
@@ -19,8 +20,8 @@ const initialState = {
 
 export const loginReducer = (
   state: ILoginState = initialState,
-  action: any,
-  ): ILoginState => {
+  action: AnyAction,
+): ILoginState => {
   const { type, payload } = action;
   switch (type) {
     case SET_USER_DATA: {
