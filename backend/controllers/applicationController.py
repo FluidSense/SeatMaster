@@ -21,9 +21,9 @@ def getApplicationByUser(userid):
 def registerNewApplication():
     if request.is_json:
         form = request.get_json()
-        applicationText = form.get("applicationText")
         username = form.get("username")
-        partnerId = form.get("partnerId")
-        responseText, successCode = applicationService.registerApplication(applicationText, username, partnerId)
+        infoText = form.get("infoText")
+        partnerUsername = form.get("partnerUsername")
+        responseText, successCode = applicationService.registerApplication(infoText, username, partnerUsername)
         return Response(json.dumps(form), successCode)
     return abort(400)

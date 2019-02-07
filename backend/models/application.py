@@ -10,8 +10,8 @@ class Application(db.Model):
         db.Integer,
         primary_key=True)
 
-    applicationtext = db.Column(
-        "application_text",
+    infoText = db.Column(
+        "info_text",
         db.String(),
         nullable=False)
 
@@ -51,17 +51,17 @@ class Application(db.Model):
         remote_side="Application.id",
         post_update=True)
 
-    def __init__(self, status, applicationtext, user, partnerUsername):
+    def __init__(self, status, infoText, user, partnerUsername):
         self.status = status
         self.user = user
-        self.applicationtext = applicationtext
+        self.infoText = infoText
         self.partnerUsername = partnerUsername
 
     def to_json(self):
         return {
             "id": self.id,
             "status": self.status,
-            "comments": self.comments,
+            "comments": self.infoText,
             "user": self.user.to_json() if self.user else None,
         }
 

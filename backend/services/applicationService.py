@@ -18,14 +18,13 @@ def getApplicationByUsername(username):
     userApplication = db.session.query(Application).join(User).filter(User.username == username).first()
     return userApplication
 
+
 # TODO application should not be registered with username, it should verify the user.
-
-
-def registerApplication(applicationText, username, partnerId):
+def registerApplication(infoText, username, partnerName):
     connectApplication(getApplicationByUsername("usrnam"))
     try:
         user = db.session.query(User).filter_by(username=username).one()
-        application = Application("Unprocessed", applicationText, user, partnerId)
+        application = Application("Unprocessed", infoText, user, partnerName)
         db.session.add(application)
         db.session.commit()
         return application.to_json, 201
