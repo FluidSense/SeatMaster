@@ -11,7 +11,7 @@ export const ApplicationComponent: React.FunctionComponent<IExampleProps> = (pro
   return (
     <div>
       <h1>My application</h1>
-      <Link to="/">
+      <Link to="/home">
         <KnappBase type="hoved" htmlType="button">Submit</KnappBase>
       </Link>
     </div>

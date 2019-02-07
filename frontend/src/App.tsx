@@ -10,16 +10,14 @@ import {
   Router,
 } from 'react-router-dom';
 import history from './components/History';
-import { HeaderComponent } from './components/Header/HeaderComponent';
 
 class App extends React.Component {
   public render() {
     return (
       <Router history={history}>
         <div className="App">
-          <HeaderComponent />
-          <Route exact={true} path="/" component={HomeComponent} />
-          <Route path="/login" component={LoginContainer} />
+          <Route exact={true} path="/" component={LoginContainer} />
+          <Route path="/home" component={HomeComponent} />
           <Route path="/application" component={ApplicationComponent} />
         </div>
       </Router>
