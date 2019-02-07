@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import { Checkbox, Input, Select, SkjemaGruppe } from 'nav-frontend-skjema';
 
-interface IDispatchProps {
+interface IProps {
   updateApplicationFormData: (item: React.FormEvent) => any;
 }
 
-export const ApplicationFormPreferences: React.FunctionComponent<IDispatchProps> = (props) => {
+export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (props) => {
   const { updateApplicationFormData } = props;
   const onUpdateForm = (item: React.FormEvent) => updateApplicationFormData(item);
   return (

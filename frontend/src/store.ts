@@ -1,6 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { applicationFormReducer } from './components/ApplicationForm/ApplicationFormReducer';
 import { applicationSeasonReducer } from './components/ApplicationSeason/ApplicationSeasonReducer';
 import { ILoginState, loginReducer } from './components/Login/LoginReducer';
 
@@ -9,7 +8,6 @@ export interface IStore {
 }
 
 export const reducers = combineReducers({
-  applicationForm: applicationFormReducer,
   applicationSeason: applicationSeasonReducer,
   userInformation: loginReducer,
 });

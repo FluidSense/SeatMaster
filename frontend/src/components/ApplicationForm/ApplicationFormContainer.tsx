@@ -1,6 +1,4 @@
 import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { sendApplicationFormData, updateApplicationFormData } from './ApplicationFormActions';
 import { ApplicationFormComponent } from './ApplicationFormComponent';
 
 const mapStateToProps = (state: any) => ({
@@ -11,14 +9,9 @@ const mapStateToProps = (state: any) => ({
   username: state.userInformation.username,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  sendApplicationFormData: () => dispatch(sendApplicationFormData()),
-  updateApplicationFormData: (item: React.FormEvent) => dispatch(updateApplicationFormData(item)),
-});
-
 const ApplicationFormContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  null,
 )(ApplicationFormComponent);
 
 export default ApplicationFormContainer;

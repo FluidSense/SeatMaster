@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import { Checkbox, SkjemaGruppe, TextareaControlled } from 'nav-frontend-skjema';
 
-interface IStateProps {
+interface IProps {
   updateApplicationFormData: (item: React.FormEvent) => any;
 }
 
-export const ApplicationFormComments: React.FunctionComponent<IStateProps> = (props) => {
+export const ApplicationFormComments: React.FunctionComponent<IProps> = (props) => {
   const { updateApplicationFormData } = props;
   const onUpdateForm = (item: React.FormEvent) => updateApplicationFormData(item);
   return (
