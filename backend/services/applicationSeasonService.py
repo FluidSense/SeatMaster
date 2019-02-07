@@ -4,6 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import json
 from models.applicationSeason import ApplicationSeason
 
+dateFormat = ("%a %b %d %Y %H:%M:%S")
 
 def getCurrentOrNext():
     comingSeasons = db.session.query(ApplicationSeason).filter(ApplicationSeason.end > datetime.today()).all()
@@ -11,10 +12,14 @@ def getCurrentOrNext():
     return min(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today(), default=None)
 
 def registerNewSeason(form):
-    newPeriodEnd = form.get("newPeriodEnd")
-    newPeriodStart = form.get("newPeriodStart")
-    newRoomEnd = form.get("newRoomStart")
-    newRoomStart = form.get("newRoomEnd")
+    newPeriodEnd = datetime.strptime(form.get("newPeriodEnd"), dateFormat)
+    newPeriodStart = datetime.strptime(form.get("newPeriodStart"), dateFormat)
+    newRoomEnd = datetime.strptime(form.get("newRoomStart"), dateFormat)
+    newRoomStart = datetime.strptime(form.get("newRoomEnd"), dateFormat)
+    if newPeriodEnd < newPeriodStart:
+        return "Application start period should not be later than application end period", 400
+    if newRoomEnd < newRoomStart:
+        return "Room start period should not be later than application end period", 400
     try:
         applicationSeason = ApplicationSeason(
             newRoomStart,
