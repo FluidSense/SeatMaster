@@ -4,6 +4,7 @@ import { Checkbox, SkjemaGruppe, TextareaControlled } from 'nav-frontend-skjema'
 
 interface IProps {
   updateApplicationFormData: (item: React.FormEvent) => any;
+  needs: boolean;
 }
 
 export const ApplicationFormComments: React.FunctionComponent<IProps> = (props) => {
@@ -24,7 +25,7 @@ export const ApplicationFormComments: React.FunctionComponent<IProps> = (props) 
         minLength={10}
         name="needs_text"
         key="needs_text"
-        disabled={true}
+        disabled={props.needs === false ? true : false}
         onChangeCapture={onUpdateForm}
       />
       <TextareaControlled

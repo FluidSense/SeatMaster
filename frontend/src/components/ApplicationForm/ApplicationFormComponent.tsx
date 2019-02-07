@@ -51,8 +51,14 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
           phone={this.props.phone}
           status={this.props.status}
         />
-        <ApplicationFormPreferences updateApplicationFormData={this.updateApplicationFormData} />
-        <ApplicationFormComments updateApplicationFormData={this.updateApplicationFormData} />
+        <ApplicationFormPreferences
+          updateApplicationFormData={this.updateApplicationFormData}
+          partner={this.state.partner}
+        />
+        <ApplicationFormComments
+          updateApplicationFormData={this.updateApplicationFormData}
+          needs={this.state.needs}
+        />
         <KnappBase type="hoved" htmlType="submit" autoDisableVedSpinner={true}>Submit</KnappBase>
       </form>
     );
@@ -71,11 +77,10 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
       body: JSON.stringify({
         comments: this.state.comments,
         keep_seat: this.state.keep_seat,
-        needs: this.state.needs,
         needs_text: this.state.needs_text,
-        partner: this.state.partner,
         partner_name: this.state.partner_name,
         room: this.state.room,
+        username: this.props.username,
       }),
       headers: {
         'Content-Type': 'application/json',

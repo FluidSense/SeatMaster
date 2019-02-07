@@ -4,6 +4,7 @@ import { Checkbox, Input, Select, SkjemaGruppe } from 'nav-frontend-skjema';
 
 interface IProps {
   updateApplicationFormData: (item: React.FormEvent) => any;
+  partner: boolean;
 }
 
 export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (props) => {
@@ -37,7 +38,7 @@ export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (prop
         bredde="M"
         name="partner_name"
         key="partner_name"
-        disabled={true}
+        disabled={props.partner === false ? true : false}
         onChangeCapture={onUpdateForm}
       />
       <Checkbox
