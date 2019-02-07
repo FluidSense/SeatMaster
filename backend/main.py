@@ -22,16 +22,16 @@ db.init_app(app)
 '''
 migrate = Migrate()
 
-def create_app(config_filename=None):
+def create_app(config_filename=None, db_url=database_file):
     app = Flask(__name__)
     if config_filename:
         app.config.from_pyfile(config_filename)
-    init_extensions(app)
+    init_extensions(app, db_url)
     register_blueprints(app)
     return app
 
-def init_extensions(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+def init_extensions(app, db_url):
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     db.init_app(app)
     migrate.init_app(app, db)
     CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
