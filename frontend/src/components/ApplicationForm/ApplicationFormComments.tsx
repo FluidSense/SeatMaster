@@ -25,7 +25,7 @@ export const ApplicationFormComments: React.FunctionComponent<IProps> = (props) 
         minLength={10}
         name="needsText"
         key="needsText"
-        disabled={props.needs === false ? true : false}
+        disabled={!props.needs ? true : false}
         onChangeCapture={onUpdateForm}
       />
       <TextareaControlled

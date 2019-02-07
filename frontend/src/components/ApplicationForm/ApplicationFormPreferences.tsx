@@ -38,7 +38,7 @@ export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (prop
         bredde="M"
         name="partnerUsername"
         key="partnerUsername"
-        disabled={props.partner === false ? true : false}
+        disabled={!props.partner ? true : false}
         onChangeCapture={onUpdateForm}
       />
       <Checkbox
