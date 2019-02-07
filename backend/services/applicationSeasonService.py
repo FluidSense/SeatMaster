@@ -1,6 +1,6 @@
 from datetime import datetime
-from shared import db
-from models.applicationSeason import ApplicationSeason
+from ..shared import db
+from ..models.applicationSeason import ApplicationSeason
 
 
 def getCurrentOrNext():
