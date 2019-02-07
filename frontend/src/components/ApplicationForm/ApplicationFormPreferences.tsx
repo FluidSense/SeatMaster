@@ -11,13 +11,20 @@ export const ApplicationFormPreferences: React.FunctionComponent<IDispatchProps>
   const onUpdateForm = (item: React.FormEvent) => updateApplicationFormData(item);
   return (
     <SkjemaGruppe title="Preferences">
-      <Select label="Choose preferred room" bredde="xxl" name="room" onChangeCapture={onUpdateForm}>
+      <Select
+        label="Choose preferred room"
+        bredde="xxl"
+        name="room"
+        defaultValue="initial"
+        onChangeCapture={onUpdateForm}
+      >
+        <option disabled={true} value="initial" hidden={true} >Select room</option>
         <option value="big_one" key="big_one">
           Big One
-          </option>
+        </option>
         <option value="space_commander" key="space_commander">
           Space Commander
-          </option>
+        </option>
       </Select>
       <Checkbox
         label="I wish to sit with my partner"
@@ -29,6 +36,7 @@ export const ApplicationFormPreferences: React.FunctionComponent<IDispatchProps>
         label="Partner username"
         bredde="M"
         name="partner_name"
+        key="partner_name"
         disabled={true}
         onChangeCapture={onUpdateForm}
       />

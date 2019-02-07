@@ -23,6 +23,7 @@ export const ApplicationFormComments: React.FunctionComponent<IStateProps> = (pr
         maxLength={500}
         minLength={10}
         name="needs_text"
+        key="needs_text"
         disabled={true}
         onChangeCapture={onUpdateForm}
       />
@@ -32,6 +33,7 @@ export const ApplicationFormComments: React.FunctionComponent<IStateProps> = (pr
         maxLength={500}
         minLength={10}
         name="comments"
+        key="comments"
         onChangeCapture={onUpdateForm}
       />
     </SkjemaGruppe>

@@ -18,3 +18,4 @@ export const ACTION_LIST: IStringList = {
   partner_name: 'PARTNER_NAME_UPDATED',
   room: 'ROOM_UPDATED',
 };
+export const POST_FORM_DATA = 'http://192.168.99.100:5000/application/registerApplication';

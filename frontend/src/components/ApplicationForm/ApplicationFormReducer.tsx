@@ -53,7 +53,7 @@ export const applicationFormReducer = (
     case ACTION_LIST.partner: {
       return {
         ...state,
-        partner: payload.partner,
+        partner: payload,
       };
     }
     case ACTION_LIST: {
