@@ -1,4 +1,5 @@
 import json
+import random
 import os
 from flask import Flask, Response, request, abort
 from .shared import db
@@ -84,6 +85,14 @@ def tea():
         db.session.delete(dbthing)
         db.session.commit()
         return Response("DELETED", status=202)
+
+
+@app.route("/copypasta", methods=["GET"])
+def copyPasta():
+    with open("./static/reddit.txt") as f:
+        output = f.read()
+    output = output.split("\n\n")
+    return json.dumps({'copyPasta': random.choice(output)})
 
 
 if __name__ == '__main__':
