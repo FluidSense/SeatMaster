@@ -32,9 +32,8 @@ export const ApplicationFormComments: React.FunctionComponent<IProps> = (props) 
         label="Additional comments"
         defaultValue=""
         maxLength={500}
-        minLength={10}
-        name="comments"
-        key="comments"
+        name="info_text"
+        key="info_text"
         onChangeCapture={onUpdateForm}
       />
     </SkjemaGruppe>

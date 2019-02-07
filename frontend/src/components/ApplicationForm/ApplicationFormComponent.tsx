@@ -20,7 +20,7 @@ interface IState {
   partner_name: string;
   needs: boolean;
   needs_text: string;
-  comments: string;
+  info_text: string;
   keep_seat: boolean;
   [key: string]: string|boolean;
 }
@@ -29,7 +29,7 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      comments: '',
+      info_text: '',
       keep_seat: false,
       needs: false,
       needs_text: '',
@@ -75,7 +75,7 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   private onSubmitForm = () => {
     fetch(POST_FORM_DATA, {
       body: JSON.stringify({
-        comments: this.state.comments,
+        info_text: this.state.info_text,
         keep_seat: this.state.keep_seat,
         needs_text: this.state.needs_text,
         partner_name: this.state.partner_name,
