@@ -1,12 +1,12 @@
 import json
 import os
 from flask import Flask, Response, request, abort
-from shared import db
+from .shared import db
 from flask_migrate import Migrate
 from flask_cors import CORS
-from models.showcase import Showcase
-from controllers.applicationController import application
-from controllers.applicationSeasonController import applicationSeason
+from .models.showcase import Showcase
+from .controllers.applicationController import application
+from .controllers.applicationSeasonController import applicationSeason
 
 # You can change these values in the .env-file
 USER = os.getenv("POSTGRES_USER")
