@@ -6,7 +6,7 @@ const mapStateToProps = (state: any) => ({
   fullname: state.userInformation.fullname,
   phone: state.userInformation.phone,
   status: state.userInformation.status,
-  username: state.userInformation.username,
+  username: state.userInformation.user.username,
 });
 
 const ApplicationFormContainer = connect(

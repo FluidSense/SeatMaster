@@ -20,8 +20,11 @@ const initialState = {
   fullname: 'Test Testesen',
   id: undefined,
   phone: '11223344',
-  status: ACTION_NONE,
-  user: undefined,
+  status: 'Master student',
+  user: {
+    id: 1,
+    username: 'usrname',
+  },
 };
 
 export const loginReducer = (
