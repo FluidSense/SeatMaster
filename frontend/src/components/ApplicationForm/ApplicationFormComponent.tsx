@@ -17,11 +17,11 @@ interface IProps {
 interface IState {
   room: string;
   partner: boolean;
-  partner_name: string;
+  partnerUsername: string;
   needs: boolean;
-  needs_text: string;
-  info_text: string;
-  keep_seat: boolean;
+  needsText: string;
+  infoText: string;
+  keepSeat: boolean;
   [key: string]: string|boolean;
 }
 
@@ -29,12 +29,12 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      info_text: '',
-      keep_seat: false,
+      infoText: '',
+      keepSeat: false,
       needs: false,
-      needs_text: '',
+      needsText: '',
       partner: false,
-      partner_name: '',
+      partnerUsername: '',
       room: '',
     };
   }
@@ -75,10 +75,10 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   private onSubmitForm = () => {
     fetch(POST_FORM_DATA, {
       body: JSON.stringify({
-        info_text: this.state.info_text,
-        keep_seat: this.state.keep_seat,
-        needs_text: this.state.needs_text,
-        partner_name: this.state.partner_name,
+        infoText: this.state.infoText,
+        keepSeat: this.state.keepSeat,
+        needsText: this.state.needsText,
+        partnerUsername: this.state.partnerUsername,
         room: this.state.room,
         username: this.props.username,
       }),

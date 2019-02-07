@@ -36,15 +36,15 @@ export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (prop
       <Input
         label="Partner username"
         bredde="M"
-        name="partner_name"
-        key="partner_name"
+        name="partnerUsername"
+        key="partnerUsername"
         disabled={props.partner === false ? true : false}
         onChangeCapture={onUpdateForm}
       />
       <Checkbox
         label="I would like to keep my seat from the previous semester"
-        name="keep_seat"
-        key="keep_seat"
+        name="keepSeat"
+        key="keepSeat"
         onChangeCapture={onUpdateForm}
       />
     </SkjemaGruppe>
