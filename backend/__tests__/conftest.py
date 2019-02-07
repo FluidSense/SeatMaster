@@ -4,13 +4,16 @@ from ..shared import db
 from flask_sqlalchemy import SQLAlchemy
 from ..main import create_app
 
+
 # Inititiate db with all tables
 def handler(postgresql):
     app = create_app(db_url=postgresql.url())
     with app.app_context() as app:
         db.create_all()
 
+
 Postgresql = testing.postgresql.PostgresqlFactory(cache_initialized_db=True, on_initialized=handler)
+
 
 @pytest.fixture(scope='session')
 def app(database):
@@ -32,6 +35,7 @@ def _db(app):
     db.create_all()
     db.session.commit()
     return db
+
 
 @pytest.fixture(scope='session')
 def database(request):
