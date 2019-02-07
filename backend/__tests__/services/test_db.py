@@ -1,6 +1,4 @@
 import testing.postgresql
-import shutil
-from flask_migrate import init, upgrade, migrate
 from ...models import User
 from ...main import create_app
 from ...shared import db
