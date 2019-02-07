@@ -1,5 +1,5 @@
 from flask import Blueprint, Response, jsonify, request, abort
-from services import applicationService
+from ..services import applicationService
 import json
 
 application = Blueprint("application", __name__, url_prefix="/application")

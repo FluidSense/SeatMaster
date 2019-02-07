@@ -1,5 +1,5 @@
 from flask import Blueprint, Response, jsonify
-from services import applicationSeasonService
+from ..services import applicationSeasonService
 
 applicationSeason = Blueprint('applicationSeason', __name__)
 
