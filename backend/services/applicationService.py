@@ -1,6 +1,6 @@
-from models.application import Application
-from models.user import User
-from shared import db
+from ..models.application import Application
+from ..models.user import User
+from ..shared import db
 from sqlalchemy.exc import SQLAlchemyError
 import json
 
