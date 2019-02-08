@@ -72,7 +72,9 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
     this.setState({ [name]: value });
   }
 
-  private onSubmitForm = () => {
+  private onSubmitForm = (e: React.FormEvent) => {
+    e.preventDefault();
+
     fetch(POST_FORM_DATA, {
       body: JSON.stringify({
         infoText: this.state.infoText,
