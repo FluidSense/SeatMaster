@@ -31,4 +31,3 @@ class TestApplicationSeason(TestCase):
     def tearDown(self):
         self.postgres.stop()
         self.ctx.pop()
-
