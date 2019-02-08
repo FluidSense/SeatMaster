@@ -16,8 +16,8 @@ describe("Tests the application form for user", () => {
 
     it('Finds name', () => {
         cy
-        .contains("#fullname")
-        .should("not.be.empty")
+        .get("#fullname")
+        .should("be.disabled")
         
     })
 
@@ -52,15 +52,24 @@ describe("Tests the application form for user", () => {
     })
 
     it('Finds keep seat', () => {
+        cy
+        .get(".skjemaelement.skjemaelement--horisontal").contains("I would like to keep my seat from the previous semester").click()
+        .get(".skjemaelement__input.checkboks").should("be.checked")
+
         
     })
 
     it('Finds needs box and text if checked', () => {
-        
+        cy
+        .get("#needsText").should("be.disabled")
+
+        .get(".skjemaelement.skjemaelement--horisontal").contains("I have needs for my seat").click()
+        .get(".skjemaelement__input.checkboks").should("be.checked")
+
+        .get("#needsText").should("not.be.disabled")
     })
 
     it('links correctly', () => {
-        cy
-        .contains()
+        
     })
 })
