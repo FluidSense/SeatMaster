@@ -20,7 +20,6 @@ const ApplicationStatusComponent: React.FunctionComponent<IApplicationStatusProp
   const etikettType = status === ACTION_WAITING ? ETIKETT_GREEN : ETIKETT_RED;
   return (
     <div>
-    <HeaderComponent />
     <EtikettBase
       type={etikettType}
     >

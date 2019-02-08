@@ -13,6 +13,7 @@ interface IHomeProps {
 export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <div>
+      <HeaderComponent />
       <h1>My status</h1>
       <ApplicationStatusContainer />
       <ApplicationSeasonContainer />
