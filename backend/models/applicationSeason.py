@@ -18,10 +18,10 @@ class ApplicationSeason(db.Model):
 
     def to_json(self):
         return {
-            "start": self.start,
-            "end": self.end,
-            "applicationPeriodStart": self.applicationPeriodStart,
-            "applicationPeriodEnd": self.applicationPeriodEnd,
+            "start": str(self.start),
+            "end": str(self.end),
+            "applicationPeriodStart": str(self.applicationPeriodStart),
+            "applicationPeriodEnd": str(self.applicationPeriodEnd),
         }
 
     def __str__(self):
