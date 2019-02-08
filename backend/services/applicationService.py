@@ -21,12 +21,12 @@ def getApplicationByUsername(username):
 
 # TODO application should not be registered with username, it should verify the user.
 def registerApplication(infoText, username, partnerUsername):
-    connectApplication(getApplicationByUsername("usrnam"))
     try:
         user = db.session.query(User).filter_by(username=username).one()
         application = Application("Unprocessed", infoText, user, partnerUsername)
         db.session.add(application)
         db.session.commit()
+        connectApplication(application)
         return application.to_json, 201
     except SQLAlchemyError as err:
         print(err)
