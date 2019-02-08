@@ -1,4 +1,4 @@
-from ...models import User
+from models.user import User
 
 
 def test_a_transaction(db_session):

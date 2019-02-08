@@ -1,8 +1,8 @@
 import pytest
 import testing.postgresql
-from ..shared import db
+from shared import db
 from flask_sqlalchemy import SQLAlchemy
-from ..main import create_app
+from main import create_app
 
 
 # Inititiate db with all tables
