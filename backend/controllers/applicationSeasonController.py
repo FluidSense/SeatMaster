@@ -9,6 +9,7 @@ def getCurrentSeason():
     currApplication = applicationSeasonService.getCurrentOrNext()
     return jsonify(currApplication.to_json()) if currApplication else Response("", 200)
 
+
 @applicationSeason.route("/createSeason", methods=["POST"])
 def createNewSeason():
     if request.is_json:
