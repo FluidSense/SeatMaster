@@ -14,7 +14,7 @@ USER = os.getenv("POSTGRES_USER")
 PASSWORD = os.getenv("POSTGRES_PASSWORD")
 DB = os.getenv("POSTGRES_DB")
 HOST = os.getenv("POSTGRES_HOST")
-
+DEBUG = os.getenv("DEBUG")
 # The f is for string insertion
 database_file = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DB}"
 
@@ -96,4 +96,4 @@ def copyPasta():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=bool(DEBUG))
