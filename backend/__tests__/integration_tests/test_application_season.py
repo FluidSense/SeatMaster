@@ -6,6 +6,8 @@ from __tests__.controllers.test_application_season_controller import createBasic
 from flask import jsonify
 
 
+# Class-based test to keep test db alive during all tests,
+# else testing.postgresql takes it down.
 class TestApplicationSeason(TestCase):
     def setUp(self):
         self.postgres = Postgresql()
