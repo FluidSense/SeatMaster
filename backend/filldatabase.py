@@ -1,4 +1,4 @@
-from models import ApplicationSeason,  User, Application
+from models import ApplicationSeason, User, Application
 from services import applicationService
 from database import Session, engine, Base
 from datetime import datetime, timedelta

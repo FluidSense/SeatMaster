@@ -24,7 +24,7 @@ def test_application_connection_succeed(mocker):
     assert app1.partnerApplication == app2 and app2.partnerApplication == app1
 
 
-def test_application_connection_fails(mocker):
+def test_application_connection_does_not_connect(mocker):
     user1, user2, app1, app2 = setUp(mocker)
     app2.partnerUsername = "Jar Jar Binks"
     mocker.patch.object(applicationService, 'getApplicationByUsername')
