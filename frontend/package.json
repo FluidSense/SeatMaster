@@ -58,7 +58,6 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.5",
-    "ignore-styles": "^5.0.1",
     "less": "^3.9.0",
     "less-plugin-npm-import": "^2.1.0",
     "less-watch-compiler": "^1.13.0",
@@ -68,6 +67,9 @@
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.4",
     "webpack-dev-server": "^3.1.11"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/jest-css-modules"
   },
   "browserslist": [
     ">0.2%",
