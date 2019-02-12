@@ -22,7 +22,7 @@ def test_getCurrentSeason_with_a_season(mocker):
         'end': str(aSeason.end),
         'applicationPeriodStart': str(aSeason.applicationPeriodStart),
         'applicationPeriodEnd': str(aSeason.applicationPeriodEnd),
-        }
+    }
     with app.app_context():
         response = applicationSeasonController.getCurrentSeason()
         assert "200 OK" == response.status
@@ -35,4 +35,4 @@ def test_getCurrentSeason_without_a_season(mocker):
     with app.app_context():
         response = applicationSeasonController.getCurrentSeason()
         assert "200 OK" == response.status
-        assert b'' == response.data
+        assert b'{}' == response.data
