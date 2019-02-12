@@ -33,5 +33,5 @@ def updateRoom(id):
     if request.is_json:
         form = request.get_json()
         responseText, successCode = roomService.updateRoom(id, form)
-        return Response(responseText, successCode)
+        return make_response(jsonify(json.dumps(responseText)), successCode)
     return abort(400)

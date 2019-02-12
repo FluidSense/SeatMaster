@@ -22,6 +22,8 @@ def test_application_connection_succeed(mocker):
     applicationService.getApplicationByUsername.return_value = app2
     applicationService.connectApplication(app1)
     assert app1.partnerApplication == app2 and app2.partnerApplication == app1
+    db.session.add.assert_called_with(app1, app2)
+    db.session.commit.assert_called()
 
 
 def test_application_connection_does_not_connect(mocker):
@@ -31,3 +33,5 @@ def test_application_connection_does_not_connect(mocker):
     applicationService.getApplicationByUsername.return_value = app2
     applicationService.connectApplication(app1)
     assert app1.partnerApplication != app2 and app2.partnerApplication != app1
+    db.session.add.assert_not_called()
+    db.session.commit.assert_not_called()

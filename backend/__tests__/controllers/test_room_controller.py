@@ -50,7 +50,7 @@ def test_createRoom_success(mocker, client):
                 name='X-wing',
                 info='nice ship dude',
             )))
-        assert "200 OK" == response.status
+        assert "201 CREATED" == response.status
         assert make_response(
             jsonify(
                 json.dumps(
@@ -82,8 +82,8 @@ def test_deleteRoom(mocker, client):
         assert "200 OK" == response.status
 
 
-def updateRoomMock(name, info):
-    return Room(name, info).to_json(), 200
+def updateRoomMock(id, form):
+    return Room(form.get("name"), form.get("info")).to_json(), 200
 
 
 def test_updateRoom_success(mocker, client):
@@ -93,7 +93,7 @@ def test_updateRoom_success(mocker, client):
         'Accept': mimetype
     }
     mocker.patch.object(roomService, "updateRoom")
-    roomService.createRoom = updateRoomMock
+    roomService.updateRoom = updateRoomMock
     with app.app_context():
         response = client.put(
             url_for('room.updateRoom', id=1),
@@ -114,11 +114,11 @@ def test_updateRoom_success(mocker, client):
 
 
 def test_updateRoom_fails(mocker, client):
-    mocker.patch.object(roomService, "createRoom")
-    roomService.createRoom = createRoomMock
+    mocker.patch.object(roomService, "updateRoom")
+    roomService.updateRoom = updateRoomMock
     with app.app_context():
-        response = client.post(
-            url_for('room.createRoom'),
+        response = client.put(
+            url_for('room.updateRoom', id=1),
             data=json.dumps(dict(
                 name='X-wing',
                 info='nice ship dude',
