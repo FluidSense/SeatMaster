@@ -2,19 +2,19 @@ import json
 import random
 import os
 from flask import Flask, Response, request, abort
-from .shared import db
+from shared import db
 from flask_migrate import Migrate
 from flask_cors import CORS
-from .models.showcase import Showcase
-from .controllers.applicationController import application
-from .controllers.applicationSeasonController import applicationSeason
+from models.showcase import Showcase
+from controllers.applicationController import application
+from controllers.applicationSeasonController import applicationSeason
 
 # You can change these values in the .env-file
 USER = os.getenv("POSTGRES_USER")
 PASSWORD = os.getenv("POSTGRES_PASSWORD")
 DB = os.getenv("POSTGRES_DB")
 HOST = os.getenv("POSTGRES_HOST")
-
+DEBUG = os.getenv("DEBUG")
 # The f is for string insertion
 database_file = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DB}"
 
@@ -32,6 +32,7 @@ def create_app(config_filename=None, db_url=database_file):
 
 def init_extensions(app, db_url):
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     db.init_app(app)
     migrate.init_app(app, db)
     CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
@@ -96,4 +97,4 @@ def copyPasta():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=bool(DEBUG))

@@ -8,3 +8,4 @@ python-dotenv
 pytest
 testing.postgresql
 pytest-flask-sqlalchemy
+pytest-flask
