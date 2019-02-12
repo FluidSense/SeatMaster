@@ -1,6 +1,5 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 from services import roomService
-import json
 
 room = Blueprint("room", __name__, url_prefix="/room")
 
@@ -24,7 +23,7 @@ def createRoom():
         name = form.get("name")
         info = form.get("info")
         responseText, successCode = roomService.createRoom(name, info)
-        return make_response(jsonify(json.dumps(responseText)), successCode)
+        return make_response(jsonify(responseText), successCode)
     return abort(400)
 
 
@@ -33,5 +32,5 @@ def updateRoom(id):
     if request.is_json:
         form = request.get_json()
         responseText, successCode = roomService.updateRoom(id, form)
-        return make_response(jsonify(json.dumps(responseText)), successCode)
+        return make_response(jsonify(responseText), successCode)
     return abort(400)

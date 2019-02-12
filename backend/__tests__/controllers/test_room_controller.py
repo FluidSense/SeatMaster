@@ -52,12 +52,10 @@ def test_createRoom_success(mocker, client):
         assert "201 CREATED" == response.status
         assert make_response(
             jsonify(
-                json.dumps(
-                    dict(
-                        id=None,
-                        name='X-wing',
-                        info='nice ship dude',
-                    ))), 201).data == response.data
+                id=None,
+                name='X-wing',
+                info='nice ship dude',
+                    )).data == response.data
 
 
 def test_createRoom_fails(mocker, client):
@@ -104,12 +102,10 @@ def test_updateRoom_success(mocker, client):
         assert "200 OK" == response.status
         assert make_response(
             jsonify(
-                json.dumps(
-                    dict(
-                        id=None,
-                        name='X-wing',
-                        info='nice ship dude',
-                    ))), 201).data == response.data
+                id=None,
+                name='X-wing',
+                info='nice ship dude',
+                    )).data == response.data
 
 
 def test_updateRoom_fails(mocker, client):
