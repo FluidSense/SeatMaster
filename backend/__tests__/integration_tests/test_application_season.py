@@ -17,7 +17,7 @@ class TestApplicationSeason(TestCase):
         db.init_app(self.app)
         self.ctx = self.app.app_context()
         self.ctx.push()
-        self.dateFormat = ("%a %b %d %Y %H:%M:%S")
+        self.dateFormat = ("%Y-%m-%d %H:%M:%S.%f")
 
     def test_application_season(self):
         response = self.app.test_client().get('/season/getSeason')
@@ -42,7 +42,7 @@ class TestApplicationSeason(TestCase):
             'Content-Type': mimetype,
             'Accept': mimetype
         }
-        starttime = datetime.now().replace(microsecond=0) + timedelta(days=+5)
+        starttime = datetime.now() + timedelta(days=+5)
         endtime = starttime + timedelta(days=+150)
         acceptstart = starttime
         acceptend = starttime + timedelta(days=+7)
@@ -52,7 +52,8 @@ class TestApplicationSeason(TestCase):
                                                    newPeriodEnd=self.formatDate(acceptend),
                                                    newPeriodStart=self.formatDate(acceptstart),
                                                    newRoomEnd=self.formatDate(starttime),
-                                                   newRoomStart=self.formatDate(endtime))))
+                                                   newRoomStart=self.formatDate(endtime)),
+                                                   default=str))
         assert "201 CREATED" == response.status
         assert jsonify(
             newPeriodEnd=str(acceptend),

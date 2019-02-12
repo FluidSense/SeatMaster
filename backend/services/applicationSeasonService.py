@@ -4,7 +4,8 @@ from sqlalchemy.exc import SQLAlchemyError
 import json
 from models.applicationSeason import ApplicationSeason
 
-dateFormat = ("%a %b %d %Y %H:%M:%S")
+# dateFormat = ("%a %b %d %Y %H:%M:%S")
+dateFormat = ("%Y-%m-%d %H:%M:%S.%f")
 
 
 def getCurrentOrNext():
