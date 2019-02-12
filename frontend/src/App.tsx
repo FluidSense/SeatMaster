@@ -12,7 +12,7 @@ import {
 
 import history from './components/History';
 import { LoginComponent } from './components/Login/LoginComponent';
-import { RouteComponent } from './components/RouteComponent';
+import { RouteComponent } from './components/Route/RouteComponent';
 
 class App extends React.Component {
   public render() {
