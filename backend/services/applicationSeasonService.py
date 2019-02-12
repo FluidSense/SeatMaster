@@ -13,11 +13,11 @@ def getCurrentOrNext():
     return min(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today(), default=None)
 
 
-def registerNewSeason(form):
-    newPeriodEnd = datetime.strptime(form.get("newPeriodEnd"), dateFormat)
-    newPeriodStart = datetime.strptime(form.get("newPeriodStart"), dateFormat)
-    newRoomEnd = datetime.strptime(form.get("newRoomStart"), dateFormat)
-    newRoomStart = datetime.strptime(form.get("newRoomEnd"), dateFormat)
+def registerNewSeason(newPeriodEnd, newPeriodStart, newRoomEnd, newRoomStart):
+    newPeriodEnd = datetime.strptime(newPeriodEnd, dateFormat)
+    newPeriodStart = datetime.strptime(newPeriodStart, dateFormat)
+    newRoomEnd = datetime.strptime(newRoomEnd, dateFormat)
+    newRoomStart = datetime.strptime(newRoomStart, dateFormat)
     if newPeriodEnd < newPeriodStart:
         return "Application start period should not be later than application end period", 400
     if newRoomEnd < newRoomStart:
@@ -31,7 +31,7 @@ def registerNewSeason(form):
             )
         db.session.add(applicationSeason)
         db.session.commit()
-        return json.dumps(form), 201
+        return applicationSeason.to_json, 201
     except SQLAlchemyError as err:
         print(err)
         return "", 400
