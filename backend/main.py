@@ -32,6 +32,7 @@ def create_app(config_filename=None, db_url=database_file):
 
 def init_extensions(app, db_url):
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     db.init_app(app)
     migrate.init_app(app, db)
     CORS(app, resources={r"*": {"origins": "http://localhost:3000"}})
