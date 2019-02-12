@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import ApplicationSeasonContainer from '../ApplicationSeason/ApplicationSeasonContainer';
+import ApplicationSeason from '../ApplicationSeason';
 import ApplicationStatusContainer from '../ApplicationStatus/ApplicationStatusContainer';
 
 import KnappBase from 'nav-frontend-knapper';
@@ -14,7 +14,7 @@ export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
     <div>
       <h1>My status</h1>
       <ApplicationStatusContainer />
-      <ApplicationSeasonContainer />
+      <ApplicationSeason />
       <Link to="/application">
         <KnappBase type="hoved" htmlType="button">New application</KnappBase>
       </Link>
