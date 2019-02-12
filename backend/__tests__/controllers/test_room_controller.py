@@ -1,6 +1,5 @@
 from controllers import roomController
 from services import roomService
-from models.application import Application
 from models.room import Room
 from flask import jsonify, url_for, make_response
 from main import app
@@ -124,4 +123,3 @@ def test_updateRoom_fails(mocker, client):
                 info='nice ship dude',
             )))
         assert "400 BAD REQUEST" == response.status
-   
