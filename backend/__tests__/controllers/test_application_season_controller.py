@@ -8,10 +8,10 @@ import json
 
 
 def createBasicSeason():
-    date1 = datetime.now()
-    date2 = datetime.now() + timedelta(days=365)
-    date3 = datetime.now() + timedelta(days=7)
-    date4 = datetime.now() + timedelta(days=21)
+    date1 = datetime.now().replace(microsecond=0)
+    date2 = datetime.now().replace(microsecond=0) + timedelta(days=365)
+    date3 = datetime.now().replace(microsecond=0) + timedelta(days=7)
+    date4 = datetime.now().replace(microsecond=0) + timedelta(days=21)
     return ApplicationSeason(date1, date2, date3, date4)
 
 
@@ -39,8 +39,10 @@ def test_getCurrentSeason_without_a_season(mocker):
         assert "200 OK" == response.status
         assert b'{}' == response.data
 
+
 def registerApplicationSeasonMock(newPeriodStart, newPeriodEnd, newRoomStart, newRoomEnd):
     return ApplicationSeason(newPeriodStart, newPeriodEnd, newRoomStart, newRoomEnd), 201
+
 
 def test_createSeason(mocker, client):
     mimetype = 'application/json'

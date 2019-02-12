@@ -1,6 +1,5 @@
 from flask import Blueprint, Response, request, abort, jsonify, make_response
 from services import applicationSeasonService
-import json
 
 applicationSeason = Blueprint('applicationSeason', __name__)
 
@@ -23,7 +22,7 @@ def createNewSeason():
             newPeriodEnd,
             newPeriodStart,
             newRoomEnd,
-            newPeriodStart,
+            newRoomStart,
         )
         return make_response(jsonify(form), successCode)
     return abort(400)

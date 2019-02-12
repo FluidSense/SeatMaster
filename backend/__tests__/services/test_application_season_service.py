@@ -51,3 +51,37 @@ def test_getCurrent_with_no_season(mocker):
     db.session.query.return_value = filter
     with pytest.raises(TypeError):
         applicationSeasonService.getCurrentOrNext()
+
+
+def test_registerSeason_period_end_too_early(mocker):
+    mocker.patch.object(db.session, "add")
+    mocker.patch.object(db.session, "commit")
+    newPeriodStart = datetime.now()
+    newPeriodEndTooEarly = newPeriodStart - timedelta(days=10)
+    newRoomStart = newPeriodStart
+    newRoomEnd = newPeriodStart + timedelta(days=10)
+    resultText, resultCode = applicationSeasonService.registerNewSeason(
+        newPeriodEnd=str(newPeriodEndTooEarly),
+        newPeriodStart=str(newPeriodStart),
+        newRoomEnd=str(newRoomEnd),
+        newRoomStart=str(newRoomStart),
+    )
+    assert resultText == "Application start period should not be later than application end period"
+    assert resultCode == 400
+
+
+def test_registerSeason_room_end_too_early(mocker):
+    mocker.patch.object(db.session, "add")
+    mocker.patch.object(db.session, "commit")
+    newPeriodStart = datetime.now()
+    newPeriodEndTooEarly = newPeriodStart + timedelta(days=10)
+    newRoomStart = newPeriodStart
+    newRoomEnd = newPeriodStart - timedelta(days=10)
+    resultText, resultCode = applicationSeasonService.registerNewSeason(
+        newPeriodEnd=str(newPeriodEndTooEarly),
+        newPeriodStart=str(newPeriodStart),
+        newRoomEnd=str(newRoomEnd),
+        newRoomStart=str(newRoomStart),
+    )
+    assert resultText == "Room start period should not be later than application end period"
+    assert resultCode == 400

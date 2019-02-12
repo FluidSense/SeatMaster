@@ -7,6 +7,7 @@ from flask import jsonify
 from datetime import datetime, timedelta
 import json
 
+
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
 class TestApplicationSeason(TestCase):
@@ -34,7 +35,7 @@ class TestApplicationSeason(TestCase):
 
     # Used to format date to match model
     def formatDate(self, date):
-       return datetime.strptime(str(date), self.dateFormat)
+        return datetime.strptime(str(date), self.dateFormat)
 
     def test_new_application_season(self):
         mimetype = 'application/json'
@@ -51,15 +52,15 @@ class TestApplicationSeason(TestCase):
                                                data=json.dumps(dict(
                                                    newPeriodEnd=self.formatDate(acceptend),
                                                    newPeriodStart=self.formatDate(acceptstart),
-                                                   newRoomEnd=self.formatDate(starttime),
-                                                   newRoomStart=self.formatDate(endtime)),
+                                                   newRoomEnd=self.formatDate(endtime),
+                                                   newRoomStart=self.formatDate(starttime)),
                                                    default=str))
         assert "201 CREATED" == response.status
         assert jsonify(
             newPeriodEnd=str(acceptend),
             newPeriodStart=str(acceptstart),
-            newRoomEnd=str(starttime),
-            newRoomStart=str(endtime)).data == response.data
+            newRoomEnd=str(endtime),
+            newRoomStart=str(starttime)).data == response.data
 
     def tearDown(self):
         self.postgres.stop()

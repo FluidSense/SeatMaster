@@ -1,7 +1,6 @@
 from datetime import datetime
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
-import json
 from models.applicationSeason import ApplicationSeason
 
 # dateFormat = ("%a %b %d %Y %H:%M:%S")
