@@ -6,7 +6,7 @@ export const HeaderComponent: React.FunctionComponent = (props) => {
   return (
     <div>
       You're logged in as Christoffer Lofsberg
-      <Link to="/">
+      <Link to="/login">
         <KnappBase type="hoved" htmlType="button">Log Out</KnappBase>
       </Link>
     </div>

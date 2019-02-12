@@ -4,7 +4,6 @@ import ApplicationSeasonContainer from '../ApplicationSeason/ApplicationSeasonCo
 import ApplicationStatusContainer from '../ApplicationStatus/ApplicationStatusContainer';
 
 import KnappBase from 'nav-frontend-knapper';
-import { HeaderComponent } from '../Header/HeaderComponent';
 
 interface IHomeProps {
   fetchSeason: () => any;
@@ -13,7 +12,6 @@ interface IHomeProps {
 export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <div>
-      <HeaderComponent />
       <h1>My status</h1>
       <ApplicationStatusContainer />
       <ApplicationSeasonContainer />

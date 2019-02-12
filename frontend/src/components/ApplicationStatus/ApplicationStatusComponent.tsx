@@ -8,7 +8,6 @@ import {
 } from './Strings';
 
 import EtikettBase from 'nav-frontend-etiketter';
-import { HeaderComponent } from '../Header/HeaderComponent';
 
 interface IApplicationStatusProps {
   status: string;
