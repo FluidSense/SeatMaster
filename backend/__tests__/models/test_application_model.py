@@ -1,8 +1,7 @@
-import pytest
 from models.application import Application
 from models.user import User
 
-    
+
 def test_add_application_without_partner(db_session):
     testuser1 = User("Powerking")
     db_session.add(testuser1)
@@ -19,6 +18,7 @@ def test_add_application_without_partner(db_session):
     assert dbapplication.user == testuser1
     assert testuser1.application == dbapplication
 
+
 def test_proper_user_serialization(db_session):
     testuser1 = User("Powerking")
     db_session.add(testuser1)
@@ -31,7 +31,8 @@ def test_proper_user_serialization(db_session):
     db_session.add(application)
     db_session.commit()
     dbapplication = db_session.query(Application).first()
-    assert testuser1.to_json() == application.to_json()['user']
+    assert testuser1.to_json() == dbapplication.to_json()['user']
+
 
 def test_users_connect_each_other(db_session):
     testuser1 = User("Powerking")
@@ -58,6 +59,4 @@ def test_users_connect_each_other(db_session):
     dbapp1 = db_session.query(Application).filter_by(user=testuser1).one()
     dbapp2 = db_session.query(Application).filter_by(user=testuser2).one()
     assert dbapp1.partnerApplication == application2
-    assert dbapp2.partnerApplication == application1 
-
-
+    assert dbapp2.partnerApplication == application1
