@@ -41,9 +41,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchSeason: () => dispatch(fetchApplicationSeasonData()),
 });
 
-const ApplicationSeason = connect(
+const ApplicationSeasonContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(_ApplicationSeasonContainer);
 
-export default ApplicationSeason;
+export default ApplicationSeasonContainer;
