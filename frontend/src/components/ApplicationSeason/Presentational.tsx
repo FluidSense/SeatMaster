@@ -26,7 +26,7 @@ const NavEtikett = (seasonStatus: string) => {
   );
 };
 
-const ApplicationSeasonComponent: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
+const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
   if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
   const currentTime = new Date();
@@ -42,4 +42,4 @@ const ApplicationSeasonComponent: React.FunctionComponent<IApplicationSeasonProp
   );
 };
 
-export default ApplicationSeasonComponent;
+export default Presentational;

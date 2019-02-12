@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { fetchApplicationSeasonData } from './actions';
-import ApplicationSeasonComponent from './component';
+import Presentational from './Presentational';
 import { IApplicationSeason } from './reducer';
 
 interface IStateProps {
@@ -17,7 +17,7 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 // tslint:disable-next-line:class-name
-class _ApplicationSeasonContainer extends React.Component<Props, {}> {
+class _Container extends React.Component<Props, {}> {
   public componentDidMount = () => {
     const { fetchSeason } = this.props;
     fetchSeason();
@@ -26,7 +26,7 @@ class _ApplicationSeasonContainer extends React.Component<Props, {}> {
   public render = () => {
     const { applicationSeason } = this.props;
     return (
-      <ApplicationSeasonComponent
+      <Presentational
         applicationSeason={applicationSeason}
       />
     );
@@ -41,9 +41,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchSeason: () => dispatch(fetchApplicationSeasonData()),
 });
 
-const ApplicationSeasonContainer = connect(
+const Container = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(_ApplicationSeasonContainer);
+)(_Container);
 
-export default ApplicationSeasonContainer;
+export default Container;

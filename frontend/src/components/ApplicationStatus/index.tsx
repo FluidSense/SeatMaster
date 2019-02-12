@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
-import ApplicationStatusComponent from './component';
+import Presentational from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
   status: state.userInformation.status,
 });
 
-const ApplicationStatusContainer = connect(
+const Container = connect(
   mapStateToProps,
   null,
-)(ApplicationStatusComponent);
+)(Presentational);
 
-export default ApplicationStatusContainer;
+export default Container;

@@ -3,7 +3,7 @@ import * as React from 'react';
 import './App.css';
 import Application from './components/Application';
 import Home from './components/Home';
-import Login from './components/Login/container';
+import Login from './components/Login';
 
 import {
   Route,
