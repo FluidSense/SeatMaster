@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { fetchUserData } from './actions';
-import { LoginComponent } from './LoginComponent';
+import { LoginComponent } from './component';
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchUserData: (userID: number) => dispatch(fetchUserData(userID)),

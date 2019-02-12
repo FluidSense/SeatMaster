@@ -9,7 +9,7 @@ interface IHomeProps {
   fetchSeason: () => any;
 }
 
-export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
+export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <div>
       <h1>My status</h1>
@@ -22,4 +22,4 @@ export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
   );
 };
 
-export default HomeComponent;
+export default Home;
