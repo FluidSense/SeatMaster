@@ -71,8 +71,8 @@ def test_registerNewApplication_fails(mocker, client):
                 username='Darth Plageus',
                 infotext='infoText',
                 partnerUsername='Jar Jar Binks')))
-        assert "200 OK" == response.status
-        assert jsonify(json.dumps(dict(
+        assert "201 CREATED" == response.status
+        assert jsonify(
             username='Darth Plageus',
             infotext='infoText',
-            partnerUsername='Jar Jar Binks')), 201).data == response.data
+            partnerUsername='Jar Jar Binks').data == response.data
