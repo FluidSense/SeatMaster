@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './App.css';
-import ApplicationComponent from './components/Application/ApplicationComponent';
+import ApplicationComponent from './components/Application';
 import HomeComponent from './components/Home/HomeComponent';
 import LoginContainer from './components/Login/LoginContainer';
 
