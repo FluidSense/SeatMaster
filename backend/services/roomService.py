@@ -1,7 +1,6 @@
 from models.room import Room
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
-import json
 
 
 def getRoomById(id):
@@ -36,9 +35,10 @@ def updateRoom(id, form):
         room = getRoomById(id)
         for field in form.keys():
             if(form[field]):
-                room[field] = form[field]
+                setattr(room, field, form[field])
+        db.session.add(room)
         db.session.commit()
-        return "", 200
+        return room.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
         return "", 400

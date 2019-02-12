@@ -1,10 +1,8 @@
 from shared import db
-from datetime import datetime
 
 
 class Room(db.Model):
-    __tablename__ = "application_season"
-    
+    __tablename__ = "rooms"
     id = db.Column(
         "room_id",
         db.Integer,
@@ -12,11 +10,11 @@ class Room(db.Model):
 
     info = db.Column(
         "info",
-        db.TextField(),
+        db.String(),
         nullable=True)
 
     name = db.Column(
-        "info",
+        "name",
         db.String(50),
         nullable=False)
 
