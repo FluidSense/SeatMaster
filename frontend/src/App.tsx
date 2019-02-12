@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom';
 
 import history from './components/History';
-import { LoginComponent } from './components/Login/LoginComponent';
 import { RouteComponent } from './components/Route/RouteComponent';
 
 class App extends React.Component {
@@ -19,7 +18,7 @@ class App extends React.Component {
     return (
       <Router history={history} >
         <Switch>
-          <Route path="/login" component={LoginComponent} />
+          <Route path="/login" component={LoginContainer} />
           <Redirect exact={true} from="/" to="/login" />
           <Route component={RouteComponent} />
         </Switch>
