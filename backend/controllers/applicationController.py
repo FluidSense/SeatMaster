@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, jsonify, request, abort
+from flask import Blueprint, Response, jsonify, request, abort, make_response
 import json
 from services import applicationService
 
@@ -25,5 +25,5 @@ def registerApplication():
         infoText = form.get("infoText")
         partnerUsername = form.get("partnerUsername")
         responseText, successCode = applicationService.registerApplication(infoText, username, partnerUsername)
-        return jsonify(json.dumps(form), successCode)
+        return make_response(jsonify(form), successCode))
     return abort(400)
