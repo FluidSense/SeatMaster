@@ -9,7 +9,7 @@ export const RouteComponent = () => {
     <div>
         <HeaderComponent />
         <Route path="/home" component={HomeComponent} />
-        <Route path="/application" component={ApplicationComponent} />;
+        <Route path="/application" component={ApplicationComponent} />
     </div>
   );
 };
