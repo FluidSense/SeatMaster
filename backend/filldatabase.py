@@ -2,7 +2,7 @@ from models.application import Application
 from models.applicationSeason import ApplicationSeason
 from models.user import User
 from services import applicationService
-from datetime import datetime, timedelta 
+from datetime import datetime, timedelta
 from shared import db
 from main import app
 
