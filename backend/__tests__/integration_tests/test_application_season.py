@@ -20,7 +20,7 @@ class TestApplicationSeason(TestCase):
     def test_application_season(self):
         response = self.app.test_client().get('/season/getSeason')
         assert response.status == "200 OK"
-        assert response.data == b''
+        assert response.data == b'{}'
 
     def test_application_season_with_data(self):
         season = createBasicSeason()
