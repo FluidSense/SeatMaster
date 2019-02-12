@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { fetchUserData } from './LoginActions';
+import { fetchUserData } from './actions';
 import { LoginComponent } from './LoginComponent';
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

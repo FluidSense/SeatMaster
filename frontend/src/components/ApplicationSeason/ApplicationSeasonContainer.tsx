@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { fetchApplicationSeasonData } from './ApplicationSeasonActions';
+import { fetchApplicationSeasonData } from './actions';
 import ApplicationSeasonComponent from './ApplicationSeasonComponent';
-import { IApplicationSeason } from './ApplicationSeasonReducer';
+import { IApplicationSeason } from './reducer';
 
 interface IStateProps {
   applicationSeason: IApplicationSeason;
@@ -26,9 +26,9 @@ class _ApplicationSeasonContainer extends React.Component<Props, {}> {
   public render = () => {
     const { applicationSeason } = this.props;
     return (
-    <ApplicationSeasonComponent
-      applicationSeason={applicationSeason}
-    />
+      <ApplicationSeasonComponent
+        applicationSeason={applicationSeason}
+      />
     );
   }
 }
@@ -37,7 +37,7 @@ const mapStateToProps = (state: IStateProps) => ({
   applicationSeason: state.applicationSeason,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any >) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchSeason: () => dispatch(fetchApplicationSeasonData()),
 });
 
