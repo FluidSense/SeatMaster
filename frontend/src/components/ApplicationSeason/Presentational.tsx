@@ -1,7 +1,12 @@
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
+import { ETIKETT_YELLOW } from './constants';
 import { IApplicationSeason } from './reducer';
-import { ETIKETT_YELLOW, SEASON_CLOSED, SEASON_END, SEASON_START } from './Strings';
+import {
+  SEASON_CLOSED,
+  SEASON_END,
+  SEASON_START,
+} from './strings';
 
 interface IApplicationSeasonProps {
   applicationSeason: IApplicationSeason;

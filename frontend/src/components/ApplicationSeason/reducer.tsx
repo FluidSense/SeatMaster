@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { SET_APPLICATION_SEASON } from './Strings';
+import { SET_APPLICATION_SEASON } from './constants';
 
 export interface IApplicationSeason {
   applicationPeriodEnd: Date;
@@ -20,7 +20,7 @@ export const initialState = {
 export const applicationSeasonReducer = (
   state: IApplicationSeason = initialState,
   action: AnyAction,
-  ): IApplicationSeason => {
+): IApplicationSeason => {
   const { type, payload } = action;
   switch (type) {
     case SET_APPLICATION_SEASON:

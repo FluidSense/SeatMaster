@@ -3,9 +3,11 @@ import {
   ACTION_WAITING,
   ETIKETT_GREEN,
   ETIKETT_RED,
+} from './constants';
+import {
   STATUS_NONE,
   STATUS_WAITING,
-} from './Strings';
+} from './strings';
 
 import EtikettBase from 'nav-frontend-etiketter';
 

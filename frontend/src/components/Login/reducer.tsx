@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ACTION_NONE, SET_USER_DATA } from './Strings';
+import { ACTION_NONE, SET_USER_DATA } from './constants';
 
 export interface ILoginState {
   comments?: string;

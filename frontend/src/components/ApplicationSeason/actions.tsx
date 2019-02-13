@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { GET_APPLICATION_SEASON, SET_APPLICATION_SEASON } from './Strings';
+import { GET_APPLICATION_SEASON, SET_APPLICATION_SEASON } from './constants';
 
 export const fetchApplicationSeasonData = ():
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
