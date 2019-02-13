@@ -604,6 +604,11 @@ body {
   box-shadow: 0 0 0px 3px #FFBD66;
   outline: none;
 }
+.bekreftCheckboksPanel:focus,
+.bekreftCheckboksPanel--focus {
+  box-shadow: 0 0 0px 3px #FFBD66;
+  outline: none;
+}
 .bekreftCheckboksPanel .bekreftCheckboksPanel__innhold {
   margin-bottom: 1rem;
 }
@@ -939,4 +944,162 @@ body {
   padding: 5px 10px;
   border-radius: 2px;
   background-color: #B7B1A9;
+}
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+.modal {
+  background-color: #FFF;
+  display: block;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 4px;
+  position: relative;
+  flex-grow: 0;
+  overflow: auto;
+  max-height: 100%;
+  margin-bottom: 0;
+  z-index: 1010;
+}
+.modal:focus,
+.modal--focus {
+  box-shadow: 0 0 0px 3px #FFBD66;
+  outline: none;
+}
+.modal:focus,
+.modal--focus {
+  box-shadow: 0 0 0px 3px #FFBD66;
+  outline: none;
+}
+.modal__overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(61, 56, 49, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.modal__overlay:active .modal:not(:active) .modal__lukkknapp--shake {
+  transform: rotate(10deg);
+  transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
+}
+.modal__lukkknapp--shake {
+  transform: rotate(0deg);
+  transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
+}
+.lukknapp {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  border: 0;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  color: #78706A;
+  border: 2px solid currentColor;
+  background-color: transparent;
+  border-radius: 2px;
+}
+.lukknapp:before,
+.lukknapp:after {
+  content: '';
+  position: absolute;
+  width: 1.25rem;
+  height: 3px;
+  top: calc(50% - 0.175rem);
+  left: 50%;
+  background-color: currentColor;
+}
+.lukknapp:before {
+  transform: translate(-50%, 50%) rotate(-45deg);
+}
+.lukknapp:after {
+  transform: translate(-50%, 50%) rotate(45deg);
+}
+.lukknapp:hover {
+  background-color: currentColor;
+}
+.lukknapp:hover:before,
+.lukknapp:hover:after {
+  background-color: #FFF;
+}
+.lukknapp:active {
+  color: #19548a;
+}
+.lukknapp:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #FFBD66;
+}
+.lukknapp--bla {
+  color: #0067C5;
+}
+.lukknapp--hvit {
+  color: #FFF;
+}
+.lukknapp--hvit:hover {
+  background-color: #66CBEC;
+  border-color: #66CBEC;
+  color: #78706A;
+}
+.lukknapp--hvit:hover:before,
+.lukknapp--hvit:hover:after {
+  background-color: #3E3832;
+}
+.lukknapp--overstHjorne {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.alertstripe {
+  background-color: #FFF;
+  display: block;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 4px;
+  display: flex;
+  align-content: center;
+  border-radius: 0.25rem;
+  color: #3E3832;
+}
+.alertstripe--info {
+  border: 1px solid #FF9100;
+}
+.alertstripe--advarsel {
+  border: 1px solid #BA3A26;
+}
+.alertstripe--suksess {
+  border: 1px solid #06893A;
+}
+.alertstripe--solid {
+  border: 0;
+}
+.alertstripe--solid.alertstripe--info {
+  background-color: #ffe5c2;
+}
+.alertstripe--solid.alertstripe--suksess {
+  background-color: #9bd0b0;
+}
+.alertstripe--solid.alertstripe--advarsel {
+  background-color: #e79999;
+}
+.alertstripe__ikon {
+  margin-right: 0.75rem;
+  padding-right: 0.75rem;
+  width: 2.5rem;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.alertstripe:not(.alertstripe--solid) .alertstripe__ikon {
+  border-right: 1px solid #B7B1A9;
+}
+.alertstripe .alertstripe__tekst {
+  margin: auto 0;
+  max-width: 37.5rem;
+  display: block;
+  flex: 1;
 }

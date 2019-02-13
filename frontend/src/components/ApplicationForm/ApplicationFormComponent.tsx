@@ -1,10 +1,11 @@
 import * as React from 'react';
 
+import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { POST_FORM_DATA } from './Strings';
+import { _ALERT_USER_ERROR, POST_FORM_DATA } from './Strings';
 
 interface IProps {
   username: string;
@@ -12,6 +13,7 @@ interface IProps {
   email: string;
   phone: string;
   status: string;
+  changeModal: (modalOpen: boolean) => void;
 }
 
 interface IState {
@@ -22,6 +24,8 @@ interface IState {
   needsText: string;
   infoText: string;
   keepSeat: boolean;
+  loading: boolean;
+  error: string;
   [key: string]: string|boolean;
 }
 
@@ -29,8 +33,10 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      error: '',
       infoText: '',
       keepSeat: false,
+      loading: false,
       needs: false,
       needsText: '',
       partner: false,
@@ -40,27 +46,38 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
     return (
-      <form
-        onSubmit={this.onSubmitForm}
-      >
-        <ApplicationFormPersonal
-          username={this.props.username}
-          fullname={this.props.fullname}
-          email={this.props.email}
-          phone={this.props.phone}
-          status={this.props.status}
-        />
-        <ApplicationFormPreferences
-          updateApplicationFormData={this.updateApplicationFormData}
-          partner={this.state.partner}
-        />
-        <ApplicationFormComments
-          updateApplicationFormData={this.updateApplicationFormData}
-          needs={this.state.needs}
-        />
-        <KnappBase type="hoved" htmlType="submit" autoDisableVedSpinner={true}>Submit</KnappBase>
-      </form>
+      <>
+        {alertBox}
+        <form
+          onSubmit={this.onSubmitForm}
+        >
+          <ApplicationFormPersonal
+            username={this.props.username}
+            fullname={this.props.fullname}
+            email={this.props.email}
+            phone={this.props.phone}
+            status={this.props.status}
+          />
+          <ApplicationFormPreferences
+            updateApplicationFormData={this.updateApplicationFormData}
+            partner={this.state.partner}
+          />
+          <ApplicationFormComments
+            updateApplicationFormData={this.updateApplicationFormData}
+            needs={this.state.needs}
+          />
+          <KnappBase
+            type="hoved"
+            htmlType="submit"
+            autoDisableVedSpinner={true}
+            spinner={this.state.loading}
+          >
+            Submit
+          </KnappBase>
+        </form>
+      </>
     );
   }
 
@@ -74,6 +91,7 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
 
   private onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
+    this.setState({ loading: true });
 
     fetch(POST_FORM_DATA, {
       body: JSON.stringify({
@@ -82,14 +100,33 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
         needsText: this.state.needsText,
         partnerUsername: this.state.partnerUsername,
         room: this.state.room,
-        username: this.props.username,
+        usernam: this.props.username,
       }),
       headers: {
         'Content-Type': 'application/json',
       },
       method: 'POST',
+    })
+    .then((response) => {
+      if (response.ok) {
+        this.props.changeModal(true);
+        this.setState({ loading: false, error: '' });
+      }
+      this.setState({ loading: false, error: _ALERT_USER_ERROR });
+    })
+    .catch((error) => {
+      this.setState({ loading: false, error: _ALERT_USER_ERROR });
     });
   }
+
+  private alertUser = (text: string) => (
+    <AlertStripe
+      type="advarsel"
+      solid={true}
+    >
+      {text}
+    </AlertStripe>
+  )
 }
 
 export default ApplicationFormComponent;
