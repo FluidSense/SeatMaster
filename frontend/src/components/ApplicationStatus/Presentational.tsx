@@ -19,11 +19,9 @@ const Presentational: React.FunctionComponent<IApplicationStatusProps> = (props)
   const etikettType = status === ACTION_WAITING ? ETIKETT_GREEN : ETIKETT_RED;
   return (
     <div>
-    <EtikettBase
-      type={etikettType}
-    >
-      {statusString}
-    </EtikettBase>
+      <EtikettBase type={etikettType}>
+        {statusString}
+      </EtikettBase>
     </div>
   );
 };
