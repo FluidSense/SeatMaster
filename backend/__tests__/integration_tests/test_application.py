@@ -35,20 +35,81 @@ class TestApplication(TestCase):
                 )
             )
         )
+        expectedResponseData = jsonify(
+            comments="Pepsi is better than coke",
+            id=1,
+            status="Unprocessed",
+            user={"id":1,"username":testuser.username})
         assert "201 CREATED" == response.status
-        assert jsonify(
-            username=testuser.username,
-            infoText="Pepsi is better than coke",
-            partnerUsername="",
-        ).data == response.data
+        assert expectedResponseData.data == response.data
+
 
     # TODO
-    def test_new_new_application_without_existing_partner(self):
-        assert False
+    def test_new_application_without_existing_partner(self):
+        testuser = User("Frank")
+        db.session.add(testuser)
+        db.session.commit()
+        mimetype = 'application/json'
+        headers = {
+        'Content-Type': mimetype,
+        'Accept': mimetype
+        }
+        response = self.app.test_client().post(
+            'http://localhost:5000/application/registerApplication',
+            headers=headers,
+            data=json.dumps(dict(
+                username=testuser.username,
+                infoText="Pepsi is better than coke",
+                partnerUsername="Elon",
+                )
+            )
+        )
+        expectedApplication = jsonify(
+            comments="Pepsi is better than coke",
+            id=1,
+            status="Unprocessed",
+            user={"id":1,"username":testuser.username},
+        )
+        getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
+        assert "201 CREATED" == response.status
+        assert expectedApplication.data == response.data
+        assert getApplication.status == "200 OK"
+        assert getApplication.data == expectedApplication.data
 
     # TODO
     def test_new_application_with_existing_partner(self):
-        assert False
+        testuser1 = User("Frank")
+        testuser2 = User("Monster")
+        db.session.add(testuser1)
+        db.session.add(testuser2)
+        db.session.commit()
+        mimetype = 'application/json'
+        headers = {
+        'Content-Type': mimetype,
+        'Accept': mimetype
+        }
+        response = self.app.test_client().post(
+            'http://localhost:5000/application/registerApplication',
+            headers=headers,
+            data=json.dumps(dict(
+                username=testuser1.username,
+                infoText="Pepsi is better than coke",
+                partnerUsername=testuser2.username,
+                )
+            )
+        )
+        expectedApplication = jsonify(
+            comments="Pepsi is better than coke",
+            id=1,
+            status="Unprocessed",
+            user={"id":1,"username":testuser1.username},
+        )
+        getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
+        assert "201 CREATED" == response.status
+        assert expectedApplication.data == response.data
+        assert getApplication.status == "200 OK"
+        assert getApplication.data == expectedApplication.data
+
 
     # TODO
     def test_get_application_by_userid(self):
