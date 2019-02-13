@@ -4,7 +4,7 @@ from models.user import User
 from shared import db
 import json
 from unittest import TestCase
-from flask import jsonify
+from flask import jsonify, make_response
 
 
 class TestApplication(TestCase):
@@ -35,15 +35,15 @@ class TestApplication(TestCase):
                 )
             )
         )
-        expectedResponseData = jsonify(
+        expectedResponse = make_response(jsonify(
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
             user={"id": 1, "username": testuser.username},
             partnerApplication={},
-            )
-        assert "201 CREATED" == response.status
-        assert expectedResponseData.data == response.data
+            ), 201)
+        assert expectedResponse.status == response.status
+        assert expectedResponse.data == response.data
 
     def test_new_application_without_existing_partner(self):
         testuser = User("Frank")
@@ -64,18 +64,18 @@ class TestApplication(TestCase):
                 )
             )
         )
-        expectedApplication = jsonify(
+        expectedApplicationResponse = make_response(jsonify(
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
             user={"id": 1, "username": testuser.username},
             partnerApplication={}
-        )
+        ), 201)
         getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
-        assert "201 CREATED" == response.status
-        assert expectedApplication.data == response.data
+        assert expectedApplicationResponse.status == response.status
+        assert expectedApplicationResponse.data == response.data
         assert getApplication.status == "200 OK"
-        assert getApplication.data == expectedApplication.data
+        assert getApplication.data == expectedApplicationResponse.data
 
     def test_new_application_with_existing_partner(self):
         testuser1 = User("Frank")
@@ -108,14 +108,14 @@ class TestApplication(TestCase):
                 )
             )
         )
-        user1expectedApplication = jsonify(
+        user1expectedResponse = make_response(jsonify(
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
             user={"id": 1, "username": testuser1.username},
             partnerApplication={}
-        )
-        user2expectedApplication = jsonify(
+        ), 201)
+        user2expectedResponse = make_response(jsonify(
             comments="Fanta is better than solo",
             id=2,
             status="Unprocessed",
@@ -126,7 +126,7 @@ class TestApplication(TestCase):
                 "status": "Unprocessed",
                 "user": {"id": 1, "username": testuser1.username}
             },
-        )
+        ), 201)
         expectedConnectedApplication = jsonify(
             comments="Fanta is better than solo",
             id=2,
@@ -140,10 +140,10 @@ class TestApplication(TestCase):
             },
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/user/2')
-        assert "201 CREATED" == user1Response.status
-        assert "201 CREATED" == user2Response.status
-        assert user2expectedApplication.data == user2Response.data
-        assert user1expectedApplication.data == user1Response.data
+        assert user1expectedResponse.status == user1Response.status
+        assert user2expectedResponse.status == user2Response.status
+        assert user2expectedResponse.data == user2Response.data
+        assert user1expectedResponse.data == user1Response.data
         assert getApplication.status == "200 OK"
         assert getApplication.data == expectedConnectedApplication.data
 

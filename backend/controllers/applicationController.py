@@ -24,6 +24,6 @@ def registerApplication():
         username = form.get("username")
         infoText = form.get("infoText")
         partnerUsername = form.get("partnerUsername")
-        responseText, successCode = applicationService.registerApplication(infoText, username, partnerUsername)
-        return make_response(jsonify(responseText), successCode)
+        responseText, statusCode = applicationService.registerApplication(infoText, username, partnerUsername)
+        return make_response(jsonify(responseText), statusCode)
     return abort(400)

@@ -58,21 +58,18 @@ class Application(db.Model):
         self.partnerUsername = partnerUsername
 
     def to_json(self, self_referred=False):
-        # Do not return partnerApplication if jsoning through a partner application.
-        if self_referred:
-            return {
-                "id": self.id,
-                "status": self.status,
-                "comments": self.infoText,
-                "user": self.user.to_json() if self.user else None,
-            }
-        return {
+        applicationDict = {
             "id": self.id,
             "status": self.status,
             "comments": self.infoText,
             "user": self.user.to_json() if self.user else None,
-            "partnerApplication": self.partnerApplication.to_json(self_referred=True) if self.partnerApplication else {}
         }
+        # Do not return partnerApplication if jsoning through a partner application.
+        if not self_referred:
+            applicationDict["partnerApplication"] = (self.partnerApplication.to_json(self_referred=True)
+                                                     if self.partnerApplication else {})
+
+        return applicationDict
 
     def __str__(self):
         return json.dumps(self.to_json())
