@@ -1,21 +1,29 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
-import KnappBase from 'nav-frontend-knapper';
+import Presentational from './Presentational';
 
-interface IExampleProps {
-  initAction: () => any;
+interface IState {
+  modalIsOpen: boolean;
 }
 
-export const Application: React.FunctionComponent<IExampleProps> = (props) => {
-  return (
-    <div>
-      <h1>My application</h1>
-      <Link to="/home">
-        <KnappBase type="hoved" htmlType="button" id="submitButton">Submit</KnappBase>
-      </Link>
-    </div>
-  );
-};
+export class Application extends React.Component<{}, IState> {
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      modalIsOpen: false,
+    };
+  }
+
+  public render() {
+    return (
+      <div>
+        <h1>My application</h1>
+        <Presentational modalIsOpen={this.state.modalIsOpen} changeModal={this.changeModal} />
+      </div >
+    );
+  }
+
+  private changeModal = (modalOpen: boolean) => { this.setState({ modalIsOpen: modalOpen }); };
+}
 
 export default Application;

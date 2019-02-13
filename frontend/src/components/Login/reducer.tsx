@@ -3,7 +3,10 @@ import { ACTION_NONE, SET_USER_DATA } from './Strings';
 
 export interface ILoginState {
   comments?: string;
+  email: string;
+  fullname: string;
   id?: number;
+  phone: string;
   status: string;
   user?: {
     id: number;
@@ -13,9 +16,15 @@ export interface ILoginState {
 
 const initialState = {
   comments: undefined,
+  email: 'test@test.com',
+  fullname: 'Test Testesen',
   id: undefined,
-  status: ACTION_NONE,
-  user: undefined,
+  phone: '11223344',
+  status: 'Master student',
+  user: {
+    id: 1,
+    username: 'usrnam',
+  },
 };
 
 export const loginReducer = (
@@ -28,7 +37,10 @@ export const loginReducer = (
       return {
         ...state,
         comments: payload.comments,
+        email: payload.email,
+        fullname: payload.fullname,
         id: payload.id,
+        phone: payload.phone,
         status: payload.status,
         user: payload.user,
       };
