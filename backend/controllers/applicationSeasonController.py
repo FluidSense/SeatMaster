@@ -18,11 +18,11 @@ def createNewSeason():
         newPeriodEnd = form.get("newPeriodEnd")
         newRoomStart = form.get("newRoomStart")
         newRoomEnd = form.get("newRoomEnd")
-        responseText, successCode = applicationSeasonService.registerNewSeason(
+        responseText, statusCode = applicationSeasonService.registerNewSeason(
             newPeriodEnd=newPeriodEnd,
             newPeriodStart=newPeriodStart,
             newRoomEnd=newRoomEnd,
             newRoomStart=newRoomStart,
         )
-        return make_response(jsonify(responseText), successCode)
+        return make_response(jsonify(responseText), statusCode)
     return abort(400)
