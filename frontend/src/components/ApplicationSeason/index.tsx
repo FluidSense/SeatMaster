@@ -26,7 +26,7 @@ class _Container extends React.Component<Props, {}> {
   public render = () => {
     const { applicationSeason } = this.props;
     return (
-      <Presentational applicationSeason={applicationSeason} />
+      <Presentational applicationSeason={applicationSeason} currentTime={new Date()} />
     );
   }
 }

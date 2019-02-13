@@ -26,7 +26,7 @@ const formatSeasonString = (preText: validPreText, time: Date) => {
 const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
   if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
-  const currentTime = new Date();
+  const { currentTime } = props;
 
   let t: string = '';
   if (currentTime < applicationPeriodStart) {
