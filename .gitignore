@@ -25,7 +25,7 @@ yarn-error.log*
 __pycahce__
 postgres-data/
 
-#Flask standard .gitignore
+# Flask standard .gitignore
 .DS_Store
 .env
 .flaskenv
@@ -56,3 +56,5 @@ htmlcov/
 
 .vscode/*
 !.vscode/snippets/
+# Utilities
+.utils/*
