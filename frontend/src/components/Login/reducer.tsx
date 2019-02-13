@@ -18,10 +18,7 @@ const initialState = {
   user: undefined,
 };
 
-export const loginReducer = (
-  state: ILoginState = initialState,
-  action: AnyAction,
-): ILoginState => {
+export const loginReducer = (state: ILoginState = initialState, action: AnyAction): ILoginState => {
   const { type, payload } = action;
   switch (type) {
     case SET_USER_DATA: {
