@@ -57,4 +57,4 @@ htmlcov/
 .vscode/*
 !.vscode/snippets/
 # Utilities
-.utils/*
+.src/utils/*
