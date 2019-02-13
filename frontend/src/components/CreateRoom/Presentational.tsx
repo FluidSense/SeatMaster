@@ -10,40 +10,46 @@ import {
 } from './strings';
 
 interface IProps {
-  notesValue: string;
-  nameValue: string;
-  seatValue: number;
-  buttonDisabled: boolean;
-  updateState: (key: string, value: validValues) => void;
+  notesEntry: [string, string];
+  nameEntry: [string, string];
+  seatEntry: [string, string];
+  updateState: (key: string, value: string) => any;
+  buttonEntry: [string, validValues];
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { nameValue, seatValue, notesValue, buttonDisabled } = props;
+  const { notesEntry, nameEntry, seatEntry, buttonEntry, updateState } = props;
+  const setState = (e: any) => updateState(e.target.name, e.target.value);
   return (
     <>
       <h1>Create new room</h1>
       <Input
-        value={nameValue}
+        name={nameEntry[0]}
+        onChange={setState}
+        value={nameEntry[1]}
         label={_INPUT_LABEL_NAME}
         bredde={'XL'}
       />
       <Input
-        value={seatValue}
+        name={seatEntry[0]}
+        onChange={setState}
+        value={seatEntry[1]}
         label={_INPUT_LABEL_SEATS}
         bredde={'XS'}
       />
       <Textarea
-        value={notesValue}
+        name={notesEntry[0]}
+        onChange={setState}
+        value={notesEntry[1]}
         label={_INPUT_LABEL_NOTES}
-        onChange={log}
       />
-      <HovedKnapp type="hoved" disabled={buttonDisabled}>
+      <HovedKnapp type="hoved" disabled={buttonEntry[1] === 'false'}>
         {_BUTTON_CREATE_ROOM}
       </HovedKnapp>
     </>
   );
 };
 
-const log = (e: any) => console.log(e.target.value);
+const log = (e: any) => console.log(e);
 
 export default Presentational;
