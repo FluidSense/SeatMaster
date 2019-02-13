@@ -7,7 +7,7 @@ interface ILoginProps {
   fetchUserData: (userId: number) => any;
 }
 
-export const LoginComponent: React.FunctionComponent<ILoginProps> = (props) => {
+export const Presentational: React.FunctionComponent<ILoginProps> = (props) => {
   const { fetchUserData } = props;
   const onClickAction = () => fetchUserData(1);
   return (

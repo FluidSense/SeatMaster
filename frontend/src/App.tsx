@@ -1,7 +1,6 @@
 import * as React from 'react';
-
 import './App.css';
-import LoginContainer from './components/Login/LoginContainer';
+import Login from './components/Login';
 
 import {
   Redirect,
@@ -18,7 +17,7 @@ class App extends React.Component {
     return (
       <Router history={history} >
         <Switch>
-          <Route path="/login" component={LoginContainer} />
+          <Route path="/login" component={Login} />
           <Redirect exact={true} from="/" to="/login" />
           <Route component={Routing} />
         </Switch>

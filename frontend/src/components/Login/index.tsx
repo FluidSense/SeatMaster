@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { fetchUserData } from './LoginActions';
-import { LoginComponent } from './LoginComponent';
+import { fetchUserData } from './actions';
+import { Presentational } from './Presentational';
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchUserData: (userID: number) => dispatch(fetchUserData(userID)),
 });
 
-const LoginContainer = connect(
+const Container = connect(
   null,
   mapDispatchToProps,
-)(LoginComponent);
+)(Presentational);
 
-export default LoginContainer;
+export default Container;

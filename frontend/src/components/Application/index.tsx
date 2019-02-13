@@ -7,7 +7,7 @@ interface IExampleProps {
   initAction: () => any;
 }
 
-export const ApplicationComponent: React.FunctionComponent<IExampleProps> = (props) => {
+export const Application: React.FunctionComponent<IExampleProps> = (props) => {
   return (
     <div>
       <h1>My application</h1>
@@ -18,4 +18,4 @@ export const ApplicationComponent: React.FunctionComponent<IExampleProps> = (pro
   );
 };
 
-export default ApplicationComponent;
+export default Application;
