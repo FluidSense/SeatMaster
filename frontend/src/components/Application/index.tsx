@@ -3,16 +3,12 @@ import * as React from 'react';
 import ApplicationForm from '../ApplicationForm';
 import ConfirmationModal from './../ApplicationForm/ConfirmationModal';
 
-interface IProps {
-  initAction: () => any;
-}
-
 interface IState {
   modalIsOpen: boolean;
 }
 
-export class Application extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+export class Application extends React.Component<{}, IState> {
+  constructor(props: object) {
     super(props);
     this.state = {
       modalIsOpen: false,
