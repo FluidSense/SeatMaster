@@ -27,7 +27,7 @@ def registerApplication(infoText, username, partnerUsername):
         db.session.add(application)
         db.session.commit()
         connectApplication(application)
-        return application.to_json, 201
+        return application.to_json(), 201
     except SQLAlchemyError as err:
         print(err)
         return "", 400
