@@ -3,16 +3,16 @@ import React from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
 import { IApplicationSeason } from './reducer';
 import {
-  SEASON_CLOSED,
-  SEASON_END,
-  SEASON_START,
+  _SEASON_CLOSED,
+  _SEASON_END,
+  _SEASON_START,
 } from './strings';
 
 interface IApplicationSeasonProps {
   applicationSeason: IApplicationSeason;
 }
 
-type validPreText = typeof SEASON_START | typeof SEASON_END;
+type validPreText = typeof _SEASON_START | typeof _SEASON_END;
 
 const formatSeasonString = (preText: validPreText, time: Date) => {
   const day = time.getDate();
@@ -36,9 +36,10 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
   const currentTime = new Date();
   const seasonEndComponent = currentTime < applicationPeriodEnd
-    ? NavEtikett(formatSeasonString(SEASON_END, applicationPeriodEnd)) : NavEtikett(SEASON_CLOSED);
+    ? NavEtikett(formatSeasonString(_SEASON_END, applicationPeriodEnd)) :
+    NavEtikett(_SEASON_CLOSED);
   const seasonStartComponent = currentTime < applicationPeriodStart
-    ? NavEtikett(formatSeasonString(SEASON_START, applicationPeriodStart)) : null;
+    ? NavEtikett(formatSeasonString(_SEASON_START, applicationPeriodStart)) : null;
   return (
     <>
       {seasonStartComponent}
