@@ -85,3 +85,46 @@ def test_registerSeason_room_end_too_early(mocker):
     )
     assert resultText == "Room start period should not be later than application end period"
     assert resultCode == 400
+
+
+def test_registerSeason_success(mocker):
+    newPeriodStart = datetime.now()
+    newPeriodEnd = newPeriodStart + timedelta(days=10)
+    newRoomStart = newPeriodStart
+    newRoomEnd = newPeriodStart + timedelta(days=10)
+    mocker.patch.object(db.session, "add")
+    mocker.patch.object(db.session, "commit")
+    applicationSeason = ApplicationSeason(
+        applicationPeriodEnd=str(newPeriodEnd),
+        applicationPeriodStart=str(newPeriodStart),
+        start=str(newRoomStart),
+        end=str(newRoomEnd),
+    )
+    resultText, resultCode = applicationSeasonService.registerNewSeason(
+        newPeriodEnd=str(newPeriodEnd),
+        newPeriodStart=str(newPeriodStart),
+        newRoomEnd=str(newRoomEnd),
+        newRoomStart=str(newRoomStart),
+    )
+    addargs = db.session.add.call_args
+    assert type(addargs[0][0]) is ApplicationSeason
+    db.session.commit.assert_called_once()
+    assert resultCode == 201
+    assert resultText == applicationSeason.to_json()
+
+
+def test_registerSeason_fail(mocker):
+    newPeriodStart = 123
+    newPeriodEnd = 321
+    newRoomStart = 123
+    newRoomEnd = 321
+    mocker.patch.object(db.session, "add")
+    mocker.patch.object(db.session, "commit")
+    resultText, resultCode = applicationSeasonService.registerNewSeason(
+        newPeriodEnd=str(newPeriodEnd),
+        newPeriodStart=str(newPeriodStart),
+        newRoomEnd=str(newRoomEnd),
+        newRoomStart=str(newRoomStart),
+    )
+    assert resultCode == 400
+    assert resultText == "Input values are wrong or datetime object is not in the format yyyy-mm-dd hh:mm:ss.ms"

@@ -41,7 +41,12 @@ def test_getCurrentSeason_without_a_season(mocker):
 
 
 def registerApplicationSeasonMock(newPeriodStart, newPeriodEnd, newRoomStart, newRoomEnd):
-    return ApplicationSeason(newPeriodStart, newPeriodEnd, newRoomStart, newRoomEnd), 201
+    return ApplicationSeason(
+      applicationPeriodStart=newPeriodStart,
+      applicationPeriodEnd=newPeriodEnd,
+      start=newRoomStart,
+      end=newRoomEnd
+    ).to_json(), 201
 
 
 def test_createSeason(mocker, client):
@@ -50,10 +55,10 @@ def test_createSeason(mocker, client):
         'Content-Type': mimetype,
         'Accept': mimetype
     }
-    starttime = datetime.now() + timedelta(days=+5)
-    endtime = starttime + timedelta(days=+150)
+    starttime = datetime.now() + timedelta(days=5)
+    endtime = starttime + timedelta(days=150)
     acceptstart = starttime
-    acceptend = starttime + timedelta(days=+7)
+    acceptend = starttime + timedelta(days=7)
     mocker.patch.object(applicationSeasonService, "registerNewSeason")
     applicationSeasonService.registerNewSeason = registerApplicationSeasonMock
     with app.app_context():
@@ -63,12 +68,12 @@ def test_createSeason(mocker, client):
             data=json.dumps(dict(
                 newPeriodEnd=acceptend,
                 newPeriodStart=acceptstart,
-                newRoomEnd=starttime,
-                newRoomStart=endtime),
+                newRoomEnd=endtime,
+                newRoomStart=starttime),
                 default=str))
         assert "201 CREATED" == response.status
         assert jsonify(
-            newPeriodEnd=str(acceptend),
-            newPeriodStart=str(acceptstart),
-            newRoomEnd=str(starttime),
-            newRoomStart=str(endtime)).data == response.data
+            applicationPeriodEnd=str(acceptend),
+            applicationPeriodStart=str(acceptstart),
+            start=str(starttime),
+            end=str(endtime)).data == response.data

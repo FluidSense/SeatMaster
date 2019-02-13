@@ -14,24 +14,27 @@ def getCurrentOrNext():
 
 
 def registerNewSeason(newPeriodEnd, newPeriodStart, newRoomEnd, newRoomStart):
-    newPeriodEnd = datetime.strptime(newPeriodEnd, dateFormat)
-    newPeriodStart = datetime.strptime(newPeriodStart, dateFormat)
-    newRoomEnd = datetime.strptime(newRoomEnd, dateFormat)
-    newRoomStart = datetime.strptime(newRoomStart, dateFormat)
-    if newPeriodEnd < newPeriodStart:
+    try:
+        newPeriodEnd = datetime.strptime(newPeriodEnd, dateFormat)
+        newPeriodStart = datetime.strptime(newPeriodStart, dateFormat)
+        newRoomEnd = datetime.strptime(newRoomEnd, dateFormat)
+        newRoomStart = datetime.strptime(newRoomStart, dateFormat)
+    except ValueError:
+        return "Input values are wrong or datetime object is not in the format yyyy-mm-dd hh:mm:ss.ms", 400
+    if newPeriodEnd <= newPeriodStart:
         return "Application start period should not be later than application end period", 400
-    if newRoomEnd < newRoomStart:
+    if newRoomEnd <= newRoomStart:
         return "Room start period should not be later than application end period", 400
     try:
         applicationSeason = ApplicationSeason(
-            newRoomStart,
-            newRoomEnd,
-            newPeriodStart,
-            newPeriodEnd
+            start=newRoomStart,
+            end=newRoomEnd,
+            applicationPeriodStart=newPeriodStart,
+            applicationPeriodEnd=newPeriodEnd
             )
         db.session.add(applicationSeason)
         db.session.commit()
-        return applicationSeason.to_json, 201
+        return applicationSeason.to_json(), 201
     except SQLAlchemyError as err:
         print(err)
         return "", 400

@@ -47,20 +47,21 @@ class TestApplicationSeason(TestCase):
         endtime = starttime + timedelta(days=+150)
         acceptstart = starttime
         acceptend = starttime + timedelta(days=+7)
-        response = self.app.test_client().post('/season/createSeason',
-                                               headers=headers,
-                                               data=json.dumps(dict(
-                                                   newPeriodEnd=self.formatDate(acceptend),
-                                                   newPeriodStart=self.formatDate(acceptstart),
-                                                   newRoomEnd=self.formatDate(endtime),
-                                                   newRoomStart=self.formatDate(starttime)),
-                                                   default=str))
+        response = self.app.test_client().post(
+          '/season/createSeason',
+          headers=headers,
+          data=json.dumps(dict(
+              newPeriodEnd=self.formatDate(acceptend),
+              newPeriodStart=self.formatDate(acceptstart),
+              newRoomEnd=self.formatDate(endtime),
+              newRoomStart=self.formatDate(starttime)),
+              default=str))
         assert "201 CREATED" == response.status
         assert jsonify(
-            newPeriodEnd=str(acceptend),
-            newPeriodStart=str(acceptstart),
-            newRoomEnd=str(endtime),
-            newRoomStart=str(starttime)).data == response.data
+            applicationPeriodEnd=str(acceptend),
+            applicationPeriodStart=str(acceptstart),
+            end=str(endtime),
+            start=str(starttime)).data == response.data
 
     def tearDown(self):
         self.postgres.stop()
