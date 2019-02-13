@@ -11,6 +11,8 @@ import {
 } from './components/ApplicationSeason/reducer';
 import { ILoginState, loginReducer } from './components/Login/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
+import { createUserManager, loadUser } from 'redux-oidc';
+import userManager from './utils/userManager';
 
 export interface IStore {
   userInformation: ILoginState;
