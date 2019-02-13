@@ -2,6 +2,7 @@ from __tests__.conftest import Postgresql
 from main import create_app
 from shared import db
 
+
 class TestRoom():
     def setUp(self):
         self.postgres = Postgresql()
@@ -14,7 +15,7 @@ class TestRoom():
     # TODO
     def add_test_here(self):
         pass
-    
+
     def tearDown(self):
         self.postgres.stop()
         self.ctx.pop()

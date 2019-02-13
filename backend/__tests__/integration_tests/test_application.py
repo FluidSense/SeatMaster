@@ -22,8 +22,8 @@ class TestApplication(TestCase):
         db.session.commit()
         mimetype = 'application/json'
         headers = {
-        'Content-Type': mimetype,
-        'Accept': mimetype
+            'Content-Type': mimetype,
+            'Accept': mimetype
         }
         response = self.app.test_client().post(
             'http://localhost:5000/application/registerApplication',
@@ -39,22 +39,20 @@ class TestApplication(TestCase):
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
-            user={"id":1,"username":testuser.username},
+            user={"id": 1, "username": testuser.username},
             partnerApplication={},
             )
         assert "201 CREATED" == response.status
         assert expectedResponseData.data == response.data
 
-
-    # TODO
     def test_new_application_without_existing_partner(self):
         testuser = User("Frank")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
         headers = {
-        'Content-Type': mimetype,
-        'Accept': mimetype
+            'Content-Type': mimetype,
+            'Accept': mimetype
         }
         response = self.app.test_client().post(
             'http://localhost:5000/application/registerApplication',
@@ -70,7 +68,7 @@ class TestApplication(TestCase):
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
-            user={"id":1,"username":testuser.username},
+            user={"id": 1, "username": testuser.username},
             partnerApplication={}
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
@@ -79,7 +77,6 @@ class TestApplication(TestCase):
         assert getApplication.status == "200 OK"
         assert getApplication.data == expectedApplication.data
 
-    # TODO
     def test_new_application_with_existing_partner(self):
         testuser1 = User("Frank")
         testuser2 = User("Monster")
@@ -88,8 +85,8 @@ class TestApplication(TestCase):
         db.session.commit()
         mimetype = 'application/json'
         headers = {
-        'Content-Type': mimetype,
-        'Accept': mimetype
+            'Content-Type': mimetype,
+            'Accept': mimetype
         }
         user1Response = self.app.test_client().post(
             'http://localhost:5000/application/registerApplication',
@@ -115,43 +112,36 @@ class TestApplication(TestCase):
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
-            user={"id":1,"username":testuser1.username},
+            user={"id": 1, "username": testuser1.username},
             partnerApplication={}
         )
         user2expectedApplication = jsonify(
             comments="Fanta is better than solo",
             id=2,
             status="Unprocessed",
-            user={"id":2,"username":testuser2.username},
+            user={"id": 2, "username": testuser2.username},
             partnerApplication={}
         )
         expectedConnectedApplication = jsonify(
             comments="Fanta is better than solo",
             id=2,
             status="Unprocessed",
-            user={"id":2,"username":testuser2.username},
+            user={"id": 2, "username": testuser2.username},
             partnerApplication={
-                "comments":"Pepsi is better than coke",
-                "id":1,
-                "status":"Unprocessed",
-                "user":{"id":1,"username":testuser1.username}
+                "comments": "Pepsi is better than coke",
+                "id": 1,
+                "status": "Unprocessed",
+                "user": {"id": 1, "username": testuser1.username}
             },
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/user/2')
         assert "201 CREATED" == user1Response.status
+        assert "201 CREATED" == user2Response.status
+        assert user2expectedApplication.data == user2Response.data
         assert user1expectedApplication.data == user1Response.data
         assert getApplication.status == "200 OK"
         assert getApplication.data == expectedConnectedApplication.data
 
-
-    # TODO
-    def test_get_application_by_userid(self):
-        assert False
-
-    # TODO
-    def test_get_application_by_application_id(self):
-        assert False
-    
     def tearDown(self):
         self.postgres.stop()
         self.ctx.pop()
