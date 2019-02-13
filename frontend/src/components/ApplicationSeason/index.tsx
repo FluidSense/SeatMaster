@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -26,7 +27,7 @@ class _Container extends React.Component<Props, {}> {
   public render = () => {
     const { applicationSeason } = this.props;
     return (
-      <Presentational applicationSeason={applicationSeason} currentTime={new Date()} />
+      <Presentational applicationSeason={applicationSeason} currentTime={moment()} />
     );
   }
 }

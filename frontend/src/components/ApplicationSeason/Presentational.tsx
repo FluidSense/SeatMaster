@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
 import { ETIKETT_INFO } from '../commonConstants';
@@ -11,17 +12,8 @@ import {
 
 interface IApplicationSeasonProps {
   applicationSeason: IApplicationSeason;
-  currentTime: Date;
+  currentTime: Moment;
 }
-
-type validPreText = typeof _SEASON_START | typeof _SEASON_END;
-
-const formatSeasonString = (preText: validPreText, time: Date) => {
-  const day = time.getDate();
-  const month = time.getMonth() + 1;
-  const year = time.getFullYear();
-  return `${preText} - ${day}/${month}/${year}`;
-};
 
 const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
   if (props.applicationSeason === undefined) return null;
@@ -30,7 +22,7 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
 
   let t: string = '';
   if (currentTime < applicationPeriodStart) {
-    t = formatSeasonString(_SEASON_START, applicationPeriodStart);
+    t = `${_SEASON_START} - ${applicationPeriodStart.format('D/M/YYYY')}`;
   } else {
     t = _SEASON_OPEN;
   }
@@ -38,7 +30,7 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
 
   let p: any = '';
   if (currentTime < applicationPeriodEnd) {
-    p = formatSeasonString(_SEASON_END, applicationPeriodEnd);
+    p = `${_SEASON_END} - ${applicationPeriodEnd.format('D/M/YYYY')}`;
   } else {
     p = _SEASON_CLOSED;
   }
