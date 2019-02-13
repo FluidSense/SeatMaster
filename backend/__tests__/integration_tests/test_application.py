@@ -39,7 +39,9 @@ class TestApplication(TestCase):
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
-            user={"id":1,"username":testuser.username})
+            user={"id":1,"username":testuser.username},
+            partnerApplication={},
+            )
         assert "201 CREATED" == response.status
         assert expectedResponseData.data == response.data
 
@@ -69,6 +71,7 @@ class TestApplication(TestCase):
             id=1,
             status="Unprocessed",
             user={"id":1,"username":testuser.username},
+            partnerApplication={}
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
         assert "201 CREATED" == response.status
@@ -88,7 +91,7 @@ class TestApplication(TestCase):
         'Content-Type': mimetype,
         'Accept': mimetype
         }
-        response = self.app.test_client().post(
+        user1Response = self.app.test_client().post(
             'http://localhost:5000/application/registerApplication',
             headers=headers,
             data=json.dumps(dict(
@@ -98,17 +101,47 @@ class TestApplication(TestCase):
                 )
             )
         )
-        expectedApplication = jsonify(
+        user2Response = self.app.test_client().post(
+            'http://localhost:5000/application/registerApplication',
+            headers=headers,
+            data=json.dumps(dict(
+                username=testuser2.username,
+                infoText="Fanta is better than solo",
+                partnerUsername=testuser1.username,
+                )
+            )
+        )
+        user1expectedApplication = jsonify(
             comments="Pepsi is better than coke",
             id=1,
             status="Unprocessed",
             user={"id":1,"username":testuser1.username},
+            partnerApplication={}
         )
-        getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
-        assert "201 CREATED" == response.status
-        assert expectedApplication.data == response.data
+        user2expectedApplication = jsonify(
+            comments="Fanta is better than solo",
+            id=2,
+            status="Unprocessed",
+            user={"id":2,"username":testuser2.username},
+            partnerApplication={}
+        )
+        expectedConnectedApplication = jsonify(
+            comments="Fanta is better than solo",
+            id=2,
+            status="Unprocessed",
+            user={"id":2,"username":testuser2.username},
+            partnerApplication={
+                "comments":"Pepsi is better than coke",
+                "id":1,
+                "status":"Unprocessed",
+                "user":{"id":1,"username":testuser1.username}
+            },
+        )
+        getApplication = self.app.test_client().get('http://localhost:5000/application/user/2')
+        assert "201 CREATED" == user1Response.status
+        assert user1expectedApplication.data == user1Response.data
         assert getApplication.status == "200 OK"
-        assert getApplication.data == expectedApplication.data
+        assert getApplication.data == expectedConnectedApplication.data
 
 
     # TODO
