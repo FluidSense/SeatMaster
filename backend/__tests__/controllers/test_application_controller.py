@@ -52,10 +52,10 @@ def test_getApplicationByUser_with_application(mocker):
 
 
 def registerApplicationMock(infoText, username, partnerUsername):
-    return Application("status", infoText, User("Darth Plageus"), partnerUsername), 201
+    return Application("status", infoText, User("Darth Plageus"), partnerUsername).to_json(), 201
 
 
-def test_registerNewApplication_fails(mocker, client):
+def test_registerNewApplication(mocker, client):
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,
@@ -69,10 +69,13 @@ def test_registerNewApplication_fails(mocker, client):
             headers=headers,
             data=json.dumps(dict(
                 username='Darth Plageus',
-                infotext='infoText',
+                infoText='infoText',
                 partnerUsername='Jar Jar Binks')))
         assert "201 CREATED" == response.status
         assert jsonify(
-            username='Darth Plageus',
-            infotext='infoText',
-            partnerUsername='Jar Jar Binks').data == response.data
+            comments='infoText',
+            user={"id": None, "username": "Darth Plageus"},
+            id=None,
+            status="status",
+            partnerApplication={},
+            ).data == response.data

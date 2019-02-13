@@ -120,7 +120,12 @@ class TestApplication(TestCase):
             id=2,
             status="Unprocessed",
             user={"id": 2, "username": testuser2.username},
-            partnerApplication={}
+            partnerApplication={
+                "comments": "Pepsi is better than coke",
+                "id": 1,
+                "status": "Unprocessed",
+                "user": {"id": 1, "username": testuser1.username}
+            },
         )
         expectedConnectedApplication = jsonify(
             comments="Fanta is better than solo",
