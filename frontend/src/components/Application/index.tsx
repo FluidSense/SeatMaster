@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import ApplicationForm from '../ApplicationForm';
-import ConfirmationModal from './../ApplicationForm/ConfirmationModal';
+import Presentational from './Presentational';
 
 interface IState {
   modalIsOpen: boolean;
@@ -19,8 +18,7 @@ export class Application extends React.Component<{}, IState> {
     return (
       <div>
         <h1>My application</h1>
-        <ConfirmationModal modalIsOpen={this.state.modalIsOpen} changeModal={this.changeModal} />
-        <ApplicationForm changeModal={this.changeModal} />
+        <Presentational modalIsOpen={this.state.modalIsOpen} changeModal={this.changeModal} />
       </div >
     );
   }
