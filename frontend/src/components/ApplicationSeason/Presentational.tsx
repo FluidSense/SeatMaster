@@ -12,34 +12,25 @@ import {
 
 interface IApplicationSeasonProps {
   applicationSeason: IApplicationSeason;
-  currentTime: Moment;
+  currentDate: Moment;
 }
 
 const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
   if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
-  const { currentTime } = props;
+  const { currentDate } = props;
 
-  let t: string = '';
-  if (currentTime < applicationPeriodStart) {
-    t = `${_SEASON_START} - ${applicationPeriodStart.format('D/M/YYYY')}`;
-  } else {
-    t = _SEASON_OPEN;
-  }
-  const seasonStartText: string = t;
-
-  let p: any = '';
-  if (currentTime < applicationPeriodEnd) {
-    p = `${_SEASON_END} - ${applicationPeriodEnd.format('D/M/YYYY')}`;
-  } else {
-    p = _SEASON_CLOSED;
-  }
-  const seasonEndText: string = p;
+  const startText = currentDate < applicationPeriodStart ? _SEASON_START : _SEASON_OPEN;
+  const endText = currentDate < applicationPeriodEnd ? _SEASON_END : _SEASON_CLOSED;
 
   return (
     <>
-      <EtikettBase type={ETIKETT_INFO}>{seasonStartText}</EtikettBase>
-      <EtikettBase type={ETIKETT_INFO}>{seasonEndText}</EtikettBase>
+      <EtikettBase type={ETIKETT_INFO}>
+        {`${startText} - ${applicationPeriodStart.format('D/M/YYYY')}`}
+      </EtikettBase>
+      <EtikettBase type={ETIKETT_INFO}>
+        {`${endText} - ${applicationPeriodEnd.format('D/M/YYYY')}`}
+      </EtikettBase>
     </>
   );
 };
