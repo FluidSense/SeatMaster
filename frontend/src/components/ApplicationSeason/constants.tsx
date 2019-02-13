@@ -1,5 +1,4 @@
 // States
-export const ETIKETT_YELLOW = 'fokus';
 
 // Actions
 export const SET_APPLICATION_SEASON = 'SET_APPLICATION_SEASON';

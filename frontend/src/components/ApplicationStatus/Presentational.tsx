@@ -3,7 +3,7 @@ import {
   ACTION_WAITING,
   ETIKETT_GREEN,
   ETIKETT_RED,
-} from './constants';
+} from '../commonConstants';
 import {
   STATUS_NONE,
   STATUS_WAITING,

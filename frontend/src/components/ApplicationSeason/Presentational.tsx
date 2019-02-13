@@ -1,6 +1,6 @@
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
-import { ETIKETT_YELLOW } from './constants';
+import { ETIKETT_YELLOW } from '../commonConstants';
 import { IApplicationSeason } from './reducer';
 import {
   SEASON_CLOSED,
