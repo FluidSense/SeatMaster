@@ -16,7 +16,7 @@ export const HomeComponent: React.FunctionComponent<IHomeProps> = (props) => {
       <ApplicationStatusContainer />
       <ApplicationSeasonContainer />
       <Link to="/application">
-        <KnappBase type="hoved" htmlType="button">New application</KnappBase>
+        <KnappBase type="hoved" htmlType="button" id="newAppButton">New application</KnappBase>
       </Link>
     </div>
   );

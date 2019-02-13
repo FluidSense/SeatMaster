@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 
 import history from './components/History';
-import { RouteComponent } from './components/Route/RouteComponent';
+import { Routing } from './components/Route';
 
 class App extends React.Component {
   public render() {
@@ -20,7 +20,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/login" component={LoginContainer} />
           <Redirect exact={true} from="/" to="/login" />
-          <Route component={RouteComponent} />
+          <Route component={Routing} />
         </Switch>
       </Router>
     );

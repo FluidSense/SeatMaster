@@ -27,6 +27,7 @@ export const LoginComponent: React.FunctionComponent<ILoginProps> = (props) => {
           type="hoved"
           htmlType="button"
           onClick={onClickAction}
+          id="loginButton"
         >
           Log in
         </KnappBase>
