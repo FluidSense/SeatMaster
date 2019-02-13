@@ -29,7 +29,7 @@ interface IState {
   [key: string]: string|boolean;
 }
 
-export class ApplicationFormComponent extends React.Component<IProps, IState> {
+export class Presentational extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -100,7 +100,7 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
         needsText: this.state.needsText,
         partnerUsername: this.state.partnerUsername,
         room: this.state.room,
-        usernam: this.props.username,
+        username: this.props.username,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -129,4 +129,4 @@ export class ApplicationFormComponent extends React.Component<IProps, IState> {
   )
 }
 
-export default ApplicationFormComponent;
+export default Presentational;

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { ApplicationFormComponent } from './ApplicationFormComponent';
+import { Presentational } from './Presentational';
 
 const mapStateToProps = (state: any) => ({
   email: state.userInformation.email,
@@ -9,9 +9,9 @@ const mapStateToProps = (state: any) => ({
   username: state.userInformation.user.username,
 });
 
-const ApplicationFormContainer = connect(
+const ApplicationForm = connect(
   mapStateToProps,
   null,
-)(ApplicationFormComponent);
+)(Presentational);
 
-export default ApplicationFormContainer;
+export default ApplicationForm;

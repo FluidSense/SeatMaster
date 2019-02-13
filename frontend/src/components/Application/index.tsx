@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import ApplicationFormContainer from '../ApplicationForm/ApplicationFormContainer';
+import ApplicationForm from '../ApplicationForm';
 import ConfirmationModal from './../ApplicationForm/ConfirmationModal';
 
 interface IProps {
@@ -24,7 +24,7 @@ export class Application extends React.Component<IProps, IState> {
       <div>
         <h1>My application</h1>
         <ConfirmationModal modalIsOpen={this.state.modalIsOpen} changeModal={this.changeModal} />
-        <ApplicationFormContainer changeModal={this.changeModal} />
+        <ApplicationForm changeModal={this.changeModal} />
       </div >
     );
   }

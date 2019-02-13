@@ -23,7 +23,7 @@ const initialState = {
   status: 'Master student',
   user: {
     id: 1,
-    username: 'usrname',
+    username: 'usrnam',
   },
 };
 
