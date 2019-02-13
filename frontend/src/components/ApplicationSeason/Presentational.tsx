@@ -1,6 +1,6 @@
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
-import { ETIKETT_YELLOW } from '../commonConstants';
+import { ETIKETT_WARNING } from '../commonConstants';
 import { IApplicationSeason } from './reducer';
 import {
   SEASON_CLOSED,
@@ -24,7 +24,7 @@ const formatSeasonString = (preText: validPreText, time: Date) => {
 const NavEtikett = (seasonStatus: string) => {
   return (
     <EtikettBase
-      type={ETIKETT_YELLOW}
+      type={ETIKETT_WARNING}
     >
       {seasonStatus}
     </EtikettBase>

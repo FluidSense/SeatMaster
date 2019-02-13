@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  ACTION_WAITING,
-  ETIKETT_GREEN,
-  ETIKETT_RED,
+  ETIKETT_SUCCESS,
+  ETIKETT_WARNING,
 } from '../commonConstants';
 import {
+  ACTION_WAITING,
   STATUS_NONE,
   STATUS_WAITING,
 } from './strings';
@@ -18,7 +18,7 @@ interface IApplicationStatusProps {
 const Presentational: React.FunctionComponent<IApplicationStatusProps> = (props) => {
   const { status } = props;
   const statusString = status === ACTION_WAITING ? STATUS_WAITING : STATUS_NONE;
-  const etikettType = status === ACTION_WAITING ? ETIKETT_GREEN : ETIKETT_RED;
+  const etikettType = status === ACTION_WAITING ? ETIKETT_SUCCESS : ETIKETT_WARNING;
   return (
     <EtikettBase
       type={etikettType}
