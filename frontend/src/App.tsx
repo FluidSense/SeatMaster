@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import './App.css';
-import ApplicationComponent from './components/Application/ApplicationComponent';
-import HomeComponent from './components/Home/HomeComponent';
-import LoginContainer from './components/Login/LoginContainer';
+import Application from './components/Application';
+import Home from './components/Home';
+import Login from './components/Login';
 
 import {
   Route,
@@ -16,9 +16,9 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <div className="App">
-          <Route exact={true} path="/" component={HomeComponent} />
-          <Route path="/login" component={LoginContainer} />
-          <Route path="/application" component={ApplicationComponent} />
+          <Route exact={true} path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/application" component={Application} />
         </div>
       </Router>
     );
