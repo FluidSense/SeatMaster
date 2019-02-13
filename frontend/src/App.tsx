@@ -1,25 +1,26 @@
 import * as React from 'react';
-
 import './App.css';
-import Application from './components/Application';
-import Home from './components/Home';
 import Login from './components/Login';
 
 import {
+  Redirect,
   Route,
   Router,
+  Switch,
 } from 'react-router-dom';
+
 import history from './components/History';
+import { Routing } from './components/Route';
 
 class App extends React.Component {
   public render() {
     return (
-      <Router history={history}>
-        <div className="App">
-          <Route exact={true} path="/" component={Home} />
+      <Router history={history} >
+        <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/application" component={Application} />
-        </div>
+          <Redirect exact={true} from="/" to="/login" />
+          <Route component={Routing} />
+        </Switch>
       </Router>
     );
   }
