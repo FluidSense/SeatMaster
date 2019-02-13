@@ -8,8 +8,8 @@ from flask_cors import CORS
 from models.showcase import Showcase
 from controllers.applicationController import application
 from controllers.applicationSeasonController import applicationSeason
-
-# You can change these values in the .env-file
+from controllers.roomController import room
+# You can change these values in the .env-filen
 USER = os.getenv("POSTGRES_USER")
 PASSWORD = os.getenv("POSTGRES_PASSWORD")
 DB = os.getenv("POSTGRES_DB")
@@ -41,6 +41,7 @@ def init_extensions(app, db_url):
 def register_blueprints(app):
     app.register_blueprint(application)
     app.register_blueprint(applicationSeason, url_prefix="/season")
+    app.register_blueprint(room, url_prefix="/room")
 
 
 app = create_app()

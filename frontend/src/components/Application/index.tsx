@@ -11,7 +11,7 @@ interface IState {
   modalIsOpen: boolean;
 }
 
-export class ApplicationComponent extends React.Component<IProps, IState> {
+export class Application extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -32,4 +32,4 @@ export class ApplicationComponent extends React.Component<IProps, IState> {
   private changeModal = (modalOpen: boolean) => { this.setState({ modalIsOpen: modalOpen }); };
 }
 
-export default ApplicationComponent;
+export default Application;
