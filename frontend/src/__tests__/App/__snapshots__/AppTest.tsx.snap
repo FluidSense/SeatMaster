@@ -23,22 +23,20 @@ exports[`<App /> renders correctly 1`] = `
     }
   }
 >
-  <div
-    className="App"
-  >
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
-    />
+  <Switch>
     <Route
       component={[Function]}
       path="/login"
     />
+    <Redirect
+      exact={true}
+      from="/"
+      push={false}
+      to="/login"
+    />
     <Route
       component={[Function]}
-      path="/application"
     />
-  </div>
+  </Switch>
 </Router>
 `;

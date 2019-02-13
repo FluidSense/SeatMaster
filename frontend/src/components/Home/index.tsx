@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import ApplicationSeason from '../ApplicationSeason';
-import ApplicationStatus from '../ApplicationStatus';
+import _Container from '../ApplicationSeason/index';
+import Container from '../ApplicationStatus/index';
 
 import KnappBase from 'nav-frontend-knapper';
 
@@ -13,10 +13,10 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <div>
       <h1>My status</h1>
-      <ApplicationStatus />
-      <ApplicationSeason />
+      <_Container />
+      <Container />
       <Link to="/application">
-        <KnappBase type="hoved" htmlType="button">New application</KnappBase>
+        <KnappBase type="hoved" htmlType="button" id="newAppButton">New application</KnappBase>
       </Link>
     </div>
   );
