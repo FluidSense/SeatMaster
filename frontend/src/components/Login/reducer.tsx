@@ -1,10 +1,10 @@
 import { AnyAction } from 'redux';
-import { ACTION_NONE, SET_USER_DATA } from './constants';
+import { APP_NOT_FOUND, SET_USER_DATA } from './constants';
 
 export interface ILoginState {
+  applicationStatus: string;
   comments?: string;
   id?: number;
-  status: string;
   user?: {
     id: number;
     username: string;
@@ -12,9 +12,9 @@ export interface ILoginState {
 }
 
 const initialState = {
+  applicationStatus: APP_NOT_FOUND,
   comments: undefined,
   id: undefined,
-  status: ACTION_NONE,
   user: undefined,
 };
 
@@ -27,9 +27,9 @@ export const loginReducer = (
     case SET_USER_DATA: {
       return {
         ...state,
+        applicationStatus: payload.applicationStatus,
         comments: payload.comments,
         id: payload.id,
-        status: payload.status,
         user: payload.user,
       };
     }
