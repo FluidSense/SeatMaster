@@ -23,9 +23,7 @@ const formatSeasonString = (preText: validPreText, time: Date) => {
 
 const NavEtikett = (seasonStatus: string) => {
   return (
-    <EtikettBase
-      type={ETIKETT_WARNING}
-    >
+    <EtikettBase type={ETIKETT_WARNING}>
       {seasonStatus}
     </EtikettBase>
   );
@@ -35,11 +33,23 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
   if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
   const currentTime = new Date();
-  const seasonEndComponent = currentTime < applicationPeriodEnd
-    ? NavEtikett(formatSeasonString(_SEASON_END, applicationPeriodEnd)) :
-    NavEtikett(_SEASON_CLOSED);
-  const seasonStartComponent = currentTime < applicationPeriodStart
-    ? NavEtikett(formatSeasonString(_SEASON_START, applicationPeriodStart)) : null;
+
+  let t: any = '';
+  if (currentTime < applicationPeriodEnd) {
+    t = NavEtikett(formatSeasonString(_SEASON_END, applicationPeriodEnd));
+  } else {
+    t = NavEtikett(_SEASON_CLOSED);
+  }
+  const seasonEndComponent: JSX.Element = t;
+
+  let p: any = '';
+  if (currentTime < applicationPeriodStart) {
+    p = NavEtikett(formatSeasonString(_SEASON_START, applicationPeriodStart));
+  } else {
+    p = null;
+  }
+  const seasonStartComponent: JSX.Element = p;
+
   return (
     <>
       {seasonStartComponent}
