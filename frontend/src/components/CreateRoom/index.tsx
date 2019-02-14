@@ -6,53 +6,55 @@ import Presentational from './Presentational';
 interface IState {
   notesValue: string;
   nameValue: string;
-  seatValue: string;
-  buttonDisabled: string;
-  [key: string]: string;
+  buttonDisabled: boolean;
+  [key: string]: validValues;
 }
 
-export type validValues = boolean | string | number;
+export type validValues = boolean | string;
 
 // tslint:disable-next-line:class-name
 class _CreateRoom extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      buttonDisabled: 'false',
+      buttonDisabled: true,
       nameValue: '',
       notesValue: '',
-      seatValue: '0',
     };
   }
 
-  public componentDidUpdate = (prevState: IState) => {
-    if (prevState === this.state) return;
+  public componentDidUpdate = (prevProps: {}, prevState: IState) => {
+    if (prevState !== this.state) {
+      const { nameValue, notesValue } = this.state;
+      this.setState({ buttonDisabled: true });
+    }
   }
 
   public render() {
-    const { nameValue, notesValue, seatValue, buttonDisabled } = this.state;
+    const { buttonDisabled, nameValue, notesValue } = this.state;
     // Sending down the array entries so each field can
     // update themselves with a single updateState function written below
-    const stateEntries = Object.entries(this.state);
-    const buttonEntry = stateEntries[0];
-    const nameEntry = stateEntries[1];
-    const notesEntry = stateEntries[2];
-    const seatEntry = stateEntries[3];
+    const stateEntries = Object.keys(this.state);
+    const nameKey = stateEntries[1];
+    const notesKey = stateEntries[2];
     return (
       <Presentational
-        nameEntry={nameEntry}
-        notesEntry={notesEntry}
-        seatEntry={seatEntry}
-        buttonEntry={buttonEntry}
+        nameValue={nameValue}
+        nameKey={nameKey}
+        notesValue={notesValue}
+        notesKey={notesKey}
+        buttonDisabled={buttonDisabled}
         updateState={this.updateState}
+        createRoom={this.createRoom}
       />
     );
   }
 
   // Given the key (from state) as a key and a new value
-  private updateState = (key: string, value: string) => {
-    console.log(value)
-    this.setState({ [key]: value });
+  private updateState = (key: string, value: string) => this.setState({ [key]: value });
+
+  private createRoom = () => {
+    console.log("ROOM CREATED BATCHES");
   }
 }
 
