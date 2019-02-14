@@ -32,15 +32,3 @@ def deleteSeat(roomId, seatId):
         return "", 400
 
 
-def updateSeat(id, roomId, form):
-    try:
-        seat = getSeatById(id, roomId)
-        for field in form.keys():
-            if(form[field]):
-                setattr(seat, field, form[field])
-        db.session.add(seat)
-        db.session.commit()
-        return seat.to_json(), 200
-    except SQLAlchemyError as err:
-        print(err)
-        return "", 400
