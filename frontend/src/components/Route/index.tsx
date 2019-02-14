@@ -11,7 +11,7 @@ export const Routing = () => {
       <Header />
       <Route path="/home" component={Home} />
       <Route path="/application" component={Application} />
-      <Route path="/admin/create-room" component={CreateRoom} />
+      <Route path="/admin/rooms/create-room" component={CreateRoom} />
     </div>
   );
 };
