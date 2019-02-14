@@ -1,7 +1,8 @@
 import { AnyAction } from 'redux';
-import { ACTION_NONE, SET_USER_DATA } from './Strings';
+import { APP_NOT_FOUND, SET_USER_DATA } from './constants';
 
 export interface ILoginState {
+  applicationStatus: string;
   comments?: string;
   email: string;
   fullname: string;
@@ -15,6 +16,7 @@ export interface ILoginState {
 }
 
 const initialState = {
+  applicationStatus: APP_NOT_FOUND,
   comments: undefined,
   email: 'test@test.com',
   fullname: 'Test Testesen',
@@ -27,15 +29,13 @@ const initialState = {
   },
 };
 
-export const loginReducer = (
-  state: ILoginState = initialState,
-  action: AnyAction,
-): ILoginState => {
+export const loginReducer = (state: ILoginState = initialState, action: AnyAction): ILoginState => {
   const { type, payload } = action;
   switch (type) {
     case SET_USER_DATA: {
       return {
         ...state,
+        applicationStatus: payload.applicationStatus,
         comments: payload.comments,
         email: payload.email,
         fullname: payload.fullname,
