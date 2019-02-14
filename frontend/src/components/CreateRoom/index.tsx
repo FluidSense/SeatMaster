@@ -18,7 +18,7 @@ interface IState {
 }
 
 // tslint:disable-next-line:class-name
-class _CreateRoom extends Component<{}, IState> {
+class _Container extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -92,6 +92,6 @@ class _CreateRoom extends Component<{}, IState> {
 const CreateRoom = connect(
   null,
   null,
-)(_CreateRoom);
+)(_Container);
 
 export default CreateRoom;
