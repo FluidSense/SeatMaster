@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import { connect } from 'react-redux';
 import Presentational from './Presentational';
 
-// TODO Change values from string to strin/boolean/number
 interface IState {
-  notesValue: string;
-  nameValue: string;
+  roomName: string;
+  roomNotes: string;
   buttonDisabled: boolean;
-  [key: string]: validValues;
 }
-
-export type validValues = boolean | string;
 
 // tslint:disable-next-line:class-name
 class _CreateRoom extends Component<{}, IState> {
@@ -18,43 +14,44 @@ class _CreateRoom extends Component<{}, IState> {
     super(props);
     this.state = {
       buttonDisabled: true,
-      nameValue: '',
-      notesValue: '',
+      roomName: '',
+      roomNotes: '',
     };
   }
 
   public componentDidUpdate = (prevProps: {}, prevState: IState) => {
-    if (prevState !== this.state) {
-      const { nameValue, notesValue } = this.state;
-      this.setState({ buttonDisabled: true });
+    const { roomName, roomNotes } = this.state;
+    if (prevState.roomName !== roomName || prevState.roomNotes !== roomNotes) {
+      if (roomName !== '' && roomNotes !== '') this.setState({ buttonDisabled: false });
     }
   }
 
   public render() {
-    const { buttonDisabled, nameValue, notesValue } = this.state;
-    // Sending down the array entries so each field can
-    // update themselves with a single updateState function written below
-    const stateEntries = Object.keys(this.state);
-    const nameKey = stateEntries[1];
-    const notesKey = stateEntries[2];
+    const { buttonDisabled, roomName, roomNotes } = this.state;
     return (
       <Presentational
-        nameValue={nameValue}
-        nameKey={nameKey}
-        notesValue={notesValue}
-        notesKey={notesKey}
+        roomName={roomName}
+        roomNotes={roomNotes}
         buttonDisabled={buttonDisabled}
-        updateState={this.updateState}
+        setNotes={this.setNotes}
+        setName={this.setName}
         createRoom={this.createRoom}
       />
     );
   }
 
-  // Given the key (from state) as a key and a new value
-  private updateState = (key: string, value: string) => this.setState({ [key]: value });
+  private setNotes = (notesEvent: ChangeEvent<HTMLInputElement>) =>  {
+    const roomNotes = notesEvent.target.value;
+    this.setState({ roomNotes });
+  }
+  private setName = (nameEvent: ChangeEvent<HTMLInputElement>) => {
+    const roomName = nameEvent.target.value;
+    this.setState({ roomName });
+  }
 
   private createRoom = () => {
-    console.log("ROOM CREATED BATCHES");
+    const { roomName, roomNotes } = this.state;
+    console.log(roomName, roomNotes);
   }
 }
 

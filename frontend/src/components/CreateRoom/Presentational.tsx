@@ -1,49 +1,43 @@
 import HovedKnapp from 'nav-frontend-knapper';
 import { Input, Textarea } from 'nav-frontend-skjema';
-import React from 'react';
-import CreateRoom, { validValues } from './index';
+import React, { ChangeEvent, SyntheticEvent } from 'react';
 import {
   _BUTTON_CREATE_ROOM,
   _INPUT_LABEL_NAME,
   _INPUT_LABEL_NOTES,
-  _INPUT_LABEL_SEATS,
+  _TITLE_CREATE_NEW_ROOM,
 } from './strings';
 
 interface IProps {
-  nameValue: string;
-  nameKey: string;
-  notesValue: string;
-  notesKey: string;
-  updateState: (key: string, value: string) => any;
+  roomName: string;
+  roomNotes: string;
+  setNotes: (roomNotes: ChangeEvent<HTMLInputElement>) => void;
+  setName: (roomName: ChangeEvent<HTMLInputElement>) => void;
   buttonDisabled: boolean;
   createRoom: () => any;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const {
-    nameValue,
-    nameKey,
-    notesKey,
-    notesValue,
-    buttonDisabled,
-    updateState,
-    createRoom,
-  } = props;
-  const setState = (e: any) => updateState(e.target.name, e.target.value);
+  const { roomName, roomNotes, setNotes, setName, buttonDisabled, createRoom } = props;
+
+  // TextArea returns the wrong type, so its type has to be forced
+  const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
+    const changeEvent = event as ChangeEvent<HTMLInputElement>;
+    setNotes(changeEvent);
+  };
+
   return (
     <>
-      <h1>Create new room</h1>
+      <h1>{_TITLE_CREATE_NEW_ROOM}</h1>
       <Input
-        name={nameKey}
-        onChange={setState}
-        value={nameValue}
+        onChange={setName}
+        value={roomName}
         label={_INPUT_LABEL_NAME}
         bredde={'XL'}
       />
       <Textarea
-        name={notesKey}
-        onChange={setState}
-        value={notesValue}
+        onChange={assertEventType}
+        value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
       <HovedKnapp
@@ -56,7 +50,5 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     </>
   );
 };
-
-const log = (e: any) => console.log(e);
 
 export default Presentational;
