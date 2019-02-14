@@ -10,7 +10,7 @@ COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install -r /app/requirements.txt
 
-ENV FLASK_APP=/app/app.py
+ENV FLASK_APP=/app/main.py
 
 ENTRYPOINT [ "bash entrypoint.sh" ]
 

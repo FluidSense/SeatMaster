@@ -1,31 +1,32 @@
-from models import ApplicationSeason, Showcase, User, Application
-from database import Session, engine, Base
+from models.application import Application
+from models.applicationSeason import ApplicationSeason
+from models.user import User
+from services import applicationService
 from datetime import datetime, timedelta
+from shared import db
+from main import app
 
-Base.metadata.create_all(engine)
+with app.app_context():
+    the_annoying_user = User("usrnam")
+    the_annoyinger_user = User("putnam")
+    db.session.add(the_annoying_user)
+    db.session.add(the_annoyinger_user)
+    db.session.commit()
+    test_user = db.session.query(User).filter_by(username="usrnam").first()
 
-session = Session()
+    starttime = datetime.now() + timedelta(days=+5)
+    endtime = starttime + timedelta(days=+150)
+    acceptstart = starttime
+    acceptend = starttime + timedelta(days=+7)
 
-some_showcase = Showcase("Yes")
-the_annoying_user = User("usrnam")
-session.add(the_annoying_user)
-session.commit()
-test_user = session.query(User).filter_by(username="usrnam").first()
-print("got test user:", test_user)
-a_test_application = Application("Submitted", "Lorem Ipsum", test_user)
-session.add(a_test_application)
+    some_applicationseason = ApplicationSeason(starttime, endtime, acceptstart, acceptend)
 
-starttime = datetime.now() + timedelta(days=+5)
-endtime = starttime + timedelta(days=+150)
-acceptstart = starttime
-acceptend = starttime + timedelta(days=+7)
+    application1 = applicationService.registerApplication(
+        "sadsda", the_annoying_user.username, the_annoyinger_user.username)
+    application2 = applicationService.registerApplication(
+        "sadsda", the_annoyinger_user.username, the_annoying_user.username)
 
-some_showcase = Showcase("Yes")
-some_applicationseason = ApplicationSeason(starttime, endtime, acceptstart, acceptend)
-
-
-session.add(some_showcase)
-session.add(some_applicationseason)
-session.commit()
-print("All applications users: ", [u.user for u in session.query(Application).all()])
-session.close()
+    db.session.add(some_applicationseason)
+    db.session.commit()
+    print("All applications users: ", [u.user for u in db.session.query(Application).all()])
+    db.session.close()

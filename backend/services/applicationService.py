@@ -2,7 +2,6 @@ from models.application import Application
 from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
-import json
 
 
 def getApplicationById(id):
@@ -15,16 +14,32 @@ def getApplicationByUserId(userid):
     return userApplication
 
 
-def registerApplication(form):
-    status = form.get('status')
-    applicationText = form.get("applicationtext")
-    user = form.get("username")
+def getApplicationByUsername(username):
+    userApplication = db.session.query(Application).join(User).filter(User.username == username).first()
+    return userApplication
+
+
+# TODO application should not be registered with username, it should verify the user.
+def registerApplication(infoText, username, partnerUsername):
     try:
-        user = db.session.query(User).filter_by(username=user).one()
-        application = Application(status, applicationText, user)
+        user = db.session.query(User).filter_by(username=username).one()
+        application = Application("Unprocessed", infoText, user, partnerUsername)
         db.session.add(application)
         db.session.commit()
-        return json.dumps(form), 201
+        connectApplication(application)
+        return application.to_json(), 201
     except SQLAlchemyError as err:
         print(err)
         return "", 400
+
+
+# makes relation between two applications if their userids match
+def connectApplication(application):
+    partnerApplication = getApplicationByUsername(application.partnerUsername)
+    if(not partnerApplication):
+        return
+    if(partnerApplication.partnerUsername == application.user.username):
+        application.partnerApplication = partnerApplication
+        partnerApplication.partnerApplication = application
+        db.session.add(application, partnerApplication)
+        db.session.commit()

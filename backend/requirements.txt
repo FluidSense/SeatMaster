@@ -5,3 +5,9 @@ Flask-Migrate
 Flask-SQLAlchemy
 psycopg2-binary
 python-dotenv
+pytest
+testing.postgresql
+pytest-flask-sqlalchemy
+pytest-flask
+coverage
+pytest-cov

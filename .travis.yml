@@ -6,15 +6,25 @@ matrix:
         - "10"
       before_install:
         - cd frontend
-      cache: 
+      cache:
         npm: true
         directories:
           - frontend/node_modules
       install:
         - npm install
+        - npm run build:css
       script:
         - npm run lint
         - npm run test
     - language: python
+      python: 3.7
+      dist: xenial
+      sudo: true
+
+      before_install:
+        - cd backend
+      install:
+        - pip install -r requirements.txt
       script:
-        - echo "snek"
+        - flake8
+        - python -m "pytest"

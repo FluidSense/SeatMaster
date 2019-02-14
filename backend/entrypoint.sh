@@ -3,4 +3,4 @@ flask db upgrade
 flask db migrate
 flask db upgrade
 
-python3 app.py
+python3 main.py

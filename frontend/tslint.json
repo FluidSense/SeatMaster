@@ -1,11 +1,15 @@
 {
-  "extends": ["tslint:recommended", "tslint-react","tslint-config-airbnb"], 
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-airbnb"
+  ],
   "rules": {
     "variable-name": [
-        true,
-        "ban-keywords",
-        "check-format",
-        "allow-pascal-case"
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case"
     ],
     "import-name": false
   },
