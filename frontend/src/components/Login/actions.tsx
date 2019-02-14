@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { SET_USER_DATA } from './Strings';
+import { SET_USER_DATA } from './constants';
 
 export const fetchUserData = (userID: number):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {

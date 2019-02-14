@@ -1,43 +1,36 @@
+import { Moment } from 'moment';
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
+import { ETIKETT_INFO } from '../commonConstants';
 import { IApplicationSeason } from './reducer';
-import { ETIKETT_YELLOW, SEASON_CLOSED, SEASON_END, SEASON_START } from './Strings';
+import {
+  _SEASON_CLOSED,
+  _SEASON_END,
+  _SEASON_OPEN,
+  _SEASON_START,
+} from './strings';
 
 interface IApplicationSeasonProps {
   applicationSeason: IApplicationSeason;
+  currentDate: Moment;
 }
-
-type validPreText = typeof SEASON_START | typeof SEASON_END;
-
-const formatSeasonString = (preText: validPreText, time: Date) => {
-  const day = time.getDate();
-  const month = time.getMonth() + 1;
-  const year = time.getFullYear();
-  return `${preText} ${day}/${month}/${year}`;
-};
-
-const NavEtikett = (seasonStatus: string) => {
-  return (
-    <EtikettBase
-      type={ETIKETT_YELLOW}
-    >
-      {seasonStatus}
-    </EtikettBase>
-  );
-};
 
 const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
   if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
-  const currentTime = new Date();
-  const seasonEndComponent = currentTime < applicationPeriodEnd
-    ? NavEtikett(formatSeasonString(SEASON_END, applicationPeriodEnd)) : NavEtikett(SEASON_CLOSED);
-  const seasonStartComponent = currentTime < applicationPeriodStart
-    ? NavEtikett(formatSeasonString(SEASON_START, applicationPeriodStart)) : null;
+  const { currentDate } = props;
+
+  const startText = currentDate < applicationPeriodStart ? _SEASON_START : _SEASON_OPEN;
+  const endText = currentDate < applicationPeriodEnd ? _SEASON_END : _SEASON_CLOSED;
+
   return (
     <>
-      {seasonStartComponent}
-      {seasonEndComponent}
+      <EtikettBase type={ETIKETT_INFO}>
+        {`${startText} - ${applicationPeriodStart.format('D/M/YYYY')}`}
+      </EtikettBase>
+      <EtikettBase type={ETIKETT_INFO}>
+        {`${endText} - ${applicationPeriodEnd.format('D/M/YYYY')}`}
+      </EtikettBase>
     </>
   );
 };
