@@ -4,13 +4,13 @@ from shared import db
 from sqlalchemy.exc import SQLAlchemyError
 
 
-def getSeatById(id, room_id):
-    room = db.session.query(Seat).get((id, room_id))
-    return room
+def getSeatById(roomId, seatId):
+    seat = db.session.query(Seat).get((roomId, seatId))
+    return seat
 
 
 def createSeat(id, roomId, info):
-    room = roomService.getRoomById(roomId) 
+    room = roomService.getRoomById(roomId)
     try:
         seat = Seat(id, room, info)
         db.session.add(seat)
@@ -21,10 +21,10 @@ def createSeat(id, roomId, info):
         return "", 400
 
 
-''' def deleteRoom(id):
+def deleteSeat(roomId, seatId):
     try:
-        room = getRoomById(id)
-        db.session.delete(room)
+        seat = getSeatById(roomId, seatId)
+        db.session.delete(seat)
         db.session.commit()
         return "", 200
     except SQLAlchemyError as err:
@@ -32,17 +32,15 @@ def createSeat(id, roomId, info):
         return "", 400
 
 
-def updateRoom(id, form):
+def updateSeat(id, roomId, form):
     try:
-        room = getRoomById(id)
+        seat = getSeatById(id, roomId)
         for field in form.keys():
             if(form[field]):
-                setattr(room, field, form[field])
-        db.session.add(room)
+                setattr(seat, field, form[field])
+        db.session.add(seat)
         db.session.commit()
-        return room.to_json(), 200
+        return seat.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
         return "", 400
-
-'''
