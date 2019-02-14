@@ -2,8 +2,6 @@ import { Column, Container, Row } from 'nav-frontend-grid';
 import KnappBase from 'nav-frontend-knapper';
 import PanelBase from 'nav-frontend-paneler';
 import React, { Fragment } from 'react';
-import { ILoginState } from '../Login/LoginReducer';
-import { ACTION_NONE } from '../Login/Strings';
 import {
   EDIT,
   EMAIL,
@@ -34,7 +32,7 @@ const newApplicationLink = (
 );
 
 interface IProps {
-  applicationInfo: ILoginState;
+  applicationInfo: any;
 }
 
 const userInfo = () => (
@@ -69,9 +67,8 @@ const roomInfo = () => (
   </Fragment>
 );
 
-const ApplicationReviewComponent: React.FunctionComponent<IProps> = (props) => {
+const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { status } = props.applicationInfo;
-  if (status === ACTION_NONE) return newApplicationLink;
   return (
     <Fragment>
         {userInfo()}
@@ -90,4 +87,4 @@ const ApplicationReviewComponent: React.FunctionComponent<IProps> = (props) => {
   );
 };
 
-export default ApplicationReviewComponent;
+export default Presentational;

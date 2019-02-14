@@ -2,26 +2,21 @@ import KnappBase from 'nav-frontend-knapper';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
-import { ILoginState } from '../Login/LoginReducer';
-import ApplicationReviewComponent from './ApplicationReviewComponent';
 import { EDIT } from './Strings';
 
 interface IStateProps {
-  applicationInfo: ILoginState;
+  applicationInfo: any;
 }
 
 type Props = IStateProps;
 
 // tslint:disable-next-line:class-name
-class _ApplicationReviewContainer extends React.Component<Props, {}> {
+class _Container extends React.Component<Props, {}> {
   public render = () => {
     const { applicationInfo } = this.props;
     return (
       <Fragment>
         <h1>Review Application</h1>
-        <ApplicationReviewComponent
-          applicationInfo={applicationInfo}
-        />
       </Fragment>
     );
   }
@@ -31,9 +26,9 @@ const mapStateToProps = (state: IStore) => ({
   applicationInfo: state.userInformation,
 });
 
-const ApplicationReviewContainer = connect(
+const ApplicationReview = connect(
   mapStateToProps,
   null,
-)(_ApplicationReviewContainer);
+)(_Container);
 
-export default ApplicationReviewContainer;
+export default ApplicationReview;
