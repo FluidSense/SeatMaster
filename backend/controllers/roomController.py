@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 from services import roomService
+import json
 
 room = Blueprint("room", __name__, url_prefix="/room")
 
@@ -34,3 +35,11 @@ def updateRoom(id):
         responseText, statusCode = roomService.updateRoom(id, form)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+@room.route("/all")
+def getAllRooms():
+    rooms = roomService.getAllRooms()
+    roomList = []
+    for room in rooms:
+        roomList.append(room.to_json())
+    return jsonify(roomList) if rooms else Response("{}", 200)
