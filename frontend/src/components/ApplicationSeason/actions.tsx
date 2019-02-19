@@ -6,6 +6,7 @@ export const fetchApplicationSeasonData = ():
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     fetch(`${SEASON_API_URL}getSeason`)
       .then(response => response.json())
+      .then(response => !Object.keys(response).length ? Promise.reject() : response)
       .then(result => dispatch({
         payload: result,
         type: SET_APPLICATION_SEASON,
