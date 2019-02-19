@@ -39,7 +39,7 @@ describe('Presentation ApplicationSeason', () => {
       applicationPeriodStart: moment().subtract(7, 'days'),
       end: moment().add(3, 'weeks'),
       start: moment().subtract(1, 'days'),
-    }
+    };
     const wrapper = shallow(
       <Presentational
         applicationSeason={endedSeason}
