@@ -35,7 +35,7 @@ class Seat(db.Model):
         return {
             "id": self.seat_id,
             "info": self.info,
-            "room": self.room,
+            "roomId": self.room.id,
         }
 
     def __str__(self):
