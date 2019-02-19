@@ -87,8 +87,8 @@
   "jest": {
     "collectCoverageFrom": [
       "src/components/**.{ts,tsx}",
-      "!src/components/**constants*",
-      "!src/components/**strings*"
+      "!src/components/**onstants*",
+      "!src/components/**trings*"
     ]
   }
 }
