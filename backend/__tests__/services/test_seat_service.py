@@ -44,6 +44,6 @@ def mockQuery(mocker, returnValue=None):
 def test_get_seat_by_id(mocker):
     room, seat = setUp(mocker)
     mocker.patch.object(db, "session")
-    db.session = mockQuery(mocker, returnValue=seat) 
+    db.session = mockQuery(mocker, returnValue=seat)
     response = seatService.getSeatById(room.id, seat.seat_id)
     assert response == seat

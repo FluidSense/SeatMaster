@@ -30,5 +30,3 @@ def deleteSeat(roomId, seatId):
     except SQLAlchemyError as err:
         print(err)
         return "", 400
-
-

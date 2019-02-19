@@ -1,10 +1,8 @@
-from models.application import Application
 from models.seat import Seat
 from models.room import Room
 from pytest import raises
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
-import json
 
 
 def test_add_room_without_room(db_session):
@@ -28,7 +26,7 @@ def test_add_seat_with_room(db_session):
     dbroom = db_session.query(Room).first()
     assert seat == dbseat
     assert dbseat.room == room
-    assert dbroom.seats == [seat] 
+    assert dbroom.seats == [seat]
 
 
 def test_seat_serialization(db_session):
