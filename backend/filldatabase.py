@@ -1,6 +1,7 @@
 from models.application import Application
 from models.applicationSeason import ApplicationSeason
 from models.user import User
+from models.room import Room
 from services import applicationService
 from datetime import datetime, timedelta
 from shared import db
@@ -27,6 +28,12 @@ with app.app_context():
         "sadsda", the_annoyinger_user.username, the_annoying_user.username)
 
     db.session.add(some_applicationseason)
+    db.session.commit()
+
+    room1 = Room("Space Commaner", "Is very big and nice, though the screen doesn't always work")
+    room2 = Room("Shit room", "Its pretty shit")
+    db.session.add(room1)
+    db.session.add(room2)
     db.session.commit()
     print("All applications users: ", [u.user for u in db.session.query(Application).all()])
     db.session.close()
