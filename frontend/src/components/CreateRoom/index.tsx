@@ -1,5 +1,4 @@
 import React, { ChangeEvent, Component } from 'react';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import {
   POST_HEADERS,
@@ -18,7 +17,7 @@ interface IState {
 }
 
 // tslint:disable-next-line:class-name
-class _Container extends Component<{}, IState> {
+class CreateRoom extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -88,10 +87,5 @@ class _Container extends Component<{}, IState> {
     });
   }
 }
-
-const CreateRoom = connect(
-  null,
-  null,
-)(_Container);
 
 export default CreateRoom;
