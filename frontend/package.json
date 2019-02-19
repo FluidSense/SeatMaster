@@ -83,5 +83,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "jest": {
+    "collectCoverageFrom": [
+      "src/components/**.{ts,tsx}",
+      "!src/components/**constants*",
+      "!src/components/**strings*"
+    ]
+  }
 }
