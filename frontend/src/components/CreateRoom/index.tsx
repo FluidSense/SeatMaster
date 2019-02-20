@@ -49,7 +49,6 @@ class CreateRoom extends Component<{}, IState> {
     const { buttonDisabled, roomName, roomNotes, showAlert, redirect } = this.state;
     if (redirect) return <Redirect to={'/admin/room'} />;
     return (
-      <>
         <Presentational
           roomName={roomName}
           roomNotes={roomNotes}
@@ -59,7 +58,6 @@ class CreateRoom extends Component<{}, IState> {
           createRoom={this.createRoom}
           showAlert={showAlert}
         />
-      </>
     );
   }
 

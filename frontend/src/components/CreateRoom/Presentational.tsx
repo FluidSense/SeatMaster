@@ -40,17 +40,20 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <>
       <h1>{_TITLE_CREATE_NEW_ROOM}</h1>
       <Input
+        id={'input-room-name'}
         onChange={setName}
         value={roomName}
         label={_INPUT_LABEL_NAME}
         bredde={'XL'}
       />
       <Textarea
+        id={'input-room-notes'}
         onChange={assertEventType}
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
       <HovedKnapp
+        id={'create-room-button'}
         type="hoved"
         disabled={buttonDisabled}
         onClick={createRoom}
