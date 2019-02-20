@@ -1,7 +1,7 @@
 describe("Tests making a new application", () => {
 
   beforeEach(() => {
-    cy.visit("http://localhost:3000/admin/new-application")
+    cy.visit("http://localhost:3000/admin/create-season")
   });
 
   it('Checks that its on the correct site', () => {
