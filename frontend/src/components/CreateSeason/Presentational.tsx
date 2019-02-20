@@ -1,14 +1,15 @@
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import React from 'react';
 import { _CREATE_NEW_SEASON, _NEW_APPLICATION_SEASON } from './strings';
 
 interface IProps {
-  alertPeriodEndBeforeStart: any;
-  alertApplicationEndBeforeStart: any;
-  createFields: (index: number, end: number) => any;
+  alertPeriodEndBeforeStart?: SkjemaelementFeil;
+  alertApplicationEndBeforeStart?: SkjemaelementFeil;
+  createFields: (index: number, end: number) => JSX.Element[];
   buttonDisable: boolean;
-  postApplicationSeason: () => any;
+  postApplicationSeason: () => void;
   alertFail?: JSX.Element;
 }
 
