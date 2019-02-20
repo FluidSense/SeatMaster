@@ -1,4 +1,3 @@
-import { Column, Container, Row } from 'nav-frontend-grid';
 import * as React from 'react';
 import './App.css';
 import Login from './components/Login';

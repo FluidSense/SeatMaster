@@ -1,8 +1,7 @@
-import KnappBase from 'nav-frontend-knapper';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
-import { EDIT } from './Strings';
+import Presentational from './Presentational';
 
 interface IStateProps {
   applicationInfo: any;
@@ -15,9 +14,7 @@ class _Container extends React.Component<Props, {}> {
   public render = () => {
     const { applicationInfo } = this.props;
     return (
-      <Fragment>
-        <h1>Review Application</h1>
-      </Fragment>
+      <Presentational applicationInfo={applicationInfo} />
     );
   }
 }
