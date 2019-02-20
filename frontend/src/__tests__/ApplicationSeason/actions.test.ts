@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import { fetchApplicationSeasonData } from '../../components/ApplicationSeason/actions';
+import thunk, { ThunkAction } from 'redux-thunk';
+import * as actions from '../../components/ApplicationSeason/actions';
 import { SET_APPLICATION_SEASON } from '../../components/ApplicationSeason/constants';
 
 const middlewares = [thunk];
@@ -13,7 +13,7 @@ describe('actions', () => {
   });
   const store = mockStore();
 
-  it('should create a thunk action', () => {
+  it('should create a thunk action', async () => {
     const testApplicationSeason = {
       applicationPeriodEnd: '2019-03-03 11:41:04.793276',
       applicationPeriodStart: '2019-03-03 11:41:04.793276',
@@ -33,24 +33,19 @@ describe('actions', () => {
       payload: testApplicationSeason,
       type: SET_APPLICATION_SEASON,
     };
-
-    return store.dispatch<any>(fetchApplicationSeasonData()).then(() => {
-      expect(store.getActions()).toContainEqual(expectedAction);
-    });
-
-    /*return store.dispatch<any>(fetchApplicationSeasonData()).then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
-    });*/
+    await store.dispatch<any>(actions.fetchApplicationSeasonData());
+    expect(store.getActions()).toContainEqual(expectedAction);
   });
 
-  it('should fail if no body returned', () => {
+  it('should fail if no body returned', async () => {
     fetchMock.getOnce('http://localhost:5000/season/getSeason', {
-      body: '',
+      body: '{}',
       headers: {
         'Content-type': 'application/json',
       },
     });
-
-    return expect(store.dispatch<any>(fetchApplicationSeasonData()).rejects());
+    // The expect rejects does nothing?
+    expect.assertions(1);
+    expect(store.dispatch<any>(actions.fetchApplicationSeasonData())).rejects.toMatch('e');
   });
 });
