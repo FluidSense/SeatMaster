@@ -1,5 +1,5 @@
 import { createUserManager } from 'redux-oidc';
-import { DATAPORTEN_CLIENT_ID } from '../../.secrets';
+import { DATAPORTEN_CLIENT_ID } from '../.secrets';
 
 const userManagerConfig = {
   authority: 'https://auth.dataporten.no',

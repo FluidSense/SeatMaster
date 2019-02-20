@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import userManager from './../../utils/userManager';
 
 import KnappBase from 'nav-frontend-knapper';
 
@@ -8,8 +9,11 @@ interface ILoginProps {
 }
 
 export const Presentational: React.FunctionComponent<ILoginProps> = (props) => {
-  const { fetchUserData } = props;
-  const onClickAction = () => fetchUserData(1);
+  const doLogin = (event: React.MouseEvent) => {
+    event.preventDefault();
+    userManager.signinRedirect();
+  };
+  const onClickAction = (event: React.MouseEvent) => doLogin(event);
   return (
     <div className="main-content">
       <h1>
