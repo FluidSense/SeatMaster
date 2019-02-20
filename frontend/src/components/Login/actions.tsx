@@ -1,13 +1,13 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { GET_APPLICATION_SEASON, SET_APPLICATION_SEASON } from './Strings';
+import { SET_USER_DATA } from './constants';
 
-export const fetchApplicationSeasonData = ():
+export const fetchUserData = (userID: number):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    fetch(GET_APPLICATION_SEASON)
+    fetch(`http://localhost:5000/application/user/${userID}`)
       .then(response => response.json())
       .then(result => dispatch({
         payload: result,
-        type: SET_APPLICATION_SEASON,
+        type: SET_USER_DATA,
       }));
   };

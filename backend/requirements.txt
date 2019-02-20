@@ -9,3 +9,5 @@ pytest
 testing.postgresql
 pytest-flask-sqlalchemy
 pytest-flask
+coverage
+pytest-cov

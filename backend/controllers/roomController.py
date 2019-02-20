@@ -22,8 +22,8 @@ def createRoom():
         form = request.get_json()
         name = form.get("name")
         info = form.get("info")
-        responseText, successCode = roomService.createRoom(name, info)
-        return make_response(jsonify(responseText), successCode)
+        responseText, statusCode = roomService.createRoom(name, info)
+        return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
 
@@ -31,6 +31,6 @@ def createRoom():
 def updateRoom(id):
     if request.is_json:
         form = request.get_json()
-        responseText, successCode = roomService.updateRoom(id, form)
-        return make_response(jsonify(responseText), successCode)
+        responseText, statusCode = roomService.updateRoom(id, form)
+        return make_response(jsonify(responseText), statusCode)
     return abort(400)
