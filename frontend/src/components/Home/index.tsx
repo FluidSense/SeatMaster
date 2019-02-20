@@ -17,9 +17,6 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
       <_Container />
       <Container />
       <ApplicationReview />
-      <Link to="/application">
-        <KnappBase type="hoved" htmlType="button" id="newAppButton">New application</KnappBase>
-      </Link>
     </div>
   );
 };
