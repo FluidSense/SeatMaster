@@ -38,7 +38,7 @@ class TestSeat(TestCase):
         room, seat = createSeatAndRoom()
         response = self.app.test_client().delete(f"http://localhost:5000/seat/deleteSeat/{room.id}/{seat.seat_id}")
         assert response.status == "200 OK"
-        assert db.session.query(Seat).first() == None
+        assert db.session.query(Seat).first() is None
 
     def test_create_seat(self):
         room, seat = createSeatAndRoom()

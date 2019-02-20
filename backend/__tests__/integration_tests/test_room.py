@@ -15,7 +15,7 @@ def createRoom():
 
 
 class TestRoom(TestCase):
-    
+
     def setUp(self):
         self.postgres = Postgresql()
         self.app = create_app(db_url=self.postgres.url())
@@ -43,9 +43,9 @@ class TestRoom(TestCase):
             'Accept': mimetype
         }
         data = dict(
-                name='X-wing',
-                info='nice ship dude',
-            )
+            name='X-wing',
+            info='nice ship dude',
+        )
         response = self.app.test_client().post(
             "http://localhost:5000/room/createRoom",
             headers=headers,
@@ -53,7 +53,6 @@ class TestRoom(TestCase):
         assert "201 CREATED" == response.status
         data["id"] = 1
         assert db.session.query(Room).first().to_json() == data
-
 
     def test_updateRoom_success(self):
         room = createRoom()
@@ -72,7 +71,7 @@ class TestRoom(TestCase):
         assert "200 OK" == response.status
         dbroom = db.session.query(Room).first()
         assert dbroom.name == 'X-wing'
-        assert room.info == 'nice ship dude' 
+        assert room.info == 'nice ship dude'
 
     def tearDown(self):
         self.postgres.stop()

@@ -34,7 +34,7 @@ def test_getSeat_with_seat(mocker):
 
 
 def createSeatMock(id, room, info):
-    roomMock = Room("name", "info") 
+    roomMock = Room("name", "info")
     return Seat(id, roomMock, info).to_json(), 201
 
 
@@ -61,7 +61,7 @@ def test_createSeat_success(mocker, client):
                 id="D1",
                 roomId=None,
                 info='nice ship dude',
-                    )).data == response.data
+            )).data == response.data
 
 
 def test_createRoom_fails(mocker, client):
