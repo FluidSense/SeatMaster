@@ -5,10 +5,10 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
   <_Container
     applicationSeason={
       Object {
-        "applicationPeriodEnd": "2019-02-21T10:48:25.293Z",
-        "applicationPeriodStart": "2019-02-21T10:48:25.293Z",
-        "end": "2019-02-21T10:48:25.293Z",
-        "start": "2019-02-21T10:48:25.293Z",
+        "applicationPeriodEnd": "2019-02-01T23:00:00.000Z",
+        "applicationPeriodStart": "2019-02-01T23:00:00.000Z",
+        "end": "2019-02-01T23:00:00.000Z",
+        "start": "2019-02-01T23:00:00.000Z",
       }
     }
     fetchSeason={[Function]}
@@ -16,13 +16,13 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
     <Presentational
       applicationSeason={
         Object {
-          "applicationPeriodEnd": "2019-02-21T10:48:25.293Z",
-          "applicationPeriodStart": "2019-02-21T10:48:25.293Z",
-          "end": "2019-02-21T10:48:25.293Z",
-          "start": "2019-02-21T10:48:25.293Z",
+          "applicationPeriodEnd": "2019-02-01T23:00:00.000Z",
+          "applicationPeriodStart": "2019-02-01T23:00:00.000Z",
+          "end": "2019-02-01T23:00:00.000Z",
+          "start": "2019-02-01T23:00:00.000Z",
         }
       }
-      currentDate={"2019-02-21T10:48:25.324Z"}
+      currentDate={"2017-01-01T00:00:00.000Z"}
     >
       <EtikettBase
         type="info"
@@ -38,7 +38,26 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
             <span
               className="typo-normal"
             >
-              Closed for applications - 21/2/2019
+              Open for applications  - 2/2/2019
+            </span>
+          </TypografiBase>
+        </div>
+      </EtikettBase>
+      <EtikettBase
+        type="info"
+        typo="normaltekst"
+      >
+        <div
+          className="etikett etikett--info"
+        >
+          <TypografiBase
+            tag="span"
+            type="normaltekst"
+          >
+            <span
+              className="typo-normal"
+            >
+              Closing for applications  - 2/2/2019
             </span>
           </TypografiBase>
         </div>

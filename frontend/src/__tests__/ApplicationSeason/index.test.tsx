@@ -11,11 +11,13 @@ describe('ApplicationSeasonContainer', () => {
   const middlewares = [thunk];
   const mockStore = configureMockStore(middlewares);
   const store = mockStore({applicationSeason: {
-    applicationPeriodEnd: moment(),
-    applicationPeriodStart: moment(),
-    end: moment(),
-    start: moment(),
+    applicationPeriodEnd: moment('20190202'),
+    applicationPeriodStart: moment('20190202'),
+    end: moment('20190202'),
+    start: moment('20190202'),
   }});
+  // Overwrite Date.now being used by moment() to always return same value
+  Date.now = jest.fn(() => new Date(Date.UTC(2017, 0, 1)).valueOf());
   it('renders correctly', () => {
     const wrapper = mount(
     <Provider store={store} >
