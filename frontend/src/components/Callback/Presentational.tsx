@@ -2,11 +2,11 @@ import React from 'react';
 import { CallbackComponent } from 'redux-oidc';
 import userManager from '../../utils/userManager';
 
-interface ILoginProps {
+interface IProps {
   push: (userId: string) => any;
 }
 
-export const Presentational: React.FunctionComponent<ILoginProps> = (props) =>{
+export const Presentational: React.FunctionComponent<IProps> = (props) =>{
   const doSuccessCallback = () => {
     props.push('/');
   };
