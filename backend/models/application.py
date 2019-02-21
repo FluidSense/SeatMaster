@@ -1,4 +1,5 @@
 from shared import db
+from models.seat import Seat
 import json
 
 
@@ -50,6 +51,22 @@ class Application(db.Model):
         backref='partnersApplication',
         remote_side="Application.id",
         post_update=True)
+
+    room_id = db.Column(db.Integer)
+
+    seat_id = db.Column(db.String)
+
+    __table_args__ = (
+        db.ForeignKeyConstraint(
+            [room_id, seat_id],
+            [Seat.room_id, Seat.seat_id]),
+        {})
+
+    seat = db.relationship(
+        Seat,
+        uselist=False,
+        foreign_keys='[Seat.room_id, Seat.seat_id]',
+        primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
     def __init__(self, status, infoText, user, partnerUsername):
         self.status = status

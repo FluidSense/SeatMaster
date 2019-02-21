@@ -26,6 +26,11 @@ class Seat(db.Model):
         db.String(),
         nullable=True)
 
+    assignedApplication = db.relationship(
+        "Application",
+        uselist=False,
+    )
+
     def __init__(self, id, room, info):
         self.seat_id = id
         self.room = room
