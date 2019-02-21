@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ApplicationSeasonContainer renders correctly 1`] = `
+<Connect(_Container)>
+  <_Container
+    applicationSeason={
+      Object {
+        "applicationPeriodEnd": "2019-02-02T00:00:00.000Z",
+        "applicationPeriodStart": "2019-02-02T00:00:00.000Z",
+        "end": "2019-02-02T00:00:00.000Z",
+        "start": "2019-02-02T00:00:00.000Z",
+      }
+    }
+    fetchSeason={[Function]}
+  >
+    <Presentational
+      applicationSeason={
+        Object {
+          "applicationPeriodEnd": "2019-02-02T00:00:00.000Z",
+          "applicationPeriodStart": "2019-02-02T00:00:00.000Z",
+          "end": "2019-02-02T00:00:00.000Z",
+          "start": "2019-02-02T00:00:00.000Z",
+        }
+      }
+      currentDate={"2017-01-01T00:00:00.000Z"}
+    >
+      <EtikettBase
+        type="info"
+        typo="normaltekst"
+      >
+        <div
+          className="etikett etikett--info"
+        >
+          <TypografiBase
+            tag="span"
+            type="normaltekst"
+          >
+            <span
+              className="typo-normal"
+            >
+              Open for applications  - 2/2/2019
+            </span>
+          </TypografiBase>
+        </div>
+      </EtikettBase>
+      <EtikettBase
+        type="info"
+        typo="normaltekst"
+      >
+        <div
+          className="etikett etikett--info"
+        >
+          <TypografiBase
+            tag="span"
+            type="normaltekst"
+          >
+            <span
+              className="typo-normal"
+            >
+              Closing for applications  - 2/2/2019
+            </span>
+          </TypografiBase>
+        </div>
+      </EtikettBase>
+    </Presentational>
+  </_Container>
+</Connect(_Container)>
+`;
