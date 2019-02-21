@@ -1,23 +1,32 @@
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import fetchMock from 'fetch-mock';
 import moment from 'moment';
 import * as React from 'react';
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-import CreateSeason, { setTime } from '../../components/CreateSeason';
+import { POST_NEW_SEASON_URL } from '../../components/commonConstants';
+import CreateSeason, { format, IState, setTime } from '../../components/CreateSeason/index';
 
-const mockStore = configureMockStore();
+fetchMock.mock(POST_NEW_SEASON_URL, 201);
+
 describe('Create season', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<CreateSeason />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('Creates correct alert', () => {
+  it('Check if creating is available', () => {
     const wrapper = shallow(<CreateSeason />);
-    console.log(wrapper.dive().find('#new-season-btn').html());
-    // const testStripe = <AlertStripe type="advarsel" solid={true}>Test</AlertStripe>;
-
+    const state: IState = wrapper.instance().state;
+    const body = JSON.stringify({
+      newPeriodEnd: state.periodEnd.format(format),
+      newPeriodStart: state.periodStart.format(format),
+      newRoomEnd: state.roomEnd.format(format),
+      newRoomStart: state.roomStart.format(format),
+    });
+    const newSeasonButton = wrapper.dive().find('#new-season-btn');
+    newSeasonButton.simulate('click');
+    const fetchOptions = fetchMock.lastOptions();
+    expect(fetchOptions.body).toEqual(body);
   });
 });
 

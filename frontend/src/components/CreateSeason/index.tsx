@@ -1,7 +1,6 @@
 import moment, { Moment } from 'moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { POST_NEW_SEASON_URL } from '../commonConstants';
 import DateInputField from '../DateInputField';
@@ -16,7 +15,7 @@ import {
   _SEASON_START,
 } from './strings';
 
-interface IState {
+export interface IState {
   periodStart: Moment;
   periodEnd: Moment;
   roomStart: Moment;
@@ -47,7 +46,7 @@ export const setTime = (day: Moment) => {
 };
 
 // Format to match backend model
-const format = 'YYYY-MM-DD HH:mm:ss.SSS';
+export const format = 'YYYY-MM-DD HH:mm:ss.SSS';
 
 // tslint:disable-next-line:class-name
 class CreateSeason extends Component<{}, IState> {
