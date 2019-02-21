@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create room functions renders correctly 1`] = `
+<Presentational
+  buttonDisabled={true}
+  createRoom={[Function]}
+  roomName=""
+  roomNotes=""
+  setName={[Function]}
+  setNotes={[Function]}
+  showAlert={false}
+/>
+`;
