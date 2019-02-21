@@ -1,3 +1,4 @@
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { loadUser, reducer as oidcReducer } from 'redux-oidc';
 import reduxThunk from 'redux-thunk';
@@ -10,9 +11,9 @@ import {
   applicationSeasonReducer,
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
+import history from './components/History';
 import { ILoginState, loginReducer } from './components/Login/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
-import { createUserManager, loadUser } from 'redux-oidc';
 import userManager from './utils/userManager';
 
 export interface IStore {
@@ -29,6 +30,7 @@ export const reducers = combineReducers({
   applications: ApplicationReducer,
   rooms: viewRoomReducer,
   oidc: oidcReducer,
+  router: connectRouter(history),
   userInformation: loginReducer,
 });
 
@@ -40,7 +42,7 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const createStoreWithMiddleware = composeEnhancers(
-    applyMiddleware(reduxThunk),
+    applyMiddleware(reduxThunk, routerMiddleware(history)),
   )(createStore);
 
 const store = createStoreWithMiddleware(reducers);

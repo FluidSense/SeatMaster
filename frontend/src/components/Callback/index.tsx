@@ -1,29 +1,15 @@
-import React from 'react';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { CallbackComponent } from 'redux-oidc';
-import userManager from './../../utils/userManager';
+import { ThunkDispatch } from 'redux-thunk';
+import { Presentational } from './Presentational';
 
-class CallbackPage extends React.Component {
-  public render() {
-    return (
-      <CallbackComponent
-        userManager={userManager}
-        successCallback={this.doSuccessCallback}
-        errorCallback={this.doErrorCallback}
-      >
-        <div>Redirecting...</div>
-      </CallbackComponent>
-    );
-  }
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  push: (endpoint: string) => dispatch(push(endpoint)),
+});
 
-  private doSuccessCallback = () => {
-    return <Redirect to="/" />;
-  }
+const Callback = connect(
+  null,
+  mapDispatchToProps,
+)(Presentational);
 
-  private doErrorCallback = () => {
-    return <Redirect to="/" />;
-  }
-}
-
-export default connect()(CallbackPage);
+export default Callback;
