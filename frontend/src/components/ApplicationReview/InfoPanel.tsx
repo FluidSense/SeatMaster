@@ -12,7 +12,7 @@ const InfoPanel: React.FunctionComponent<IProps> = (props) => {
   return (
     <>
       <Element>{title}</Element>
-      <PanelBase>{text}</PanelBase>
+      <PanelBase>{text == null ? '' : text}</PanelBase>
     </>
   );
 };

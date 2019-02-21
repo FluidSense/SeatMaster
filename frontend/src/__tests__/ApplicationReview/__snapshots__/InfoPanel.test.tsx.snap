@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoPanel renders correctly 1`] = `
+<Fragment>
+  <Element>
+    This is a title
+  </Element>
+  <PanelBase
+    border={false}
+  >
+    This is a text
+  </PanelBase>
+</Fragment>
+`;

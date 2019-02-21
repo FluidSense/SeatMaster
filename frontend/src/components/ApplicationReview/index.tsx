@@ -4,13 +4,11 @@ import { IStore } from '../../store';
 import Presentational from './Presentational';
 
 interface IStateProps {
-  applicationInfo: any;
+  applicationInfo: object;
 }
 
-type Props = IStateProps;
-
 // tslint:disable-next-line:class-name
-class _Container extends React.Component<Props, {}> {
+class _Container extends React.Component<IStateProps> {
   public render = () => {
     const { applicationInfo } = this.props;
     return (

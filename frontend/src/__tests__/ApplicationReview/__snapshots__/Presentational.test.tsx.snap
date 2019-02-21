@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Application review presentational Renders correctly 1`] = `
+<Fragment>
+  <h1>
+    Review Application
+  </h1>
+  <div
+    className="user-information"
+  >
+    <InfoPanel
+      key="Name"
+      text="Teser Testersen"
+      title="Name"
+    />
+    <InfoPanel
+      key="E-Mail"
+      text="test@test.com"
+      title="E-Mail"
+    />
+    <InfoPanel
+      key="Phone"
+      text="91100999"
+      title="Phone"
+    />
+    <InfoPanel
+      key="Master status"
+      text="Master of masters"
+      title="Master status"
+    />
+  </div>
+  <div
+    className="room-information"
+  >
+    <InfoPanel
+      key="Partner"
+      text="None"
+      title="Partner"
+    />
+    <InfoPanel
+      key="Preffered room"
+      text="Space Commander"
+      title="Preffered room"
+    />
+    <InfoPanel
+      key="Seat Rollover"
+      text="Yes"
+      title="Seat Rollover"
+    />
+  </div>
+  <div
+    className="needs-information"
+  >
+    <InfoPanel
+      title="Needs"
+    />
+  </div>
+  <KnappBase
+    autoDisableVedSpinner={false}
+    className={null}
+    disabled={false}
+    htmlType="submit"
+    inaktivKlasseVedDisabled={false}
+    mini={false}
+    spinner={false}
+    type="hoved"
+  >
+    Edit Application
+  </KnappBase>
+</Fragment>
+`;
