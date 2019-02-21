@@ -37,18 +37,20 @@ const inputTextArray = [
 const errorObjectSeasonEndTooEarly = { feilmelding: _SEASON_END_TOO_EARLY };
 const errorObjectRoomEndTooEarly = { feilmelding: _ROOM_END_TOO_EARLY };
 
-export const setTime = (day: Moment) => (
-  day.set({
+export const setTime = (day: Moment) => {
+  const newDay = moment(day);
+  newDay.set({
     hour: 23,
     minute: 59,
-  })
-);
+  });
+  return newDay;
+};
 
 // Format to match backend model
 const format = 'YYYY-MM-DD HH:mm:ss.SSS';
 
 // tslint:disable-next-line:class-name
-class _Container extends Component<{}, IState> {
+class CreateSeason extends Component<{}, IState> {
   constructor(props: object) {
     super(props);
     const currentTime = setTime(moment());
@@ -92,16 +94,14 @@ class _Container extends Component<{}, IState> {
 
     if (redirect) return (<Redirect to="/admin" />);
     return (
-      <>
-        <Presentational
-          buttonDisable={buttonDisable}
-          alertApplicationEndBeforeStart={errorApplicationEndBeforeStart}
-          alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
-          createFields={this.createFields}
-          postApplicationSeason={this.postApplicationSeason}
-          alertFail={alertFail}
-        />
-      </>
+      <Presentational
+        buttonDisable={buttonDisable}
+        alertApplicationEndBeforeStart={errorApplicationEndBeforeStart}
+        alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
+        createFields={this.createFields}
+        postApplicationSeason={this.postApplicationSeason}
+        alertFail={alertFail}
+      />
     );
   }
 
@@ -158,10 +158,5 @@ class _Container extends Component<{}, IState> {
 
   private setDate = (key: string, time: Moment) => this.setState({ [key]: time });
 }
-
-const CreateSeason = connect(
-  null,
-  null,
-)(_Container);
 
 export default CreateSeason;

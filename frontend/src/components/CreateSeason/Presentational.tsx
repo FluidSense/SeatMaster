@@ -28,7 +28,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         <h1>{_NEW_APPLICATION_SEASON}</h1>
         <SkjemaGruppe feil={alertPeriodEndBeforeStart}> {createFields(0, 2)} </SkjemaGruppe>
         <SkjemaGruppe feil={alertApplicationEndBeforeStart}> {createFields(2, 4)} </SkjemaGruppe>
-        <Hovedknapp disabled={buttonDisable} onClick={postApplicationSeason}>
+        <Hovedknapp id={'new-season-btn'} disabled={buttonDisable} onClick={postApplicationSeason}>
           {_CREATE_NEW_SEASON}
         </Hovedknapp>
         {alertFail}

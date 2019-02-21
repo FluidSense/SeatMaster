@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Create season renders correctly 1`] = `
-<ContextConsumer>
-  <Component />
-</ContextConsumer>
+<Presentational
+  buttonDisable={false}
+  createFields={[Function]}
+  postApplicationSeason={[Function]}
+/>
 `;
