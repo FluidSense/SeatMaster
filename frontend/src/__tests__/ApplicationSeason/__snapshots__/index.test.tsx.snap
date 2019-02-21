@@ -5,10 +5,10 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
   <_Container
     applicationSeason={
       Object {
-        "applicationPeriodEnd": "2019-02-01T23:00:00.000Z",
-        "applicationPeriodStart": "2019-02-01T23:00:00.000Z",
-        "end": "2019-02-01T23:00:00.000Z",
-        "start": "2019-02-01T23:00:00.000Z",
+        "applicationPeriodEnd": "2019-02-02T00:00:00.000Z",
+        "applicationPeriodStart": "2019-02-02T00:00:00.000Z",
+        "end": "2019-02-02T00:00:00.000Z",
+        "start": "2019-02-02T00:00:00.000Z",
       }
     }
     fetchSeason={[Function]}
@@ -16,10 +16,10 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
     <Presentational
       applicationSeason={
         Object {
-          "applicationPeriodEnd": "2019-02-01T23:00:00.000Z",
-          "applicationPeriodStart": "2019-02-01T23:00:00.000Z",
-          "end": "2019-02-01T23:00:00.000Z",
-          "start": "2019-02-01T23:00:00.000Z",
+          "applicationPeriodEnd": "2019-02-02T00:00:00.000Z",
+          "applicationPeriodStart": "2019-02-02T00:00:00.000Z",
+          "end": "2019-02-02T00:00:00.000Z",
+          "start": "2019-02-02T00:00:00.000Z",
         }
       }
       currentDate={"2017-01-01T00:00:00.000Z"}
