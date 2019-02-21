@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkAction } from 'redux-thunk';
+import thunk from 'redux-thunk';
 import * as actions from '../../components/ApplicationSeason/actions';
 import { SET_APPLICATION_SEASON } from '../../components/ApplicationSeason/constants';
 
@@ -8,10 +8,11 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('actions', () => {
+  const store = mockStore();
   afterEach(() => {
     fetchMock.restore();
+    store.clearActions();
   });
-  const store = mockStore();
 
   it('should create a thunk action', async () => {
     const testApplicationSeason = {
@@ -26,8 +27,6 @@ describe('actions', () => {
         'Content-type': 'application/json',
       },
     });
-
-    const dummyaction = () => async () => ({ type:'DUMMY', payload:{ key:'value' } });
 
     const expectedAction = {
       payload: testApplicationSeason,
@@ -44,8 +43,6 @@ describe('actions', () => {
         'Content-type': 'application/json',
       },
     });
-    // The expect rejects does nothing?
-    expect.assertions(1);
-    expect(store.dispatch<any>(actions.fetchApplicationSeasonData())).rejects.toMatch('e');
+    expect(store.getActions()).toEqual([]);
   });
 });
