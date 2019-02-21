@@ -18,12 +18,11 @@ class CallbackPage extends React.Component {
   }
 
   private doSuccessCallback = () => {
-    this.props.dispatch(push('/'));
+    return <Redirect to="/" />;
   }
 
   private doErrorCallback = () => {
-    this.props.dispatch(push('/'));
-    console.error(error);
+    return <Redirect to="/" />;
   }
 }
 

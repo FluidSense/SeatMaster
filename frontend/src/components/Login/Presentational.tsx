@@ -26,16 +26,14 @@ export const Presentational: React.FunctionComponent<ILoginProps> = (props) => {
       <p>
         Click the button to login using FEIDE.
       </p>
-      <Link to="/home">
-        <KnappBase
-          type="hoved"
-          htmlType="button"
-          onClick={onClickAction}
-          id="loginButton"
-        >
-          Log in
-        </KnappBase>
-      </Link>
+      <KnappBase
+        type="hoved"
+        htmlType="button"
+        onClick={onClickAction}
+        id="loginButton"
+      >
+        Log in
+      </KnappBase>
     </div>
   );
 };

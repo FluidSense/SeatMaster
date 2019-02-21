@@ -8,7 +8,7 @@ const userManagerConfig = {
   filterProtocolClaims: true,
   loadUserInfo: true,
   redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/callback`,
-  response_type: 'token id_token',
+  response_type: 'id_token token',
   scope: 'email openid profile userid userid-feide',
   silent_redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/silent_renew.html`,
 };
