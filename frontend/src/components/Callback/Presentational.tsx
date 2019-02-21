@@ -6,12 +6,13 @@ interface IProps {
   push: (userId: string) => any;
 }
 
-export const Presentational: React.FunctionComponent<IProps> = (props) =>{
+export const Presentational: React.FunctionComponent<IProps> = (props) => {
   const doSuccessCallback = () => {
     props.push('/');
   };
 
   const doErrorCallback = () => {
+    // TODO: Create login failure page
     props.push('/');
   };
 

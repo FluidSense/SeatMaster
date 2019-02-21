@@ -1,6 +1,6 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { loadUser, reducer as oidcReducer } from 'redux-oidc';
+import { loadUser, reducer as oidcReducer, UserState } from 'redux-oidc';
 import reduxThunk from 'redux-thunk';
 import {
   ApplicationReducer,
@@ -22,6 +22,7 @@ export interface IStore {
   rooms: IRoomState;
   adminRoom: IAdminRoomState;
   applications: IApplicationState;
+  oidc: UserState;
 }
 
 export const reducers = combineReducers({
