@@ -15,7 +15,7 @@ describe('Create room functions', () => {
     const component = shallow(<CreateRoom />);
     const name = 'X-Wing';
     const inputName = component.dive().find('#input-room-name');
-    inputName.simulate('change', { target : { value: name } });
+    inputName.simulate('change', { target: { value: name } });
     expect(component.state('roomName')).toEqual(name);
   });
 
@@ -23,7 +23,7 @@ describe('Create room functions', () => {
     const component = shallow(<CreateRoom />);
     const notes = 'These are some notes, bro';
     const inputNotes = component.dive().find('#input-room-notes');
-    inputNotes.simulate('change', { target : { value:  notes } });
+    inputNotes.simulate('change', { target: { value: notes } });
     expect(component.state('roomNotes')).toEqual(notes);
   });
 
@@ -38,8 +38,8 @@ describe('Create room functions', () => {
     };
     component.setState(newState);
     const jsonBody = JSON.stringify({
-      name: component.state('roomName'),
       info: component.state('roomNotes'),
+      name: component.state('roomName'),
     });
     submitButton.simulate('click');
     const fetchOptions = fetchMock.lastOptions();
@@ -47,7 +47,7 @@ describe('Create room functions', () => {
   });
 });
 
-describe('Create Room life cycle' , () => {
+describe('Create Room life cycle', () => {
   it('Update state and check if button is enabled', () => {
     const wrapper = shallow(<CreateRoom />) as any;
     const newState = {

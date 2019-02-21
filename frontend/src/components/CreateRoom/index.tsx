@@ -49,19 +49,19 @@ class CreateRoom extends Component<{}, IState> {
     const { buttonDisabled, roomName, roomNotes, showAlert, redirect } = this.state;
     if (redirect) return <Redirect to={'/admin/room'} />;
     return (
-        <Presentational
-          roomName={roomName}
-          roomNotes={roomNotes}
-          buttonDisabled={buttonDisabled}
-          setNotes={this.setNotes}
-          setName={this.setName}
-          createRoom={this.createRoom}
-          showAlert={showAlert}
-        />
+      <Presentational
+        roomName={roomName}
+        roomNotes={roomNotes}
+        buttonDisabled={buttonDisabled}
+        setNotes={this.setNotes}
+        setName={this.setName}
+        createRoom={this.createRoom}
+        showAlert={showAlert}
+      />
     );
   }
 
-  private setNotes = (notesEvent: ChangeEvent<HTMLInputElement>) =>  {
+  private setNotes = (notesEvent: ChangeEvent<HTMLInputElement>) => {
     const roomNotes = notesEvent.target.value;
     this.setState({ roomNotes });
   }
@@ -72,17 +72,17 @@ class CreateRoom extends Component<{}, IState> {
 
   private createRoom = () => {
     const { roomName, roomNotes } = this.state;
-    const body = { [POST_ROOM_NAME]: roomName, [POST_ROOM_NOTES]: roomNotes };
+    const body = { [POST_ROOM_NOTES]: roomNotes, [POST_ROOM_NAME]: roomName };
     fetch(POST_NEW_ROOM_URL, {
       body: JSON.stringify(body),
       headers: POST_HEADERS,
       method: 'post',
     })
-    .then(response => response.status)
-    .then((statusCode) => {
-      if (statusCode === 201) this.setState({ redirect: true });
-      if (statusCode === 400) this.setState({ showAlert: true });
-    });
+      .then(response => response.status)
+      .then((statusCode) => {
+        if (statusCode === 201) this.setState({ redirect: true });
+        if (statusCode === 400) this.setState({ showAlert: true });
+      });
   }
 }
 
