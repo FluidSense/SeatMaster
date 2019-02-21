@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import userManager from './../../utils/userManager';
 
 import KnappBase from 'nav-frontend-knapper';
