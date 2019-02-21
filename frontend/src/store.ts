@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { reducer as oidcReducer } from 'redux-oidc';
+import { loadUser, reducer as oidcReducer } from 'redux-oidc';
 import reduxThunk from 'redux-thunk';
 import {
   ApplicationReducer,
@@ -39,6 +39,11 @@ declare global {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const createStoreWithMiddleware = composeEnhancers(applyMiddleware(reduxThunk)(createStore));
+const createStoreWithMiddleware = composeEnhancers(
+    applyMiddleware(reduxThunk),
+  )(createStore);
 
-export const configureStore = () => createStoreWithMiddleware(reducers);
+const store = createStoreWithMiddleware(reducers);
+loadUser(store, userManager);
+
+export default store;
