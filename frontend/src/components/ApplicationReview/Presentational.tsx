@@ -2,7 +2,9 @@ import KnappBase from 'nav-frontend-knapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_NOT_FOUND } from '../Login/constants';
+import { IApplicationInfoObject } from './index';
 import InfoPanel from './InfoPanel';
+import InformationList from './InformationList';
 import {
   _EDIT_APPLICATION,
   _EMAIL,
@@ -18,18 +20,25 @@ import {
 } from './strings';
 
 interface IProps {
-  applicationInfo: any;
+  applicationInfo: IApplicationInfoObject;
 }
 
-const createInformationDiv = (object: object) => {
-  return Object.entries(object).map(array => (
-    <InfoPanel key={array[0]} title={array[0]} text={array[1]} />
-  ));
-};
+export interface IUserInfoObject {
+  [_NAME]?: string;
+  [_EMAIL]?: string;
+  [_PHONE]?: string;
+  [_MASTER_STATUS]?: string;
+}
+
+export interface IRoomInfObject {
+  [_PARTNER]?: string;
+  [_PREFFERED_ROOM]?: string;
+  [_SEAT_ROLLOVER]?: string;
+}
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { applicationInfo } = props;
-  const userInfoObject = {
+  const userInfoObject: IUserInfoObject = {
     [_NAME]: applicationInfo.fullname,
     [_EMAIL]: applicationInfo.email,
     [_PHONE]: applicationInfo.phone,
@@ -50,8 +59,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   return (
     <>
       <h1>{_REVIEW_APPLICATION}</h1>
-      <div className="user-information">{createInformationDiv(userInfoObject)}</div>
-      <div className="room-information">{createInformationDiv(roomInfoObject)}</div>
+      <div className="user-information">{<InformationList information={userInfoObject} />}</div>
+      <div className="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
         {<InfoPanel title={_NEEDS} text={applicationInfo.needs} />}
       </div>

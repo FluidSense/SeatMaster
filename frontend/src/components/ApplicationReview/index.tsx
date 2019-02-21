@@ -4,7 +4,19 @@ import { IStore } from '../../store';
 import Presentational from './Presentational';
 
 interface IStateProps {
-  applicationInfo: object;
+  applicationInfo: IApplicationInfoObject;
+}
+
+export interface IApplicationInfoObject {
+  fullname?: string;
+  email?: string;
+  phone?: string;
+  status?: string;
+  partner?: string;
+  room?: string;
+  seatRollover?: string;
+  needs?: string;
+  applicationStatus?: string;
 }
 
 // tslint:disable-next-line:class-name

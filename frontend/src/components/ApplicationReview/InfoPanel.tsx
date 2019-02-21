@@ -4,7 +4,7 @@ import React from 'react';
 
 interface IProps {
   title: string;
-  text: string;
+  text?: string;
 }
 
 const InfoPanel: React.FunctionComponent<IProps> = (props) => {
