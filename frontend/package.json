@@ -16,6 +16,8 @@
     "nav-frontend-core": "^4.0.6",
     "nav-frontend-etiketter": "^1.0.17",
     "nav-frontend-etiketter-style": "^0.3.15",
+    "nav-frontend-grid-style": "^0.2.18",
+    "nav-frontend-paneler": "^1.0.12",
     "nav-frontend-ikoner-assets": "^0.2.31",
     "nav-frontend-js-utils": "^1.0.6",
     "nav-frontend-knapper": "^1.0.15",
