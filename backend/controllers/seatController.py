@@ -11,8 +11,8 @@ def getSeat(roomId, id):
 
 
 @seat.route("deleteSeat/<roomId>/<id>", methods=["DELETE"])
-def deleteSeat(id):
-    responseText, statusCode = seatService.deleteSeat(id)
+def deleteSeat(roomId, id):
+    responseText, statusCode = seatService.deleteSeat(roomId, id)
     return Response(responseText, statusCode)
 
 
@@ -24,14 +24,5 @@ def createSeat():
         roomId = form.get("roomId")
         info = form.get("info")
         responseText, successCode = seatService.createSeat(id, roomId, info)
-        return make_response(jsonify(responseText), successCode)
-    return abort(400)
-
-
-@seat.route("/updateSeat/<roomId>/<id>", methods=["PUT"])
-def updateSeat(roomId, id):
-    if request.is_json:
-        form = request.get_json()
-        responseText, successCode = seatService.updateSeat(id, roomId, form)
         return make_response(jsonify(responseText), successCode)
     return abort(400)
