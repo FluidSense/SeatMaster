@@ -2,6 +2,7 @@ from models.seat import Seat
 from services import roomService
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
+from services import applicationService
 
 
 def getSeatById(roomId, seatId):
@@ -27,6 +28,17 @@ def deleteSeat(roomId, seatId):
         db.session.delete(seat)
         db.session.commit()
         return "", 200
+    except SQLAlchemyError as err:
+        print(err)
+        return "", 400
+
+
+def assignSeat(roomId, seatId, userId):
+    try:
+        seat = getSeatById(roomId, seatId)
+        application = applicationService.getApplicationByUserId(userId)
+        application.seat = seat
+        return application.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
         return "", 400
