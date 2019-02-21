@@ -8,44 +8,28 @@ exports[`Application review presentational Renders correctly 1`] = `
   <div
     className="user-information"
   >
-    <InfoPanel
-      key="Name"
-      text="Teser Testersen"
-      title="Name"
-    />
-    <InfoPanel
-      key="E-Mail"
-      text="test@test.com"
-      title="E-Mail"
-    />
-    <InfoPanel
-      key="Phone"
-      text="91100999"
-      title="Phone"
-    />
-    <InfoPanel
-      key="Master status"
-      text="Master of masters"
-      title="Master status"
+    <InformationList
+      information={
+        Object {
+          "E-Mail": "test@test.com",
+          "Master status": "Master of masters",
+          "Name": "Teser Testersen",
+          "Phone": "91100999",
+        }
+      }
     />
   </div>
   <div
     className="room-information"
   >
-    <InfoPanel
-      key="Partner"
-      text="None"
-      title="Partner"
-    />
-    <InfoPanel
-      key="Preffered room"
-      text="Space Commander"
-      title="Preffered room"
-    />
-    <InfoPanel
-      key="Seat Rollover"
-      text="Yes"
-      title="Seat Rollover"
+    <InformationList
+      information={
+        Object {
+          "Partner": "None",
+          "Preffered room": "Space Commander",
+          "Seat Rollover": "Yes",
+        }
+      }
     />
   </div>
   <div
