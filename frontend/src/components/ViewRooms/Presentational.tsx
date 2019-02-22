@@ -1,25 +1,26 @@
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import React from 'react';
+import { IRoom, IState as IProps } from './index';
 
-interface IProps {
-  room: {
-    id: number,
-    name: string,
-    info: string,
-  };
-}
-
-const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { name, info } = props.room;
-  return(
+const createRoomPanelList = (rooms: IRoom[]) => {
+  return rooms.map(room => (
     <LenkepanelBase href="/admin/rooms/update-room">
       <div>
-        {name}
+        {room.name}
       </div>
       <div>
-        {info}
+        {room.info}
       </div>
     </LenkepanelBase>
+  ));
+};
+
+const Presentational: React.FunctionComponent<IProps> = (props) => {
+  const { rooms } = props;
+  return (
+    <>
+      {createRoomPanelList(rooms)}
+    </>
   );
 };
 

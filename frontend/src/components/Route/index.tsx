@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Application from '../Application';
 import CreateRoom from '../CreateRoom';
 import CreateSeason from '../CreateSeason';
@@ -11,11 +11,13 @@ export const Routing = () => {
   return (
     <div>
       <Header />
-      <Route path="/home" component={Home} />
-      <Route path="/application" component={Application} />
-      <Route path="/admin/rooms" component={ViewRoom} />
-      <Route path="/admin/rooms/create-room" component={CreateRoom} />
-      <Route path="/admin/create-season" component={CreateSeason} />
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/application" component={Application} />
+        <Route exact={true} path="/admin/rooms" component={ViewRoom} />
+        <Route exact={true} path="/admin/rooms/create-room" component={CreateRoom} />
+        <Route path="/admin/create-season" component={CreateSeason} />
+      </Switch>
     </div>
   );
 };

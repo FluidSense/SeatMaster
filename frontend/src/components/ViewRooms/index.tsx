@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Presentational from './Presentational';
 
-interface IState {
-  room?: {
-    id: number,
-    name: string,
-    info: string,
-  };
+export interface IRoom {
+  id: number;
+  name: string;
+  info: string;
+  seat: number;
+}
+
+export interface IState {
+  rooms: IRoom[];
 }
 
 // tslint:disable-next-line:class-name
@@ -15,20 +18,19 @@ class _Container extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      room: undefined,
+      rooms: [],
     };
   }
   public componentDidMount = () => {
-    fetch('http://localhost:5000/room/1')
-    .then(response => response.json())
-    .then(result => this.setState({ room: result }));
+    fetch('http://localhost:5000/room/all')
+      .then(response => response.json())
+      .then(result => this.setState({ rooms: result }));
   }
 
   public render() {
-    const { room } = this.state;
-    if (room === undefined) return null;
-    return(
-      <Presentational room={room}/>
+    const { rooms } = this.state;
+    return (
+      <Presentational rooms={rooms} />
     );
   }
 }
