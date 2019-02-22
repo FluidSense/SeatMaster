@@ -35,10 +35,10 @@ def deleteSeat(roomId, seatId):
 
 def assignSeat(roomId, seatId, userId):
     try:
-        seat = getSeatById(roomId, seatId)
         application = applicationService.getApplicationByUserId(userId)
-        application.seat = seat
-        return application.to_json(), 200
+        application.seat_id = seatId
+        application.room_id = roomId
+        return application.seat.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
         return "", 400

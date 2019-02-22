@@ -29,6 +29,7 @@ class Seat(db.Model):
     assignedApplication = db.relationship(
         "Application",
         uselist=False,
+        backref="Application"
     )
 
     def __init__(self, id, room, info):
