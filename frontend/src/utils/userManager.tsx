@@ -3,7 +3,7 @@ import { DATAPORTEN_CLIENT_ID } from '../.secrets';
 
 const userManagerConfig = {
   authority: 'https://auth.dataporten.no',
-  automaticSilentRenew: true,
+  automaticSilentRenew: false,
   client_id: DATAPORTEN_CLIENT_ID,
   filterProtocolClaims: true,
   loadUserInfo: true,

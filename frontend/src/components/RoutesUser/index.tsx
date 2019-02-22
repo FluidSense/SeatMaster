@@ -13,7 +13,6 @@ export const RoutesUser = () => {
         <Route exact={true} path="/" component={Home} />
         <Redirect from="/home" to="/" />
         <Route path="/application" component={Application} />
-        <Route path="/callback" component={Callback} />
       </Switch>
     </>
   );
