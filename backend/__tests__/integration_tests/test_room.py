@@ -73,6 +73,15 @@ class TestRoom(TestCase):
         assert dbroom.name == 'X-wing'
         assert room.info == 'nice ship dude'
 
+    def test_create_rooms_and_get_all(self):
+        room1 = createRoom()
+        room2 = createRoom()
+        roomList = [room1, room2]
+        jsonList = list(map(lambda x: x.to_json(), roomList))
+        response = self.app.test_client().get(f"http://localhost:5000/room/all")
+        assert response.data == jsonify(jsonList).data
+        assert db.session.query(Room).all() == roomList
+
     def tearDown(self):
         self.postgres.stop()
         self.ctx.pop()
