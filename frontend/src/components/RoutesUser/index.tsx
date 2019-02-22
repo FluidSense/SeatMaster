@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Application from '../Application/index';
 import Callback from '../Callback/index';
 import { Header } from '../Header';
@@ -11,8 +11,9 @@ export const RoutesUser = () => {
       <Header />
       <Switch>
         <Route exact={true} path="/" component={Home} />
-        <Route path="/home" component={Home} />
+        <Redirect from="/home" to="/" />
         <Route path="/application" component={Application} />
+        <Route path="/callback" component={Callback} />
       </Switch>
     </>
   );

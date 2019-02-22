@@ -13,7 +13,7 @@ export const Presentational: React.FunctionComponent<IProps> = (props) => {
 
   const doErrorCallback = () => {
     // TODO: Create login failure page
-    props.push('/');
+    props.push('/loginerror');
   };
 
   return (

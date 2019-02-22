@@ -8,8 +8,6 @@ import { RoutesUser } from '../RoutesUser';
 const RoutesRedirect = (props: UserState) => {
   const { user } = props;
 
-  console.log(user);
-
   if (!user || user.expired) {
     return <RoutesLogin />;
   }
