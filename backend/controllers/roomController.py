@@ -34,3 +34,10 @@ def updateRoom(id):
         responseText, statusCode = roomService.updateRoom(id, form)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+
+@room.route("/all")
+def getAllRooms():
+    rooms = roomService.getAllRooms()
+    roomList = list(map(lambda x: x.to_json(), rooms))
+    return jsonify(roomList) if rooms else Response("{}", 200)
