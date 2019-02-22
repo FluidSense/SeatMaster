@@ -42,3 +42,8 @@ def updateRoom(id, form):
     except SQLAlchemyError as err:
         print(err)
         return "", 400
+
+
+def getAllRooms():
+    rooms = db.session.query(Room).all()
+    return rooms

@@ -48,6 +48,7 @@ def test_createRoom_success(mocker, client):
             data=json.dumps(dict(
                 name='X-wing',
                 info='nice ship dude',
+                seats=0,
             )))
         assert "201 CREATED" == response.status
         assert make_response(
@@ -55,6 +56,7 @@ def test_createRoom_success(mocker, client):
                 id=None,
                 name='X-wing',
                 info='nice ship dude',
+                seats=0,
                     )).data == response.data
 
 
@@ -98,6 +100,7 @@ def test_updateRoom_success(mocker, client):
             data=json.dumps(dict(
                 name='X-wing',
                 info='nice ship dude',
+                seats=0,
             )))
         assert "200 OK" == response.status
         assert make_response(
@@ -105,6 +108,7 @@ def test_updateRoom_success(mocker, client):
                 id=None,
                 name='X-wing',
                 info='nice ship dude',
+                seats=0,
                     )).data == response.data
 
 

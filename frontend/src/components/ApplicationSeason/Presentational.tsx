@@ -16,18 +16,21 @@ interface IApplicationSeasonProps {
 }
 
 const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props) => {
-  if (props.applicationSeason === undefined) return null;
   const { applicationPeriodEnd, applicationPeriodStart } = props.applicationSeason;
   const { currentDate } = props;
 
   const startText = currentDate < applicationPeriodStart ? _SEASON_START : _SEASON_OPEN;
   const endText = currentDate < applicationPeriodEnd ? _SEASON_END : _SEASON_CLOSED;
 
-  return (
-    <>
+  const start = (
       <EtikettBase type={ETIKETT_INFO}>
         {`${startText} - ${applicationPeriodStart.format('D/M/YYYY')}`}
-      </EtikettBase>
+      </EtikettBase>);
+  const startEtikett = currentDate <= applicationPeriodEnd ? start : false;
+
+  return (
+    <>
+      {startEtikett}
       <EtikettBase type={ETIKETT_INFO}>
         {`${endText} - ${applicationPeriodEnd.format('D/M/YYYY')}`}
       </EtikettBase>

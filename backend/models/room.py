@@ -1,4 +1,5 @@
 from shared import db
+from models.seat import Seat
 
 
 class Room(db.Model):
@@ -18,6 +19,12 @@ class Room(db.Model):
         db.String(50),
         nullable=False)
 
+    seats = db.relationship(
+        'Seat',
+        back_populates="room",
+        foreign_keys=[Seat.room_id, Seat.seat_id]
+    )
+
     def __init__(self, name, info):
         self.name = name
         self.info = info
@@ -27,6 +34,7 @@ class Room(db.Model):
             "id": self.id,
             "name": self.name,
             "info": self.info,
+            "seats": len(self.seats),
         }
 
     def __str__(self):
