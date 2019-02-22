@@ -29,11 +29,4 @@ describe('Tests the routing', () => {
             .get('#newAppButton').click()
             .url().should('eq', 'http://localhost:3000/application');
   });
-
-  it('Tests submit button', () => {
-    cy
-            .visit('http://localhost:3000/application')
-            .get('#submitButton').click()
-            .url().should('eq', 'http://localhost:3000/home');
-  });
 });
