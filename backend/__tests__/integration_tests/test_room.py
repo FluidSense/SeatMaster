@@ -45,6 +45,7 @@ class TestRoom(TestCase):
         data = dict(
             name='X-wing',
             info='nice ship dude',
+            seats=0,
         )
         response = self.app.test_client().post(
             "http://localhost:5000/room/createRoom",
