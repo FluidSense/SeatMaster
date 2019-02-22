@@ -26,3 +26,15 @@ def createSeat():
         responseText, successCode = seatService.createSeat(id, roomId, info)
         return make_response(jsonify(responseText), successCode)
     return abort(400)
+
+
+@seat.route("/assignSeat", methods=["PUT"])
+def assignSeat():
+    if request.is_json:
+        form = request.get_json()
+        roomId = form.get("roomId")
+        seatId = form.get("seatId")
+        userId = form.get("userId")
+        responseText, statusCode = seatService.assignSeat(roomId, seatId, userId)
+        return make_response(jsonify(responseText), statusCode)
+    return abort(400)
