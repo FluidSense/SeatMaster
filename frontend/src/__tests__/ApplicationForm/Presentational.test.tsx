@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -6,6 +6,7 @@ import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
 import Presentational from '../../components/ApplicationForm/Presentational';
 import { _ALERT_USER_ERROR, POST_FORM_DATA } from '../../components/ApplicationForm/Strings';
+import { setTime } from '../../components/CreateSeason';
 
 describe('application form', () => {
   const user = {
@@ -35,9 +36,8 @@ describe('application form', () => {
 
   it('renders alertbox if faulty fetch', () => {
     fetchMock.postOnce(POST_FORM_DATA, {
-      status: '400',
       body: '',
-      headers: 'Content-type: application/json',
+      status: '400',
     });
     const wrapper = mount(
       <Presentational
@@ -48,13 +48,37 @@ describe('application form', () => {
         status={user.status}
         changeModal={user.changeModal}
       />);
-    const submit = wrapper.find(KnappBase).first();
-    submit.simulate('click');
-    const state = wrapper.state();
-    expect(fetchMock.called(POST_FORM_DATA)).toBeTruthy();
-    expect(state).toBe(1);
-    const alert = wrapper.find(AlertStripe);
-    expect(alert.length).toBe(1);
+    const btn = wrapper.find(KnappBase).first();
+    expect(btn.length).toBe(1);
+    btn.simulate('submit');
+    expect(fetchMock.called()).toBeTruthy();
+    expect(wrapper.state('loading')).toBeTruthy();
+  });
+
+  it('triggers modal if response is ok', () => {
+    fetchMock.postOnce(
+      POST_FORM_DATA,
+      {
+        body: {},
+        status: '200',
+      },
+      {
+        overwriteRoutes: true,
+      });
+    const changeModalMock = jest.fn();
+    const wrapper = mount(
+      <Presentational
+        username={user.username}
+        fullname={user.fullname}
+        email={user.email}
+        phone={user.phone}
+        status={user.status}
+        changeModal={changeModalMock}
+      />);
+    const btn = wrapper.find(KnappBase).first();
+    expect(fetchMock.called()).toBeTruthy();
+    btn.simulate('submit');
+    expect(changeModalMock.mock.calls.length).toBe(1);
   });
 
   it('renders correctly', () => {

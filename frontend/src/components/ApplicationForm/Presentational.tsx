@@ -111,8 +111,9 @@ export class Presentational extends React.Component<IProps, IState> {
       if (response.ok) {
         this.props.changeModal(true);
         this.setState({ loading: false, error: '' });
+      } else {
+        this.setState({ loading: false, error: _ALERT_USER_ERROR });
       }
-      this.setState({ loading: false, error: _ALERT_USER_ERROR });
     })
     .catch((error) => {
       this.setState({ loading: false, error: _ALERT_USER_ERROR });
