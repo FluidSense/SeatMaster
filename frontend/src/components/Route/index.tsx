@@ -17,6 +17,8 @@ export const Routing = () => {
         <Route exact={true} path="/admin/rooms" component={ViewRoom} />
         <Route exact={true} path="/admin/rooms/create-room" component={CreateRoom} />
         <Route path="/admin/create-season" component={CreateSeason} />
+        {/* Will be edited in other pull request */}
+        <Route path="/admin/rooms/update-room-:id" component={CreateRoom} />
       </Switch>
     </div>
   );

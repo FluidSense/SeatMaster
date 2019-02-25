@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Presentational from './Presentational';
 
 export interface IRoom {
@@ -9,12 +8,12 @@ export interface IRoom {
   seat: number;
 }
 
-export interface IState {
+export interface IStateProps {
   rooms: IRoom[];
 }
 
 // tslint:disable-next-line:class-name
-class _Container extends Component<{}, IState> {
+class ViewRoom extends Component<{}, IStateProps> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -34,10 +33,5 @@ class _Container extends Component<{}, IState> {
     );
   }
 }
-
-const ViewRoom = connect(
-  null,
-  null,
-)(_Container);
 
 export default ViewRoom;
