@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`application form renders correctly 1`] = `
+<Fragment>
+  <form
+    onSubmit={[Function]}
+  >
+    <ApplicationFormPersonal
+      email="london@starbucks.com"
+      fullname="Starbucks London"
+      phone="22225555"
+      status=""
+      username="Sutaba"
+    />
+    <ApplicationFormPreferences
+      partner={false}
+      updateApplicationFormData={[Function]}
+    />
+    <ApplicationFormComments
+      needs={false}
+      updateApplicationFormData={[Function]}
+    />
+    <KnappBase
+      autoDisableVedSpinner={true}
+      className={null}
+      disabled={false}
+      htmlType="submit"
+      inaktivKlasseVedDisabled={false}
+      mini={false}
+      spinner={false}
+      type="hoved"
+    >
+      Submit
+    </KnappBase>
+  </form>
+</Fragment>
+`;
