@@ -12,16 +12,16 @@ import {
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
 import history from './components/History';
-import { ILoginState, loginReducer } from './components/Login/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 import userManager from './utils/userManager';
+import { IRegisteredUserState, registeredUserReducer } from './components/RegisterUser/reducer';
 
 export interface IStore {
-  userInformation: ILoginState;
   applicationSeason: IApplicationSeasonState;
   rooms: IRoomState;
   adminRoom: IAdminRoomState;
   applications: IApplicationState;
+  userInformation: IRegisteredUserState;
   oidc: UserState;
 }
 
@@ -32,7 +32,7 @@ export const reducers = combineReducers({
   rooms: viewRoomReducer,
   oidc: oidcReducer,
   router: connectRouter(history),
-  userInformation: loginReducer,
+  userInformation: registeredUserReducer,
 });
 
 declare global {

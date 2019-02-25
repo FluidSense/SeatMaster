@@ -2,8 +2,8 @@ import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { APP_NOT_FOUND } from '../Login/constants';
 import ApplicationOverview from './ApplicationOverview';
+import { APP_NOT_FOUND } from '../commonConstants';
 import { IApplicationInfoObject } from './index';
 import { _NEW_APPLICATION } from './strings';
 

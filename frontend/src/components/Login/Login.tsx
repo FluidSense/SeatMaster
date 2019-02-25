@@ -1,13 +1,9 @@
 import * as React from 'react';
-import userManager from './../../utils/userManager';
+import userManager from '../../utils/userManager';
 
 import KnappBase from 'nav-frontend-knapper';
 
-interface ILoginProps {
-  fetchUserData: (userId: number) => any;
-}
-
-export const Presentational: React.FunctionComponent<ILoginProps> = (props) => {
+export const Login: React.FunctionComponent<{}> = (props) => {
   const doLogin = (event: React.MouseEvent) => {
     event.preventDefault();
     userManager.signinRedirect();

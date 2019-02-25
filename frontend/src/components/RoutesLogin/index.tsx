@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Login from '../Login';
+import { Login } from '../Login/Login';
 import { LoginError } from '../LoginError/LoginError';
 
 export const RoutesLogin = () => {

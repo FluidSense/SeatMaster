@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { IStore } from '../../store';
-import { fetchUserRegistered } from './actions';
+import { postCreateUser } from './actions';
 import { Presentational } from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
@@ -12,13 +12,13 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchUserRegistered: (feideId: string) => dispatch(fetchUserRegistered(feideId)),
+  postCreateUser: (userID: string) => dispatch(postCreateUser(userID)),
   push: (endpoint: string) => dispatch(push(endpoint)),
 });
 
-const Callback = connect(
+const RegisterUser = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Presentational);
 
-export default Callback;
+export default RegisterUser;

@@ -1,14 +1,30 @@
 import React from 'react';
-import { CallbackComponent } from 'redux-oidc';
+import { CallbackComponent, UserState } from 'redux-oidc';
 import userManager from '../../utils/userManager';
 
-interface IProps {
-  push: (userId: string) => any;
+interface IDispatchProps {
+  fetchUserRegistered: (userId: string) => any;
+  push: (endpoint: string) => any;
 }
 
-export const Presentational: React.FunctionComponent<IProps> = (props) => {
+type Props = UserState & IDispatchProps;
+
+export const Presentational: React.FunctionComponent<Props> = (props) => {
+  const { user } = props;
+
   const doSuccessCallback = () => {
-    props.push('/');
+
+    console.log(user);
+
+    if (user && !user.expired) {
+      console.log("heyo")
+      if (!props.fetchUserRegistered(user.id_token)) {
+        console.log('registering');
+        props.push('/registerUser');
+      }
+      props.push('/');
+    }
+    props.push('/loginerror');
   };
 
   const doErrorCallback = () => {
