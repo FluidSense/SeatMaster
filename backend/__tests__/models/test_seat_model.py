@@ -1,5 +1,7 @@
 from models.seat import Seat
 from models.room import Room
+from models.user import User
+from models.application import Application
 from pytest import raises
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
@@ -59,3 +61,27 @@ def test_users_connect_each_other(db_session):
     with raises(FlushError):
         db_session.add(seat2)
         db_session.commit()
+
+
+def test_application_connect_to_seat(db_session):
+    room = Room("D1", "kek")
+    db_session.add(room)
+    seat = Seat(
+        id="D1",
+        room=room,
+        info="")
+    db_session.add(seat)
+    user = User("yooyo")
+    db_session.add(user)
+    application = Application(
+        status="",
+        infoText="",
+        user=user,
+        partnerUsername="",
+    )
+    db_session.add(application)
+    db_session.commit()
+    seat.assignedApplication = application
+    db_session.add(seat)
+    db_session.commit()
+    assert application.seat == seat
