@@ -21,7 +21,7 @@ describe('actions', () => {
       end: '2019-03-03 11:41:04.793276',
       start: '2019-03-03 11:41:04.793276',
     };
-    fetchMock.get('http://localhost:5000/season/getSeason', {
+    fetchMock.get('http://localhost:5000/season/', {
       body: JSON.stringify(testApplicationSeason),
       headers: {
         'Content-type': 'application/json',

@@ -32,7 +32,7 @@ class TestRoom(TestCase):
 
     def test_delete_seat(self):
         room = createRoom()
-        response = self.app.test_client().delete(f"http://localhost:5000/room/deleteRoom/{room.id}")
+        response = self.app.test_client().delete(f"http://localhost:5000/room/{room.id}")
         assert response.status == "200 OK"
         assert db.session.query(Room).first() is None
 
@@ -48,7 +48,7 @@ class TestRoom(TestCase):
             seats=0,
         )
         response = self.app.test_client().post(
-            "http://localhost:5000/room/createRoom",
+            "http://localhost:5000/room/",
             headers=headers,
             data=json.dumps(data))
         assert "201 CREATED" == response.status
@@ -63,7 +63,7 @@ class TestRoom(TestCase):
             'Accept': mimetype
         }
         response = self.app.test_client().put(
-            'http://localhost:5000/room/updateRoom/1',
+            'http://localhost:5000/room/1',
             headers=headers,
             data=json.dumps(dict(
                 name='X-wing',
@@ -79,7 +79,8 @@ class TestRoom(TestCase):
         room2 = createRoom()
         roomList = [room1, room2]
         jsonList = list(map(lambda x: x.to_json(), roomList))
-        response = self.app.test_client().get(f"http://localhost:5000/room/all")
+        response = self.app.test_client().get(f"http://localhost:5000/room/")
+        assert response.status == "200 OK"
         assert response.data == jsonify(jsonList).data
         assert db.session.query(Room).all() == roomList
 
