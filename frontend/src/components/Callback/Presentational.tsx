@@ -8,13 +8,10 @@ interface IProps {
 
 export const Presentational: React.FunctionComponent<IProps> = (props) => {
   const doSuccessCallback = () => {
-    console.log("Actual success");
     props.push('/');
   };
 
   const doErrorCallback = () => {
-    // TODO: Create login failure page
-    console.log("failure");
     props.push('/loginerror');
   };
 

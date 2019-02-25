@@ -6,20 +6,14 @@ import { RoutesLogin } from '../RoutesLogin';
 import { RoutesUser } from '../RoutesUser';
 
 const RoutesRedirect = (props: UserState) => {
-  const { isLoadingUser, user } = props;
-
-  console.log("HÆLL*", user);
-
+  const { user } = props;
 
   if (!user || user.expired) {
-    console.log("fucky wucky routes")
     return <RoutesLogin />;
   }
 
   // TODO: Add a check for admin privileges and add adminroutes
-  console.log("Updated correct routes");
   return <RoutesUser />;
-
 };
 
 const mapStateToProps = (state: IStore) => ({
