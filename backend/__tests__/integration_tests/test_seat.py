@@ -38,7 +38,7 @@ class TestSeat(TestCase):
 
     def test_delete_seat(self):
         room, seat = createSeatAndRoom()
-        response = self.app.test_client().delete(f"http://localhost:5000/seat/deleteSeat/{room.id}/{seat.seat_id}")
+        response = self.app.test_client().delete(f"http://localhost:5000/seat/{room.id}/{seat.seat_id}")
         assert response.status == "200 OK"
         assert db.session.query(Seat).first() is None
 
@@ -55,7 +55,7 @@ class TestSeat(TestCase):
             info='nice ship dude',
         )
         response = self.app.test_client().post(
-            "http://localhost:5000/seat/createSeat",
+            "http://localhost:5000/seat/",
             headers=headers,
             data=json.dumps(data))
 

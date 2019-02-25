@@ -21,7 +21,7 @@ class TestApplicationSeason(TestCase):
         self.dateFormat = ("%Y-%m-%d %H:%M:%S.%f")
 
     def test_application_season(self):
-        response = self.app.test_client().get('/season/getSeason')
+        response = self.app.test_client().get('/season/')
         assert response.status == "200 OK"
         assert response.data == b'{}'
 
@@ -29,7 +29,7 @@ class TestApplicationSeason(TestCase):
         season = createBasicSeason()
         db.session.add(season)
         db.session.commit()
-        response = self.app.test_client().get('/season/getSeason')
+        response = self.app.test_client().get('/season/')
         assert response.status == "200 OK"
         assert response.data == jsonify(season.to_json()).data
 
@@ -48,7 +48,7 @@ class TestApplicationSeason(TestCase):
         acceptstart = starttime
         acceptend = starttime + timedelta(days=+7)
         response = self.app.test_client().post(
-          '/season/createSeason',
+          '/season/',
           headers=headers,
           data=json.dumps(dict(
               newPeriodEnd=self.formatDate(acceptend),
