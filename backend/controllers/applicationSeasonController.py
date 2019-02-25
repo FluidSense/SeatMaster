@@ -4,13 +4,13 @@ from services import applicationSeasonService
 applicationSeason = Blueprint('applicationSeason', __name__)
 
 
-@applicationSeason.route("/getSeason")
+@applicationSeason.route("/")
 def getCurrentSeason():
     currApplication = applicationSeasonService.getCurrentOrNext()
     return jsonify(currApplication.to_json()) if currApplication else Response("{}", 200)
 
 
-@applicationSeason.route("/createSeason", methods=["POST"])
+@applicationSeason.route("/", methods=["POST"])
 def createNewSeason():
     if request.is_json:
         form = request.get_json()

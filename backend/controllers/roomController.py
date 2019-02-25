@@ -10,13 +10,13 @@ def getRoom(id):
     return jsonify(room.to_json()) if room else Response("{}", 200)
 
 
-@room.route("deleteRoom/<id>", methods=["DELETE"])
+@room.route("/<id>", methods=["DELETE"])
 def deleteRoom(id):
     responseText, statusCode = roomService.deleteRoom(id)
     return Response(responseText, statusCode)
 
 
-@room.route("/createRoom", methods=["POST"])
+@room.route("/", methods=["POST"])
 def createRoom():
     if request.is_json:
         form = request.get_json()
@@ -27,7 +27,7 @@ def createRoom():
     return abort(400)
 
 
-@room.route("/updateRoom/<id>", methods=["PUT"])
+@room.route("/<id>", methods=["PUT"])
 def updateRoom(id):
     if request.is_json:
         form = request.get_json()
@@ -36,7 +36,7 @@ def updateRoom(id):
     return abort(400)
 
 
-@room.route("/all")
+@room.route("/")
 def getAllRooms():
     rooms = roomService.getAllRooms()
     roomList = list(map(lambda x: x.to_json(), rooms))
