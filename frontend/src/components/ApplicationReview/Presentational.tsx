@@ -44,7 +44,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       : applicationInfo.fullname,
     [_EMAIL]: applicationInfo.email,
     [_PHONE]: applicationInfo.phone,
-    [_MASTER_STATUS]: applicationInfo.applicationStatus,
+    [_MASTER_STATUS]: applicationInfo.status,
   };
   const roomInfoObject = {
     [_PARTNER]: applicationInfo.partner,

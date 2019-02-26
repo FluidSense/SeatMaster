@@ -37,7 +37,7 @@ export const loginReducer = (state: ILoginState = initialState, action: AnyActio
     case SET_USER_DATA: {
       return {
         ...state,
-        applicationStatus: payload.applicationStatus,
+        applicationStatus: payload.status,
         comments: payload.comments,
         email: payload.email,
         fullname: payload.fullname,
@@ -45,7 +45,7 @@ export const loginReducer = (state: ILoginState = initialState, action: AnyActio
         needs: payload.needs,
         partner: payload.partnerApplication.user.username,
         phone: payload.phone,
-        status: payload.status,
+        status: payload.masterStatus,
         user: payload.user,
       };
     }
