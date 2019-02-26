@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`application form confirmation modal renders correctly 1`] = `
+<ModalWrapper
+  closeButton={true}
+  closeTimeoutMS={0}
+  contentLabel="Form submitted"
+  isOpen={true}
+  onRequestClose={[Function]}
+  shouldCloseOnOverlayClick={true}
+>
+  <div
+    style={
+      Object {
+        "padding": "2rem 2.5rem",
+      }
+    }
+  >
+    Your application has been submitted and will be processed. You can see its status on the home page.
+    <br />
+    <Link
+      replace={false}
+      to="/"
+    >
+      <KnappBase
+        autoDisableVedSpinner={true}
+        className={null}
+        disabled={false}
+        htmlType="submit"
+        inaktivKlasseVedDisabled={false}
+        mini={false}
+        spinner={false}
+        type="hoved"
+      >
+        Go home
+      </KnappBase>
+    </Link>
+  </div>
+</ModalWrapper>
+`;
