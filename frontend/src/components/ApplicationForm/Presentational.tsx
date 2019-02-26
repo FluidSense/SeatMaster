@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
+import * as React from 'react';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
@@ -52,6 +51,7 @@ export class Presentational extends React.Component<IProps, IState> {
         {alertBox}
         <form
           onSubmit={this.onSubmitForm}
+          id="new-application-form"
         >
           <ApplicationFormPersonal
             username={this.props.username}

@@ -9,12 +9,12 @@ interface IHomeProps {
   fetchSeason: () => any;
 }
 
-const title = 'My Status';
+const _TITLE = 'My Status';
 
 export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <div id="student-application">
-      <Sidetittel>{title}</Sidetittel>
+      <Sidetittel className="page-title">{_TITLE}</Sidetittel>
       <ApplicationSeason />
       <ApplicationStatus />
       <ApplicationReview />
