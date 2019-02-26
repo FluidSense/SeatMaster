@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InfoPanel renders correctly 1`] = `
-<Fragment>
+<div
+  className="info-panel"
+  id="info-panel-Thisis a title"
+>
   <Element>
     This is a title
   </Element>
@@ -10,5 +13,5 @@ exports[`InfoPanel renders correctly 1`] = `
   >
     This is a text
   </PanelBase>
-</Fragment>
+</div>
 `;
