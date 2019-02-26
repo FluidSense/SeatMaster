@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IRoom } from '../../components/ViewRooms/index';
 import Presentational from '../../components/ViewRooms/Presentational';
 
-const mockRoom = (id: number, name: string, info: string, seat: number) => ({
+export const mockRoom = (id: number, name: string, info: string, seat: number) => ({
   id,
   info,
   name,
