@@ -50,5 +50,7 @@ htmlcov/
 .coverage.*
 *,cover
 
-.vscode
 *.css
+
+.vscode/*
+!.vscode/snippets/
