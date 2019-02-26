@@ -1,0 +1,49 @@
+{
+  "SeatMaster Container": {
+    "prefix": "smcon",
+    "body": [
+      "import { connect } from 'react-redux';",
+      "import { ThunkAction, ThunkDispatch } from 'redux-thunk';",
+      "import { IStore } from '../../store';",
+      "import Presentational from './Presentational';",
+      "",
+      "const mapStateToProps = (state: IStore) => ({",
+      "",
+      "});",
+      "",
+      "const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({",
+      "",
+      "});",
+      "",
+      "const Container = connect(",
+      "  mapStateToProps,",
+      "  mapDispatchToProps,",
+      ")(Presentational);",
+      "",
+      "export default Container;",
+      ""
+    ],
+    "description": "Container pattern based on the Seat Master setup."
+  },
+  "SeatMaster Presentational": {
+    "prefix": "smpres",
+    "body": [
+      "import React from 'react';",
+      "",
+      "interface IProps {",
+      "}",
+      "",
+      "const Presentational: React.FunctionComponent<IProps> = (props) => {",
+      "  const { } = props;",
+      "",
+      "  return (",
+      "",
+      "  );",
+      "};",
+      "",
+      "export default Presentational;",
+      ""
+    ],
+    "description": "Presentational pattern based on hte Seat Master setup."
+  }
+}
