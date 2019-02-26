@@ -10,10 +10,10 @@ interface IProps {
 const InfoPanel: React.FunctionComponent<IProps> = (props) => {
   const { title, text } = props;
   return (
-    <>
+    <div className={'info-panel'} id={`info-panel-${title.replace(' ', '')}`}>
       <Element>{title}</Element>
       <PanelBase>{text == null ? '' : text}</PanelBase>
-    </>
+    </div>
   );
 };
 

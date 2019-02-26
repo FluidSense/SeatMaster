@@ -23,7 +23,11 @@ const initialState = {
   email: 'test@test.com',
   fullname: 'Test Testesen',
   id: undefined,
+  needs: 'scoopedewhoop',
+  partner: 'Peter Rydberg',
   phone: '11223344',
+  room: 'Space Commander',
+  seatRollover: 'Yes',
   status: 'Master student',
   user: {
     id: 1,
