@@ -72,7 +72,13 @@ class TestSeat(TestCase):
         room, seat = createSeatAndRoom()
         user = User("hello")
         db.session.add(user)
-        application = Application("lol", "lol", user, "no")
+        application = Application(
+            status="lol",
+            comments="lol",
+            needs="needs",
+            user=user,
+            partnerUsername="no"
+        )
         db.session.add(application)
         db.session.commit()
         mimetype = 'application/json'
@@ -99,7 +105,13 @@ class TestSeat(TestCase):
         room, seat = createSeatAndRoom()
         user = User("hello")
         db.session.add(user)
-        application = Application("lol", "lol", user, "no")
+        application = Application(
+            status="lol",
+            comments="lol",
+            needs="needs",
+            user=user,
+            partnerUsername="no"
+        )
         db.session.add(application)
         db.session.commit()
         seat.assignedApplication = application

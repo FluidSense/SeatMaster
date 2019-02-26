@@ -9,7 +9,13 @@ import json
 
 def createApplication():
     user = User("Darth plageus")
-    application = Application("status", "infoText", user, "Jar Jar Binks")
+    application = Application(
+        status="status",
+        needs="needs",
+        comments="comments",
+        user=user,
+        partnerUsername="Jar Jar Binks",
+    )
     return application
 
 
@@ -51,8 +57,14 @@ def test_getApplicationByUser_with_application(mocker):
         assert jsonify(application.to_json()).data == response.data
 
 
-def registerApplicationMock(infoText, username, partnerUsername):
-    return Application("status", infoText, User("Darth Plageus"), partnerUsername).to_json(), 201
+def registerApplicationMock(comments, username, needs, partnerUsername):
+    return Application(
+        status="SUBMITTED",
+        comments=comments,
+        needs=needs,
+        user=User("Darth Plageus"),
+        partnerUsername=partnerUsername,
+    ).to_json(), 201
 
 
 def test_registerNewApplication(mocker, client):
@@ -69,13 +81,15 @@ def test_registerNewApplication(mocker, client):
             headers=headers,
             data=json.dumps(dict(
                 username='Darth Plageus',
-                infoText='infoText',
+                needs='needs',
+                comments='comments',
                 partnerUsername='Jar Jar Binks')))
         assert "201 CREATED" == response.status
         assert jsonify(
-            comments='infoText',
+            comments='comments',
+            needs='needs',
             user={"id": None, "username": "Darth Plageus"},
             id=None,
-            status="status",
+            status="SUBMITTED",
             partnerApplication={},
             ).data == response.data
