@@ -23,9 +23,15 @@ with app.app_context():
     some_applicationseason = ApplicationSeason(starttime, endtime, acceptstart, acceptend)
 
     application1 = applicationService.registerApplication(
-        "sadsda", the_annoying_user.username, the_annoyinger_user.username)
+        username=the_annoying_user.username,
+        partnerUsername=the_annoyinger_user.username,
+        comments='comments',
+        needs='needs')
     application2 = applicationService.registerApplication(
-        "sadsda", the_annoyinger_user.username, the_annoying_user.username)
+        username=the_annoyinger_user.username,
+        partnerUsername=the_annoying_user.username,
+        comments='comments',
+        needs='needs')
 
     db.session.add(some_applicationseason)
     db.session.commit()

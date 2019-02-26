@@ -11,8 +11,8 @@ class Application(db.Model):
         db.Integer,
         primary_key=True)
 
-    infoText = db.Column(
-        "info_text",
+    needs = db.Column(
+        "needs",
         db.String(),
         nullable=False)
 
@@ -68,17 +68,19 @@ class Application(db.Model):
         foreign_keys='[Seat.room_id, Seat.seat_id]',
         primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
-    def __init__(self, status, infoText, user, partnerUsername):
+    def __init__(self, status, needs, user, partnerUsername, comments):
         self.status = status
         self.user = user
-        self.infoText = infoText
+        self.needs = needs
+        self.comments = comments
         self.partnerUsername = partnerUsername
 
     def to_json(self, self_referred=False):
         applicationDict = {
             "id": self.id,
             "status": self.status,
-            "comments": self.infoText,
+            "comments": self.comments,
+            "needs": self.needs,
             "user": self.user.to_json() if self.user else None,
         }
         # Do not return partnerApplication if jsoning through a partner application.
