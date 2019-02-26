@@ -26,7 +26,7 @@ exports[`Application review presentational Renders correctly 1`] = `
       information={
         Object {
           "Partner": "None",
-          "Preffered room": "Space Commander",
+          "Preferred room": "Space Commander",
           "Seat Rollover": "Yes",
         }
       }

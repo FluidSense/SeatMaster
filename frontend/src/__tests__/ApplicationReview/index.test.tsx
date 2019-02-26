@@ -7,6 +7,7 @@ import ApplicationReview from '../../components/ApplicationReview/index';
 
 const mockStore = configureMockStore();
 const applicationInfoMock = {
+  applicationStatus: 'SUBMITTED',
   email: 'test@test.com',
   fullname: 'Teser Testersen',
   partner: 'None',

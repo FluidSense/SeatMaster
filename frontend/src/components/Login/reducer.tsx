@@ -4,11 +4,13 @@ import { APP_NOT_FOUND, SET_USER_DATA } from './constants';
 export interface ILoginState {
   applicationStatus: string;
   comments?: string;
+  needs?: string;
   email: string;
   fullname: string;
   id?: number;
   phone: string;
   status: string;
+  partner?: string;
   user?: {
     id: number;
     username: string;
@@ -35,13 +37,15 @@ export const loginReducer = (state: ILoginState = initialState, action: AnyActio
     case SET_USER_DATA: {
       return {
         ...state,
-        applicationStatus: payload.applicationStatus,
+        applicationStatus: payload.status,
         comments: payload.comments,
         email: payload.email,
         fullname: payload.fullname,
         id: payload.id,
+        needs: payload.needs,
+        partner: payload.partnerApplication.user.username,
         phone: payload.phone,
-        status: payload.status,
+        status: payload.masterStatus,
         user: payload.user,
       };
     }

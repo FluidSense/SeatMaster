@@ -4,6 +4,7 @@ import React from 'react';
 import Presentational from '../../components/ApplicationReview/Presentational';
 
 const applicationInfoMock = {
+  applicationStatus: 'SUBMITTED',
   email: 'test@test.com',
   fullname: 'Teser Testersen',
   partner: 'None',
