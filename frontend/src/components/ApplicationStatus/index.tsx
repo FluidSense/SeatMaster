@@ -3,7 +3,7 @@ import { IStore } from '../../store';
 import Presentational from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
-  applicationStatus: state.userInformation.applicationStatus,
+  applicationStatus: state.userInformation.status,
 });
 
 const Container = connect(

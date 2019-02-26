@@ -17,6 +17,10 @@ export interface IApplicationInfoObject {
   seatRollover?: string;
   needs?: string;
   applicationStatus?: string;
+  user?: {
+    id: number,
+    username: string,
+  };
 }
 
 // tslint:disable-next-line:class-name
