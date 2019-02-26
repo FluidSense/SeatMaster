@@ -38,3 +38,14 @@ def assignSeat():
         responseText, statusCode = seatService.assignSeat(roomId, seatId, userId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+
+@seat.route("/removeStudent", methods=["PUT"])
+def removeStudentFromSeat():
+    if request.is_json:
+        form = request.get_json()
+        roomId = form.get("roomId")
+        seatId = form.get("seatId")
+        responseText, statusCode = seatService.removeStudentFromSeat(roomId, seatId)
+        return make_response(jsonify(responseText), statusCode)
+    return abort(400)
