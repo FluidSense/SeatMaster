@@ -10,12 +10,12 @@ import { setTime } from '../../components/CreateSeason';
 
 describe('application form', () => {
   const user = {
-    username: 'Sutaba',
-    fullname: 'Starbucks London',
+    changeModal: () => '',
     email: 'london@starbucks.com',
+    fullname: 'Starbucks London',
     phone: '22225555',
     status: '',
-    changeModal: () => '',
+    username: 'Sutaba',
   };
   it('renders alertBox correctly', () => {
     const wrapper = shallow(
