@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Presentational from './Presentational';
+import './viewRooms.css';
 
 export interface IRoom {
   id: number;
