@@ -34,6 +34,7 @@ class Room(db.Model):
             "id": self.id,
             "name": self.name,
             "info": self.info,
+            "seats": len(self.seats),
         }
 
     def __str__(self):

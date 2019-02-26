@@ -32,7 +32,7 @@ class TestRoom(TestCase):
 
     def test_delete_seat(self):
         room = createRoom()
-        response = self.app.test_client().delete(f"http://localhost:5000/room/deleteRoom/{room.id}")
+        response = self.app.test_client().delete(f"http://localhost:5000/room/{room.id}")
         assert response.status == "200 OK"
         assert db.session.query(Room).first() is None
 
@@ -45,9 +45,10 @@ class TestRoom(TestCase):
         data = dict(
             name='X-wing',
             info='nice ship dude',
+            seats=0,
         )
         response = self.app.test_client().post(
-            "http://localhost:5000/room/createRoom",
+            "http://localhost:5000/room/",
             headers=headers,
             data=json.dumps(data))
         assert "201 CREATED" == response.status
@@ -62,7 +63,7 @@ class TestRoom(TestCase):
             'Accept': mimetype
         }
         response = self.app.test_client().put(
-            'http://localhost:5000/room/updateRoom/1',
+            'http://localhost:5000/room/1',
             headers=headers,
             data=json.dumps(dict(
                 name='X-wing',
@@ -72,6 +73,16 @@ class TestRoom(TestCase):
         dbroom = db.session.query(Room).first()
         assert dbroom.name == 'X-wing'
         assert room.info == 'nice ship dude'
+
+    def test_create_rooms_and_get_all(self):
+        room1 = createRoom()
+        room2 = createRoom()
+        roomList = [room1, room2]
+        jsonList = list(map(lambda x: x.to_json(), roomList))
+        response = self.app.test_client().get(f"http://localhost:5000/room/")
+        assert response.status == "200 OK"
+        assert response.data == jsonify(jsonList).data
+        assert db.session.query(Room).all() == roomList
 
     def tearDown(self):
         self.postgres.stop()

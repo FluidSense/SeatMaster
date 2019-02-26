@@ -11,13 +11,13 @@ def getApplication(id):
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
-@application.route("/user/<userid>")
+@application.route("/byUser/<userid>")
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
-@application.route("/registerApplication", methods=["POST"])
+@application.route("/", methods=["POST"])
 def registerApplication():
     if request.is_json:
         form = request.get_json()
