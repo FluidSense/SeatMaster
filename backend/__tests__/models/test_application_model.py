@@ -9,7 +9,8 @@ def test_add_application_without_partner(db_session):
     db_session.add(testuser1)
     application = Application(
         status="",
-        infoText="",
+        needs="",
+        comments="",
         user=testuser1,
         partnerUsername=None,
     )
@@ -26,7 +27,8 @@ def test_proper_user_serialization(db_session):
     db_session.add(testuser1)
     application = Application(
         status="",
-        infoText="",
+        needs="",
+        comments="",
         user=testuser1,
         partnerUsername=None,
     )
@@ -43,13 +45,15 @@ def test_users_connect_each_other(db_session):
     db_session.add(testuser2)
     application2 = Application(
         status="",
-        infoText="",
+        needs="",
+        comments="",
         user=testuser2,
         partnerUsername=testuser1.username,
     )
     application1 = Application(
         status="",
-        infoText="",
+        needs="",
+        comments="",
         user=testuser1,
         partnerUsername=testuser2.username,
     )
@@ -76,7 +80,8 @@ def test_application_connect_to_seat(db_session):
     db_session.add(user)
     application = Application(
         status="",
-        infoText="",
+        needs="",
+        comments="",
         user=user,
         partnerUsername="",
     )

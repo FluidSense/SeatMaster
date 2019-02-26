@@ -72,7 +72,13 @@ class TestSeat(TestCase):
         room, seat = createSeatAndRoom()
         user = User("hello")
         db.session.add(user)
-        application = Application("lol", "lol", user, "no")
+        application = Application(
+            status="lol",
+            comments="lol",
+            needs="needs",
+            user=user,
+            partnerUsername="no"
+        )
         db.session.add(application)
         db.session.commit()
         mimetype = 'application/json'
@@ -94,6 +100,42 @@ class TestSeat(TestCase):
         assert jsonify(seat.to_json()).data == response.data
         assert seat.assignedApplication == application
         assert application.seat == seat
+
+    def test_remove_student_from_seat(self):
+        room, seat = createSeatAndRoom()
+        user = User("hello")
+        db.session.add(user)
+        application = Application(
+            status="lol",
+            comments="lol",
+            needs="needs",
+            user=user,
+            partnerUsername="no"
+        )
+        db.session.add(application)
+        db.session.commit()
+        seat.assignedApplication = application
+        db.session.add(seat)
+        db.session.commit()
+
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype
+        }
+        data = dict(
+            seatId='D1',
+            roomId=room.id,
+        )
+        response = self.app.test_client().put(
+            "http://localhost:5000/seat/removeStudent",
+            headers=headers,
+            data=json.dumps(data))
+
+        assert "200 OK" == response.status
+        assert jsonify(seat.to_json()).data == response.data
+        assert seat.assignedApplication is None
+        assert application.seat is None
 
     def tearDown(self):
         self.postgres.stop()

@@ -30,15 +30,17 @@ class TestApplication(TestCase):
             headers=headers,
             data=json.dumps(dict(
                 username=testuser.username,
-                infoText="Pepsi is better than coke",
+                needs="Pepsi is better than coke",
+                comments="Not Pepsi, but Pepsi Max",
                 partnerUsername="",
                 )
             )
         )
         expectedResponse = make_response(jsonify(
-            comments="Pepsi is better than coke",
+            needs="Pepsi is better than coke",
+            comments="Not Pepsi, but Pepsi Max",
             id=1,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 1, "username": testuser.username},
             partnerApplication={},
             ), 201)
@@ -59,15 +61,17 @@ class TestApplication(TestCase):
             headers=headers,
             data=json.dumps(dict(
                 username=testuser.username,
-                infoText="Pepsi is better than coke",
+                needs="Pepsi is better than coke",
+                comments="Not Pepsi, but Pepsi Max",
                 partnerUsername="Elon",
                 )
             )
         )
         expectedApplicationResponse = make_response(jsonify(
-            comments="Pepsi is better than coke",
+            needs="Pepsi is better than coke",
+            comments="Not Pepsi, but Pepsi Max",
             id=1,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 1, "username": testuser.username},
             partnerApplication={}
         ), 201)
@@ -93,7 +97,8 @@ class TestApplication(TestCase):
             headers=headers,
             data=json.dumps(dict(
                 username=testuser1.username,
-                infoText="Pepsi is better than coke",
+                needs="Pepsi is better than coke",
+                comments="Not Pepsi, but Pepsi Max",
                 partnerUsername=testuser2.username,
                 )
             )
@@ -103,39 +108,45 @@ class TestApplication(TestCase):
             headers=headers,
             data=json.dumps(dict(
                 username=testuser2.username,
-                infoText="Fanta is better than solo",
+                needs="Fanta is better than solo",
+                comments="Bruh wtf",
                 partnerUsername=testuser1.username,
                 )
             )
         )
         user1expectedResponse = make_response(jsonify(
-            comments="Pepsi is better than coke",
+            needs="Pepsi is better than coke",
+            comments="Not Pepsi, but Pepsi Max",
             id=1,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 1, "username": testuser1.username},
             partnerApplication={}
         ), 201)
         user2expectedResponse = make_response(jsonify(
-            comments="Fanta is better than solo",
+            needs="Fanta is better than solo",
+            comments="Bruh wtf",
             id=2,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 2, "username": testuser2.username},
             partnerApplication={
-                "comments": "Pepsi is better than coke",
+                "needs": "Pepsi is better than coke",
+                "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
-                "status": "Unprocessed",
+                "status": "SUBMITTED",
                 "user": {"id": 1, "username": testuser1.username}
             },
         ), 201)
         expectedConnectedApplication = jsonify(
-            comments="Fanta is better than solo",
+            needs="Fanta is better than solo",
+            comments="Bruh wtf",
             id=2,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 2, "username": testuser2.username},
             partnerApplication={
-                "comments": "Pepsi is better than coke",
+                "needs": "Pepsi is better than coke",
+                "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
-                "status": "Unprocessed",
+                "status": "SUBMITTED",
                 "user": {"id": 1, "username": testuser1.username}
             },
         )

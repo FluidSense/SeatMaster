@@ -75,7 +75,8 @@ def test_application_connect_to_seat(db_session):
     db_session.add(user)
     application = Application(
         status="",
-        infoText="",
+        needs="",
+        comments="",
         user=user,
         partnerUsername="",
     )

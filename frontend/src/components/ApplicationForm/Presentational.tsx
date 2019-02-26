@@ -26,7 +26,7 @@ interface IState {
   keepSeat: boolean;
   loading: boolean;
   error: string;
-  [key: string]: string|boolean;
+  [key: string]: string | boolean;
 }
 
 export class Presentational extends React.Component<IProps, IState> {
@@ -84,7 +84,7 @@ export class Presentational extends React.Component<IProps, IState> {
   private updateApplicationFormData = (item: React.FormEvent) => {
     const eventTarget = item.target as HTMLFormElement;
     const name: string = eventTarget.name;
-    const value: string|boolean =
+    const value: string | boolean =
       eventTarget.type === 'checkbox' ? eventTarget.checked : eventTarget.value;
     this.setState({ [name]: value });
   }
@@ -95,9 +95,9 @@ export class Presentational extends React.Component<IProps, IState> {
 
     fetch(POST_FORM_DATA, {
       body: JSON.stringify({
-        infoText: this.state.infoText,
+        comments: this.state.infoText,
         keepSeat: this.state.keepSeat,
-        needsText: this.state.needsText,
+        needs: this.state.needsText,
         partnerUsername: this.state.partnerUsername,
         room: this.state.room,
         username: this.props.username,
@@ -107,16 +107,17 @@ export class Presentational extends React.Component<IProps, IState> {
       },
       method: 'POST',
     })
-    .then((response) => {
-      if (response.ok) {
-        this.props.changeModal(true);
-        this.setState({ loading: false, error: '' });
-      }
-      this.setState({ loading: false, error: _ALERT_USER_ERROR });
-    })
-    .catch((error) => {
-      this.setState({ loading: false, error: _ALERT_USER_ERROR });
-    });
+      .then((response) => {
+        if (response.ok) {
+          this.props.changeModal(true);
+          this.setState({ loading: false, error: '' });
+        } else {
+          this.setState({ loading: false, error: _ALERT_USER_ERROR });
+        }
+      })
+      .catch((error) => {
+        this.setState({ loading: false, error: _ALERT_USER_ERROR });
+      });
   }
 
   private alertUser = (text: string) => (

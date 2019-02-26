@@ -14,7 +14,7 @@ import {
   _NEW_APPLICATION,
   _PARTNER,
   _PHONE,
-  _PREFFERED_ROOM,
+  _PREFERRED_ROOM,
   _REVIEW_APPLICATION,
   _SEAT_ROLLOVER,
 } from './strings';
@@ -32,21 +32,23 @@ export interface IUserInfoObject {
 
 export interface IRoomInfObject {
   [_PARTNER]?: string;
-  [_PREFFERED_ROOM]?: string;
+  [_PREFERRED_ROOM]?: string;
   [_SEAT_ROLLOVER]?: string;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { applicationInfo } = props;
   const userInfoObject: IUserInfoObject = {
-    [_NAME]: applicationInfo.fullname,
+    [_NAME]: applicationInfo.user !== undefined
+      ? applicationInfo.user.username
+      : applicationInfo.fullname,
     [_EMAIL]: applicationInfo.email,
     [_PHONE]: applicationInfo.phone,
     [_MASTER_STATUS]: applicationInfo.status,
   };
   const roomInfoObject = {
     [_PARTNER]: applicationInfo.partner,
-    [_PREFFERED_ROOM]: applicationInfo.room,
+    [_PREFERRED_ROOM]: applicationInfo.room,
     [_SEAT_ROLLOVER]: applicationInfo.seatRollover,
   };
   if (applicationInfo.applicationStatus === APP_NOT_FOUND) {
