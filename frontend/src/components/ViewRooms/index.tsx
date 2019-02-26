@@ -21,7 +21,7 @@ class ViewRoom extends Component<{}, IStateProps> {
     };
   }
   public componentDidMount = () => {
-    fetch('http://localhost:5000/room/all')
+    fetch('http://localhost:5000/room/')
       .then(response => response.json())
       .then(result => this.setState({ rooms: result }));
   }
