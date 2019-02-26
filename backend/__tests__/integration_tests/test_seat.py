@@ -4,6 +4,8 @@ from main import create_app
 from shared import db
 from models.room import Room
 from models.seat import Seat
+from models.user import User
+from models.application import Application
 from flask import jsonify, make_response
 import json
 # Class-based test to keep test db alive during all tests,
@@ -36,7 +38,7 @@ class TestSeat(TestCase):
 
     def test_delete_seat(self):
         room, seat = createSeatAndRoom()
-        response = self.app.test_client().delete(f"http://localhost:5000/seat/deleteSeat/{room.id}/{seat.seat_id}")
+        response = self.app.test_client().delete(f"http://localhost:5000/seat/{room.id}/{seat.seat_id}")
         assert response.status == "200 OK"
         assert db.session.query(Seat).first() is None
 
@@ -53,7 +55,7 @@ class TestSeat(TestCase):
             info='nice ship dude',
         )
         response = self.app.test_client().post(
-            "http://localhost:5000/seat/createSeat",
+            "http://localhost:5000/seat/",
             headers=headers,
             data=json.dumps(data))
 
@@ -65,6 +67,33 @@ class TestSeat(TestCase):
                 info='nice ship dude',
             )).data == response.data
         assert db.session.query(Seat).all()[1].to_json() == data
+
+    def test_assign_seat(self):
+        room, seat = createSeatAndRoom()
+        user = User("hello")
+        db.session.add(user)
+        application = Application("lol", "lol", user, "no")
+        db.session.add(application)
+        db.session.commit()
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype
+        }
+        data = dict(
+            seatId='D1',
+            roomId=room.id,
+            userId=user.id,
+        )
+        response = self.app.test_client().put(
+            "http://localhost:5000/seat/assignSeat",
+            headers=headers,
+            data=json.dumps(data))
+
+        assert "200 OK" == response.status
+        assert jsonify(seat.to_json()).data == response.data
+        assert seat.assignedApplication == application
+        assert application.seat == seat
 
     def tearDown(self):
         self.postgres.stop()

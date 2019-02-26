@@ -39,7 +39,7 @@ class DateInputField extends Component<IProps, IState> {
           value={value.format(DATE_FORMAT_INPUT_FIELD)}
           bredde="XL"
         />
-        <Hovedknapp onClick={this.toggleModal}> {_CHOOSE_DATE} </Hovedknapp>
+        <Hovedknapp onClick={this.toggleModal} id="chooseDateButton"> {_CHOOSE_DATE}  </Hovedknapp>
         <Modal
           isOpen={showModal}
           onRequestClose={this.toggleModal}

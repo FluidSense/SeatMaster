@@ -11,5 +11,5 @@ export const POST_HEADERS = { 'Content-Type': 'application/json' };
 export const DATE_FORMAT_INPUT_FIELD = 'DD/MM/YYYY - H:mm';
 
 // URL for database
-export const POST_NEW_SEASON_URL = 'http://localhost:5000/season/createSeason';
-export const POST_NEW_ROOM_URL = 'http://localhost:5000/room/createRoom';
+export const POST_NEW_SEASON_URL = 'http://localhost:5000/season/';
+export const POST_NEW_ROOM_URL = 'http://localhost:5000/room/';

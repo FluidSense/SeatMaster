@@ -26,7 +26,7 @@ class TestApplication(TestCase):
             'Accept': mimetype
         }
         response = self.app.test_client().post(
-            'http://localhost:5000/application/registerApplication',
+            'http://localhost:5000/application/',
             headers=headers,
             data=json.dumps(dict(
                 username=testuser.username,
@@ -55,7 +55,7 @@ class TestApplication(TestCase):
             'Accept': mimetype
         }
         response = self.app.test_client().post(
-            'http://localhost:5000/application/registerApplication',
+            'http://localhost:5000/application/',
             headers=headers,
             data=json.dumps(dict(
                 username=testuser.username,
@@ -71,7 +71,7 @@ class TestApplication(TestCase):
             user={"id": 1, "username": testuser.username},
             partnerApplication={}
         ), 201)
-        getApplication = self.app.test_client().get('http://localhost:5000/application/user/1')
+        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1')
         assert expectedApplicationResponse.status == response.status
         assert expectedApplicationResponse.data == response.data
         assert getApplication.status == "200 OK"
@@ -89,7 +89,7 @@ class TestApplication(TestCase):
             'Accept': mimetype
         }
         user1Response = self.app.test_client().post(
-            'http://localhost:5000/application/registerApplication',
+            'http://localhost:5000/application/',
             headers=headers,
             data=json.dumps(dict(
                 username=testuser1.username,
@@ -99,7 +99,7 @@ class TestApplication(TestCase):
             )
         )
         user2Response = self.app.test_client().post(
-            'http://localhost:5000/application/registerApplication',
+            'http://localhost:5000/application/',
             headers=headers,
             data=json.dumps(dict(
                 username=testuser2.username,
@@ -139,7 +139,7 @@ class TestApplication(TestCase):
                 "user": {"id": 1, "username": testuser1.username}
             },
         )
-        getApplication = self.app.test_client().get('http://localhost:5000/application/user/2')
+        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2')
         assert user1expectedResponse.status == user1Response.status
         assert user2expectedResponse.status == user2Response.status
         assert user2expectedResponse.data == user2Response.data
