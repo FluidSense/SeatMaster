@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewRoom Renders 1 room correctly 1`] = `
+<Presentational
+  rooms={
+    Array [
+      Object {
+        "id": 1,
+        "info": "Dis be notes, mon",
+        "name": "X-Wing",
+        "seat": 2,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`ViewRoom Renders nothing correctly 1`] = `
+<Presentational
+  rooms={Array []}
+/>
+`;
