@@ -16,7 +16,7 @@ describe('Create season', () => {
 
   it('Check if creating is available', () => {
     const wrapper = shallow(<CreateSeason />);
-    const state: IState = wrapper.instance().state;
+    const state: IState = wrapper.state();
     const body = JSON.stringify({
       newPeriodEnd: state.periodEnd.format(format),
       newPeriodStart: state.periodStart.format(format),
