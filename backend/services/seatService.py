@@ -38,7 +38,21 @@ def assignSeat(roomId, seatId, userId):
         application = applicationService.getApplicationByUserId(userId)
         application.seat_id = seatId
         application.room_id = roomId
+        db.session.add(application)
+        db.session.commit()
         return application.seat.to_json(), 200
+    except SQLAlchemyError as err:
+        print(err)
+        return "", 400
+
+
+def removeStudentFromSeat(roomId, seatId):
+    try:
+        seat = getSeatById(roomId, seatId)
+        seat.assignedApplication = None
+        db.session.add(seat)
+        db.session.commit()
+        return seat.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
         return "", 400
