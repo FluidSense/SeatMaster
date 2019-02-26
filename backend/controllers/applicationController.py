@@ -22,8 +22,13 @@ def registerApplication():
     if request.is_json:
         form = request.get_json()
         username = form.get("username")
-        infoText = form.get("infoText")
+        needs = form.get("needs")
+        comments = form.get("comments")
         partnerUsername = form.get("partnerUsername")
-        responseText, statusCode = applicationService.registerApplication(infoText, username, partnerUsername)
+        responseText, statusCode = applicationService.registerApplication(
+          comments=comments,
+          needs=needs,
+          username=username,
+          partnerUsername=partnerUsername)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)

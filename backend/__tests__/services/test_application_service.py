@@ -7,8 +7,20 @@ from shared import db
 def setUp(mocker):
     user1 = User("Yoda")
     user2 = User("Obi Wan")
-    app1 = Application("good", "whatever", user1, "Obi Wan")
-    app2 = Application("good", "whatever", user2, "Yoda")
+    app1 = Application(
+        status="good",
+        comments="whatever",
+        needs="needs",
+        user=user1,
+        partnerUsername="Obi Wan"
+    )
+    app2 = Application(
+        status="good",
+        comments="whatever",
+        needs="needs",
+        user=user2,
+        partnerUsername="Yoda"
+    )
     mocker.patch.object(db.session, 'add')
     db.session.add.return_value = ""
     mocker.patch.object(db.session, 'commit')
