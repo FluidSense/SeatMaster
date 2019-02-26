@@ -55,7 +55,7 @@ describe('application form', () => {
     expect(wrapper.state('loading')).toBeTruthy();
   });
 
-  it('triggers modal if response is ok', () => {
+  it('triggers modal if response is ok', (callback: any) => {
     fetchMock.postOnce(
       POST_FORM_DATA,
       {
@@ -76,9 +76,15 @@ describe('application form', () => {
         changeModal={changeModalMock}
       />);
     const btn = wrapper.find(KnappBase).first();
+    expect.assertions(2);
     expect(fetchMock.called()).toBeTruthy();
     btn.simulate('submit');
-    expect(changeModalMock.mock.calls.length).toBe(1);
+    setTimeout(
+      () => {
+        expect(changeModalMock.mock.calls.length).toBe(1);
+        callback();
+      },
+      100);
   });
 
   it('renders correctly', () => {
