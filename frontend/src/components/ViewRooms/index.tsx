@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getAllRooms } from '../../API/calls';
 import Presentational from './Presentational';
 
 export interface IRoom {
@@ -21,8 +22,7 @@ class ViewRoom extends Component<{}, IStateProps> {
     };
   }
   public componentDidMount = () => {
-    fetch('http://localhost:5000/room/all')
-      .then(response => response.json())
+    getAllRooms()
       .then(result => this.setState({ rooms: result }));
   }
 
