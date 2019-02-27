@@ -1,15 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { UserState } from 'redux-oidc';
 import { IStore } from '../../store';
 import { RoutesLogin } from '../RoutesLogin';
 import { RoutesUser } from '../RoutesUser';
 
-const RoutesRedirect = (props: UserState) => {
-  const { user } = props;
+const RoutesRedirect = (props: IStore) => {
+  const { oidc, userInformation } = props;
 
-  if (!user || user.expired) {
+  if (!oidc.user || oidc.user.expired) {
     return <RoutesLogin />;
+  }
+  if (!userInformation) {
+    // TODO: return <RoutesRegister>
+    return <RoutesUser />;
   }
 
   // TODO: Add a check for admin privileges and add adminroutes
@@ -17,8 +20,8 @@ const RoutesRedirect = (props: UserState) => {
 };
 
 const mapStateToProps = (state: IStore) => ({
-  isLoadingUser: state.oidc.isLoadingUser,
-  user: state.oidc.user,
+  oidc: state.oidc,
+  userInformation: state.userInformation,
 });
 
 const Routes = connect(
