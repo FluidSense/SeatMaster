@@ -1,25 +1,34 @@
 import { AnyAction } from 'redux';
-import { CREATE_ROOM, DELETE_ROOM, UPDATE_ROOM } from './constants';
+import { CREATE_ROOM, DELETE_ROOM, RESET_PAGE, UPDATE_ROOM } from './constants';
 import { _ALERT_CREATED_MESSAGE, _ALERT_DELETED_MESSAGE, _ALERT_UPDATED_MESSAGE } from './strings';
 
-export interface IState {
+export interface IAdminRoomReducer {
   error?: string;
-  submitted: boolean;
+  submitted?: boolean;
 }
 
 const initialState = {
-  submitted: false,
+  error: undefined,
+  submitted: undefined,
 };
 
 const reducer = (
-  state: IState = initialState,
+  state: IAdminRoomReducer = initialState,
   action: AnyAction,
-): IState => {
+): IAdminRoomReducer => {
   const { type, payload } = action;
   switch (type) {
     case CREATE_ROOM:
       if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_CREATED_MESSAGE };
+      return { ...state, error: _ALERT_CREATED_MESSAGE, submitted: false };
+    case DELETE_ROOM:
+      if (payload) return { ...state, submitted: payload };
+      return { ...state, error: _ALERT_DELETED_MESSAGE, submitted: false };
+    case UPDATE_ROOM:
+      if (payload) return { ...state, submitted: payload };
+      return { ...state, error: _ALERT_UPDATED_MESSAGE, submitted: false };
+    case RESET_PAGE:
+      return { ...state, submitted: undefined };
     default:
       return state;
   }

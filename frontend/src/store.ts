@@ -1,17 +1,20 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
+import roomReducer, { IAdminRoomReducer } from './components/AdminRoom/reducer';
 import { applicationSeasonReducer } from './components/ApplicationSeason/reducer';
 import { ILoginState, loginReducer } from './components/Login/reducer';
-import roomReducer, { IRoomState } from './components/ViewRooms/reducer';
+import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 
 export interface IStore {
   userInformation: ILoginState;
   rooms: IRoomState;
+  adminRoom: IAdminRoomReducer;
 }
 
 export const reducers = combineReducers({
+  adminRoom: roomReducer,
   applicationSeason: applicationSeasonReducer,
-  rooms: roomReducer,
+  rooms: viewRoomReducer,
   userInformation: loginReducer,
 });
 
