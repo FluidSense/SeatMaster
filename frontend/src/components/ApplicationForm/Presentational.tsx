@@ -1,8 +1,8 @@
-import * as React from 'react';
-
 import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
+import * as React from 'react';
 import { postApplicationForm } from '../../API/calls';
+import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
@@ -18,7 +18,7 @@ interface IProps {
 }
 
 interface IState {
-  room: string;
+  room?: IRoom;
   partner: boolean;
   partnerUsername: string;
   needs: boolean;
@@ -27,7 +27,7 @@ interface IState {
   keepSeat: boolean;
   loading: boolean;
   error: string;
-  [key: string]: string | boolean;
+  [key: string]: string | boolean | IRoom | undefined;
 }
 
 export class Presentational extends React.Component<IProps, IState> {
@@ -42,7 +42,7 @@ export class Presentational extends React.Component<IProps, IState> {
       needsText: '',
       partner: false,
       partnerUsername: '',
-      room: '',
+      room: undefined,
     };
   }
 

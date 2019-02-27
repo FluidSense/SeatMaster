@@ -2,10 +2,10 @@ import { IRoom } from './../components/ViewRooms/index';
 
 export interface IPostApplicationForm {
   comments: string;
-  keepSeat: boolean;
-  needs: string;
-  partnerUsername: string;
-  room: IRoom;
+  keepSeat?: boolean;
+  needs?: string;
+  partnerUsername?: string;
+  room?: IRoom;
   username: string;
 }
 
