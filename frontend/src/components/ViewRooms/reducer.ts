@@ -17,7 +17,7 @@ const reducer = (
   const { type, payload } = action;
   switch (type) {
     case FETCH_ROOMS:
-      return { ...state, rooms: payload.rooms };
+      return { ...state, rooms: payload };
     default:
       return state;
   }
