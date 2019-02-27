@@ -14,9 +14,7 @@ import {
   IPostRoom,
 } from './interfaces';
 
-export const getSeason = (): PromiseLike<IApplicationSeason> => {
-  return getJson(SEASON_API_URL);
-};
+export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_API_URL);
 
 export const postSeason = (data: IPostApplicationSeason):
  PromiseLike<IApplicationSeason> => {
@@ -37,9 +35,7 @@ export const getRoom = (id: number): PromiseLike<IRoom> => {
   return getJson(`${GET_ROOM_URL}${id}`);
 };
 
-export const getAllRooms = (): PromiseLike<[IRoom]> => {
-  return getJson(GET_ROOM_URL);
-};
+export const getAllRooms = (): PromiseLike<[IRoom]> => getJson(GET_ROOM_URL);
 
 export const postRoom = (data: IPostRoom): PromiseLike<IRoom> => {
   return postJson(POST_NEW_ROOM_URL, data);
