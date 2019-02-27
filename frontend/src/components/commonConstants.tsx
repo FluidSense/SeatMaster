@@ -14,7 +14,7 @@ export const DATE_FORMAT_INPUT_FIELD = 'DD/MM/YYYY - H:mm';
 export const POST_NEW_SEASON_URL = 'http://localhost:5000/season/';
 export const POST_NEW_ROOM_URL = 'http://localhost:5000/room/';
 export const GET_USER_BY_NAME_URL = 'http://localhost:5000/user/';
-export const POST_NEW_USER_URL = 'http://localhost:5000/user/createUser';
+export const POST_NEW_USER_URL = 'http://localhost:5000/user/';
 
 // actions
 export const SET_USER_DATA = 'SET_USER_DATA';

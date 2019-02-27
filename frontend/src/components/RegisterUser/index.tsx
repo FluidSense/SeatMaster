@@ -12,7 +12,8 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  postCreateUser: (userID: string) => dispatch(postCreateUser(userID)),
+  postCreateUser: (idToken: string, accessToken: string) =>
+    dispatch(postCreateUser(idToken, accessToken)),
   push: (endpoint: string) => dispatch(push(endpoint)),
 });
 
