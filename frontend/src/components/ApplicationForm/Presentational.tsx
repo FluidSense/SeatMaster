@@ -2,12 +2,11 @@ import * as React from 'react';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
-import { postJson } from '../../API/callDefinitions';
 import { postApplicationForm } from '../../API/calls';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { _ALERT_USER_ERROR, POST_FORM_DATA } from './Strings';
+import { _ALERT_USER_ERROR } from './Strings';
 
 interface IProps {
   username: string;
