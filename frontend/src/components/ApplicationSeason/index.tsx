@@ -12,7 +12,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  fetchSeason: () => ThunkAction<Promise<AnyAction>, {}, {}, AnyAction>;
+  fetchSeason: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
 
 type Props = IStateProps & IDispatchProps;
