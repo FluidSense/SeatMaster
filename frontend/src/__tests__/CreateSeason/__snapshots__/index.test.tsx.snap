@@ -1,9 +1,687 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Create season renders correctly 1`] = `
-<Presentational
-  buttonDisable={false}
-  createFields={[Function]}
-  postApplicationSeason={[Function]}
-/>
+<Connect(_CreateSeason)>
+  <_CreateSeason
+    submitNewSeason={[Function]}
+  >
+    <Presentational
+      buttonDisable={false}
+      createFields={[Function]}
+      postApplicationSeason={[Function]}
+    >
+      <div
+        id="new-application-season"
+      >
+        <h1>
+          New Application Season
+        </h1>
+        <div
+          id="appSeason"
+        >
+          <SkjemaGruppe>
+            <div
+              className=""
+            >
+              <DateInputField
+                key="Application season opens"
+                label="Application season opens"
+                objectKey="periodStart"
+                setDate={[Function]}
+                value={"2017-01-01T22:59:00.000Z"}
+              >
+                <Input
+                  bredde="XL"
+                  label="Application season opens"
+                  readOnly={true}
+                  value="01/01/2017 - 23:59"
+                >
+                  <div
+                    className="skjemaelement"
+                  >
+                    <label
+                      className="skjemaelement__label"
+                      htmlFor="997804155-19115-9191-23819-831917855117"
+                    >
+                      Application season opens
+                    </label>
+                    <input
+                      className="skjemaelement__input input--xl"
+                      id="997804155-19115-9191-23819-831917855117"
+                      readOnly={true}
+                      type="text"
+                      value="01/01/2017 - 23:59"
+                    />
+                    <SkjemaelementFeilmelding>
+                      <div
+                        aria-live="assertive"
+                        role="alert"
+                      />
+                    </SkjemaelementFeilmelding>
+                  </div>
+                </Input>
+                <Hovedknapp
+                  id="chooseDateButton"
+                  onClick={[Function]}
+                >
+                  <KnappBase
+                    autoDisableVedSpinner={false}
+                    className={null}
+                    disabled={false}
+                    htmlType="submit"
+                    id="chooseDateButton"
+                    inaktivKlasseVedDisabled={false}
+                    mini={false}
+                    onClick={[Function]}
+                    spinner={false}
+                    type="hoved"
+                  >
+                    <button
+                      className="knapp knapp--hoved"
+                      disabled={false}
+                      id="chooseDateButton"
+                      onClick={[Function]}
+                      type="submit"
+                    >
+                       
+                      CHOOSE DATE
+                        
+                    </button>
+                  </KnappBase>
+                </Hovedknapp>
+                <ModalWrapper
+                  closeButton={false}
+                  closeTimeoutMS={0}
+                  contentLabel=""
+                  isOpen={false}
+                  onRequestClose={[Function]}
+                  shouldCloseOnOverlayClick={true}
+                >
+                  <Modal
+                    ariaHideApp={true}
+                    bodyOpenClassName="ReactModal__Body--open"
+                    className="modal"
+                    closeTimeoutMS={0}
+                    contentLabel=""
+                    isOpen={false}
+                    onRequestClose={[Function]}
+                    overlayClassName="modal__overlay"
+                    parentSelector={[Function]}
+                    portalClassName="ReactModalPortal"
+                    role="dialog"
+                    shouldCloseOnEsc={true}
+                    shouldCloseOnOverlayClick={true}
+                    shouldFocusAfterRender={true}
+                    shouldReturnFocusAfterClose={true}
+                  >
+                    <Portal
+                      containerInfo={
+                        <div
+                          class="ReactModalPortal"
+                        />
+                      }
+                    >
+                      <ModalPortal
+                        ariaHideApp={true}
+                        bodyOpenClassName="ReactModal__Body--open"
+                        className="modal"
+                        closeTimeoutMS={0}
+                        contentLabel=""
+                        defaultStyles={
+                          Object {
+                            "content": Object {
+                              "WebkitOverflowScrolling": "touch",
+                              "background": "#fff",
+                              "border": "1px solid #ccc",
+                              "borderRadius": "4px",
+                              "bottom": "40px",
+                              "left": "40px",
+                              "outline": "none",
+                              "overflow": "auto",
+                              "padding": "20px",
+                              "position": "absolute",
+                              "right": "40px",
+                              "top": "40px",
+                            },
+                            "overlay": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "fixed",
+                              "right": 0,
+                              "top": 0,
+                            },
+                          }
+                        }
+                        isOpen={false}
+                        onRequestClose={[Function]}
+                        overlayClassName="modal__overlay"
+                        parentSelector={[Function]}
+                        portalClassName="ReactModalPortal"
+                        role="dialog"
+                        shouldCloseOnEsc={true}
+                        shouldCloseOnOverlayClick={true}
+                        shouldFocusAfterRender={true}
+                        shouldReturnFocusAfterClose={true}
+                        style={
+                          Object {
+                            "content": Object {},
+                            "overlay": Object {},
+                          }
+                        }
+                      />
+                    </Portal>
+                  </Modal>
+                </ModalWrapper>
+              </DateInputField>
+              <DateInputField
+                key="Application season ends"
+                label="Application season ends"
+                objectKey="periodEnd"
+                setDate={[Function]}
+                value={"2017-02-01T22:59:00.000Z"}
+              >
+                <Input
+                  bredde="XL"
+                  label="Application season ends"
+                  readOnly={true}
+                  value="01/02/2017 - 23:59"
+                >
+                  <div
+                    className="skjemaelement"
+                  >
+                    <label
+                      className="skjemaelement__label"
+                      htmlFor="056847358-05605-8494-08236-144462162630022"
+                    >
+                      Application season ends
+                    </label>
+                    <input
+                      className="skjemaelement__input input--xl"
+                      id="056847358-05605-8494-08236-144462162630022"
+                      readOnly={true}
+                      type="text"
+                      value="01/02/2017 - 23:59"
+                    />
+                    <SkjemaelementFeilmelding>
+                      <div
+                        aria-live="assertive"
+                        role="alert"
+                      />
+                    </SkjemaelementFeilmelding>
+                  </div>
+                </Input>
+                <Hovedknapp
+                  id="chooseDateButton"
+                  onClick={[Function]}
+                >
+                  <KnappBase
+                    autoDisableVedSpinner={false}
+                    className={null}
+                    disabled={false}
+                    htmlType="submit"
+                    id="chooseDateButton"
+                    inaktivKlasseVedDisabled={false}
+                    mini={false}
+                    onClick={[Function]}
+                    spinner={false}
+                    type="hoved"
+                  >
+                    <button
+                      className="knapp knapp--hoved"
+                      disabled={false}
+                      id="chooseDateButton"
+                      onClick={[Function]}
+                      type="submit"
+                    >
+                       
+                      CHOOSE DATE
+                        
+                    </button>
+                  </KnappBase>
+                </Hovedknapp>
+                <ModalWrapper
+                  closeButton={false}
+                  closeTimeoutMS={0}
+                  contentLabel=""
+                  isOpen={false}
+                  onRequestClose={[Function]}
+                  shouldCloseOnOverlayClick={true}
+                >
+                  <Modal
+                    ariaHideApp={true}
+                    bodyOpenClassName="ReactModal__Body--open"
+                    className="modal"
+                    closeTimeoutMS={0}
+                    contentLabel=""
+                    isOpen={false}
+                    onRequestClose={[Function]}
+                    overlayClassName="modal__overlay"
+                    parentSelector={[Function]}
+                    portalClassName="ReactModalPortal"
+                    role="dialog"
+                    shouldCloseOnEsc={true}
+                    shouldCloseOnOverlayClick={true}
+                    shouldFocusAfterRender={true}
+                    shouldReturnFocusAfterClose={true}
+                  >
+                    <Portal
+                      containerInfo={
+                        <div
+                          class="ReactModalPortal"
+                        />
+                      }
+                    >
+                      <ModalPortal
+                        ariaHideApp={true}
+                        bodyOpenClassName="ReactModal__Body--open"
+                        className="modal"
+                        closeTimeoutMS={0}
+                        contentLabel=""
+                        defaultStyles={
+                          Object {
+                            "content": Object {
+                              "WebkitOverflowScrolling": "touch",
+                              "background": "#fff",
+                              "border": "1px solid #ccc",
+                              "borderRadius": "4px",
+                              "bottom": "40px",
+                              "left": "40px",
+                              "outline": "none",
+                              "overflow": "auto",
+                              "padding": "20px",
+                              "position": "absolute",
+                              "right": "40px",
+                              "top": "40px",
+                            },
+                            "overlay": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "fixed",
+                              "right": 0,
+                              "top": 0,
+                            },
+                          }
+                        }
+                        isOpen={false}
+                        onRequestClose={[Function]}
+                        overlayClassName="modal__overlay"
+                        parentSelector={[Function]}
+                        portalClassName="ReactModalPortal"
+                        role="dialog"
+                        shouldCloseOnEsc={true}
+                        shouldCloseOnOverlayClick={true}
+                        shouldFocusAfterRender={true}
+                        shouldReturnFocusAfterClose={true}
+                        style={
+                          Object {
+                            "content": Object {},
+                            "overlay": Object {},
+                          }
+                        }
+                      />
+                    </Portal>
+                  </Modal>
+                </ModalWrapper>
+              </DateInputField>
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+            </div>
+          </SkjemaGruppe>
+        </div>
+        <div
+          id="roomSeason"
+        >
+          <SkjemaGruppe>
+            <div
+              className=""
+            >
+              <DateInputField
+                key="Room period opens"
+                label="Room period opens"
+                objectKey="roomStart"
+                setDate={[Function]}
+                value={"2017-01-01T22:59:00.000Z"}
+              >
+                <Input
+                  bredde="XL"
+                  label="Room period opens"
+                  readOnly={true}
+                  value="01/01/2017 - 23:59"
+                >
+                  <div
+                    className="skjemaelement"
+                  >
+                    <label
+                      className="skjemaelement__label"
+                      htmlFor="0230710527-8074-8794-7205-7883192089854"
+                    >
+                      Room period opens
+                    </label>
+                    <input
+                      className="skjemaelement__input input--xl"
+                      id="0230710527-8074-8794-7205-7883192089854"
+                      readOnly={true}
+                      type="text"
+                      value="01/01/2017 - 23:59"
+                    />
+                    <SkjemaelementFeilmelding>
+                      <div
+                        aria-live="assertive"
+                        role="alert"
+                      />
+                    </SkjemaelementFeilmelding>
+                  </div>
+                </Input>
+                <Hovedknapp
+                  id="chooseDateButton"
+                  onClick={[Function]}
+                >
+                  <KnappBase
+                    autoDisableVedSpinner={false}
+                    className={null}
+                    disabled={false}
+                    htmlType="submit"
+                    id="chooseDateButton"
+                    inaktivKlasseVedDisabled={false}
+                    mini={false}
+                    onClick={[Function]}
+                    spinner={false}
+                    type="hoved"
+                  >
+                    <button
+                      className="knapp knapp--hoved"
+                      disabled={false}
+                      id="chooseDateButton"
+                      onClick={[Function]}
+                      type="submit"
+                    >
+                       
+                      CHOOSE DATE
+                        
+                    </button>
+                  </KnappBase>
+                </Hovedknapp>
+                <ModalWrapper
+                  closeButton={false}
+                  closeTimeoutMS={0}
+                  contentLabel=""
+                  isOpen={false}
+                  onRequestClose={[Function]}
+                  shouldCloseOnOverlayClick={true}
+                >
+                  <Modal
+                    ariaHideApp={true}
+                    bodyOpenClassName="ReactModal__Body--open"
+                    className="modal"
+                    closeTimeoutMS={0}
+                    contentLabel=""
+                    isOpen={false}
+                    onRequestClose={[Function]}
+                    overlayClassName="modal__overlay"
+                    parentSelector={[Function]}
+                    portalClassName="ReactModalPortal"
+                    role="dialog"
+                    shouldCloseOnEsc={true}
+                    shouldCloseOnOverlayClick={true}
+                    shouldFocusAfterRender={true}
+                    shouldReturnFocusAfterClose={true}
+                  >
+                    <Portal
+                      containerInfo={
+                        <div
+                          class="ReactModalPortal"
+                        />
+                      }
+                    >
+                      <ModalPortal
+                        ariaHideApp={true}
+                        bodyOpenClassName="ReactModal__Body--open"
+                        className="modal"
+                        closeTimeoutMS={0}
+                        contentLabel=""
+                        defaultStyles={
+                          Object {
+                            "content": Object {
+                              "WebkitOverflowScrolling": "touch",
+                              "background": "#fff",
+                              "border": "1px solid #ccc",
+                              "borderRadius": "4px",
+                              "bottom": "40px",
+                              "left": "40px",
+                              "outline": "none",
+                              "overflow": "auto",
+                              "padding": "20px",
+                              "position": "absolute",
+                              "right": "40px",
+                              "top": "40px",
+                            },
+                            "overlay": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "fixed",
+                              "right": 0,
+                              "top": 0,
+                            },
+                          }
+                        }
+                        isOpen={false}
+                        onRequestClose={[Function]}
+                        overlayClassName="modal__overlay"
+                        parentSelector={[Function]}
+                        portalClassName="ReactModalPortal"
+                        role="dialog"
+                        shouldCloseOnEsc={true}
+                        shouldCloseOnOverlayClick={true}
+                        shouldFocusAfterRender={true}
+                        shouldReturnFocusAfterClose={true}
+                        style={
+                          Object {
+                            "content": Object {},
+                            "overlay": Object {},
+                          }
+                        }
+                      />
+                    </Portal>
+                  </Modal>
+                </ModalWrapper>
+              </DateInputField>
+              <DateInputField
+                key="Room period ends"
+                label="Room period ends"
+                objectKey="roomEnd"
+                setDate={[Function]}
+                value={"2017-02-01T22:59:00.000Z"}
+              >
+                <Input
+                  bredde="XL"
+                  label="Room period ends"
+                  readOnly={true}
+                  value="01/02/2017 - 23:59"
+                >
+                  <div
+                    className="skjemaelement"
+                  >
+                    <label
+                      className="skjemaelement__label"
+                      htmlFor="1737507992-18001-03815-5155-0960150219307"
+                    >
+                      Room period ends
+                    </label>
+                    <input
+                      className="skjemaelement__input input--xl"
+                      id="1737507992-18001-03815-5155-0960150219307"
+                      readOnly={true}
+                      type="text"
+                      value="01/02/2017 - 23:59"
+                    />
+                    <SkjemaelementFeilmelding>
+                      <div
+                        aria-live="assertive"
+                        role="alert"
+                      />
+                    </SkjemaelementFeilmelding>
+                  </div>
+                </Input>
+                <Hovedknapp
+                  id="chooseDateButton"
+                  onClick={[Function]}
+                >
+                  <KnappBase
+                    autoDisableVedSpinner={false}
+                    className={null}
+                    disabled={false}
+                    htmlType="submit"
+                    id="chooseDateButton"
+                    inaktivKlasseVedDisabled={false}
+                    mini={false}
+                    onClick={[Function]}
+                    spinner={false}
+                    type="hoved"
+                  >
+                    <button
+                      className="knapp knapp--hoved"
+                      disabled={false}
+                      id="chooseDateButton"
+                      onClick={[Function]}
+                      type="submit"
+                    >
+                       
+                      CHOOSE DATE
+                        
+                    </button>
+                  </KnappBase>
+                </Hovedknapp>
+                <ModalWrapper
+                  closeButton={false}
+                  closeTimeoutMS={0}
+                  contentLabel=""
+                  isOpen={false}
+                  onRequestClose={[Function]}
+                  shouldCloseOnOverlayClick={true}
+                >
+                  <Modal
+                    ariaHideApp={true}
+                    bodyOpenClassName="ReactModal__Body--open"
+                    className="modal"
+                    closeTimeoutMS={0}
+                    contentLabel=""
+                    isOpen={false}
+                    onRequestClose={[Function]}
+                    overlayClassName="modal__overlay"
+                    parentSelector={[Function]}
+                    portalClassName="ReactModalPortal"
+                    role="dialog"
+                    shouldCloseOnEsc={true}
+                    shouldCloseOnOverlayClick={true}
+                    shouldFocusAfterRender={true}
+                    shouldReturnFocusAfterClose={true}
+                  >
+                    <Portal
+                      containerInfo={
+                        <div
+                          class="ReactModalPortal"
+                        />
+                      }
+                    >
+                      <ModalPortal
+                        ariaHideApp={true}
+                        bodyOpenClassName="ReactModal__Body--open"
+                        className="modal"
+                        closeTimeoutMS={0}
+                        contentLabel=""
+                        defaultStyles={
+                          Object {
+                            "content": Object {
+                              "WebkitOverflowScrolling": "touch",
+                              "background": "#fff",
+                              "border": "1px solid #ccc",
+                              "borderRadius": "4px",
+                              "bottom": "40px",
+                              "left": "40px",
+                              "outline": "none",
+                              "overflow": "auto",
+                              "padding": "20px",
+                              "position": "absolute",
+                              "right": "40px",
+                              "top": "40px",
+                            },
+                            "overlay": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "fixed",
+                              "right": 0,
+                              "top": 0,
+                            },
+                          }
+                        }
+                        isOpen={false}
+                        onRequestClose={[Function]}
+                        overlayClassName="modal__overlay"
+                        parentSelector={[Function]}
+                        portalClassName="ReactModalPortal"
+                        role="dialog"
+                        shouldCloseOnEsc={true}
+                        shouldCloseOnOverlayClick={true}
+                        shouldFocusAfterRender={true}
+                        shouldReturnFocusAfterClose={true}
+                        style={
+                          Object {
+                            "content": Object {},
+                            "overlay": Object {},
+                          }
+                        }
+                      />
+                    </Portal>
+                  </Modal>
+                </ModalWrapper>
+              </DateInputField>
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+            </div>
+          </SkjemaGruppe>
+        </div>
+        <Hovedknapp
+          disabled={false}
+          id="new-season-btn"
+          onClick={[Function]}
+        >
+          <KnappBase
+            autoDisableVedSpinner={false}
+            className={null}
+            disabled={false}
+            htmlType="submit"
+            id="new-season-btn"
+            inaktivKlasseVedDisabled={false}
+            mini={false}
+            onClick={[Function]}
+            spinner={false}
+            type="hoved"
+          >
+            <button
+              className="knapp knapp--hoved"
+              disabled={false}
+              id="new-season-btn"
+              onClick={[Function]}
+              type="submit"
+            >
+              Create new application season
+            </button>
+          </KnappBase>
+        </Hovedknapp>
+      </div>
+    </Presentational>
+  </_CreateSeason>
+</Connect(_CreateSeason)>
 `;
