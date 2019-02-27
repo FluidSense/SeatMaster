@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Component } from 'react';
 import { Redirect } from 'react-router';
+import { postRoom } from '../../API/calls';
 import {
   POST_HEADERS,
   POST_NEW_ROOM_URL,
@@ -94,16 +95,8 @@ class CreateRoom extends Component<IProps, IState> {
   private createRoom = () => {
     const { roomName, roomNotes } = this.state;
     const body = { [POST_ROOM_NOTES]: roomNotes, [POST_ROOM_NAME]: roomName };
-    fetch(POST_NEW_ROOM_URL, {
-      body: JSON.stringify(body),
-      headers: POST_HEADERS,
-      method: 'post',
-    })
-      .then(response => response.status)
-      .then((statusCode) => {
-        if (statusCode === 201) this.setState({ redirect: true });
-        if (statusCode === 400) this.setState({ showAlert: true });
-      });
+    postRoom(body)
+      .then(() => this.setState({ redirect: true }), () => this.setState({ showAlert: true }));
   }
 
   private deleteRoom = () => {

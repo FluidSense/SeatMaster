@@ -2,7 +2,7 @@ import moment, { Moment } from 'moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { POST_NEW_SEASON_URL } from '../commonConstants';
+import { postSeason } from '../../API/calls';
 import DateInputField from '../DateInputField';
 import Presentational from './Presentational';
 import {
@@ -98,13 +98,13 @@ class CreateSeason extends Component<{}, IState> {
         alertApplicationEndBeforeStart={errorApplicationEndBeforeStart}
         alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
         createFields={this.createFields}
-        postApplicationSeason={this.postApplicationSeason}
+        postApplicationSeason={this.submitApplicationSeason}
         alertFail={alertFail}
       />
     );
   }
 
-  private postApplicationSeason = () => {
+  private submitApplicationSeason = () => {
     const { periodEnd, periodStart, roomEnd, roomStart } = this.state;
     const body = {
       newPeriodEnd: periodEnd.format(format),
@@ -112,18 +112,8 @@ class CreateSeason extends Component<{}, IState> {
       newRoomEnd: roomEnd.format(format),
       newRoomStart: roomStart.format(format),
     };
-    fetch(POST_NEW_SEASON_URL, {
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'post',
-    })
-      .then(response => response.status)
-      .then((statusCode) => {
-        if (statusCode === 201) this.setState({ redirect: true });
-        if (statusCode === 400) this.setState({ showAlert: true });
-      });
+    postSeason(body)
+      .then(() => this.setState({ redirect: true }), () => this.setState({ showAlert: true }));
   }
 
   private createDateInputField = (label: string, key: string, value: Moment) => {
