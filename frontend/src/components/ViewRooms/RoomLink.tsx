@@ -14,7 +14,10 @@ const noUnderline = { textDecoration: 'none' };
 const RoomLink: React.FunctionComponent<IProps> = (props) => {
   const { room } = props;
   return (
-    <Link to={`/admin/rooms/update-room-${room.id}`} style={noUnderline}>
+    <Link
+      to={{ pathname: '/admin/rooms/update-room', room: { ...room } }}
+      style={noUnderline}
+    >
       <LenkepanelBase key={room.id}>
         <div className="link-name">
           <Element>{_LINK_NAME_TITLE}</Element>
