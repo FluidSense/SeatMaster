@@ -1,16 +1,11 @@
 import React, { ChangeEvent, Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { postRoom } from '../../API/calls';
+import { ThunkDispatch } from 'redux-thunk';
+import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
-import {
-  POST_HEADERS,
-  POST_NEW_ROOM_URL,
-  POST_ROOM_NAME,
-  POST_ROOM_NOTES,
-} from '../commonConstants';
 import { IRoom } from '../ViewRooms';
+import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
 import Presentational from './Presentational';
 
 interface IState {
@@ -19,20 +14,31 @@ interface IState {
   buttonDisabled: boolean;
   showAlert: boolean;
   redirect: boolean;
-  room?: IRoom;
 }
 
 interface IProps {
-  match: {
-    params: {
-      id: number;
-    };
+  location: {
+    room?: IRoom;
   };
 }
 
+interface IDispatchProps {
+  createRoom: (data: IPostRoom) => void;
+  updateRoom: (data: IPostRoom, id: number) => void;
+  deleteRoom: (id: number) => void;
+  reset: () => void;
+}
+
+interface IStateProps {
+  submitted?: boolean;
+  error?: string;
+}
+
+type Props = IDispatchProps & IStateProps & IProps;
+
 // tslint:disable-next-line:class-name
-class _Container extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class _Container extends Component<Props, IState> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       buttonDisabled: true,
@@ -43,12 +49,15 @@ class _Container extends Component<IProps, IState> {
     };
   }
 
-  public componentDidUpdate = (prevProps: {}, prevState: IState) => {
+  public componentDidUpdate = (prevProps: Props, prevState: IState) => {
     const { roomName, roomNotes, showAlert } = this.state;
+    const { submitted, reset } = this.props;
     // Display alertstripe
-    if (showAlert && !prevState.showAlert) {
-      setTimeout(() => this.setState({ showAlert: false }), 5000);
+    if (submitted === false && prevProps.submitted === undefined) {
+      this.setState({ showAlert: true });
+      reset();
     }
+    if (showAlert) setTimeout(() => this.setState({ showAlert: false }), 5000);
     // Disable or enable create room button
     if (prevState.roomName !== roomName || prevState.roomNotes !== roomNotes) {
       if (roomName.trim() !== '' && roomNotes.trim() !== '') {
@@ -60,17 +69,20 @@ class _Container extends Component<IProps, IState> {
   }
 
   public componentDidMount = () => {
-    const { id } = this.props.match.params;
-    fetch(`http://localhost:5000/room/${id}`)
-      .then(response => response.json())
-      .then(room => this.setState({ room, roomName: room.name, roomNotes: room.info }));
+    const { room } = this.props.location;
+    if (room) this.setState({ roomName: room.name, roomNotes: room.info });
   }
 
   public render() {
-    const { id } = this.props.match.params;
-    const { buttonDisabled, roomName, roomNotes, showAlert, redirect } = this.state;
-    const onClick = id ? this.updateRoom : this.createRoom;
-    if (redirect) return <Redirect to={'/admin/rooms'} />;
+    const { buttonDisabled, roomName, roomNotes, showAlert } = this.state;
+    const { submitted, location, reset, error } = this.props;
+    const { room } = location;
+    const onClick = room ? this.updateRoom : this.createRoom;
+    const roomExists = room ? true : false;
+    if (submitted) {
+      reset();
+      return <Redirect to={'/admin/rooms'} />;
+    }
     return (
       <Presentational
         roomName={roomName}
@@ -79,9 +91,10 @@ class _Container extends Component<IProps, IState> {
         setNotes={this.setNotes}
         setName={this.setName}
         onClick={onClick}
-        deleteRoom={this.deleteRoom}
+        deleteRoom={this.delete}
         showAlert={showAlert}
-        roomId={id}
+        alertMessage={error}
+        roomExists={roomExists}
       />
     );
   }
@@ -97,53 +110,42 @@ class _Container extends Component<IProps, IState> {
 
   private createRoom = () => {
     const { roomName, roomNotes } = this.state;
-    const body = { [POST_ROOM_NOTES]: roomNotes, [POST_ROOM_NAME]: roomName };
-    postRoom(body)
-      .then(() => this.setState({ redirect: true }), () => this.setState({ showAlert: true }));
+    const { createRoom } = this.props;
+    const body = { info: roomNotes, name: roomName };
+    createRoom(body);
   }
 
-  private deleteRoom = () => {
-    const { room } = this.state;
+  private delete = () => {
+    const { deleteRoom, location } = this.props;
+    const { room } = location;
     if (!room) return null;
-    fetch(`http://localhost:5000/room/${room.id}`, {
-      headers: POST_HEADERS,
-      method: 'delete',
-    })
-      .then(response => response.status)
-      .then((statusCode) => {
-        if (statusCode === 200) this.setState({ redirect: true });
-        if (statusCode === 400) this.setState({ showAlert: true });
-      });
+    deleteRoom(room.id);
   }
 
   private updateRoom = () => {
-    const { roomName, roomNotes, room } = this.state;
-    if (!room) return null;
+    const { roomName, roomNotes } = this.state;
+    const { updateRoom, location } = this.props;
+    if (!location.room) return null;
     const body = { info: roomNotes, name: roomName };
-    fetch(`http://localhost:5000/room/${room.id}`, {
-      body: JSON.stringify(body),
-      headers: POST_HEADERS,
-      method: 'put',
-    })
-      .then(response => response.status)
-      .then((statusCode) => {
-        if (statusCode === 200) this.setState({ redirect: true });
-        if (statusCode === 400) this.setState({ showAlert: true });
-      });
+    updateRoom(body, location.room.id);
   }
 }
 
 const mapStateToProps = (state: IStore) => ({
-
+  error: state.adminRoom.error,
+  submitted: state.adminRoom.submitted,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-
+  createRoom: (data: IPostRoom) => dispatch(createRoomAction(data)),
+  deleteRoom: (id: number) => dispatch(deleteRoomAction(id)),
+  reset: () => dispatch(resetPage()),
+  updateRoom: (data: IPostRoom, id: number) => dispatch(updateRoomAction(data, id)),
 });
 
-const CreateRoom = connect(
+const AdminRoom = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(_Container);
 
-export default CreateRoom;
+export default AdminRoom;

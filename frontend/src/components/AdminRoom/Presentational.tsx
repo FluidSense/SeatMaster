@@ -24,36 +24,39 @@ interface IProps {
   onClick: () => void;
   deleteRoom: () => void;
   showAlert: boolean;
-  roomId?: number;
+  alertMessage?: string;
+  roomExists: boolean;
 }
-
-const alertStripe = (
-  <AlertStripe solid={true} type={ETIKETT_WARNING}>
-    {_ALERT_CREATED_MESSAGE}
-  </AlertStripe>
-);
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const {
     roomName,
     roomNotes,
-    roomId,
+    roomExists,
     setNotes,
     setName,
     buttonDisabled,
     onClick,
     deleteRoom,
     showAlert,
+    alertMessage,
   } = props;
-  const displayAlert = showAlert ? alertStripe : null;
-  const titleText = roomId ? _TITLE_UPDATE_NEW_ROOM : _TITLE_CREATE_NEW_ROOM;
-  const buttonText = roomId ? _BUTTON_UPDATE_ROOM : _BUTTON_CREATE_ROOM;
-  const deleteButton = roomId
-    ? (
-      <HovedKnapp id={'delete-room-button'} type="fare" onClick={deleteRoom}>
-        {_BUTTON_DELETE_ROOM}
-      </HovedKnapp>
-    ) : null;
+  const displayAlert =
+    showAlert
+      ? (
+        <AlertStripe solid={true} type={ETIKETT_WARNING}>
+          {alertMessage}
+        </AlertStripe>)
+      : null;
+  const titleText = roomExists ? _TITLE_UPDATE_NEW_ROOM : _TITLE_CREATE_NEW_ROOM;
+  const buttonText = roomExists ? _BUTTON_UPDATE_ROOM : _BUTTON_CREATE_ROOM;
+  const deleteButton =
+    roomExists
+      ? (
+        <HovedKnapp id={'delete-room-button'} type="fare" onClick={deleteRoom}>
+          {_BUTTON_DELETE_ROOM}
+        </HovedKnapp>
+      ) : null;
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
     const changeEvent = event as ChangeEvent<HTMLInputElement>;
