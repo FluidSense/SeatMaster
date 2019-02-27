@@ -5,7 +5,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
 import {
-  _ALERT_ERROR_MESSAGE,
+  _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,
   _BUTTON_DELETE_ROOM,
   _BUTTON_UPDATE_ROOM,
@@ -29,7 +29,7 @@ interface IProps {
 
 const alertStripe = (
   <AlertStripe solid={true} type={ETIKETT_WARNING}>
-    {_ALERT_ERROR_MESSAGE}
+    {_ALERT_CREATED_MESSAGE}
   </AlertStripe>
 );
 

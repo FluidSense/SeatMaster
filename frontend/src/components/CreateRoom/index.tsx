@@ -1,6 +1,9 @@
 import React, { ChangeEvent, Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { postRoom } from '../../API/calls';
+import { IStore } from '../../store';
 import {
   POST_HEADERS,
   POST_NEW_ROOM_URL,
@@ -28,7 +31,7 @@ interface IProps {
 }
 
 // tslint:disable-next-line:class-name
-class CreateRoom extends Component<IProps, IState> {
+class _Container extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -129,5 +132,18 @@ class CreateRoom extends Component<IProps, IState> {
       });
   }
 }
+
+const mapStateToProps = (state: IStore) => ({
+
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+
+});
+
+const CreateRoom = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(_Container);
 
 export default CreateRoom;
