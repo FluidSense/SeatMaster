@@ -10,9 +10,13 @@ const genericFetch = (fetchType: fetchTypes, url: string, data: any) => {
   });
 };
 
-export const postFetch = (url: string, data: any) => genericFetch('POST', url, data);
-export const putFetch = (url: string, data: any) => genericFetch('PUT', url, data);
-export const deleteFetch = (url: string, data: any) => genericFetch('DELETE', url, data);
+const postFetch = (url: string, data: any) => genericFetch('POST', url, data);
+const putFetch = (url: string, data: any) => genericFetch('PUT', url, data);
+const deleteFetch = (url: string, id: any) => {
+  return fetch(`${url}${id}`, {
+    method: 'DELETE',
+  });
+};
 
 export const postJson = (url: string, data: any) => {
   return postFetch(url, data).then(response => response.ok
