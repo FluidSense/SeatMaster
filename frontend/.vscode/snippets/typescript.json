@@ -1,0 +1,52 @@
+{
+  "SeatMaster Reducer": {
+    "prefix": "smred",
+    "body": [
+      "import { AnyAction } from 'redux';",
+      "import { } from './constants';",
+      "",
+      "export interface IState {",
+      "something?: any;",
+      "}",
+      "",
+      "const initialState = {",
+      "something: undefined,",
+      "};",
+      "",
+      "const reducer = (",
+      "state: IState = initialState,",
+      "action: AnyAction,",
+      "): IState => {",
+      "const { type, payload } = action;",
+      "switch (type) {",
+      "default:",
+      "return state;",
+      "}",
+      "};",
+      "",
+      "export default reducer;",
+      ""
+    ],
+    "description": "Reducer pattern based on the Seat Master setup."
+  },
+  "SeatMaster ThunkAction": {
+    "prefix": "smta",
+    "body": [
+      "import { AnyAction, Dispatch } from 'redux';",
+      "import { ThunkAction } from 'redux-thunk';",
+      "",
+      "const action = (payload: any) => ({",
+      "payload,",
+      "type: 'ACTION',",
+      "});",
+      "",
+      "export const thunkAction = ():",
+      "ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {",
+      "const result = await undefined;",
+      "if (result) dispatch(action(result));",
+      "};",
+      ""
+    ],
+    "description": "ThunkAction pattern based on the Seat Master setup."
+  }
+}
