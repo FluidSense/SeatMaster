@@ -18,6 +18,11 @@ def registerUser(userInfo):
     return user.to_json(), 200
 
 
+def getUserFromSub(sub):
+    user = db.query(User).filter(sub=sub).first()
+    return user
+
+
 def getApplicationByStudentNumber(studentNumber):
     user = db.session.query(User).filter(studentNumber=studentNumber).first()
     return user

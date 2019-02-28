@@ -34,7 +34,5 @@ def registerUser():
 @requires_auth
 def getSelf():
     ctx = _request_ctx_stack.top
-    print(ctx.current_user, flush=True)
-    #userApplication = applicationService.getApplicationByUserId(userid)
-    # return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
-    return Response("", 200)
+    user = userService.getUserFromSub(ctx.current_user.sub)
+    return jsonify(user.to_json()) if user else Response("{}", 401)
