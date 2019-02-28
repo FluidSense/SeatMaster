@@ -1,10 +1,11 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
+import { postApplicationForm } from '../../API/calls';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { _ALERT_USER_ERROR, POST_FORM_DATA } from './Strings';
+import { _ALERT_USER_ERROR } from './Strings';
 
 interface IProps {
   username: string;
@@ -93,31 +94,24 @@ export class Presentational extends React.Component<IProps, IState> {
     e.preventDefault();
     this.setState({ loading: true });
 
-    fetch(POST_FORM_DATA, {
-      body: JSON.stringify({
-        comments: this.state.infoText,
-        keepSeat: this.state.keepSeat,
-        needs: this.state.needsText,
-        partnerUsername: this.state.partnerUsername,
-        room: this.state.room,
-        username: this.props.username,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
+    postApplicationForm({
+      comments: this.state.infoText,
+      keepSeat: this.state.keepSeat,
+      needs: this.state.needsText,
+      partnerUsername: this.state.partnerUsername,
+      room: this.state.room,
+      username: this.props.username,
     })
-      .then((response) => {
-        if (response.ok) {
+      .then(
+        // On fullfilled promise:
+        () => {
           this.props.changeModal(true);
           this.setState({ loading: false, error: '' });
-        } else {
+        },
+        // On rejected promise:
+        () => {
           this.setState({ loading: false, error: _ALERT_USER_ERROR });
-        }
-      })
-      .catch((error) => {
-        this.setState({ loading: false, error: _ALERT_USER_ERROR });
-      });
+        });
   }
 
   private alertUser = (text: string) => (

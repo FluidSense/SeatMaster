@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getAllRooms } from '../../API/calls';
 import Presentational from './Presentational';
 import './viewRooms.css';
 
@@ -21,11 +22,7 @@ class ViewRoom extends Component<{}, IStateProps> {
       rooms: [],
     };
   }
-  public componentDidMount = () => {
-    fetch('http://localhost:5000/room/')
-      .then(response => response.json())
-      .then(result => this.setState({ rooms: result }));
-  }
+  public componentDidMount = () => getAllRooms().then(result => this.setState({ rooms: result }));
 
   public render() {
     const { rooms } = this.state;
