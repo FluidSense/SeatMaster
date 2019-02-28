@@ -5,8 +5,8 @@ from shared import db
 
 
 def setUp(mocker):
-    user1 = User("Yoda")
-    user2 = User("Obi Wan")
+    user1 = User("Yoda", "sub", "email")
+    user2 = User("Obi Wan", "sub", "email")
     app1 = Application(
         status="good",
         comments="whatever",

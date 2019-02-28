@@ -18,7 +18,7 @@ class TestApplication(TestCase):
         self.ctx.push()
 
     def test_new_application_without_partner(self):
-        testuser = User("Frank")
+        testuser = User("Frank", "sub", "email")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
@@ -42,14 +42,14 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username},
+            user={"id": 1, "username": testuser.username, "email": "email"},
             partnerApplication={},
             ), 201)
         assert expectedResponse.status == response.status
         assert expectedResponse.data == response.data
 
     def test_new_application_without_existing_partner(self):
-        testuser = User("Frank")
+        testuser = User("Frank", "sub", "email")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
@@ -73,7 +73,7 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username},
+            user={"id": 1, "username": testuser.username, "email": "email"},
             partnerApplication={}
         ), 201)
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1')
@@ -83,8 +83,8 @@ class TestApplication(TestCase):
         assert getApplication.data == expectedApplicationResponse.data
 
     def test_new_application_with_existing_partner(self):
-        testuser1 = User("Frank")
-        testuser2 = User("Monster")
+        testuser1 = User("Frank", "sub", "email")
+        testuser2 = User("Monster", "sub2", "emails")
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()
@@ -120,7 +120,7 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser1.username},
+            user={"id": 1, "username": testuser1.username, "email": testuser1.email},
             partnerApplication={}
         ), 201)
         user2expectedResponse = make_response(jsonify(
@@ -128,13 +128,13 @@ class TestApplication(TestCase):
             comments="Bruh wtf",
             id=2,
             status="SUBMITTED",
-            user={"id": 2, "username": testuser2.username},
+            user={"id": 2, "username": testuser2.username, "email": testuser2.email},
             partnerApplication={
                 "needs": "Pepsi is better than coke",
                 "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
                 "status": "SUBMITTED",
-                "user": {"id": 1, "username": testuser1.username}
+                "user": {"id": 1, "username": testuser1.username, "email": testuser1.email}
             },
         ), 201)
         expectedConnectedApplication = jsonify(
@@ -142,13 +142,13 @@ class TestApplication(TestCase):
             comments="Bruh wtf",
             id=2,
             status="SUBMITTED",
-            user={"id": 2, "username": testuser2.username},
+            user={"id": 2, "username": testuser2.username, "email": testuser2.email},
             partnerApplication={
                 "needs": "Pepsi is better than coke",
                 "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
                 "status": "SUBMITTED",
-                "user": {"id": 1, "username": testuser1.username}
+                "user": {"id": 1, "username": testuser1.username, "email": testuser1.email}
             },
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2')
@@ -160,8 +160,8 @@ class TestApplication(TestCase):
         assert getApplication.data == expectedConnectedApplication.data
 
     def test_get_all_applications(self):
-        testuser1 = User("Frank")
-        testuser2 = User("Monster")
+        testuser1 = User("Frank", "sub", "email")
+        testuser2 = User("Monster", "uuid", "email")
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()

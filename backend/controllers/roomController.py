@@ -1,11 +1,9 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 from services import roomService
-from auth import requires_auth
 room = Blueprint("room", __name__, url_prefix="/room")
 
 
 @room.route("/<id>")
-@requires_auth
 def getRoom(id):
     room = roomService.getRoomById(id)
     return jsonify(room.to_json()) if room else Response("{}", 200)

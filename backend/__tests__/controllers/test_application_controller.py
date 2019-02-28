@@ -8,7 +8,7 @@ import json
 
 
 def createApplication():
-    user = User("Darth plageus")
+    user = User("Darth plageus", "sub", "email")
     application = Application(
         status="status",
         needs="needs",
@@ -62,7 +62,7 @@ def registerApplicationMock(comments, username, needs, partnerUsername):
         status="SUBMITTED",
         comments=comments,
         needs=needs,
-        user=User("Darth Plageus"),
+        user=User("Darth Plageus", "sub", "email"),
         partnerUsername=partnerUsername,
     ).to_json(), 201
 
@@ -88,7 +88,7 @@ def test_registerNewApplication(mocker, client):
         assert jsonify(
             comments='comments',
             needs='needs',
-            user={"id": None, "username": "Darth Plageus"},
+            user={"id": None, "username": "Darth Plageus", "email": "email"},
             id=None,
             status="SUBMITTED",
             partnerApplication={},

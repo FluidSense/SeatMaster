@@ -70,7 +70,7 @@ class TestSeat(TestCase):
 
     def test_assign_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello")
+        user = User("hello", "sub", "email")
         db.session.add(user)
         application = Application(
             status="lol",
@@ -103,7 +103,7 @@ class TestSeat(TestCase):
 
     def test_remove_student_from_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello")
+        user = User("hello", "sub", "email")
         db.session.add(user)
         application = Application(
             status="lol",
