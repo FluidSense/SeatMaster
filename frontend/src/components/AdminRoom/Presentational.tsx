@@ -55,8 +55,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       ? (
         <HovedKnapp id={'delete-room-button'} type="fare" onClick={deleteRoom}>
           {_BUTTON_DELETE_ROOM}
-        </HovedKnapp>
-      ) : null;
+        </HovedKnapp>)
+      : null;
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
     const changeEvent = event as ChangeEvent<HTMLInputElement>;
@@ -66,6 +66,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   return (
     <>
       <Sidetittel>{titleText}</Sidetittel>
+      {displayAlert}
       <Input
         id={'input-room-name'}
         onChange={setName}
@@ -88,7 +89,6 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         {buttonText}
       </HovedKnapp>
       {deleteButton}
-      {displayAlert}
     </>
   );
 };

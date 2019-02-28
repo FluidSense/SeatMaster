@@ -6,11 +6,13 @@ import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IRoom } from '../ViewRooms';
 import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
+import { ROUTE_TO } from './constants';
 import Presentational from './Presentational';
 
 interface IState {
   roomName: string;
   roomNotes: string;
+  room?: IRoom;
   buttonDisabled: boolean;
   showAlert: boolean;
   redirect: boolean;
@@ -43,6 +45,7 @@ class _Container extends Component<Props, IState> {
     this.state = {
       buttonDisabled: true,
       redirect: false,
+      room: undefined,
       roomName: '',
       roomNotes: '',
       showAlert: false,
@@ -70,18 +73,17 @@ class _Container extends Component<Props, IState> {
 
   public componentDidMount = () => {
     const { room } = this.props.location;
-    if (room) this.setState({ roomName: room.name, roomNotes: room.info });
+    if (room) this.setState({ room, roomName: room.name, roomNotes: room.info });
   }
 
   public render() {
-    const { buttonDisabled, roomName, roomNotes, showAlert } = this.state;
-    const { submitted, location, reset, error } = this.props;
-    const { room } = location;
+    const { buttonDisabled, roomName, roomNotes, room, showAlert } = this.state;
+    const { submitted, reset, error } = this.props;
     const onClick = room ? this.updateRoom : this.createRoom;
     const roomExists = room ? true : false;
     if (submitted) {
       reset();
-      return <Redirect to={'/admin/rooms'} />;
+      return <Redirect to={ROUTE_TO} />;
     }
     return (
       <Presentational
@@ -116,18 +118,18 @@ class _Container extends Component<Props, IState> {
   }
 
   private delete = () => {
-    const { deleteRoom, location } = this.props;
-    const { room } = location;
+    const { room } = this.state;
+    const { deleteRoom } = this.props;
     if (!room) return null;
     deleteRoom(room.id);
   }
 
   private updateRoom = () => {
-    const { roomName, roomNotes } = this.state;
-    const { updateRoom, location } = this.props;
-    if (!location.room) return null;
+    const { roomName, roomNotes, room } = this.state;
+    const { updateRoom } = this.props;
+    if (!room) return null;
     const body = { info: roomNotes, name: roomName };
-    updateRoom(body, location.room.id);
+    updateRoom(body, room.id);
   }
 }
 

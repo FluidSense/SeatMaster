@@ -2,6 +2,7 @@ import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { ROUTE_TO } from './constants';
 import { IRoom } from './index';
 import { _LINK_NAME_TITLE, _LINK_NOTES_TITLE } from './strings';
 
@@ -13,7 +14,7 @@ const RoomLink: React.FunctionComponent<IProps> = (props) => {
   const { room } = props;
   const link = (panelProps: any) => (
     <NavLink
-      to={{ pathname: '/admin/rooms/update-room', room: { ...room } }}
+      to={{ pathname: panelProps.href, room: { ...room } }}
       className="lenkepanel lenkepanel--border"
     >
       {panelProps.children}
@@ -22,7 +23,7 @@ const RoomLink: React.FunctionComponent<IProps> = (props) => {
     <LenkepanelBase
       key={room.id}
       linkCreator={link}
-      href={'/admin/rooms/update-room'}
+      href={ROUTE_TO}
     >
       <div className="link-name">
         <Element>{_LINK_NAME_TITLE}</Element>
