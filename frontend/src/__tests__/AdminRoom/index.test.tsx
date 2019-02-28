@@ -1,61 +1,77 @@
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import fetchMock from 'fetch-mock';
 import * as React from 'react';
-import { POST_NEW_ROOM_URL } from '../../components/commonConstants';
-import CreateRoom from '../../components/CreateRoom/index';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import AdminRoom from '../../components/AdminRoom/index';
 
-describe('Create room functions', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<CreateRoom />);
+describe('Admin room functions', () => {
+  const location = { room: undefined };
+  const middlewares = [thunk];
+  const mockStore = configureMockStore(middlewares);
+  const store = mockStore({
+    adminRoom: { error: undefined, submitted: undefined },
+    rooms: { rooms: [] },
+  });
+  const mountProvider = () => (mount(
+    <Provider store={store}><AdminRoom location={location} /></Provider>));
+
+  it('renders correctly without rooms', () => {
+    const wrapper = mountProvider();
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('Updates roomName state through onchange', () => {
-    const component = shallow(<CreateRoom />);
+    const wrapper = mountProvider();
+    const component = wrapper.find(AdminRoom);
     const name = 'X-Wing';
-    const inputName = component.dive().find('#input-room-name');
+    const inputName = component.find('#input-room-name').hostNodes();
     inputName.simulate('change', { target: { value: name } });
-    expect(component.state('roomName')).toEqual(name);
+    const state = component.children().state();
+    expect(state.roomName).toEqual(name);
   });
 
   it('Updates roomNotes state through onchange', () => {
-    const component = shallow(<CreateRoom />);
+    const wrapper = mountProvider();
+    const component = wrapper.find(AdminRoom);
     const notes = 'These are some notes, bro';
-    const inputNotes = component.dive().find('#input-room-notes');
+    const inputNotes = component.find('#input-room-notes').hostNodes();
     inputNotes.simulate('change', { target: { value: notes } });
-    expect(component.state('roomNotes')).toEqual(notes);
+    const state = component.children().state();
+    expect(state.roomNotes).toEqual(notes);
   });
 
-  it('Fetches with correct body', () => {
-    fetchMock.mock(POST_NEW_ROOM_URL, 201);
-    const component = shallow(<CreateRoom />);
-    const submitButton = component.dive().find('#create-room-button');
-    const newState = {
-      ...component.state(),
-      roomName: 'X-Wing',
-      roomNotes: 'Notes',
-    };
-    component.setState(newState);
-    const jsonBody = JSON.stringify({
-      info: component.state('roomNotes'),
-      name: component.state('roomName'),
-    });
-    submitButton.simulate('click');
-    const fetchOptions = fetchMock.lastOptions();
-    expect(fetchOptions.body).toEqual(jsonBody);
+  it('Renders correctly when room as prop', () => {
+    const location2 = { room: { id: 64, info: 'wasd', name: 'qwerty', seat: 0 } };
+    const wrapper = mount(
+      <Provider store={store}><AdminRoom location={location2} /></Provider>);
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
 
-describe('Create Room life cycle', () => {
+describe('Admin Room life cycle', () => {
+  const location = { room: undefined };
+  const middlewares = [thunk];
+  const mockStore = configureMockStore(middlewares);
+  const store = mockStore({
+    adminRoom: { error: undefined, submitted: undefined },
+    rooms: { room: [] },
+  });
+
   it('Update state and check if button is enabled', () => {
-    const wrapper = shallow(<CreateRoom />) as any;
+    const wrapper = mount(
+      <Provider store={store}>
+        <AdminRoom location={location} />
+      </Provider>);
     const newState = {
       ...wrapper.state(),
       roomName: 'X-Wing',
       roomNotes: 'Notes',
     };
     wrapper.setState(newState);
-    expect(wrapper.state('buttonDisabled')).toEqual(false);
+    const component = wrapper.find(AdminRoom);
+    const state = component.children().state();
+    expect(state.buttonDisabled).toEqual(true);
   });
 });
