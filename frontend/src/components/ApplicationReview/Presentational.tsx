@@ -1,4 +1,5 @@
 import KnappBase from 'nav-frontend-knapper';
+import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_NOT_FOUND } from '../Login/constants';
@@ -18,7 +19,6 @@ import {
   _REVIEW_APPLICATION,
   _SEAT_ROLLOVER,
 } from './strings';
-import { Sidetittel } from 'nav-frontend-typografi';
 
 interface IProps {
   applicationInfo: IApplicationInfoObject;
