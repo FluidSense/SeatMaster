@@ -21,9 +21,9 @@ const deleteFetch = (url: string, id: any) => {
 export const postJson = (url: string, data: any) => {
   return postFetch(url, data).then(response => response.ok
   ? response.json()
-  : Promise.reject());
+  : false);
 };
 
 export const getJson = (url: string) => fetch(url).then(response => response.ok
   ? response.json()
-  : Promise.reject());
+  : false);
