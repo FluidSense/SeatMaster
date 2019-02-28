@@ -2,11 +2,11 @@
 
 exports[`Application review presentational Renders correctly 1`] = `
 <Fragment>
-  <h1>
+  <Sidetittel>
     Review Application
-  </h1>
+  </Sidetittel>
   <div
-    className="user-information"
+    id="user-information"
   >
     <InformationList
       information={
@@ -20,7 +20,7 @@ exports[`Application review presentational Renders correctly 1`] = `
     />
   </div>
   <div
-    className="room-information"
+    id="room-information"
   >
     <InformationList
       information={
@@ -44,6 +44,7 @@ exports[`Application review presentational Renders correctly 1`] = `
     className={null}
     disabled={false}
     htmlType="submit"
+    id="edit-application"
     inaktivKlasseVedDisabled={false}
     mini={false}
     spinner={false}

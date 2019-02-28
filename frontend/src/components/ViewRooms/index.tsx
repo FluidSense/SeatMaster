@@ -4,6 +4,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
+import './viewRooms.css';
 
 export interface IRoom {
   id: number;

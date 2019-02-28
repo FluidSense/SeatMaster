@@ -1,15 +1,12 @@
 import * as React from 'react';
-import './App.css';
-import Login from './components/Login';
-
 import {
   Redirect,
   Route,
   Router,
   Switch,
 } from 'react-router-dom';
-
 import history from './components/History';
+import Login from './components/Login';
 import { Routing } from './components/Route';
 
 class App extends React.Component {
