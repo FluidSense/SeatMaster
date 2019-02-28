@@ -16,15 +16,16 @@ describe('Create season', () => {
   const middlewares = [thunk];
   const mockStore = configureMockStore(middlewares);
   const store = mockStore({ applicationSeason: {} });
-  it('renders correctly', () => {
+  it('renders itself and children', () => {
     Date.now = jest.fn(() => new Date(Date.UTC(2017, 0, 1)).valueOf());
     const wrapper = mount(
     <Provider store={store}>
       <CreateSeason />
     </Provider>);
     const season = wrapper.find(CreateSeason);
-
-    expect(toJson(season)).toMatchSnapshot();
+    expect(season.length).toBe(1);
+    const presentational = wrapper.find(Presentational);
+    expect(presentational.length).toBe(1);
   });
 
   it('Check if creating is available', () => {
