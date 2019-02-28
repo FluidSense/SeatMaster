@@ -3,6 +3,7 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+from services import userService
 
 DOMAIN = 'https://auth.dataporten.no'
 VERIFICATION_DOMAIN = DOMAIN + '/openid/jwks'
@@ -49,7 +50,7 @@ def get_token_auth_header():
     return token
 
 
-def requires_auth(f):
+def requiresIdToken(f):
     """Determines if the Access Token is valid
     """
 
@@ -95,12 +96,27 @@ def requires_auth(f):
                     'description': 'Unable to parse authentication token.'
                 }, 400)
 
-            _request_ctx_stack.top.current_user = payload
+            _request_ctx_stack.top.idToken = payload
             return f(*args, **kwargs)
 
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Unable to find the appropriate key.'
         }, 400)
+
+    return decorated
+
+
+def requires_auth(f):
+    """Determines if the Access Token is valid
+    """
+
+    @wraps(f)
+    @requiresIdToken
+    def decorated(*args, **kwargs):
+        ctx = _request_ctx_stack.top
+        user = userService.getUserFromSub(ctx.token.sub)
+        ctx.user = user
+        return f(*args, **kwargs)
 
     return decorated

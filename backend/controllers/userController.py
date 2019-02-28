@@ -22,7 +22,7 @@ def registerUser():
         ctx = _request_ctx_stack.top
         accessToken = form.get("accessToken")
         userInfo = getDataportenUserInfo(accessToken)
-        if(ctx.current_user.get("sub") == userInfo.get("sub")):
+        if(ctx.idToken.get("sub") == userInfo.get("sub")):
             response, statusCode = userService.registerUser(userInfo)
             return make_response(jsonify(response), statusCode)
         else:
