@@ -54,7 +54,7 @@ const Presentational: React.FunctionComponent<IApplicationStatusProps> = (props)
   const etikettText = selectEtikettText(applicationStatus);
 
   return (
-    <div><EtikettBase type={etikettType}>{etikettText}</EtikettBase></div>
+    <EtikettBase type={etikettType}>{etikettText}</EtikettBase>
   );
 };
 
