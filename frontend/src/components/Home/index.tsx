@@ -1,21 +1,22 @@
+import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import ApplicationReview from '../ApplicationReview';
-import _Container from '../ApplicationSeason/index';
-import Container from '../ApplicationStatus/index';
-
-import KnappBase from 'nav-frontend-knapper';
+import ApplicationSeason from '../ApplicationSeason/index';
+import ApplicationStatus from '../ApplicationStatus/index';
+import './home.css';
 
 interface IHomeProps {
   fetchSeason: () => any;
 }
 
+const _TITLE = 'My Status';
+
 export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
-    <div>
-      <h1>My status</h1>
-      <_Container />
-      <Container />
+    <div id="student-application">
+      <Sidetittel className="page-title">{_TITLE}</Sidetittel>
+      <ApplicationSeason />
+      <ApplicationStatus />
       <ApplicationReview />
     </div>
   );

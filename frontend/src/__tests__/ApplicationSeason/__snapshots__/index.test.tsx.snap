@@ -24,44 +24,48 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
       }
       currentDate={"2017-01-01T00:00:00.000Z"}
     >
-      <EtikettBase
-        type="info"
-        typo="normaltekst"
+      <div
+        id="season-info"
       >
-        <div
-          className="etikett etikett--info"
+        <EtikettBase
+          type="info"
+          typo="normaltekst"
         >
-          <TypografiBase
-            tag="span"
-            type="normaltekst"
+          <div
+            className="etikett etikett--info"
           >
-            <span
-              className="typo-normal"
+            <TypografiBase
+              tag="span"
+              type="normaltekst"
             >
-              Open for applications  - 2/2/2019
-            </span>
-          </TypografiBase>
-        </div>
-      </EtikettBase>
-      <EtikettBase
-        type="info"
-        typo="normaltekst"
-      >
-        <div
-          className="etikett etikett--info"
+              <span
+                className="typo-normal"
+              >
+                Open for applications  - 2/2/2019
+              </span>
+            </TypografiBase>
+          </div>
+        </EtikettBase>
+        <EtikettBase
+          type="info"
+          typo="normaltekst"
         >
-          <TypografiBase
-            tag="span"
-            type="normaltekst"
+          <div
+            className="etikett etikett--info"
           >
-            <span
-              className="typo-normal"
+            <TypografiBase
+              tag="span"
+              type="normaltekst"
             >
-              Closing for applications  - 2/2/2019
-            </span>
-          </TypografiBase>
-        </div>
-      </EtikettBase>
+              <span
+                className="typo-normal"
+              >
+                Closing for applications  - 2/2/2019
+              </span>
+            </TypografiBase>
+          </div>
+        </EtikettBase>
+      </div>
     </Presentational>
   </_Container>
 </Connect(_Container)>

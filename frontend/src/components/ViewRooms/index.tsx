@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getAllRooms } from '../../API/calls';
 import Presentational from './Presentational';
+import './viewRooms.css';
 
 export interface IRoom {
   id: number;
@@ -21,10 +22,7 @@ class ViewRoom extends Component<{}, IStateProps> {
       rooms: [],
     };
   }
-  public componentDidMount = () => {
-    getAllRooms()
-      .then(result => this.setState({ rooms: result }));
-  }
+  public componentDidMount = () => getAllRooms().then(result => this.setState({ rooms: result }));
 
   public render() {
     const { rooms } = this.state;
