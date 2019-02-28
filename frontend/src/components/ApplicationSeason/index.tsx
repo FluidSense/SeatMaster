@@ -5,6 +5,7 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
 import { fetchApplicationSeasonData } from './actions';
+import './applicationSeason.css';
 import Presentational from './Presentational';
 import { IApplicationSeason } from './reducer';
 
@@ -41,9 +42,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchSeason: () => dispatch(fetchApplicationSeasonData()),
 });
 
-const Container = connect(
+const ApplicationSeason = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(_Container);
 
-export default Container;
+export default ApplicationSeason;

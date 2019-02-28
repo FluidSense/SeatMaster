@@ -1,4 +1,5 @@
 import KnappBase from 'nav-frontend-knapper';
+import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_NOT_FOUND } from '../Login/constants';
@@ -60,13 +61,13 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   }
   return (
     <>
-      <h1>{_REVIEW_APPLICATION}</h1>
-      <div className="user-information">{<InformationList information={userInfoObject} />}</div>
-      <div className="room-information">{<InformationList information={roomInfoObject} />}</div>
+      <Sidetittel>{_REVIEW_APPLICATION}</Sidetittel>
+      <div id="user-information">{<InformationList information={userInfoObject} />}</div>
+      <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
         {<InfoPanel title={_NEEDS} text={applicationInfo.needs} />}
       </div>
-      <KnappBase type="hoved">{_EDIT_APPLICATION}</KnappBase>
+      <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
     </>
   );
 };

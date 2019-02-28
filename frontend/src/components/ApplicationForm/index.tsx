@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import './applicationForm.css';
 import { Presentational } from './Presentational';
 
 const mapStateToProps = (state: any) => ({

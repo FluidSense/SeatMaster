@@ -53,6 +53,7 @@ export class Presentational extends React.Component<IProps, IState> {
         {alertBox}
         <form
           onSubmit={this.onSubmitForm}
+          id="new-application-form"
         >
           <ApplicationFormPersonal
             username={this.props.username}
@@ -102,16 +103,16 @@ export class Presentational extends React.Component<IProps, IState> {
       room: this.state.room,
       username: this.props.username,
     })
-    .then(
-      // On fullfilled promise:
-      () => {
-        this.props.changeModal(true);
-        this.setState({ loading: false, error: '' });
-      },
-      // On rejected promise:
-      () => {
-        this.setState({ loading: false, error: _ALERT_USER_ERROR });
-      });
+      .then(
+        // On fullfilled promise:
+        () => {
+          this.props.changeModal(true);
+          this.setState({ loading: false, error: '' });
+        },
+        // On rejected promise:
+        () => {
+          this.setState({ loading: false, error: _ALERT_USER_ERROR });
+        });
   }
 
   private alertUser = (text: string) => (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
+import './applicationReview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {

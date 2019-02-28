@@ -23,18 +23,18 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
   const endText = currentDate < applicationPeriodEnd ? _SEASON_END : _SEASON_CLOSED;
 
   const start = (
-      <EtikettBase type={ETIKETT_INFO}>
-        {`${startText} - ${applicationPeriodStart.format('D/M/YYYY')}`}
-      </EtikettBase>);
+    <EtikettBase type={ETIKETT_INFO}>
+      {`${startText} - ${applicationPeriodStart.format('D/M/YYYY')}`}
+    </EtikettBase>);
   const startEtikett = currentDate <= applicationPeriodEnd ? start : false;
 
   return (
-    <>
+    <div id="season-info">
       {startEtikett}
       <EtikettBase type={ETIKETT_INFO}>
         {`${endText} - ${applicationPeriodEnd.format('D/M/YYYY')}`}
       </EtikettBase>
-    </>
+    </div>
   );
 };
 
