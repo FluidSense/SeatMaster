@@ -1,12 +1,15 @@
 import moment, { Moment } from 'moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { postSeason } from '../../API/calls';
 import { IPostApplicationSeason } from '../../API/interfaces';
+import { IStore } from '../../store';
 import DateInputField from '../DateInputField';
+import { postNewSeason } from './actions';
 import Presentational from './Presentational';
 import {
   _ERROR_MESSAGE,
@@ -17,9 +20,6 @@ import {
   _SEASON_END_TOO_EARLY,
   _SEASON_START,
 } from './strings';
-import { connect } from 'react-redux';
-import { IStore } from '../../store';
-import { postNewSeason } from './actions';
 
 export interface IState {
   periodStart: Moment;

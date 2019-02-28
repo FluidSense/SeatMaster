@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 import { AnyAction } from 'redux';
-import { SET_APPLICATION_SEASON } from './constants';
 import { SUBMITTED_APPLICATION_SEASON } from '../CreateSeason/strings';
+import { SET_APPLICATION_SEASON } from './constants';
 
 export interface IApplicationSeason {
   applicationPeriodEnd: Moment;
@@ -23,7 +23,7 @@ export const initialState = {
     applicationPeriodStart: minDate,
     end: minDate,
     start: minDate,
-  }
+  },
 };
 
 export const applicationSeasonReducer = (

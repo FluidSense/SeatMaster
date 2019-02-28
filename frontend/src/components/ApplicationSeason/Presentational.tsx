@@ -2,7 +2,7 @@ import { Moment } from 'moment';
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
 import { ETIKETT_INFO } from '../commonConstants';
-import { IApplicationSeason } from './reducer';
+import { IApplicationSeason, IApplicationSeasonState } from './reducer';
 import {
   _SEASON_CLOSED,
   _SEASON_END,

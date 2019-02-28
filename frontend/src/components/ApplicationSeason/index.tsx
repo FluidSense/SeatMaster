@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { IStore } from '../../store';
 import { fetchApplicationSeasonData } from './actions';
 import Presentational from './Presentational';
 import { IApplicationSeason } from './reducer';
@@ -32,8 +33,8 @@ class _Container extends React.Component<Props, {}> {
   }
 }
 
-const mapStateToProps = (state: IStateProps) => ({
-  applicationSeason: state.applicationSeason,
+const mapStateToProps = (state: IStore) => ({
+  applicationSeason: state.applicationSeason.currentSeason,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
