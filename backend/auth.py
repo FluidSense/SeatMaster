@@ -107,7 +107,7 @@ def requiresIdToken(f):
     return decorated
 
 
-def requires_auth(f):
+def requiresUser(f):
     """Determines if the Access Token is valid
     """
 
@@ -115,7 +115,13 @@ def requires_auth(f):
     @requiresIdToken
     def decorated(*args, **kwargs):
         ctx = _request_ctx_stack.top
-        user = userService.getUserFromSub(ctx.token.sub)
+        sub = ctx.idToken.get("sub")
+        user = userService.getUserFromSub(sub)
+        if(not user):
+            raise AuthError({
+                'code': 'User_not_exist',
+                'description': 'User not found in database'
+            }, 400)
         ctx.user = user
         return f(*args, **kwargs)
 

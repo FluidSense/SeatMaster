@@ -1,7 +1,7 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 import json
 from services import userService
-from auth import requires_auth
+from auth import requiresUser, requiresIdToken
 from flask import _request_ctx_stack
 from utils.dataporten import getDataportenUserInfo
 
@@ -15,7 +15,7 @@ def getUser(id):
 
 
 @user.route("/", methods=["POST"])
-@requires_auth
+@requiresIdToken
 def registerUser():
     if request.is_json:
         form = request.get_json()
@@ -31,8 +31,8 @@ def registerUser():
 
 
 @user.route("/")
-@requires_auth
+@requiresUser
 def getSelf():
     ctx = _request_ctx_stack.top
-    user = userService.getUserFromSub(ctx.current_user.sub)
+    user = ctx.user
     return jsonify(user.to_json()) if user else Response("{}", 401)

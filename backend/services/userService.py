@@ -4,7 +4,7 @@ import re
 
 
 def getUserByUsername(username):
-    user = db.session.query(User).filter(username=username).first()
+    user = db.session.query(User).filter(User.username == username).first()
     return user
 
 
@@ -19,10 +19,10 @@ def registerUser(userInfo):
 
 
 def getUserFromSub(sub):
-    user = db.query(User).filter(sub=sub).first()
+    user = db.session.query(User).filter(User.sub == sub).first()
     return user
 
 
 def getApplicationByStudentNumber(studentNumber):
-    user = db.session.query(User).filter(studentNumber=studentNumber).first()
+    user = db.session.query(User).filter(User.studentNumber == studentNumber).first()
     return user
