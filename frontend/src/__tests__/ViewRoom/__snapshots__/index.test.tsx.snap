@@ -7,6 +7,7 @@ exports[`ViewRoom Renders 1 room correctly 1`] = `
     rooms={Array []}
   >
     <Presentational
+      onClick={[Function]}
       rooms={Array []}
     />
   </_Container>
@@ -20,6 +21,7 @@ exports[`ViewRoom Renders nothing correctly 1`] = `
     rooms={Array []}
   >
     <Presentational
+      onClick={[Function]}
       rooms={Array []}
     />
   </_Container>
