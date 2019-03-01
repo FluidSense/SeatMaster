@@ -3,10 +3,10 @@ import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import moment from 'moment';
 import * as React from 'react';
-import { POST_NEW_SEASON_URL } from '../../components/commonConstants';
+import { SEASON_URL } from '../../API/constants';
 import CreateSeason, { format, IState, setTime } from '../../components/CreateSeason/index';
 
-fetchMock.mock(POST_NEW_SEASON_URL, 201);
+fetchMock.mock(SEASON_URL, 201);
 
 describe('Create season', () => {
   it('renders correctly', () => {

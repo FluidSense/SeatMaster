@@ -13,7 +13,7 @@ def getRoom(id):
 @room.route("/<id>", methods=["DELETE"])
 def deleteRoom(id):
     responseText, statusCode = roomService.deleteRoom(id)
-    return Response(responseText, statusCode)
+    return jsonify(responseText, statusCode)
 
 
 @room.route("/", methods=["POST"])
