@@ -3,17 +3,22 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './sideBar.css';
 
-const adminUrls: string[] = [
-  '/admin/',
-  '/admin/rooms/',
-  '/admin/create-season/',
+interface IUrl {
+  url: string;
+  title: string;
+}
+
+const adminUrls: IUrl[] = [
+  { url: '/admin/', title: 'Admin' },
+  { url: '/admin/rooms/', title: 'Rooms' },
+  { url: '/admin/create-season/', title: 'Create Season' },
 ];
 
 const Presentational: React.FunctionComponent<{}> = (props) => {
   const urls = adminUrls.map(url => (
     <li key={adminUrls.indexOf(url)}>
-      <NavLink to={url} exact={true}>
-        {url}
+      <NavLink to={url.url} exact={true}>
+        {url.title}
       </NavLink>
     </li>));
   return (
