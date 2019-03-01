@@ -4,7 +4,7 @@ import './applicationStatus.css';
 import Presentational from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
-  applicationStatus: state.userInformation.applicationStatus,
+  applicationStatus: state.applicationInformation.status,
 });
 
 const ApplicationStatus = connect(

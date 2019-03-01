@@ -3,9 +3,9 @@ import * as React from 'react';
 
 interface IStateProps {
   username: string;
-  fullname: string;
+  fullname?: string;
   email: string;
-  phone: string;
+  phone?: string;
   status: string;
 }
 

@@ -1,24 +1,21 @@
-import { Sidetittel } from 'nav-frontend-typografi';
-import * as React from 'react';
-import ApplicationReview from '../ApplicationReview';
-import ApplicationSeason from '../ApplicationSeason/index';
-import ApplicationStatus from '../ApplicationStatus/index';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { IStore } from '../../store';
+import { fetchApplicationInformation } from './actions';
+import { Presentational } from './Presentational';
 
-interface IHomeProps {
-  fetchSeason: () => any;
-}
+const mapStateToProps = (state: IStore) => ({
+  oidc: state.oidc,
+});
 
-const _TITLE = 'My Status';
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  fetchApplicationInformation: (idToken: string, username: string) =>
+    dispatch(fetchApplicationInformation(idToken, username)),
+});
 
-export const Home: React.FunctionComponent<IHomeProps> = (props) => {
-  return (
-    <div className="main-content">
-      <Sidetittel>{_TITLE}</Sidetittel>
-      <ApplicationSeason />
-      <ApplicationStatus />
-      <ApplicationReview />
-    </div>
-  );
-};
+const Home = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Presentational);
 
 export default Home;

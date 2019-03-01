@@ -35,7 +35,7 @@ class _Container extends React.Component<IStateProps> {
 }
 
 const mapStateToProps = (state: IStore) => ({
-  applicationInfo: state.userInformation,
+  applicationInfo: state.applicationInformation,
 });
 
 const ApplicationReview = connect(

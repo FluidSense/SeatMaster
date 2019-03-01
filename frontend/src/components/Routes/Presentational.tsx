@@ -1,6 +1,7 @@
 import React from 'react';
-import { IStore } from '../../store';
 
+import { UserState } from 'redux-oidc';
+import { IRegisteredUserState } from '../RegisterUser/reducer';
 import { RoutesLogin } from '../RoutesLogin';
 import { RoutesRegister } from '../RoutesRegister';
 import { RoutesUser } from '../RoutesUser';
@@ -9,7 +10,12 @@ interface IDispatchProps {
   fetchUserData: (idToken: string) => void;
 }
 
-type Props = IStore & IDispatchProps;
+interface IUserStates {
+  userInformation: IRegisteredUserState;
+  oidc: UserState;
+}
+
+type Props = IUserStates & IDispatchProps;
 
 export class Presentational extends React.Component<Props, {}> {
 
