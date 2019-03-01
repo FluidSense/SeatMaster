@@ -21,15 +21,22 @@ interface IDispatchProps {
   fetchRooms: () => void;
 }
 
-type Props = IStateProps & IDispatchProps;
+export interface IRouterProps {
+  history: {
+    push: (path: string) => void;
+  };
+}
+
+type Props = IStateProps & IDispatchProps & IRouterProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends Component<Props> {
   public componentDidMount = () => this.props.fetchRooms();
 
   public render() {
-    const { rooms } = this.props;
-    return (<Presentational rooms={rooms} />);
+    const { rooms, history } = this.props;
+    const onClick = () => history.push('/admin/rooms/create-room');
+    return (<Presentational rooms={rooms} onClick={onClick} />);
   }
 }
 
