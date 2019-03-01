@@ -52,153 +52,157 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
         setNotes={[Function]}
         showAlert={false}
       >
-        <Sidetittel>
-          <TypografiBase
-            type="sidetittel"
+        <div
+          className="main-content"
+        >
+          <Sidetittel>
+            <TypografiBase
+              type="sidetittel"
+            >
+              <h1
+                className="typo-sidetittel"
+              >
+                Update room
+              </h1>
+            </TypografiBase>
+          </Sidetittel>
+          <Input
+            bredde="XL"
+            id="input-room-name"
+            label="Name"
+            onChange={[Function]}
+            value="qwerty"
           >
-            <h1
-              className="typo-sidetittel"
+            <div
+              className="skjemaelement"
+            >
+              <label
+                className="skjemaelement__label"
+                htmlFor="input-room-name"
+              >
+                Name
+              </label>
+              <input
+                className="skjemaelement__input input--xl"
+                id="input-room-name"
+                onChange={[Function]}
+                type="text"
+                value="qwerty"
+              />
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+            </div>
+          </Input>
+          <Textarea
+            id="input-room-notes"
+            label="Notes"
+            maxLength={2000}
+            onChange={[Function]}
+            tellerTekst={[Function]}
+            textareaClass=""
+            value="wasd"
+          >
+            <div
+              className="skjemaelement textarea__container"
+            >
+              <label
+                className="skjemaelement__label"
+                htmlFor="input-room-notes"
+              >
+                Notes
+              </label>
+              <div
+                className="textarea--medMeta__wrapper"
+              >
+                <EventThrottler
+                  callback={[Function]}
+                  delay={100}
+                  event="resize"
+                >
+                  <textarea
+                    className="skjemaelement__input textarea--medMeta"
+                    id="input-room-notes"
+                    onChange={[Function]}
+                    style={
+                      Object {
+                        "height": "30px",
+                      }
+                    }
+                    type="text"
+                    value="wasd"
+                  />
+                </EventThrottler>
+                <p
+                  className="textarea--medMeta__teller"
+                >
+                  <span>
+                    Du har 
+                    1996
+                     tegn igjen
+                  </span>
+                </p>
+              </div>
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+              <div
+                aria-hidden="true"
+                className="textareamirror"
+              />
+            </div>
+          </Textarea>
+          <KnappBase
+            autoDisableVedSpinner={false}
+            className={null}
+            disabled={false}
+            htmlType="submit"
+            id="create-room-button"
+            inaktivKlasseVedDisabled={false}
+            mini={false}
+            onClick={[Function]}
+            spinner={false}
+            type="hoved"
+          >
+            <button
+              className="knapp knapp--hoved"
+              disabled={false}
+              id="create-room-button"
+              onClick={[Function]}
+              type="submit"
             >
               Update room
-            </h1>
-          </TypografiBase>
-        </Sidetittel>
-        <Input
-          bredde="XL"
-          id="input-room-name"
-          label="Name"
-          onChange={[Function]}
-          value="qwerty"
-        >
-          <div
-            className="skjemaelement"
-          >
-            <label
-              className="skjemaelement__label"
-              htmlFor="input-room-name"
-            >
-              Name
-            </label>
-            <input
-              className="skjemaelement__input input--xl"
-              id="input-room-name"
-              onChange={[Function]}
-              type="text"
-              value="qwerty"
-            />
-            <SkjemaelementFeilmelding>
-              <div
-                aria-live="assertive"
-                role="alert"
-              />
-            </SkjemaelementFeilmelding>
-          </div>
-        </Input>
-        <Textarea
-          id="input-room-notes"
-          label="Notes"
-          maxLength={2000}
-          onChange={[Function]}
-          tellerTekst={[Function]}
-          textareaClass=""
-          value="wasd"
-        >
-          <div
-            className="skjemaelement textarea__container"
-          >
-            <label
-              className="skjemaelement__label"
-              htmlFor="input-room-notes"
-            >
-              Notes
-            </label>
-            <div
-              className="textarea--medMeta__wrapper"
-            >
-              <EventThrottler
-                callback={[Function]}
-                delay={100}
-                event="resize"
-              >
-                <textarea
-                  className="skjemaelement__input textarea--medMeta"
-                  id="input-room-notes"
-                  onChange={[Function]}
-                  style={
-                    Object {
-                      "height": "30px",
-                    }
-                  }
-                  type="text"
-                  value="wasd"
-                />
-              </EventThrottler>
-              <p
-                className="textarea--medMeta__teller"
-              >
-                <span>
-                  Du har 
-                  1996
-                   tegn igjen
-                </span>
-              </p>
-            </div>
-            <SkjemaelementFeilmelding>
-              <div
-                aria-live="assertive"
-                role="alert"
-              />
-            </SkjemaelementFeilmelding>
-            <div
-              aria-hidden="true"
-              className="textareamirror"
-            />
-          </div>
-        </Textarea>
-        <KnappBase
-          autoDisableVedSpinner={false}
-          className={null}
-          disabled={false}
-          htmlType="submit"
-          id="create-room-button"
-          inaktivKlasseVedDisabled={false}
-          mini={false}
-          onClick={[Function]}
-          spinner={false}
-          type="hoved"
-        >
-          <button
-            className="knapp knapp--hoved"
+            </button>
+          </KnappBase>
+          <KnappBase
+            autoDisableVedSpinner={false}
+            className={null}
             disabled={false}
-            id="create-room-button"
-            onClick={[Function]}
-            type="submit"
-          >
-            Update room
-          </button>
-        </KnappBase>
-        <KnappBase
-          autoDisableVedSpinner={false}
-          className={null}
-          disabled={false}
-          htmlType="submit"
-          id="delete-room-button"
-          inaktivKlasseVedDisabled={false}
-          mini={false}
-          onClick={[Function]}
-          spinner={false}
-          type="fare"
-        >
-          <button
-            className="knapp knapp--fare"
-            disabled={false}
+            htmlType="submit"
             id="delete-room-button"
+            inaktivKlasseVedDisabled={false}
+            mini={false}
             onClick={[Function]}
-            type="submit"
+            spinner={false}
+            type="fare"
           >
-            Delete room
-          </button>
-        </KnappBase>
+            <button
+              className="knapp knapp--fare"
+              disabled={false}
+              id="delete-room-button"
+              onClick={[Function]}
+              type="submit"
+            >
+              Delete room
+            </button>
+          </KnappBase>
+        </div>
       </Presentational>
     </_Container>
   </Connect(_Container)>
@@ -247,131 +251,135 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
         setNotes={[Function]}
         showAlert={false}
       >
-        <Sidetittel>
-          <TypografiBase
-            type="sidetittel"
-          >
-            <h1
-              className="typo-sidetittel"
-            >
-              Create new room
-            </h1>
-          </TypografiBase>
-        </Sidetittel>
-        <Input
-          bredde="XL"
-          id="input-room-name"
-          label="Name"
-          onChange={[Function]}
-          value=""
+        <div
+          className="main-content"
         >
-          <div
-            className="skjemaelement"
-          >
-            <label
-              className="skjemaelement__label"
-              htmlFor="input-room-name"
+          <Sidetittel>
+            <TypografiBase
+              type="sidetittel"
             >
-              Name
-            </label>
-            <input
-              className="skjemaelement__input input--xl"
-              id="input-room-name"
-              onChange={[Function]}
-              type="text"
-              value=""
-            />
-            <SkjemaelementFeilmelding>
-              <div
-                aria-live="assertive"
-                role="alert"
-              />
-            </SkjemaelementFeilmelding>
-          </div>
-        </Input>
-        <Textarea
-          id="input-room-notes"
-          label="Notes"
-          maxLength={2000}
-          onChange={[Function]}
-          tellerTekst={[Function]}
-          textareaClass=""
-          value=""
-        >
-          <div
-            className="skjemaelement textarea__container"
-          >
-            <label
-              className="skjemaelement__label"
-              htmlFor="input-room-notes"
-            >
-              Notes
-            </label>
-            <div
-              className="textarea--medMeta__wrapper"
-            >
-              <EventThrottler
-                callback={[Function]}
-                delay={100}
-                event="resize"
+              <h1
+                className="typo-sidetittel"
               >
-                <textarea
-                  className="skjemaelement__input textarea--medMeta"
-                  id="input-room-notes"
-                  onChange={[Function]}
-                  style={
-                    Object {
-                      "height": "30px",
-                    }
-                  }
-                  type="text"
-                  value=""
+                Create new room
+              </h1>
+            </TypografiBase>
+          </Sidetittel>
+          <Input
+            bredde="XL"
+            id="input-room-name"
+            label="Name"
+            onChange={[Function]}
+            value=""
+          >
+            <div
+              className="skjemaelement"
+            >
+              <label
+                className="skjemaelement__label"
+                htmlFor="input-room-name"
+              >
+                Name
+              </label>
+              <input
+                className="skjemaelement__input input--xl"
+                id="input-room-name"
+                onChange={[Function]}
+                type="text"
+                value=""
+              />
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
                 />
-              </EventThrottler>
-              <p
-                className="textarea--medMeta__teller"
-              >
-                <span>
-                  Du har 
-                  2000
-                   tegn igjen
-                </span>
-              </p>
+              </SkjemaelementFeilmelding>
             </div>
-            <SkjemaelementFeilmelding>
-              <div
-                aria-live="assertive"
-                role="alert"
-              />
-            </SkjemaelementFeilmelding>
-            <div
-              aria-hidden="true"
-              className="textareamirror"
-            />
-          </div>
-        </Textarea>
-        <KnappBase
-          autoDisableVedSpinner={false}
-          className={null}
-          disabled={true}
-          htmlType="submit"
-          id="create-room-button"
-          inaktivKlasseVedDisabled={false}
-          mini={false}
-          onClick={[Function]}
-          spinner={false}
-          type="hoved"
-        >
-          <button
-            className="knapp knapp--hoved knapp--disabled"
-            disabled={true}
-            id="create-room-button"
-            onClick={[Function]}
-            type="submit"
+          </Input>
+          <Textarea
+            id="input-room-notes"
+            label="Notes"
+            maxLength={2000}
+            onChange={[Function]}
+            tellerTekst={[Function]}
+            textareaClass=""
+            value=""
           >
-            Create room
-          </button>
-        </KnappBase>
+            <div
+              className="skjemaelement textarea__container"
+            >
+              <label
+                className="skjemaelement__label"
+                htmlFor="input-room-notes"
+              >
+                Notes
+              </label>
+              <div
+                className="textarea--medMeta__wrapper"
+              >
+                <EventThrottler
+                  callback={[Function]}
+                  delay={100}
+                  event="resize"
+                >
+                  <textarea
+                    className="skjemaelement__input textarea--medMeta"
+                    id="input-room-notes"
+                    onChange={[Function]}
+                    style={
+                      Object {
+                        "height": "30px",
+                      }
+                    }
+                    type="text"
+                    value=""
+                  />
+                </EventThrottler>
+                <p
+                  className="textarea--medMeta__teller"
+                >
+                  <span>
+                    Du har 
+                    2000
+                     tegn igjen
+                  </span>
+                </p>
+              </div>
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+              <div
+                aria-hidden="true"
+                className="textareamirror"
+              />
+            </div>
+          </Textarea>
+          <KnappBase
+            autoDisableVedSpinner={false}
+            className={null}
+            disabled={true}
+            htmlType="submit"
+            id="create-room-button"
+            inaktivKlasseVedDisabled={false}
+            mini={false}
+            onClick={[Function]}
+            spinner={false}
+            type="hoved"
+          >
+            <button
+              className="knapp knapp--hoved knapp--disabled"
+              disabled={true}
+              id="create-room-button"
+              onClick={[Function]}
+              type="submit"
+            >
+              Create room
+            </button>
+          </KnappBase>
+        </div>
       </Presentational>
     </_Container>
   </Connect(_Container)>
