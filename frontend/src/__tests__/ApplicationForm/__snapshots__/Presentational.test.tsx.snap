@@ -26,6 +26,7 @@ exports[`application form renders correctly 1`] = `
       className={null}
       disabled={false}
       htmlType="submit"
+      id="submit-application"
       inaktivKlasseVedDisabled={false}
       mini={false}
       spinner={false}
