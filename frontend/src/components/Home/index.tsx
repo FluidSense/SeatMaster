@@ -13,7 +13,7 @@ const _TITLE = 'My Status';
 export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <div className="main-content">
-      <Sidetittel className="page-title">{_TITLE}</Sidetittel>
+      <Sidetittel>{_TITLE}</Sidetittel>
       <ApplicationSeason />
       <ApplicationStatus />
       <ApplicationReview />
