@@ -80,15 +80,17 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
-      <HovedKnapp
-        id={'create-room-button'}
-        type="hoved"
-        disabled={buttonDisabled}
-        onClick={onClick}
-      >
-        {buttonText}
-      </HovedKnapp>
-      {deleteButton}
+      <div id="state-buttons">
+        <HovedKnapp
+          id={'create-room-button'}
+          type="hoved"
+          disabled={buttonDisabled}
+          onClick={onClick}
+        >
+          {buttonText}
+        </HovedKnapp>
+        {deleteButton}
+      </div>
     </>
   );
 };
