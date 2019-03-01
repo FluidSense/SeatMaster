@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { postSeason } from '../../API/calls';
 import DateInputField from '../DateInputField';
+import './createSeason.css';
 import Presentational from './Presentational';
 import {
   _ERROR_MESSAGE,

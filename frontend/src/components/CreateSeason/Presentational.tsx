@@ -3,6 +3,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import React from 'react';
 import { _CREATE_NEW_SEASON, _NEW_APPLICATION_SEASON } from './strings';
+import { Sidetittel } from 'nav-frontend-typografi';
 
 interface IProps {
   alertPeriodEndBeforeStart?: SkjemaelementFeil;
@@ -25,7 +26,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   return (
     <>
       <div id="new-application-season">
-        <h1>{_NEW_APPLICATION_SEASON}</h1>
+        <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>
         <div id="appSeason">
           <SkjemaGruppe feil={alertPeriodEndBeforeStart}>{createFields(0, 2)}</SkjemaGruppe>
         </div>
