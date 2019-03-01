@@ -10,7 +10,7 @@ const userManagerConfig = {
 // tslint:disable-next-line: max-line-length
   redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/callback`,
   response_type: 'code',
-  scope: 'email openid profile userid userid-feide',
+  scope: 'email openid profile userid userid-feide groups longterm',
 // tslint:disable-next-line: max-line-length
   silent_redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/silent_renew.html`,
 };
