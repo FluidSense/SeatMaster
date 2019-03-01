@@ -8,6 +8,8 @@ interface IUrl {
   title: string;
 }
 
+const pageTitle = 'Navigation';
+
 const adminUrls: IUrl[] = [
   { url: '/admin/', title: 'Admin' },
   { url: '/admin/rooms/', title: 'Rooms' },
@@ -24,7 +26,7 @@ const Presentational: React.FunctionComponent<{}> = (props) => {
   return (
     <div id="admin-side-bar">
       <nav>
-        <Systemtittel>Navigation</Systemtittel>
+        <Systemtittel>{pageTitle}</Systemtittel>
         <ul id="nav-list">
           {urls}
         </ul>
