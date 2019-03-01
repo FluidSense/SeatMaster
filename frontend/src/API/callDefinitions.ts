@@ -19,9 +19,27 @@ const deleteFetch = (url: string, id: any) => {
 };
 
 export const postJson = (url: string, data: any) => {
-  return postFetch(url, data).then(response => response.ok
-  ? response.json()
-  : Promise.reject());
+  return postFetch(url, data)
+    .then(response => response.ok
+      ? response.json()
+      : Promise.reject(new Error('fail')))
+    .catch(error => false);
+};
+
+export const putJson = (url: string, data: any) => {
+  return putFetch(url, data)
+    .then(response => response.ok
+      ? response.json()
+      : Promise.reject())
+    .catch(error => false);
+};
+
+export const deleteJson = (url: string, id: any) => {
+  return deleteFetch(url, id)
+    .then(response => response.ok
+      ? response.json()
+      : Promise.reject())
+    .catch(error => false);
 };
 
 export const getJson = (url: string) => fetch(url).then(response => response.ok

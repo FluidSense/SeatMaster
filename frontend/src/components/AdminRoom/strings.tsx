@@ -1,0 +1,10 @@
+export const _INPUT_LABEL_NAME = 'Name';
+export const _TITLE_CREATE_NEW_ROOM = 'Create new room';
+export const _TITLE_UPDATE_NEW_ROOM = 'Update room';
+export const _INPUT_LABEL_NOTES = 'Notes';
+export const _BUTTON_CREATE_ROOM = 'Create room';
+export const _BUTTON_UPDATE_ROOM = 'Update room';
+export const _BUTTON_DELETE_ROOM = 'Delete room';
+export const _ALERT_CREATED_MESSAGE = 'Could not create room, something went wrong';
+export const _ALERT_UPDATED_MESSAGE = 'Could not update room, something went wrong';
+export const _ALERT_DELETED_MESSAGE = 'Could not delete room, something went wrong';
