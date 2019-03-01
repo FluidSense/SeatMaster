@@ -1,9 +1,35 @@
-body {
-  padding: 0;
-  margin: auto;
+html {
+  min-height: 100%;
   height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: inherit;
+  height: inherit;
   background-color: #F2F2F2;
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+#root {
+  min-height: inherit;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-page {
+  height: inherit;
+  display: grid;
+  grid-template-columns: 20% 5% 50% 25%;
+}
+
+.main-content {
+  grid-column: 3;
+}
+
+.page-title {
+  margin-top: 1em !important;
 }
 
 .etikett {
@@ -17,7 +43,6 @@ body {
 .page-title {
   margin-bottom: 2rem !important;
 }
-
 
 @import "~nav-frontend-typografi-style";
 @import "~nav-frontend-skjema-style";

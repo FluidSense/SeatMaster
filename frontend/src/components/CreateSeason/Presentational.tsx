@@ -24,7 +24,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   } = props;
   return (
     <>
-      <div id="new-application-season">
+      <div id="new-application-season" className="main-content">
         <h1>{_NEW_APPLICATION_SEASON}</h1>
         <div id="appSeason">
           <SkjemaGruppe feil={alertPeriodEndBeforeStart}>{createFields(0, 2)}</SkjemaGruppe>

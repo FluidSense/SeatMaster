@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import ApplicationForm from '../ApplicationForm';
 import ConfirmationModal from './../ApplicationForm/ConfirmationModal';
 

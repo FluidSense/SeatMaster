@@ -10,6 +10,7 @@ import {
   _INPUT_LABEL_NOTES,
   _TITLE_CREATE_NEW_ROOM,
 } from './strings';
+import { Sidetittel } from 'nav-frontend-typografi';
 
 interface IProps {
   roomName: string;
@@ -37,8 +38,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   };
 
   return (
-    <>
-      <h1>{_TITLE_CREATE_NEW_ROOM}</h1>
+    <div className="main-content">
+      <Sidetittel>{_TITLE_CREATE_NEW_ROOM}</Sidetittel>
       <Input
         id={'input-room-name'}
         onChange={setName}
@@ -61,7 +62,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         {_BUTTON_CREATE_ROOM}
       </HovedKnapp>
       {displayAlert}
-    </>
+    </div>
   );
 };
 
