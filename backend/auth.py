@@ -38,50 +38,52 @@ def get_token_auth_header():
     return token
 
 
-def requiresIdToken(f):
-    """Determines if the Access Token is valid
-    """
+def requiresIdToken(verify=True):
 
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = get_token_auth_header()
-        jsonurl = urlopen(VERIFICATION_DOMAIN)
-        jwks = json.loads(jsonurl.read())
-        unverified_header = jwt.get_unverified_header(token)
-        rsa_key = {}
-        for key in jwks['keys']:
-            if key['kid'] == unverified_header['kid']:
-                rsa_key = {
-                    'kty': key['kty'],
-                    'kid': key['kid'],
-                    'n': key['n'],
-                    'e': key['e']
-                }
-        if rsa_key:
-            try:
-                payload = jwt.decode(
-                    token,
-                    rsa_key,
-                    algorithms=ALGORITHMS,
-                    issuer=DOMAIN,
-                    audience='77ee33cd-cc7f-4b7a-bce9-241c96458f14'
-                )
+    def decorator(f):
+        """Determines if the Access Token is valid
+        """
 
-            except jwt.ExpiredSignatureError:
-                return Response(json.dumps({'error': 'Token_expired'}), 401)
+        def wrapper(*args, **kwargs):
+            token = get_token_auth_header()
+            jsonurl = urlopen(VERIFICATION_DOMAIN)
+            jwks = json.loads(jsonurl.read())
+            unverified_header = jwt.get_unverified_header(token)
+            rsa_key = {}
+            for key in jwks['keys']:
+                if key['kid'] == unverified_header['kid']:
+                    rsa_key = {
+                        'kty': key['kty'],
+                        'kid': key['kid'],
+                        'n': key['n'],
+                        'e': key['e']
+                    }
+            if rsa_key:
+                try:
+                    payload = jwt.decode(
+                        token,
+                        rsa_key,
+                        algorithms=ALGORITHMS,
+                        issuer=DOMAIN,
+                        audience='77ee33cd-cc7f-4b7a-bce9-241c96458f14',
+                        options={"verify_signature": verify,
+                                 "verify_exp": verify}
+                    )
 
-            except jwt.JWTClaimsError:
-                return Response(json.dumps({'error': 'Invalid_claims'}), 401)
+                except jwt.ExpiredSignatureError:
+                    return Response(json.dumps({'error': 'Token_expired'}), 401)
 
-            except Exception:
-                return Response(json.dumps({'error': 'Invalid_header'}), 401)
+                except jwt.JWTClaimsError:
+                    return Response(json.dumps({'error': 'Invalid_claims'}), 401)
+                except Exception:
+                    return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
-            _request_ctx_stack.top.idToken = payload
-            return f(*args, **kwargs)
+                _request_ctx_stack.top.idToken = payload
+                return f(*args, **kwargs)
 
-        return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
-    return decorated
+        return wrapper
+    return decorator
 
 
 def requiresUser(f):
@@ -89,7 +91,7 @@ def requiresUser(f):
     """
 
     @wraps(f)
-    @requiresIdToken
+    @requiresIdToken()
     def decorated(*args, **kwargs):
         ctx = _request_ctx_stack.top
         sub = ctx.idToken.get("sub")

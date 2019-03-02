@@ -15,7 +15,7 @@ def getUser(id):
 
 
 @user.route("/", methods=["POST"])
-@requiresIdToken
+@requiresIdToken()
 def registerUser():
     if request.is_json:
         form = request.get_json()
