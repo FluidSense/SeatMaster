@@ -158,50 +158,54 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
               />
             </div>
           </Textarea>
-          <KnappBase
-            autoDisableVedSpinner={false}
-            className={null}
-            disabled={false}
-            htmlType="submit"
-            id="create-room-button"
-            inaktivKlasseVedDisabled={false}
-            mini={false}
-            onClick={[Function]}
-            spinner={false}
-            type="hoved"
+          <div
+            id="state-buttons"
           >
-            <button
-              className="knapp knapp--hoved"
+            <KnappBase
+              autoDisableVedSpinner={false}
+              className={null}
               disabled={false}
+              htmlType="submit"
               id="create-room-button"
+              inaktivKlasseVedDisabled={false}
+              mini={false}
               onClick={[Function]}
-              type="submit"
+              spinner={false}
+              type="hoved"
             >
-              Update room
-            </button>
-          </KnappBase>
-          <KnappBase
-            autoDisableVedSpinner={false}
-            className={null}
-            disabled={false}
-            htmlType="submit"
-            id="delete-room-button"
-            inaktivKlasseVedDisabled={false}
-            mini={false}
-            onClick={[Function]}
-            spinner={false}
-            type="fare"
-          >
-            <button
-              className="knapp knapp--fare"
+              <button
+                className="knapp knapp--hoved"
+                disabled={false}
+                id="create-room-button"
+                onClick={[Function]}
+                type="submit"
+              >
+                Update room
+              </button>
+            </KnappBase>
+            <KnappBase
+              autoDisableVedSpinner={false}
+              className={null}
               disabled={false}
+              htmlType="submit"
               id="delete-room-button"
+              inaktivKlasseVedDisabled={false}
+              mini={false}
               onClick={[Function]}
-              type="submit"
+              spinner={false}
+              type="fare"
             >
-              Delete room
-            </button>
-          </KnappBase>
+              <button
+                className="knapp knapp--fare"
+                disabled={false}
+                id="delete-room-button"
+                onClick={[Function]}
+                type="submit"
+              >
+                Delete room
+              </button>
+            </KnappBase>
+          </div>
         </div>
       </Presentational>
     </_Container>
@@ -357,28 +361,32 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
               />
             </div>
           </Textarea>
-          <KnappBase
-            autoDisableVedSpinner={false}
-            className={null}
-            disabled={true}
-            htmlType="submit"
-            id="create-room-button"
-            inaktivKlasseVedDisabled={false}
-            mini={false}
-            onClick={[Function]}
-            spinner={false}
-            type="hoved"
+          <div
+            id="state-buttons"
           >
-            <button
-              className="knapp knapp--hoved knapp--disabled"
+            <KnappBase
+              autoDisableVedSpinner={false}
+              className={null}
               disabled={true}
+              htmlType="submit"
               id="create-room-button"
+              inaktivKlasseVedDisabled={false}
+              mini={false}
               onClick={[Function]}
-              type="submit"
+              spinner={false}
+              type="hoved"
             >
-              Create room
-            </button>
-          </KnappBase>
+              <button
+                className="knapp knapp--hoved knapp--disabled"
+                disabled={true}
+                id="create-room-button"
+                onClick={[Function]}
+                type="submit"
+              >
+                Create room
+              </button>
+            </KnappBase>
+          </div>
         </div>
       </Presentational>
     </_Container>
