@@ -10,9 +10,9 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <RoomLink key={room.id} room={room} />
   ));
   return (
-    <>
+    <div className="main-content">
       {roomList}
-    </>
+    </div>
   );
 };
 
