@@ -12,19 +12,24 @@
 
 #redirect-new-room {
   margin: 0 !important;
+}
 
-  @media only screen and (max-width: 600px) {
-    .room-link {
-      width: 100%;
-    }
+@media only screen and (max-width: 600px) {
+  #create-room-title {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .link-name {
-      grid-column: 1 /span 2;
-    }
+  .room-link {
+    width: 100%;
+  }
 
-    .link-notes,
-    .link-seats {
-      display: none;
-    }
+  .link-name {
+    grid-column: 1 /span 2;
+  }
+
+  .link-notes,
+  .link-seats {
+    display: none;
   }
 }
