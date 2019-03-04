@@ -32,14 +32,16 @@ class DateInputField extends Component<IProps, IState> {
     const { showModal } = this.state;
     const { label, value } = this.props;
     return (
-      <>
+      <div className="date-picker-field">
         <Input
           label={label}
           readOnly={true}
           value={value.format(DATE_FORMAT_INPUT_FIELD)}
           bredde="XL"
         />
-        <Hovedknapp onClick={this.toggleModal} id="chooseDateButton"> {_CHOOSE_DATE}  </Hovedknapp>
+        <Hovedknapp onClick={this.toggleModal} className="choose-date-button">
+          {_CHOOSE_DATE}
+        </Hovedknapp>
         <Modal
           isOpen={showModal}
           onRequestClose={this.toggleModal}
@@ -52,7 +54,7 @@ class DateInputField extends Component<IProps, IState> {
             month={value.toDate()}
           />
         </Modal>
-      </>
+      </div>
     );
   }
 

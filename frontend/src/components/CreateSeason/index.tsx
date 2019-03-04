@@ -3,13 +3,13 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { AnyAction, Dispatch } from 'redux';
+import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { postSeason } from '../../API/calls';
 import { IPostApplicationSeason } from '../../API/interfaces';
 import { IStore } from '../../store';
 import DateInputField from '../DateInputField';
 import { postNewSeason } from './actions';
+import './createSeason.css';
 import Presentational from './Presentational';
 import {
   _ERROR_MESSAGE,
@@ -36,7 +36,7 @@ export interface IStateProps {
 
 export interface IDispatchProps {
   submitNewSeason: (season: IPostApplicationSeason) =>
-   ThunkAction<Promise<void>, {}, {}, AnyAction>;
+    ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
 
 type Props = IStateProps & IDispatchProps;
