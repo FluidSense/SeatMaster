@@ -6,6 +6,7 @@ import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IRoom } from '../ViewRooms';
 import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
+import './adminRoom.css';
 import { ROUTE_TO } from './constants';
 import Presentational from './Presentational';
 
