@@ -4,6 +4,11 @@ from services import applicationService
 
 application = Blueprint("application", __name__, url_prefix="/application")
 
+@application.route("/")
+def getAllApplications():
+    applications = applicationService.getAllApplications()
+    applicationList = list(map(lambda x: x.to_json(), applications))
+    return jsonify(applicationList) if applications else jsonify({})
 
 @application.route("/<id>")
 def getApplication(id):
