@@ -52,7 +52,7 @@ const Presentational: React.FunctionComponent<IApplicationStatusProps> = (props)
   const { applicationStatus } = props;
   const etikettType = selectEtikettType(applicationStatus);
   const etikettText = selectEtikettText(applicationStatus);
-
+  // Added div because it is inline display and won't work well with flexbox
   return (
     <div>
       <EtikettBase type={etikettType}>{etikettText}</EtikettBase>
