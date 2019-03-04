@@ -1,5 +1,6 @@
 import React from 'react';
 import { IApplication } from '../../API/interfaces';
+import ApplicationLink from './ApplicationLink';
 
 interface IProps {
   applications: IApplication[];

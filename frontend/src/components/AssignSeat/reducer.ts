@@ -6,8 +6,12 @@ export interface IApplicationState {
   applications: IApplication[];
 }
 
+const initialState: IApplicationState = {
+  applications: [],
+};
+
 export const ApplicationReducer = (
-  state: IApplicationState,
+  state: IApplicationState = initialState,
   action: AnyAction,
 ): IApplicationState => {
   switch (action.type) {

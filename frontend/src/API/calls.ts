@@ -25,7 +25,7 @@ export const getApplicationForm = (id: number):
 
 export const getAllApplications = ():
   PromiseLike<IApplication[]> => {
-  return getJson(GET_ALL_APPLICATIONS_URL);
+  return getJson(GET_APPLICATION_BY_USERID_URL);
 };
 
 export const postApplicationForm = (data: IPostApplicationForm):

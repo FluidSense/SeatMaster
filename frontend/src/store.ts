@@ -5,7 +5,7 @@ import {
   applicationSeasonReducer,
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
-import { IApplicationState } from './components/AssignSeat/reducer';
+import { ApplicationReducer, IApplicationState } from './components/AssignSeat/reducer';
 import { ILoginState, loginReducer } from './components/Login/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 
@@ -20,6 +20,7 @@ export interface IStore {
 export const reducers = combineReducers({
   adminRoom: roomReducer,
   applicationSeason: applicationSeasonReducer,
+  applications: ApplicationReducer,
   rooms: viewRoomReducer,
   userInformation: loginReducer,
 });
