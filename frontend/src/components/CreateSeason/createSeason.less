@@ -20,3 +20,29 @@
 #roomSeason {
   margin-bottom: 2rem;
 }
+
+
+@media only screen and (max-width: 600px) {
+
+  #appSeason {
+    margin-bottom: 0;
+  }
+
+  #appSeason>div,
+  #roomSeason>div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .choose-date-button {
+    width: 100%;
+  }
+
+  #roomSeason {
+    margin-bottom: 1rem;
+  }
+
+  #new-season-btn {
+    width: 100%;
+  }
+}

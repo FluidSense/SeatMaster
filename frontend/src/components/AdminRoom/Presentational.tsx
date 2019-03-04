@@ -64,7 +64,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   };
 
   return (
-    <>
+    <div className="main-content">
       <Sidetittel>{titleText}</Sidetittel>
       {displayAlert}
       <Input
@@ -89,7 +89,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         {buttonText}
       </HovedKnapp>
       {deleteButton}
-    </>
+    </div>
   );
 };
 

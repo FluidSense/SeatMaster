@@ -1,9 +1,14 @@
 import moment, { Moment } from 'moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { postSeason } from '../../API/calls';
+import { AnyAction } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { IPostApplicationSeason } from '../../API/interfaces';
+import { IStore } from '../../store';
 import DateInputField from '../DateInputField';
+import { postNewSeason } from './actions';
 import './createSeason.css';
 import Presentational from './Presentational';
 import {
@@ -21,10 +26,20 @@ export interface IState {
   periodEnd: Moment;
   roomStart: Moment;
   roomEnd: Moment;
-  redirect: boolean;
   showAlert: boolean;
   [key: string]: Moment | boolean;
 }
+
+export interface IStateProps {
+  submitted?: boolean;
+}
+
+export interface IDispatchProps {
+  submitNewSeason: (season: IPostApplicationSeason) =>
+    ThunkAction<Promise<void>, {}, {}, AnyAction>;
+}
+
+type Props = IStateProps & IDispatchProps;
 
 // Need to be in this order to match the proper fields
 const inputTextArray = [
@@ -50,30 +65,34 @@ export const setTime = (day: Moment) => {
 export const format = 'YYYY-MM-DD HH:mm:ss.SSS';
 
 // tslint:disable-next-line:class-name
-class CreateSeason extends Component<{}, IState> {
-  constructor(props: object) {
+class _CreateSeason extends Component<Props, IState> {
+  constructor(props: Props) {
     super(props);
     const currentTime = setTime(moment());
     const nextMonth = setTime(moment().add(1, 'month'));
     this.state = {
       periodEnd: nextMonth,
       periodStart: currentTime,
-      redirect: false,
       roomEnd: nextMonth,
       roomStart: currentTime,
       showAlert: false,
     };
   }
 
-  public componentDidUpdate = (prevState: IState) => {
+  public componentDidUpdate = (prevProps: Props) => {
     const { showAlert } = this.state;
-    if (showAlert && !prevState.showAlert) {
+    const { submitted } = this.props;
+    if (!submitted && !prevProps.submitted === undefined) {
+      this.setState({ showAlert: true });
+    }
+    if (showAlert) {
       setTimeout(() => this.setState({ showAlert: false }), 5000);
     }
   }
 
   public render() {
-    const { periodEnd, periodStart, roomEnd, roomStart, redirect, showAlert } = this.state;
+    const { periodEnd, periodStart, roomEnd, roomStart, showAlert } = this.state;
+    const { submitted } = this.props;
     const errorPeriodEndBeforeStart =
       periodEnd <= periodStart
         ? errorObjectSeasonEndTooEarly
@@ -92,7 +111,7 @@ class CreateSeason extends Component<{}, IState> {
       ? this.createAlert(_ERROR_MESSAGE)
       : undefined;
 
-    if (redirect) return (<Redirect to="/admin" />);
+    if (submitted) return (<Redirect to="/admin" />);
     return (
       <Presentational
         buttonDisable={buttonDisable}
@@ -113,8 +132,7 @@ class CreateSeason extends Component<{}, IState> {
       newRoomEnd: roomEnd.format(format),
       newRoomStart: roomStart.format(format),
     };
-    postSeason(body)
-      .then(() => this.setState({ redirect: true }), () => this.setState({ showAlert: true }));
+    this.props.submitNewSeason(body);
   }
 
   private createDateInputField = (label: string, key: string, value: Moment) => {
@@ -148,5 +166,18 @@ class CreateSeason extends Component<{}, IState> {
 
   private setDate = (key: string, time: Moment) => this.setState({ [key]: time });
 }
+
+const mapStateToProps = (state: IStore) => ({
+  submitted: state.applicationSeason.submitted,
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  submitNewSeason: (body: any) => dispatch(postNewSeason(body)),
+});
+
+const CreateSeason = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(_CreateSeason);
 
 export default CreateSeason;

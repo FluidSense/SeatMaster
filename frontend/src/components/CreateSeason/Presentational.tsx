@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import KnappBase, { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import { Sidetittel } from 'nav-frontend-typografi';
@@ -24,25 +24,24 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     alertFail,
   } = props;
   return (
-    <>
-      <div id="new-application-season">
-        <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>
-        <div id="appSeason">
-          <SkjemaGruppe feil={alertPeriodEndBeforeStart}>{createFields(0, 2)}</SkjemaGruppe>
-        </div>
-        <div id="roomSeason">
-          <SkjemaGruppe feil={alertApplicationEndBeforeStart}>{createFields(2, 4)}</SkjemaGruppe>
-        </div>
-        <Hovedknapp
-          disabled={buttonDisable}
-          onClick={postApplicationSeason}
-          id={'new-season-btn'}
-        >
-          {_CREATE_NEW_SEASON}
-        </Hovedknapp>
-        {alertFail}
+    <div id="new-application-season" className="main-content">
+      <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>
+      <div id="appSeason">
+        <SkjemaGruppe feil={alertPeriodEndBeforeStart}>{createFields(0, 2)}</SkjemaGruppe>
       </div>
-    </>
+      <div id="roomSeason">
+        <SkjemaGruppe feil={alertApplicationEndBeforeStart}>{createFields(2, 4)}</SkjemaGruppe>
+      </div>
+      <KnappBase
+        type="hoved"
+        disabled={buttonDisable}
+        onClick={postApplicationSeason}
+        id={'new-season-btn'}
+      >
+        {_CREATE_NEW_SEASON}
+      </KnappBase>
+      {alertFail}
+    </div>
   );
 };
 

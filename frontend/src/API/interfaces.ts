@@ -1,11 +1,11 @@
+import { IRoom } from './../components/ViewRooms/index';
 
 export interface IPostApplicationForm {
   comments: string;
-  keepSeat: boolean;
-  needs: string;
-  partnerUsername: string;
-  // Rewrite to a room interface
-  room: string;
+  keepSeat?: boolean;
+  needs?: string;
+  partnerUsername?: string;
+  room?: IRoom;
   username: string;
 }
 
@@ -15,9 +15,6 @@ export interface IPostApplicationSeason {
   newRoomEnd: string;
   newRoomStart: string;
 }
-
-// Could have an generic fetch interface with data<T> extends response
-// to continue using response.ok if we want to.
 
 // FIXME Move me along IApplicationForm
 export interface IPartnerApplicationForm {
