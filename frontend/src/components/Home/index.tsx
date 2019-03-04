@@ -3,7 +3,6 @@ import * as React from 'react';
 import ApplicationReview from '../ApplicationReview';
 import ApplicationSeason from '../ApplicationSeason/index';
 import ApplicationStatus from '../ApplicationStatus/index';
-import './home.css';
 
 interface IHomeProps {
   fetchSeason: () => any;
@@ -13,8 +12,8 @@ const _TITLE = 'My Status';
 
 export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
-    <div id="student-application">
-      <Sidetittel className="page-title">{_TITLE}</Sidetittel>
+    <div className="main-content">
+      <Sidetittel>{_TITLE}</Sidetittel>
       <ApplicationSeason />
       <ApplicationStatus />
       <ApplicationReview />

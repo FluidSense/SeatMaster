@@ -1,5 +1,5 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import HovedKnapp from 'nav-frontend-knapper';
+import KnappBase from 'nav-frontend-knapper';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
@@ -53,9 +53,9 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   const deleteButton =
     roomExists
       ? (
-        <HovedKnapp id={'delete-room-button'} type="fare" onClick={deleteRoom}>
+        <KnappBase id={'delete-room-button'} type="fare" onClick={deleteRoom}>
           {_BUTTON_DELETE_ROOM}
-        </HovedKnapp>)
+        </KnappBase>)
       : null;
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
@@ -64,7 +64,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   };
 
   return (
-    <>
+    <div className="main-content">
       <Sidetittel>{titleText}</Sidetittel>
       {displayAlert}
       <Input
@@ -80,16 +80,18 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
-      <HovedKnapp
-        id={'create-room-button'}
-        type="hoved"
-        disabled={buttonDisabled}
-        onClick={onClick}
-      >
-        {buttonText}
-      </HovedKnapp>
-      {deleteButton}
-    </>
+      <div id="state-buttons">
+        <KnappBase
+          id={'create-room-button'}
+          type="hoved"
+          disabled={buttonDisabled}
+          onClick={onClick}
+        >
+          {buttonText}
+        </KnappBase>
+        {deleteButton}
+      </div>
+    </div>
   );
 };
 

@@ -11,7 +11,7 @@ export const Presentational: React.FunctionComponent<ILoginProps> = (props) => {
   const { fetchUserData } = props;
   const onClickAction = () => fetchUserData(1);
   return (
-    <div>
+    <div className="main-content">
       <h1>
         Welcome!
       </h1>

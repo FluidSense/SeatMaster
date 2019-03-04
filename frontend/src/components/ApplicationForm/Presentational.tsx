@@ -71,6 +71,7 @@ export class Presentational extends React.Component<IProps, IState> {
             needs={this.state.needs}
           />
           <KnappBase
+            id="submit-application"
             type="hoved"
             htmlType="submit"
             autoDisableVedSpinner={true}
