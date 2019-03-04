@@ -7,7 +7,6 @@ import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { DATE_FORMAT_INPUT_FIELD } from '../commonConstants';
 import { setTime } from '../CreateSeason';
-import './dateInputField.css';
 import { _CHOOSE_DATE } from './strings';
 
 interface IProps {
