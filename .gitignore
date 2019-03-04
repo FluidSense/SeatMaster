@@ -44,7 +44,7 @@ _mailinglist
 .idea/
 docs/_build/
 # Don't gitignore migrations' env file as it is needed by Flask Migrate
-!migrations/env.py
+!*/migrations/env.py
 
 # Coverage reports
 htmlcov/
