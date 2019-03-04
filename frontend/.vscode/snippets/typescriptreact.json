@@ -44,6 +44,6 @@
       "export default Presentational;",
       ""
     ],
-    "description": "Presentational pattern based on hte Seat Master setup."
+    "description": "Presentational pattern based on the Seat Master setup."
   }
 }

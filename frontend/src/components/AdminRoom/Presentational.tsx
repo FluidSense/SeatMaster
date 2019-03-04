@@ -1,14 +1,18 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import HovedKnapp from 'nav-frontend-knapper';
 import { Input, Textarea } from 'nav-frontend-skjema';
+import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
 import {
-  _ALERT_ERROR_MESSAGE,
+  _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,
+  _BUTTON_DELETE_ROOM,
+  _BUTTON_UPDATE_ROOM,
   _INPUT_LABEL_NAME,
   _INPUT_LABEL_NOTES,
   _TITLE_CREATE_NEW_ROOM,
+  _TITLE_UPDATE_NEW_ROOM,
 } from './strings';
 
 interface IProps {
@@ -17,19 +21,42 @@ interface IProps {
   setNotes: (roomNotes: ChangeEvent<HTMLInputElement>) => void;
   setName: (roomName: ChangeEvent<HTMLInputElement>) => void;
   buttonDisabled: boolean;
-  createRoom: () => any;
+  onClick: () => void;
+  deleteRoom: () => void;
   showAlert: boolean;
+  alertMessage?: string;
+  roomExists: boolean;
 }
 
-const alertStripe = (
-  <AlertStripe solid={true} type={ETIKETT_WARNING}>
-    {_ALERT_ERROR_MESSAGE}
-  </AlertStripe>
-);
-
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { roomName, roomNotes, setNotes, setName, buttonDisabled, createRoom, showAlert } = props;
-  const displayAlert = showAlert ? alertStripe : null;
+  const {
+    roomName,
+    roomNotes,
+    roomExists,
+    setNotes,
+    setName,
+    buttonDisabled,
+    onClick,
+    deleteRoom,
+    showAlert,
+    alertMessage,
+  } = props;
+  const displayAlert =
+    showAlert
+      ? (
+        <AlertStripe solid={true} type={ETIKETT_WARNING}>
+          {alertMessage}
+        </AlertStripe>)
+      : null;
+  const titleText = roomExists ? _TITLE_UPDATE_NEW_ROOM : _TITLE_CREATE_NEW_ROOM;
+  const buttonText = roomExists ? _BUTTON_UPDATE_ROOM : _BUTTON_CREATE_ROOM;
+  const deleteButton =
+    roomExists
+      ? (
+        <HovedKnapp id={'delete-room-button'} type="fare" onClick={deleteRoom}>
+          {_BUTTON_DELETE_ROOM}
+        </HovedKnapp>)
+      : null;
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
     const changeEvent = event as ChangeEvent<HTMLInputElement>;
@@ -38,7 +65,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <>
-      <h1>{_TITLE_CREATE_NEW_ROOM}</h1>
+      <Sidetittel>{titleText}</Sidetittel>
+      {displayAlert}
       <Input
         id={'input-room-name'}
         onChange={setName}
@@ -56,11 +84,11 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         id={'create-room-button'}
         type="hoved"
         disabled={buttonDisabled}
-        onClick={createRoom}
+        onClick={onClick}
       >
-        {_BUTTON_CREATE_ROOM}
+        {buttonText}
       </HovedKnapp>
-      {displayAlert}
+      {deleteButton}
     </>
   );
 };

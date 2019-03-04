@@ -1,22 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ViewRoom Renders 1 room correctly 1`] = `
-<Presentational
-  rooms={
-    Array [
-      Object {
-        "id": 1,
-        "info": "Dis be notes, mon",
-        "name": "X-Wing",
-        "seat": 2,
-      },
-    ]
-  }
-/>
+<Connect(_Container)>
+  <_Container
+    fetchRooms={[Function]}
+    rooms={Array []}
+  >
+    <Presentational
+      rooms={Array []}
+    />
+  </_Container>
+</Connect(_Container)>
 `;
 
 exports[`ViewRoom Renders nothing correctly 1`] = `
-<Presentational
-  rooms={Array []}
-/>
+<Connect(_Container)>
+  <_Container
+    fetchRooms={[Function]}
+    rooms={Array []}
+  >
+    <Presentational
+      rooms={Array []}
+    />
+  </_Container>
+</Connect(_Container)>
 `;

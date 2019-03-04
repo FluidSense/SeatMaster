@@ -6,11 +6,11 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { POST_NEW_SEASON_URL } from '../../components/commonConstants';
+import { SEASON_URL } from '../../API/constants';
 import CreateSeason, { format, IState, setTime } from '../../components/CreateSeason/index';
 import Presentational from '../../components/CreateSeason/Presentational';
 
-fetchMock.mock(POST_NEW_SEASON_URL, 201);
+fetchMock.mock(SEASON_URL, 201);
 
 describe('Create season', () => {
   const middlewares = [thunk];

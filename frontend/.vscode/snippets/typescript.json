@@ -48,5 +48,18 @@
       ""
     ],
     "description": "ThunkAction pattern based on the Seat Master setup."
+  },
+  "SeatMaster Enzyme Reducer": {
+    "prefix": "smezred",
+    "body": [
+      "it('should return SOMETHING state', () => {",
+      "const action = { type: 'ACTION', payload: null };",
+      "expect(reducer(undefined, action)).toEqual(",
+      "{ },",
+      ");",
+      "});",
+      ""
+    ],
+    "description": "A Enzyme test pattern for creating simple reducer tests"
   }
 }
