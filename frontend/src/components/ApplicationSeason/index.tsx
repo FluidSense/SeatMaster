@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { IStore } from '../../store';
 import { fetchApplicationSeasonData } from './actions';
 import './applicationSeason.css';
 import Presentational from './Presentational';
@@ -13,7 +14,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  fetchSeason: () => ThunkAction<Promise<AnyAction>, {}, {}, AnyAction>;
+  fetchSeason: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -33,8 +34,8 @@ class _Container extends React.Component<Props, {}> {
   }
 }
 
-const mapStateToProps = (state: IStateProps) => ({
-  applicationSeason: state.applicationSeason,
+const mapStateToProps = (state: IStore) => ({
+  applicationSeason: state.applicationSeason.currentSeason,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
