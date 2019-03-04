@@ -1,6 +1,5 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
-import './application.css';
 import Presentational from './Presentational';
 
 interface IState {
@@ -19,7 +18,7 @@ export class Application extends React.Component<{}, IState> {
 
   public render() {
     return (
-      <div id="new-application">
+      <div className="main-content">
         <Sidetittel className="page-title">{_TITLE}</Sidetittel>
         <Presentational modalIsOpen={this.state.modalIsOpen} changeModal={this.changeModal} />
       </div >

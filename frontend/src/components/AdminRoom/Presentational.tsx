@@ -14,6 +14,7 @@ import {
   _TITLE_CREATE_NEW_ROOM,
   _TITLE_UPDATE_NEW_ROOM,
 } from './strings';
+import KnappBase from 'nav-frontend-knapper';
 
 interface IProps {
   roomName: string;
@@ -64,7 +65,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   };
 
   return (
-    <>
+    <div className="main-content">
       <Sidetittel>{titleText}</Sidetittel>
       {displayAlert}
       <Input
@@ -81,17 +82,17 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         label={_INPUT_LABEL_NOTES}
       />
       <div id="state-buttons">
-        <HovedKnapp
+        <KnappBase
           id={'create-room-button'}
           type="hoved"
           disabled={buttonDisabled}
           onClick={onClick}
         >
           {buttonText}
-        </HovedKnapp>
+        </KnappBase>
         {deleteButton}
       </div>
-    </>
+    </div>
   );
 };
 

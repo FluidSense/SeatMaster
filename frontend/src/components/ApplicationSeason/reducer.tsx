@@ -1,5 +1,6 @@
 import moment, { Moment } from 'moment';
 import { AnyAction } from 'redux';
+import { SUBMITTED_APPLICATION_SEASON } from '../CreateSeason/strings';
 import { SET_APPLICATION_SEASON } from './constants';
 
 export interface IApplicationSeason {
@@ -9,19 +10,26 @@ export interface IApplicationSeason {
   end: Moment;
 }
 
+export interface IApplicationSeasonState {
+  currentSeason: IApplicationSeason;
+  submitted?: boolean;
+}
+
 const minDate = moment(1970);
 
 export const initialState = {
-  applicationPeriodEnd: minDate,
-  applicationPeriodStart: minDate,
-  end: minDate,
-  start: minDate,
+  currentSeason: {
+    applicationPeriodEnd: minDate,
+    applicationPeriodStart: minDate,
+    end: minDate,
+    start: minDate,
+  },
 };
 
 export const applicationSeasonReducer = (
-  state: IApplicationSeason = initialState,
+  state: IApplicationSeasonState = initialState,
   action: AnyAction,
-): IApplicationSeason => {
+): IApplicationSeasonState => {
   const { type, payload } = action;
   switch (type) {
     case SET_APPLICATION_SEASON:
@@ -33,10 +41,17 @@ export const applicationSeasonReducer = (
       } = payload;
       return {
         ...state,
-        applicationPeriodEnd: moment(applicationPeriodEnd),
-        applicationPeriodStart: moment(applicationPeriodStart),
-        end: moment(end),
-        start: moment(start),
+        currentSeason: {
+          applicationPeriodEnd: moment(applicationPeriodEnd),
+          applicationPeriodStart: moment(applicationPeriodStart),
+          end: moment(end),
+          start: moment(start),
+        },
+      };
+    case SUBMITTED_APPLICATION_SEASON:
+      return {
+        ...state,
+        submitted: payload,
       };
     default:
       return state;

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Application review presentational Renders correctly 1`] = `
-<Fragment>
+<div
+  id="application-review"
+>
   <Sidetittel>
     Review Application
   </Sidetittel>
@@ -52,5 +54,5 @@ exports[`Application review presentational Renders correctly 1`] = `
   >
     Edit Application
   </KnappBase>
-</Fragment>
+</div>
 `;

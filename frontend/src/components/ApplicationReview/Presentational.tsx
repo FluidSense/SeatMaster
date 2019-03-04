@@ -60,7 +60,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     );
   }
   return (
-    <>
+    <div id="application-review">
       <Sidetittel>{_REVIEW_APPLICATION}</Sidetittel>
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
@@ -68,7 +68,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         {<InfoPanel title={_NEEDS} text={applicationInfo.needs} />}
       </div>
       <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
-    </>
+    </div>
   );
 };
 

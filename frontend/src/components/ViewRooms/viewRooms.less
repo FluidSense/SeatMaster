@@ -7,8 +7,24 @@
 #create-room-title {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 #redirect-new-room {
   margin: 0 !important;
+
+  @media only screen and (max-width: 600px) {
+    .room-link {
+      width: 100%;
+    }
+
+    .link-name {
+      grid-column: 1 /span 2;
+    }
+
+    .link-notes,
+    .link-seats {
+      display: none;
+    }
+  }
 }
