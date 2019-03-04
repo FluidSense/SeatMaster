@@ -2,7 +2,7 @@ import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom } from '../components/ViewRooms';
 import { deleteJson, getJson, postJson, putJson } from './callDefinitions';
 import {
-  GET_APPLICATION_BY_USERID_URL, POST_FORM_DATA_URL, ROOM_URL, SEASON_URL, GET_APPLICATIONS_URL,
+  GET_APPLICATION_BY_USERID_URL, GET_APPLICATIONS_URL, POST_FORM_DATA_URL, ROOM_URL, SEASON_URL,
 } from './constants';
 import {
   IApplication,
