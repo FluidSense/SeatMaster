@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Application from '../Application/index';
 import { Header } from '../Header';
 import Home from '../Home';
-import RegisterUser from '../RegisterUser';
 
 export const RoutesUser = () => {
   return (
@@ -12,8 +11,9 @@ export const RoutesUser = () => {
       <Switch>
         <Route exact={true} path="/" component={Home} />
         <Redirect from="/home" to="/" />
+        <Redirect from="/registerUser" to="/home" />
+
         <Route path="/application" component={Application} />
-        <Route path="/registerUser" component={RegisterUser} />
         <Route path="/admin/rooms/create-room" component={CreateRoom} />
         <Route path="/admin/create-season" component={CreateSeason} />
       </Switch>

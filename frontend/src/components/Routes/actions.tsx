@@ -1,11 +1,12 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { GET_USER_BY_NAME_URL } from '../commonConstants';
 
 export const fetchUserData = (idToken: string):
 ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-  fetch('http://localhost:5000/user/', {
+  await fetch(`${GET_USER_BY_NAME_URL}`, {
     headers: {
-      'Authorization': `Bearer ${idToken}`,
+      Authorization: `Bearer ${idToken}`,
     },
   })
     .then(response => response.json())

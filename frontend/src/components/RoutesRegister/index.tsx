@@ -5,8 +5,7 @@ import RegisterUser from '../RegisterUser';
 export const RoutesRegister = () => {
   return (
     <Switch>
-      <Route exact={true} path="/registerUser" component={RegisterUser} />
-      <Redirect from="/" to="/registerUser" />
+      <Route path="/" component={RegisterUser} />
     </Switch>
   );
 };

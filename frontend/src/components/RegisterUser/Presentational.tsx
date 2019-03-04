@@ -16,11 +16,11 @@ type Props = UserState & IDispatchProps;
 export const Presentational: React.FunctionComponent<Props> = (props) => {
   const { postCreateUser, user } = props;
 
-  const createUser = (event: React.MouseEvent) => {
+  const createUser = async (event: React.MouseEvent) => {
     event.preventDefault();
 
     if (user && !user.expired) {
-      postCreateUser(user.id_token, user.access_token);
+      await postCreateUser(user.id_token, user.access_token);
     }
     props.push('/');
   };

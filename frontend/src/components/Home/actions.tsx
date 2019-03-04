@@ -1,11 +1,12 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { GET_APPLICATION_URL } from '../commonConstants';
 
 export const fetchApplicationInformation = (idToken: string, username: string):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    fetch(`http://localhost:5000/application/byUser/${username}`, {
+    fetch(`${GET_APPLICATION_URL}${username}`, {
       headers: {
-        'Authorization': `Bearer ${idToken}`,
+        Authorization: `Bearer ${idToken}`,
         'Content-Type': 'application/json',
       },
       method: 'GET',

@@ -36,10 +36,23 @@ export class Presentational extends React.Component<Props, {}> {
     return <RoutesUser />;
   }
 
-  public componentDidUpdate() {
+  public componentDidMount() {
+    this.checkuserRegistration();
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    const { oidc } = this.props;
+
+    if (oidc.user && !oidc.user.expired && prevProps.oidc.isLoadingUser && !oidc.isLoadingUser) {
+      this.checkuserRegistration();
+    }
+  }
+
+  private async checkuserRegistration() {
     const { fetchUserData, oidc } = this.props;
+
     if (oidc.user && !oidc.user.expired) {
-      fetchUserData(oidc.user.id_token);
+      await fetchUserData(oidc.user.id_token);
     }
   }
 }
