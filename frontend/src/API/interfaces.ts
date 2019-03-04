@@ -16,17 +16,17 @@ export interface IPostApplicationSeason {
   newRoomStart: string;
 }
 
-// FIXME Move me along IApplicationForm
-export interface IPartnerApplicationForm {
+// FIXME Move me along IApplication
+export interface IPartnerApplication {
   comments: string;
   id: number;
   needs: string;
-  partnerApplication?: IApplicationForm;
+  partnerApplication?: IApplication;
   status: string;
 }
 
 // FIXME Move this to a place where application form should be denoted.
-export interface IApplicationForm extends IPartnerApplicationForm {
+export interface IApplication extends IPartnerApplication {
   user: IUser;
 }
 

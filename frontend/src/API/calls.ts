@@ -5,7 +5,7 @@ import {
   GET_APPLICATION_BY_USERID_URL, POST_FORM_DATA_URL, ROOM_URL, SEASON_URL,
 } from './constants';
 import {
-  IApplicationForm,
+  IApplication,
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
@@ -19,12 +19,12 @@ export const postSeason = (data: IPostApplicationSeason):
 };
 
 export const getApplicationForm = (id: number):
-  PromiseLike<IApplicationForm> => {
+  PromiseLike<IApplication> => {
   return getJson(`${GET_APPLICATION_BY_USERID_URL}${id}`);
 };
 
 export const postApplicationForm = (data: IPostApplicationForm):
-  PromiseLike<IApplicationForm> => {
+  PromiseLike<IApplication> => {
   return postJson(POST_FORM_DATA_URL, data);
 };
 
