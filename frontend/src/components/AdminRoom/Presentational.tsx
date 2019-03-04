@@ -1,5 +1,5 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import HovedKnapp from 'nav-frontend-knapper';
+import KnappBase from 'nav-frontend-knapper';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
@@ -14,7 +14,6 @@ import {
   _TITLE_CREATE_NEW_ROOM,
   _TITLE_UPDATE_NEW_ROOM,
 } from './strings';
-import KnappBase from 'nav-frontend-knapper';
 
 interface IProps {
   roomName: string;
@@ -54,9 +53,9 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   const deleteButton =
     roomExists
       ? (
-        <HovedKnapp id={'delete-room-button'} type="fare" onClick={deleteRoom}>
+        <KnappBase id={'delete-room-button'} type="fare" onClick={deleteRoom}>
           {_BUTTON_DELETE_ROOM}
-        </HovedKnapp>)
+        </KnappBase>)
       : null;
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
