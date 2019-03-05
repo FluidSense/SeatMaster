@@ -1,6 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
-import roomReducer, { IAdminRoomReducer } from './components/AdminRoom/reducer';
+import {
+  ApplicationReducer,
+  IApplicationState,
+} from './components/AdminApplicationOverview/reducer';
+import roomReducer, { IAdminRoomState } from './components/AdminRoom/reducer';
 import {
   applicationSeasonReducer,
   IApplicationSeasonState,
@@ -12,12 +16,14 @@ export interface IStore {
   userInformation: ILoginState;
   applicationSeason: IApplicationSeasonState;
   rooms: IRoomState;
-  adminRoom: IAdminRoomReducer;
+  adminRoom: IAdminRoomState;
+  applications: IApplicationState;
 }
 
 export const reducers = combineReducers({
   adminRoom: roomReducer,
   applicationSeason: applicationSeasonReducer,
+  applications: ApplicationReducer,
   rooms: viewRoomReducer,
   userInformation: loginReducer,
 });

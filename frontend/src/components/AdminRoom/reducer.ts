@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 import { CREATE_ROOM, DELETE_ROOM, RESET_PAGE, UPDATE_ROOM } from './constants';
 import { _ALERT_CREATED_MESSAGE, _ALERT_DELETED_MESSAGE, _ALERT_UPDATED_MESSAGE } from './strings';
 
-export interface IAdminRoomReducer {
+export interface IAdminRoomState {
   error?: string;
   submitted?: boolean;
 }
@@ -13,9 +13,9 @@ const initialState = {
 };
 
 const reducer = (
-  state: IAdminRoomReducer = initialState,
+  state: IAdminRoomState = initialState,
   action: AnyAction,
-): IAdminRoomReducer => {
+): IAdminRoomState => {
   const { type, payload } = action;
   switch (type) {
     case CREATE_ROOM:
