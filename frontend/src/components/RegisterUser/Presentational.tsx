@@ -4,7 +4,7 @@ import KnappBase from 'nav-frontend-knapper';
 import { UserState } from 'redux-oidc';
 import userManager from '../../utils/userManager';
 
-import { _USER_REGISTRATION_TEXT } from './constants';
+import { _USER_REGISTRATION_TEXT, _USER_CONFIRMATION_TEXT } from './constants';
 
 interface IDispatchProps {
   postCreateUser: (accessToken: string) => void;
@@ -34,6 +34,8 @@ export const Presentational: React.FunctionComponent<Props> = (props) => {
   return (
     <div style={{ padding: '2rem 2.5rem' }}>
       {_USER_REGISTRATION_TEXT}
+      <br />
+      {_USER_CONFIRMATION_TEXT}
       <br />
       <KnappBase
         type="hoved"
