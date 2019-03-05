@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewRoom Renders 1 room correctly 1`] = `
+<Connect(_Container)>
+  <_Container
+    applications={Array []}
+    getAllApplications={[Function]}
+  >
+    <Presentational
+      applications={Array []}
+    />
+  </_Container>
+</Connect(_Container)>
+`;
+
+exports[`ViewRoom Renders nothing correctly 1`] = `
+<Connect(_Container)>
+  <_Container
+    applications={Array []}
+    getAllApplications={[Function]}
+  >
+    <Presentational
+      applications={Array []}
+    />
+  </_Container>
+</Connect(_Container)>
+`;

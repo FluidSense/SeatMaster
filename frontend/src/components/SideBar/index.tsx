@@ -14,6 +14,7 @@ const adminUrls: IUrl[] = [
   { url: '/admin/', title: 'Admin' },
   { url: '/admin/rooms/', title: 'Rooms' },
   { url: '/admin/create-season/', title: 'Create Season' },
+  { url: '/admin/applications', title: 'Applications' },
 ];
 
 const Presentational: React.FunctionComponent<{}> = (props) => {

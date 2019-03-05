@@ -1,58 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Application review presentational Renders correctly 1`] = `
-<div
-  id="application-review"
->
-  <Sidetittel>
-    Review Application
-  </Sidetittel>
-  <div
-    id="user-information"
-  >
-    <InformationList
-      information={
-        Object {
-          "E-Mail": "test@test.com",
-          "Master status": "Master of masters",
-          "Name": "Teser Testersen",
-          "Phone": "91100999",
-        }
-      }
-    />
-  </div>
-  <div
-    id="room-information"
-  >
-    <InformationList
-      information={
-        Object {
-          "Partner": "None",
-          "Preferred room": "Space Commander",
-          "Seat Rollover": "Yes",
-        }
-      }
-    />
-  </div>
-  <div
-    className="needs-information"
-  >
-    <InfoPanel
-      title="Needs"
-    />
-  </div>
-  <KnappBase
-    autoDisableVedSpinner={false}
-    className={null}
-    disabled={false}
-    htmlType="submit"
-    id="edit-application"
-    inaktivKlasseVedDisabled={false}
-    mini={false}
-    spinner={false}
-    type="hoved"
-  >
-    Edit Application
-  </KnappBase>
-</div>
+<ApplicationOverview
+  applicationInfo={
+    Object {
+      "applicationStatus": "SUBMITTED",
+      "email": "test@test.com",
+      "fullname": "Teser Testersen",
+      "partner": "None",
+      "phone": "91100999",
+      "room": "Space Commander",
+      "seatRollover": "Yes",
+      "status": "Master of masters",
+    }
+  }
+/>
 `;

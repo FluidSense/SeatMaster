@@ -47,6 +47,18 @@ exports[`Presentation SideBar Renders correctly 1`] = `
           Create Season
         </NavLink>
       </li>
+      <li
+        key="3"
+      >
+        <NavLink
+          activeClassName="active"
+          aria-current="page"
+          exact={true}
+          to="/admin/applications"
+        >
+          Applications
+        </NavLink>
+      </li>
     </ul>
   </nav>
 </div>
