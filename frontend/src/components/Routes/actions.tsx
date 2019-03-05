@@ -1,21 +1,19 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { GET_USER_BY_NAME_URL } from '../commonConstants';
+import { getUserData } from '../../API/calls';
+import { IUser } from '../../API/interfaces';
 
-export const fetchUserData = (idToken: string):
+const setUserData = (payload: IUser) => ({
+  payload,
+  type: 'SET_USER_DATA',
+});
+
+const removeUserData = () => ({
+  type: 'REMOVE_USER_DATA',
+});
+
+export const fetchUserData = ():
 ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-  await fetch(`${GET_USER_BY_NAME_URL}`, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
-  })
-    .then(response => response.json())
-    .then(result => dispatch({
-      payload: result,
-      type: 'SET_USER_DATA',
-    }))
-    .catch(error => dispatch({
-      payload: error,
-      type: 'REMOVE_USER_DATA',
-    }));
+  const result = await getUserData();
+  (result) ? dispatch(setUserData(result)) : dispatch(removeUserData());
 };

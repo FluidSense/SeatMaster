@@ -7,7 +7,7 @@ import { RoutesRegister } from '../RoutesRegister';
 import { RoutesUser } from '../RoutesUser';
 
 interface IDispatchProps {
-  fetchUserData: (idToken: string) => void;
+  fetchUserData: () => void;
 }
 
 interface IUserStates {
@@ -52,7 +52,7 @@ export class Presentational extends React.Component<Props, {}> {
     const { fetchUserData, oidc } = this.props;
 
     if (oidc.user && !oidc.user.expired) {
-      await fetchUserData(oidc.user.id_token);
+      await fetchUserData();
     }
   }
 }

@@ -10,7 +10,7 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchUserData: (idToken: string) => dispatch(fetchUserData(idToken)),
+  fetchUserData: () => dispatch(fetchUserData()),
 });
 
 const Routes = connect(

@@ -7,7 +7,7 @@ import userManager from '../../utils/userManager';
 import { _USER_REGISTRATION_TEXT } from './constants';
 
 interface IDispatchProps {
-  postCreateUser: (idToken: string, accessToken: string) => void;
+  postCreateUser: (accessToken: string) => void;
   push: (userId: string) => any;
 }
 
@@ -20,7 +20,7 @@ export const Presentational: React.FunctionComponent<Props> = (props) => {
     event.preventDefault();
 
     if (user && !user.expired) {
-      await postCreateUser(user.id_token, user.access_token);
+      await postCreateUser(user.access_token);
     }
     props.push('/');
   };
