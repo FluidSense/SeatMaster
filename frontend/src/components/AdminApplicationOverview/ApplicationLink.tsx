@@ -12,7 +12,8 @@ interface IProps {
 
 const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
   const { application } = props;
-  const user = application.user ? application.user : { id: 0, username: '' };
+  const user = application.user;
+  if (!user) return null;
   const link = (panelProps: any) => (
     <NavLink
       to={{ pathname: panelProps.href, application: { ...application } }}
