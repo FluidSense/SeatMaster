@@ -7,3 +7,10 @@ def getDataportenUserInfo(token):
     request.add_header("Authorization", f"Bearer {token}")
     result = urllib.request.urlopen(request)
     return json.load(result)
+
+
+def getDataportenGroups(token):
+    request = urllib.request.Request("https://groups-api.dataporten.no/groups/me/groups")
+    request.add_header("Authorization", f"Bearer {token}")
+    result = urllib.request.urlopen(request)
+    return json.load(result)

@@ -15,7 +15,7 @@ def registerUser(userInfo):
     user = User(username=username, sub=userInfo.get("sub"), email=userInfo.get("email"))
     db.session.add(user)
     db.session.commit()
-    return user.to_json(), 200
+    return user.to_json(), 201
 
 
 def getUserFromSub(sub):

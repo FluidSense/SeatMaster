@@ -3,7 +3,7 @@ import json
 from services import userService
 from auth import requiresUser, requiresIdToken
 from flask import _request_ctx_stack
-from utils.dataporten import getDataportenUserInfo
+from utils import dataporten
 
 user = Blueprint("user", __name__, url_prefix="/user")
 
@@ -21,7 +21,7 @@ def registerUser():
         form = request.get_json()
         ctx = _request_ctx_stack.top
         accessToken = form.get("accessToken")
-        userInfo = getDataportenUserInfo(accessToken)
+        userInfo = dataporten.getDataportenUserInfo(accessToken)
         if(ctx.idToken.get("sub") == userInfo.get("sub")):
             response, statusCode = userService.registerUser(userInfo)
             return make_response(jsonify(response), statusCode)
