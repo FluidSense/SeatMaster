@@ -35,7 +35,7 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
     <LenkepanelBase
       key={application.id}
       linkCreator={link}
-      href={ROUTE_TO}
+      href={`${ROUTE_TO}${application.id}`}
     >
       <div className="application-link">
         <div className="link-name"><Element>{_LINK_NAME_TITLE}</Element>{user.username}</div>
