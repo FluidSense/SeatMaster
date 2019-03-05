@@ -20,7 +20,6 @@ mccabe==0.6.1
 more-itertools==5.0.0
 passlib==1.7.1
 pg8000==1.13.1
-pkg-resources==0.0.0
 pluggy==0.8.1
 port-for==0.4
 psutil==5.5.0
