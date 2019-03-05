@@ -15,5 +15,5 @@ const removeUserData = () => ({
 export const fetchUserData = ():
 ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
   const result = await getUserData();
-  (result) ? dispatch(setUserData(result)) : dispatch(removeUserData());
+  (Object.keys(result).length > 0) ? dispatch(setUserData(result)) : dispatch(removeUserData());
 };

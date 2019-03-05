@@ -20,7 +20,9 @@ export interface IPartnerApplication {
   comments: string;
   id: number;
   needs: string;
-  partnerApplication?: IApplication;
+  partnerApplication?: IApplicationForm;
+  preferredRoom: string;
+  seatRollover: boolean;
   status: string;
 }
 

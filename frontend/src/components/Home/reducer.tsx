@@ -55,21 +55,40 @@ export const registeredApplicationReducer = (
         comments: payload.comments,
         id: payload.id,
         needs: payload.needs,
-        partnerApplication: {
+        partnerApplication: payload.partnerApplication !== undefined
+        ?
+        {
           id: payload.partnerApplication.id,
           user: {
             email: payload.partnerApplication.user.email,
             id: payload.partnerApplication.user.id,
             username: payload.partnerApplication.user.username,
           },
+        }
+        :
+        {
+          id: undefined,
+          user: {
+            email: undefined,
+            id: undefined,
+            username: undefined,
+          },
         },
         preferredRoom: payload.preferredRoom,
         seatRollover: payload.seatRollover,
         status: payload.status,
-        user: {
+        user: payload.user !== undefined
+        ?
+        {
           email: payload.user.email,
           id: payload.user.id,
           username: payload.user.username,
+        }
+        :
+        {
+          email: undefined,
+          id: undefined,
+          username: undefined,
         },
       };
     }

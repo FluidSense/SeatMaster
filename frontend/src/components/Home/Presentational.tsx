@@ -5,7 +5,7 @@ import _Container from '../ApplicationSeason/index';
 import Container from '../ApplicationStatus/index';
 
 interface IDispatchProps {
-  fetchApplicationInformation: (username: string) => any;
+  fetchApplicationInformation: () => any;
 }
 
 interface IUserStates {
@@ -30,10 +30,10 @@ export class Presentational extends React.Component<Props, {}> {
     );
   }
 
-  public componentDidUpdate() {
+  public componentDidMount() {
     const { fetchApplicationInformation, oidc } = this.props;
     if (oidc.user && !oidc.user.expired) {
-      fetchApplicationInformation('1');
+      fetchApplicationInformation();
     }
   }
 }

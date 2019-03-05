@@ -2,7 +2,13 @@ import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom } from '../components/ViewRooms';
 import { deleteJson, getJson, postJson, putJson } from './callDefinitions';
 import {
-  GET_APPLICATION_BY_USERID_URL, POST_FORM_DATA_URL, POST_NEW_USER_URL, ROOM_URL, SEASON_URL,
+  GET_APPLICATION_BY_SELF,
+  GET_APPLICATION_BY_USERID_URL,
+  GET_USER_URL,
+  POST_FORM_DATA_URL,
+  POST_NEW_USER_URL,
+  ROOM_URL,
+  SEASON_URL,
 } from './constants';
 import {
   IApplication,
@@ -19,7 +25,12 @@ export const postSeason = (data: IPostApplicationSeason):
   return postJson(SEASON_URL, data);
 };
 
-export const getApplicationForm = (username: string):
+export const getApplicationFormBySelf = ():
+  PromiseLike<IApplicationForm> => {
+  return getJson(`${GET_APPLICATION_BY_SELF}`);
+};
+
+export const getApplicationFormByUsername = (username: string):
   PromiseLike<IApplicationForm> => {
   return getJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
 };
@@ -34,7 +45,7 @@ export const postApplicationForm = (data: IPostApplicationForm):
   return postJson(POST_FORM_DATA_URL, data);
 };
 
-export const getUserData = (): PromiseLike<IUser> => getJson(SEASON_URL);
+export const getUserData = (): PromiseLike<IUser> => getJson(GET_USER_URL);
 
 export const postNewCreateUser = (data: {accessToken: string}):
   PromiseLike<IUser> => {
