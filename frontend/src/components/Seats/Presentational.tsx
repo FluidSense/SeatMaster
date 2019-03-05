@@ -13,7 +13,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { seats } = props;
 
   const seatElements = seats.map(seat => (
-    <Seat label={seat.id} key={seat.id} />
+    <Seat id={seat.id} key={seat.id} />
   ));
 
   return (
