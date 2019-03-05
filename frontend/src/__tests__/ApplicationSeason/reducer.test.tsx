@@ -17,6 +17,9 @@ test('reducers', () => {
           start: moment('1970-01-01T00:00:01.970Z'),
         },
       },
+      applications: {
+        applications: [],
+      },
       rooms: {
         rooms: [],
       },
@@ -53,6 +56,9 @@ test('reducers', () => {
         end: moment('2019-07-24 11:41:04.793276'),
         start: moment('2019-02-24 11:41:04.793276'),
       },
+    },
+    applications: {
+      applications: [],
     },
     rooms: {
       rooms: [],

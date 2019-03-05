@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
+<LenkepanelBase
+  border={false}
+  href="/admin/applications/1"
+  key="1"
+  linkCreator={[Function]}
+>
+  <div
+    className="application-link"
+  >
+    <div
+      className="link-name"
+    >
+      <Element>
+        Name
+      </Element>
+      Kek
+    </div>
+    <div
+      className="link-master"
+    >
+      <Element>
+        Master Status
+      </Element>
+      Status
+    </div>
+    <div
+      className="link-status"
+    >
+      <Element>
+        Application Status
+      </Element>
+      Waiting list
+    </div>
+  </div>
+</LenkepanelBase>
+`;
