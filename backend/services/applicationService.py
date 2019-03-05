@@ -4,6 +4,11 @@ from shared import db
 from sqlalchemy.exc import SQLAlchemyError
 
 
+def getAllApplications():
+    applications = db.session.query(Application).all()
+    return applications
+
+
 def getApplicationById(id):
     userApplication = db.session.query(Application).get(id)
     return userApplication
