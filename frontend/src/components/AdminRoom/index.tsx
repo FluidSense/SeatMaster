@@ -4,6 +4,7 @@ import { Redirect } from 'react-router';
 import { ThunkDispatch } from 'redux-thunk';
 import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
 import './adminRoom.css';
@@ -11,12 +12,13 @@ import { ROUTE_TO } from './constants';
 import Presentational from './Presentational';
 
 interface IState {
+  buttonDisabled: boolean;
+  redirect: boolean;
   roomName: string;
   roomNotes: string;
   room?: IRoom;
-  buttonDisabled: boolean;
+  seats: ISeat[];
   showAlert: boolean;
-  redirect: boolean;
 }
 
 interface IProps {
@@ -49,6 +51,7 @@ class _Container extends Component<Props, IState> {
       room: undefined,
       roomName: '',
       roomNotes: '',
+      seats: [],
       showAlert: false,
     };
   }
@@ -74,11 +77,18 @@ class _Container extends Component<Props, IState> {
 
   public componentDidMount = () => {
     const { room } = this.props.location;
-    if (room) this.setState({ room, roomName: room.name, roomNotes: room.info });
+    if (room) {
+      this.setState({
+        room,
+        roomName: room.name,
+        roomNotes: room.info,
+        seats: room.seats.seats,
+      });
+    }
   }
 
   public render() {
-    const { buttonDisabled, roomName, roomNotes, room, showAlert } = this.state;
+    const { buttonDisabled, roomName, roomNotes, room, showAlert, seats } = this.state;
     const { submitted, reset, error } = this.props;
     const onClick = room ? this.updateRoom : this.createRoom;
     const roomExists = room ? true : false;
@@ -98,6 +108,7 @@ class _Container extends Component<Props, IState> {
         showAlert={showAlert}
         alertMessage={error}
         roomExists={roomExists}
+        seats={seats}
       />
     );
   }

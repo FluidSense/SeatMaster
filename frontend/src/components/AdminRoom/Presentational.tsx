@@ -4,6 +4,7 @@ import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
+import Seats, { ISeat } from '../Seats';
 import {
   _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,
@@ -23,6 +24,7 @@ interface IProps {
   buttonDisabled: boolean;
   onClick: () => void;
   deleteRoom: () => void;
+  seats: ISeat[];
   showAlert: boolean;
   alertMessage?: string;
   roomExists: boolean;
@@ -38,6 +40,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     buttonDisabled,
     onClick,
     deleteRoom,
+    seats,
     showAlert,
     alertMessage,
   } = props;
@@ -80,6 +83,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
+      <Seats seats={seats} />
       <div id="state-buttons">
         <KnappBase
           id={'create-room-button'}
