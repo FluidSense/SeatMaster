@@ -10,7 +10,16 @@ export interface IRoom {
   id: number;
   name: string;
   info: string;
-  seat: number;
+  seats: {
+    count: number;
+    seats: ISeat[];
+  };
+}
+
+export interface ISeat {
+  id: string;
+  info: string;
+  roomId: number;
 }
 
 export interface IStateProps {

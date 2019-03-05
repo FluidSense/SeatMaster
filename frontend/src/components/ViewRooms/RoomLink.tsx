@@ -12,7 +12,7 @@ interface IProps {
 
 const RoomLink: React.FunctionComponent<IProps> = (props) => {
   const { room } = props;
-  const seats = room.seat !== undefined ? room.seat : 0;
+  const seats = room.seats.count !== undefined ? room.seats.count : 0;
   const link = (panelProps: any) => (
     <NavLink
       to={{ pathname: panelProps.href, room: { ...room } }}
