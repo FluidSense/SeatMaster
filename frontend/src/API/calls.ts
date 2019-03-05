@@ -1,8 +1,9 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
-import { IRoom } from '../components/ViewRooms';
+import { IRoom, ISeat } from '../components/ViewRooms';
 import { deleteJson, elevatedPostJson, getJson, postJson, putJson } from './callDefinitions';
 import {
+  ASSIGN_SEAT_URL,
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
@@ -16,6 +17,7 @@ import {
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
+  IPutUserOnSeat,
   IUser,
 } from './interfaces';
 
@@ -69,4 +71,8 @@ export const putRoom = (data: IPostRoom, id: number): PromiseLike<IRoom> => {
 
 export const deleteRoom = (id: number): PromiseLike<IRoom> => {
   return deleteJson(ROOM_URL, id);
+};
+
+export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
+  return putJson(ASSIGN_SEAT_URL, data);
 };

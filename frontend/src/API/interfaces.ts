@@ -14,6 +14,12 @@ export interface IPostApplicationSeason {
   newRoomStart: string;
 }
 
+export interface IPutUserOnSeat {
+  userId: number;
+  roomId: number;
+  seatId: string;
+}
+
 export interface IPostRoom {
   name: string;
   info: string;

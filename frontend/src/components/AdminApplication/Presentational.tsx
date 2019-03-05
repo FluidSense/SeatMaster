@@ -13,7 +13,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   return (
     <div className="main-content">
       <ApplicationOverview application={application} title={application.fullname}/>
-      <AssignSeat />
+      <AssignSeat application={application}/>
     </div>
   );
 };

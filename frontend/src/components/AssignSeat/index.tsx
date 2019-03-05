@@ -2,20 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
-import { IRoom } from '../ViewRooms';
+import { IApplicationInfoObject } from '../ApplicationReview';
+import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import Presentational from './Presentational';
+import { assignUserToSeat } from './actions';
 
 interface IDispatchProps {
   getRooms: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
+  assignSeat: (user: IUser, room: IRoom, seat: ISeat) =>
+    ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
 
 interface IStateProps {
   rooms: IRoom[];
 }
 
-type Props = IDispatchProps & IStateProps;
+interface IOwnProps {
+  application: IApplicationInfoObject;
+}
+
+type Props = IDispatchProps & IStateProps & IOwnProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends React.Component<Props> {
@@ -24,7 +33,12 @@ class _Container extends React.Component<Props> {
   }
 
   public render() {
-    return (<Presentational rooms={this.props.rooms} />);
+    return (<Presentational assignUserToSeat={this.seatAssign} rooms={this.props.rooms} />);
+  }
+
+  private seatAssign = (room: IRoom, seat: ISeat) => {
+    const user = this.props.application.user;
+    if (user) this.props.assignSeat(user, room, seat);
   }
 }
 
@@ -33,6 +47,8 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  assignSeat: (user: IUser, room: IRoom, seat: ISeat) =>
+    dispatch(assignUserToSeat(user, room, seat)),
   getRooms: () => dispatch(fetchAllRooms()),
 });
 

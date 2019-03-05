@@ -4,10 +4,11 @@ import { ISeat } from '../ViewRooms';
 
 interface IProps {
   seats?: ISeat[];
+  setSelected: (e: React.FormEvent) => void;
 }
 
 const SeatPicker: React.FunctionComponent<IProps> = (props) => {
-  const { seats } = props;
+  const { seats, setSelected } = props;
   const defaultOption = <option key={0} label="">Velg sete</option>;
 
   if (seats) {
@@ -16,7 +17,7 @@ const SeatPicker: React.FunctionComponent<IProps> = (props) => {
     });
     options.unshift(defaultOption);
     return (
-      <Select label={'Sete'} bredde="m">
+      <Select label={'Sete'} bredde="m" onChange={setSelected}>
         {options}
       </Select>
     );

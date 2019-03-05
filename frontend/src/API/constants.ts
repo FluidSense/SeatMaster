@@ -15,3 +15,6 @@ export const POST_NEW_USER_URL = `${BASEPATH}user/`;
 
 // Season
 export const SEASON_URL = `${BASEPATH}season/`;
+
+// Seat
+export const ASSIGN_SEAT_URL = `${BASEPATH}seat/assignSeat`;
