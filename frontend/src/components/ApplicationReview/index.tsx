@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
+import { IRegisteredApplicationState } from './../Home/reducer';
+import { IRegisteredUserState } from './../RegisterUser/reducer';
 import './applicationReview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
-  applicationInfo: IApplicationInfoObject;
+  applicationInfo: IRegisteredApplicationState;
+  userInfo: IRegisteredUserState;
 }
 
 export interface IApplicationInfoObject {
@@ -27,9 +30,9 @@ export interface IApplicationInfoObject {
 // tslint:disable-next-line:class-name
 class _Container extends React.Component<IStateProps> {
   public render = () => {
-    const { applicationInfo } = this.props;
+    const { applicationInfo, userInfo } = this.props;
     return (
-      <Presentational applicationInfo={applicationInfo} />
+      <Presentational applicationInfo={applicationInfo} userInfo={userInfo} />
     );
   }
 }

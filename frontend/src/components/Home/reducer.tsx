@@ -3,6 +3,7 @@ import { AnyAction } from 'redux';
 export interface IRegisteredApplicationState {
   comments?: string;
   id?: number;
+  needs?: string;
   status: string;
   user?: {
     email?: string;
@@ -14,6 +15,7 @@ export interface IRegisteredApplicationState {
 const initialState = {
   comments: undefined,
   id: undefined,
+  needs: undefined,
   status: '_APP_NOT_FOUND',
   user: {
     email: undefined,
@@ -32,6 +34,7 @@ export const registeredApplicationReducer = (
         ...state,
         comments: payload.comments,
         id: payload.id,
+        needs: payload.needs,
         status: payload.status,
         user: {
           email: payload.user.email,
@@ -45,6 +48,7 @@ export const registeredApplicationReducer = (
         ...state,
         comments: undefined,
         id: undefined,
+        needs: undefined,
         status: '_APP_NOT_FOUND',
         user: {
           email: undefined,
