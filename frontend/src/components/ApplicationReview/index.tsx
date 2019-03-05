@@ -11,22 +11,6 @@ interface IStateProps {
   userInfo: IRegisteredUserState;
 }
 
-export interface IApplicationInfoObject {
-  fullname?: string;
-  email?: string;
-  phone?: string;
-  status?: string;
-  partner?: string;
-  room?: string;
-  seatRollover?: string;
-  needs?: string;
-  applicationStatus?: string;
-  user?: {
-    id: number,
-    username: string,
-  };
-}
-
 // tslint:disable-next-line:class-name
 class _Container extends React.Component<IStateProps> {
   public render = () => {
@@ -39,6 +23,7 @@ class _Container extends React.Component<IStateProps> {
 
 const mapStateToProps = (state: IStore) => ({
   applicationInfo: state.applicationInformation,
+  userInfo: state.userInformation,
 });
 
 const ApplicationReview = connect(

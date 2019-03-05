@@ -1,7 +1,6 @@
 import React from 'react';
 import { IRoomInfoObject, IUserInfoObject } from './ApplicationOverview';
 import InfoPanel from './InfoPanel';
-
 interface IProps {
   information: validProps;
 }
