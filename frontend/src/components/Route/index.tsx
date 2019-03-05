@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import AdminApplication from '../AdminApplication';
 import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
 import Application from '../Application';
@@ -22,9 +23,12 @@ export const Routing = () => {
           <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
           <Route path="/admin/create-season" component={CreateSeason} />
           <Route path="/admin/rooms/update-room" component={AdminRoom} />
-          <Route path="/admin/applications" component={AdminApplicationOverview} />
+          <Route exact={true} path="/admin/applications" component={AdminApplicationOverview} />
+          <Route path="/admin/applications/:id" component={AdminApplication} />
         </Switch>
       </div>
     </>
   );
 };
+;
+;
