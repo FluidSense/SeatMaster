@@ -41,13 +41,16 @@ const Presentational: React.FunctionComponent = (props) => {
         </ol>
       </p>
       <p>
-        As you might know, we do not have enough personal workplaces the cover the entire student mass.
+        As you might know, we do not have enough personal
+         workplaces the cover the entire student mass.
         We have come up with a prioritization system to make things fair for everyone.
-        We will start assigning seats after the deadline and will try our best to assign all seats before 25.11.18
+        We will start assigning seats after the deadline
+         and will try our best to assign all seats before 25.11.18
         You will be notified by email if you have been assigned a personal desk.
       </p>
       <p>
-        Students that apply before the deadline will be prioritized according to the following rules:
+        Students that apply before the deadline
+         will be prioritized according to the following rules:
         <ol>
           <li>
             Full time students currently working on a master thesis.
