@@ -2,25 +2,16 @@ import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
 import './header.css';
 import userManager from './../../utils/userManager';
+import { connect } from 'react-redux';
+import { Presentational } from './Presentational';
 
-export const Header: React.FunctionComponent = (props) => {
-  const doLogout = (event: React.MouseEvent) => {
-    event.preventDefault();
-    userManager.signoutRedirect();
-  };
-  const onClickAction = (event: React.MouseEvent) => doLogout(event);
+const mapStateToProps = (state: any) => ({
+  userInformation: state.userInformation,
+});
 
-  return (
-    <div id="student-header">
-      You're logged in as Christoffer Lofsberg
-      <KnappBase
-        type="hoved"
-        htmlType="button"
-        id="logoutButton"
-        onClick={onClickAction}
-      >
-      Log Out
-      </KnappBase>
-    </div>
-  );
-};
+const Header = connect(
+  mapStateToProps,
+  null,
+)(Presentational);
+
+export default Header;
