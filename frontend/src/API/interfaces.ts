@@ -36,7 +36,7 @@ export interface IPostRoom {
 }
 
 // FIXME Move this to a fitting place and export the hell out of it
-interface IUser {
+export interface IUser {
   id: number;
   username: string;
 }

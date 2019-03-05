@@ -1,11 +1,14 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
+import {
+  ApplicationReducer,
+  IApplicationState,
+} from './components/AdminApplicationOverview/reducer';
 import roomReducer, { IAdminRoomState } from './components/AdminRoom/reducer';
 import {
   applicationSeasonReducer,
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
-import { ApplicationReducer, IApplicationState } from './components/AssignSeat/reducer';
 import { ILoginState, loginReducer } from './components/Login/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 
