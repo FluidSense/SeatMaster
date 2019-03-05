@@ -20,6 +20,7 @@ import {
 
 interface IProps {
   applicationInfo: IApplicationInfoObject;
+  title?: string;
 }
 
 export interface IUserInfoObject {
@@ -35,7 +36,7 @@ export interface IRoomInfoObject {
   [_SEAT_ROLLOVER]?: string;
 }
 const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
-  const { applicationInfo } = props;
+  const { applicationInfo, title } = props;
   const userInfoObject: IUserInfoObject = {
     [_NAME]: applicationInfo.user !== undefined
       ? applicationInfo.user.username
@@ -51,7 +52,7 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   };
   return (
     <div id="application-review">
-      <Sidetittel>{_REVIEW_APPLICATION}</Sidetittel>
+      <Sidetittel>{title ? title : _REVIEW_APPLICATION}</Sidetittel>
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
