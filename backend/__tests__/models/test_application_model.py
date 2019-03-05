@@ -7,6 +7,7 @@ from models.seat import Seat
 def test_add_application_without_partner(db_session):
     testuser1 = User("Powerking")
     db_session.add(testuser1)
+    db_session.commit()
     application = Application(
         status="",
         needs="",
