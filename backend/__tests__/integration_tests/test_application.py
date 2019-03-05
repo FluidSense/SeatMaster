@@ -164,6 +164,7 @@ class TestApplication(TestCase):
         testuser2 = User("Monster")
         db.session.add(testuser1)
         db.session.add(testuser2)
+        db.session.commit()
         testapplication1 = Application("SUBMITTED", "", testuser1, None, "")
         testapplication2 = Application("SUBMITTED", "needs", testuser2, None, "comments")
         db.session.add(testapplication1)
