@@ -11,12 +11,14 @@ interface IProps {
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { seats } = props;
-  console.log(seats);
+
+  const seatElements = seats.map(seat => (
+    <Seat label={seat.id} key={seat.id} />
+  ));
 
   return (
     <Ekspanderbartpanel tittel={_SEATS_EXPAND} border={true}>
-      <Seat />
-      <Seat />
+      {seatElements}
       <Knapp>Add seat</Knapp>
     </Ekspanderbartpanel>
   );
