@@ -5,7 +5,8 @@ import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
-import Header from '../Header';
+import FAQ from '../FAQ';
+import { Header } from '../Header';
 import Home from '../Home';
 import SideBar from '../SideBar';
 import ViewRoom from '../ViewRooms';
@@ -28,6 +29,7 @@ export const RoutesUser = () => {
           <Route path="/admin/rooms/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/applications" component={AdminApplicationOverview} />
           <Route path="/admin/applications/:id" component={AdminApplication} />
+          <Route path="/FAQ" component={FAQ} />
         </Switch>
       </div>
     </>
