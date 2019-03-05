@@ -1,11 +1,12 @@
 import React from 'react';
+import { IRoomInfoObject, IUserInfoObject } from './ApplicationOverview';
 import InfoPanel from './InfoPanel';
-import { IRoomInfObject, IUserInfoObject } from './Presentational';
+
 interface IProps {
   information: validProps;
 }
 
-type validProps = IRoomInfObject | IUserInfoObject;
+type validProps = IRoomInfoObject | IUserInfoObject;
 
 const InformationList: React.FunctionComponent<IProps> = (props) => {
   const { information } = props;
