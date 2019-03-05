@@ -5,11 +5,11 @@ export interface IRegisteredApplicationState {
   id?: number;
   needs?: string;
   partnerApplication?: {
-    id?: number;
-    user?: {
-      email?: string;
-      id?: number;
-      username?: string;
+    id: number;
+    user: {
+      email: string;
+      id: number;
+      username: string;
     };
   };
   preferredRoom?: string;
@@ -26,14 +26,7 @@ const initialState = {
   comments: undefined,
   id: undefined,
   needs: undefined,
-  partnerApplication: {
-    id: undefined,
-    user: {
-      email: undefined,
-      id: undefined,
-      username: undefined,
-    },
-  },
+  partnerApplication: undefined,
   preferredRoom: undefined,
   seatRollover: undefined,
   status: '_APP_NOT_FOUND',
@@ -59,21 +52,22 @@ export const registeredApplicationReducer = (
         ?
         {
           id: payload.partnerApplication.id,
-          user: {
+          user: payload.partnerApplication.user !== undefined
+          ?
+          {
             email: payload.partnerApplication.user.email,
             id: payload.partnerApplication.user.id,
             username: payload.partnerApplication.user.username,
-          },
-        }
-        :
-        {
-          id: undefined,
-          user: {
+          }
+          :
+          {
             email: undefined,
             id: undefined,
             username: undefined,
           },
-        },
+        }
+        :
+        undefined,
         preferredRoom: payload.preferredRoom,
         seatRollover: payload.seatRollover,
         status: payload.status,
@@ -98,14 +92,7 @@ export const registeredApplicationReducer = (
         comments: undefined,
         id: undefined,
         needs: undefined,
-        partnerApplication: {
-          id: undefined,
-          user: {
-            email: undefined,
-            id: undefined,
-            username: undefined,
-          },
-        },
+        partnerApplication: undefined,
         preferredRoom: undefined,
         seatRollover: undefined,
         status: '_APP_NOT_FOUND',

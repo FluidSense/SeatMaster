@@ -1,11 +1,12 @@
 import { IRoom } from './../components/ViewRooms/index';
 
+// TODO: make the form component reflect Room type and change preferredRoom to IRoom
 export interface IPostApplicationForm {
   comments: string;
-  keepSeat?: boolean;
+  seatRollover?: boolean;
   needs?: string;
   partnerUsername?: string;
-  room?: IRoom;
+  preferredRoom?: string;
 }
 
 export interface IPostApplicationSeason {

@@ -16,7 +16,7 @@ interface IProps {
 }
 
 interface IState {
-  room?: IRoom;
+  room?: string;
   partner: boolean;
   partnerUsername: string;
   needs: boolean;
@@ -95,10 +95,10 @@ export class Presentational extends React.Component<IProps, IState> {
 
     postApplicationForm({
       comments: this.state.infoText,
-      keepSeat: this.state.keepSeat,
       needs: this.state.needsText,
       partnerUsername: this.state.partnerUsername,
-      room: this.state.room,
+      preferredRoom: this.state.room,
+      seatRollover: this.state.keepSeat,
     })
       .then(
         // On fullfilled promise:
