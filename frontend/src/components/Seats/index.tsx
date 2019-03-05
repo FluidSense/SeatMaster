@@ -11,6 +11,15 @@ export interface ISeat {
 }
 
 const createSeat = () => {
+  // create seat
+};
+
+const editSeatID = () => {
+  // edit seat
+};
+
+const deleteSeat = () => {
+  // delete seat
 };
 
 const mapStateToProps = (state: IStore) => ({

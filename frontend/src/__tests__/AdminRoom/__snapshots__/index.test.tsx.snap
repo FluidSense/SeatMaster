@@ -20,7 +20,10 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
           "id": 64,
           "info": "wasd",
           "name": "qwerty",
-          "seat": 0,
+          "seats": Object {
+            "count": 0,
+            "seats": Array [],
+          },
         },
       }
     }
@@ -34,7 +37,10 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
             "id": 64,
             "info": "wasd",
             "name": "qwerty",
-            "seat": 0,
+            "seats": Object {
+              "count": 0,
+              "seats": Array [],
+            },
           },
         }
       }
@@ -48,6 +54,7 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
         roomExists={true}
         roomName="qwerty"
         roomNotes="wasd"
+        seats={Array []}
         setName={[Function]}
         setNotes={[Function]}
         showAlert={false}
@@ -158,6 +165,81 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
               />
             </div>
           </Textarea>
+          <Connect(Presentational)
+            seats={Array []}
+          >
+            <Presentational
+              createSeat={[Function]}
+              seats={Array []}
+            >
+              <Ekspanderbartpanel
+                apen={false}
+                border={true}
+                tittel="Show seats"
+              >
+                <EkspanderbartpanelPure
+                  apen={false}
+                  border={true}
+                  onClick={[Function]}
+                  tittel="Show seats"
+                  tittelProps="undertittel"
+                >
+                  <EkspanderbartpanelBasePure
+                    apen={false}
+                    ariaTittel="Show seats"
+                    border={true}
+                    heading={
+                      <TypografiBase
+                        className="ekspanderbartPanel__heading"
+                        tag="span"
+                        type="undertittel"
+                      >
+                        Show seats
+                      </TypografiBase>
+                    }
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="ekspanderbartPanel ekspanderbartPanel--lukket ekspanderbartPanel--border"
+                    >
+                      <button
+                        aria-controls="076746475-23617-01466-26844-06918335112113"
+                        aria-expanded={false}
+                        className="ekspanderbartPanel__hode"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
+                      >
+                        <div
+                          className="ekspanderbartPanel__flex-wrapper"
+                        >
+                          <TypografiBase
+                            className="ekspanderbartPanel__heading"
+                            tag="span"
+                            type="undertittel"
+                          >
+                            <span
+                              className="typo-undertittel ekspanderbartPanel__heading"
+                            >
+                              Show seats
+                            </span>
+                          </TypografiBase>
+                          <span
+                            className="ekspanderbartPanel__indikator"
+                          />
+                        </div>
+                      </button>
+                      <UnmountClosed
+                        id="076746475-23617-01466-26844-06918335112113"
+                        isOpened={false}
+                        onRest={[Function]}
+                      />
+                    </div>
+                  </EkspanderbartpanelBasePure>
+                </EkspanderbartpanelPure>
+              </Ekspanderbartpanel>
+            </Presentational>
+          </Connect(Presentational)>
           <div
             id="state-buttons"
           >
@@ -251,6 +333,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
         roomExists={false}
         roomName=""
         roomNotes=""
+        seats={Array []}
         setName={[Function]}
         setNotes={[Function]}
         showAlert={false}
@@ -361,6 +444,81 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
               />
             </div>
           </Textarea>
+          <Connect(Presentational)
+            seats={Array []}
+          >
+            <Presentational
+              createSeat={[Function]}
+              seats={Array []}
+            >
+              <Ekspanderbartpanel
+                apen={false}
+                border={true}
+                tittel="Show seats"
+              >
+                <EkspanderbartpanelPure
+                  apen={false}
+                  border={true}
+                  onClick={[Function]}
+                  tittel="Show seats"
+                  tittelProps="undertittel"
+                >
+                  <EkspanderbartpanelBasePure
+                    apen={false}
+                    ariaTittel="Show seats"
+                    border={true}
+                    heading={
+                      <TypografiBase
+                        className="ekspanderbartPanel__heading"
+                        tag="span"
+                        type="undertittel"
+                      >
+                        Show seats
+                      </TypografiBase>
+                    }
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="ekspanderbartPanel ekspanderbartPanel--lukket ekspanderbartPanel--border"
+                    >
+                      <button
+                        aria-controls="177907066-7654-25676-7179-417613607003"
+                        aria-expanded={false}
+                        className="ekspanderbartPanel__hode"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
+                      >
+                        <div
+                          className="ekspanderbartPanel__flex-wrapper"
+                        >
+                          <TypografiBase
+                            className="ekspanderbartPanel__heading"
+                            tag="span"
+                            type="undertittel"
+                          >
+                            <span
+                              className="typo-undertittel ekspanderbartPanel__heading"
+                            >
+                              Show seats
+                            </span>
+                          </TypografiBase>
+                          <span
+                            className="ekspanderbartPanel__indikator"
+                          />
+                        </div>
+                      </button>
+                      <UnmountClosed
+                        id="177907066-7654-25676-7179-417613607003"
+                        isOpened={false}
+                        onRest={[Function]}
+                      />
+                    </div>
+                  </EkspanderbartpanelBasePure>
+                </EkspanderbartpanelPure>
+              </Ekspanderbartpanel>
+            </Presentational>
+          </Connect(Presentational)>
           <div
             id="state-buttons"
           >

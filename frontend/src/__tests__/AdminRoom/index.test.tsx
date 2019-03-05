@@ -43,7 +43,14 @@ describe('Admin room functions', () => {
   });
 
   it('Renders correctly when room as prop', () => {
-    const location2 = { room: { id: 64, info: 'wasd', name: 'qwerty', seat: 0 } };
+    const location2 = {
+      room: {
+        id: 64,
+        info: 'wasd',
+        name: 'qwerty',
+        seats: { count: 0, seats: [] },
+      },
+    };
     const wrapper = mount(
       <Provider store={store}><AdminRoom location={location2} /></Provider>);
     expect(toJson(wrapper)).toMatchSnapshot();
