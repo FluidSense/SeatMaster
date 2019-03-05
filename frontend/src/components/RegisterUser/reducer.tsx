@@ -2,6 +2,7 @@ import { AnyAction } from 'redux';
 
 export interface IRegisteredUserState {
   email?: string;
+  fullname?: string;
   id?: number;
   masterStatus?: string;
   registered: boolean;
@@ -10,6 +11,7 @@ export interface IRegisteredUserState {
 
 const initialState = {
   email: undefined,
+  fullname: undefined,
   id: undefined,
   masterStatus: undefined,
   registered: false,
@@ -25,6 +27,7 @@ export const registeredUserReducer = (
       return {
         ...state,
         email: payload.email,
+        fullname: payload.fullname,
         id: payload.id,
         masterStatus: payload.masterStatus,
         registered: true,
@@ -35,6 +38,7 @@ export const registeredUserReducer = (
       return {
         ...state,
         email: undefined,
+        fullname: undefined,
         id: undefined,
         masterStatus: undefined,
         registered: false,

@@ -2,17 +2,14 @@ import { Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import * as React from 'react';
 
 interface IStateProps {
-  username: string;
   fullname?: string;
-  email: string;
-  phone?: string;
-  status: string;
+  email?: string;
+  status?: string;
 }
 
 export const ApplicationFormPersonal: React.FunctionComponent<IStateProps> = (props) => {
   return (
     <SkjemaGruppe className="form-personal-info" title="Personal information">
-      <input type="hidden" name="username" value={props.username} />
       <Input
         className="input-full-name"
         label="Full name"
@@ -34,7 +31,7 @@ export const ApplicationFormPersonal: React.FunctionComponent<IStateProps> = (pr
         label="Phone number"
         bredde="L"
         name="phone"
-        value={props.phone}
+        value={'No number in user reducer'}
         disabled={true}
       />
       <Input

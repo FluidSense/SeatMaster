@@ -2,18 +2,16 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
 import { postApplicationForm } from '../../API/calls';
+import { IRegisteredUserState } from '../RegisterUser/reducer';
 import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
+
 import { _ALERT_USER_ERROR } from './Strings';
 
 interface IProps {
-  username: string;
-  fullname: string;
-  email: string;
-  phone: string;
-  status: string;
+  userInformation: IRegisteredUserState;
   changeModal: (modalOpen: boolean) => void;
 }
 
@@ -47,6 +45,7 @@ export class Presentational extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const { userInformation } = this.props;
     const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
     return (
       <>
@@ -56,11 +55,9 @@ export class Presentational extends React.Component<IProps, IState> {
           id="new-application-form"
         >
           <ApplicationFormPersonal
-            username={this.props.username}
-            fullname={this.props.fullname}
-            email={this.props.email}
-            phone={this.props.phone}
-            status={this.props.status}
+            fullname={userInformation.fullname}
+            email={userInformation.email}
+            status={userInformation.masterStatus}
           />
           <ApplicationFormPreferences
             updateApplicationFormData={this.updateApplicationFormData}
@@ -102,7 +99,6 @@ export class Presentational extends React.Component<IProps, IState> {
       needs: this.state.needsText,
       partnerUsername: this.state.partnerUsername,
       room: this.state.room,
-      username: this.props.username,
     })
       .then(
         // On fullfilled promise:

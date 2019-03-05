@@ -6,7 +6,6 @@ export interface IPostApplicationForm {
   needs?: string;
   partnerUsername?: string;
   room?: IRoom;
-  username: string;
 }
 
 export interface IPostApplicationSeason {
