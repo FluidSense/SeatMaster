@@ -1,5 +1,6 @@
 import React from 'react';
 import './faq.css';
+
 const Presentational: React.FunctionComponent = (props) => {
   const { } = props;
 
