@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Application from '../Application/index';
-import { Header } from '../Header';
+import CreateSeason from '../CreateSeason';
+import Header from '../Header';
 import Home from '../Home';
 
 export const RoutesUser = () => {

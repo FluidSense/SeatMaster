@@ -36,11 +36,8 @@ export interface IPostRoom {
 
 // FIXME Move this to a fitting place and export the hell out of it
 export interface IUser {
-<<<<<<< HEAD
-=======
   email: string;
   fullname: string;
->>>>>>> ef6b5ce... Reworked API calls for authentication
   id: number;
   masterStatus: string;
   username: string;

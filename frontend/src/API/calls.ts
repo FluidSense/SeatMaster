@@ -19,9 +19,9 @@ export const postSeason = (data: IPostApplicationSeason):
   return postJson(SEASON_URL, data);
 };
 
-export const getApplicationForm = (id: number):
-  PromiseLike<IApplication> => {
-  return getJson(`${GET_APPLICATION_BY_USERID_URL}${id}`);
+export const getApplicationForm = (username: string):
+  PromiseLike<IApplicationForm> => {
+  return getJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
 };
 
 export const getAllApplications = ():

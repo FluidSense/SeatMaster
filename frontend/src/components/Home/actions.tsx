@@ -1,23 +1,19 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { GET_APPLICATION_URL } from '../commonConstants';
+import { getApplicationForm } from '../../API/calls';
+import { IApplicationForm } from '../../API/interfaces';
 
-export const fetchApplicationInformation = (idToken: string, username: string):
-  ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    fetch(`${GET_APPLICATION_URL}${username}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-        'Content-Type': 'application/json',
-      },
-      method: 'GET',
-    })
-      .then(response => response.json())
-      .then(result => dispatch({
-        payload: result,
-        type: 'SET_APPLICATION_DATA',
-      }))
-      .catch(error => dispatch({
-        payload: error,
-        type: 'REMOVE_APPLICATION_DATA',
-      }));
-  };
+const setApplicationData = (payload: IApplicationForm) => ({
+  payload,
+  type: 'SET_APPLICATION_DATA',
+});
+
+const removeApplicationData = () => ({
+  type: 'REMOVE_APPLICATION_DATA',
+});
+
+export const fetchApplicationInformation = (username: string):
+ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+  const result = await getApplicationForm(username);
+  (result) ? dispatch(setApplicationData(result)) : dispatch(removeApplicationData());
+};

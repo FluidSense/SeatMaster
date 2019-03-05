@@ -9,8 +9,8 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchApplicationInformation: (idToken: string, username: string) =>
-    dispatch(fetchApplicationInformation(idToken, username)),
+  fetchApplicationInformation: (username: string) =>
+    dispatch(fetchApplicationInformation(username)),
 });
 
 const Home = connect(
