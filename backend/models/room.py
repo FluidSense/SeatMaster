@@ -31,7 +31,8 @@ class Room(db.Model):
 
     def get_seat_list(self):
         seat_list = list(map(lambda x: x.to_json(), self.seats))
-        return seat_list
+        sorted_seat_list = sorted(seat_list, key=lambda x: x['id'])
+        return sorted_seat_list
 
     def to_json(self):
         return {
