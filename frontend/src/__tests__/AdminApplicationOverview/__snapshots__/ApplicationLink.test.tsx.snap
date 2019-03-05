@@ -19,12 +19,20 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
       Kek
     </div>
     <div
-      className="link-notes"
+      className="link-master"
     >
       <Element>
-        Status
+        Master Status
       </Element>
-      SUBMITTED
+      Status
+    </div>
+    <div
+      className="link-status"
+    >
+      <Element>
+        Application Status
+      </Element>
+      Waiting list
     </div>
   </div>
 </LenkepanelBase>
