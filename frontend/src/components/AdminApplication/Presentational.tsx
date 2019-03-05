@@ -1,6 +1,7 @@
 import React from 'react';
 import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
+import AssignSeat from '../AssignSeat';
 
 interface IProps {
   application?: IApplication;
@@ -11,7 +12,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   if (!application) return null;
   return (
     <div className="main-content">
-      <ApplicationOverview application={application} />
+      <ApplicationOverview application={application} title={application.fullname}/>
+      <AssignSeat />
     </div>
   );
 };
