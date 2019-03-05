@@ -14,6 +14,3 @@ export const POST_NEW_USER_URL = `${BASEPATH}user/`;
 
 // Season
 export const SEASON_URL = `${BASEPATH}season/`;
-
-// URL for database
-export const GET_APPLICATION_URL = 'http://localhost:5000/application/byUser/';
