@@ -29,12 +29,19 @@ class Room(db.Model):
         self.name = name
         self.info = info
 
+    def get_seat_list(self):
+        seat_list = list(map(lambda x: x.to_json(), self.seats))
+        return seat_list
+
     def to_json(self):
         return {
             "id": self.id,
             "name": self.name,
             "info": self.info,
-            "seats": len(self.seats),
+            "seats": {
+                "count": len(self.seats),
+                "seats": self.get_seat_list(),
+            },
         }
 
     def __str__(self):
