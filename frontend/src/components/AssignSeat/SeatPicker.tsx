@@ -1,25 +1,33 @@
 import { Select } from 'nav-frontend-skjema';
 import React from 'react';
+import { ISeat } from '../ViewRooms';
 
 interface IProps {
-  seats: [];
-}
-
-interface ITempSeat {
-  id: string;
+  seats?: ISeat[];
 }
 
 const SeatPicker: React.FunctionComponent<IProps> = (props) => {
   const { seats } = props;
-  const options = seats.map((seat: ITempSeat) => {
-    return <option key={seat.id} label={seat.id}>{seat.id}</option>;
-  });
+  const defaultOption = <option key={0} label="">Velg sete</option>;
 
-  return (
-    <Select label={'Sete'} bredde="m">
-      {options}
-    </Select>
-  );
+  if (seats) {
+    const options = seats.map((seat: ISeat) => {
+      return <option key={seat.id} label={seat.id}>{seat.id}</option>;
+    });
+    options.unshift(defaultOption);
+    return (
+      <Select label={'Sete'} bredde="m">
+        {options}
+      </Select>
+    );
+  }
+  else {
+    return (
+      <Select label={'Sete'} bredde="m" disabled={true}>
+        {defaultOption}
+      </Select>
+    );
+  }
 };
 
 export default SeatPicker;
