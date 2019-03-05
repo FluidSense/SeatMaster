@@ -1,41 +1,54 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 import json
 from services import applicationService
+from auth import requiresUser, requiresIdToken
+from flask import _request_ctx_stack
 
 application = Blueprint("application", __name__, url_prefix="/application")
 
-
 @application.route("/")
-def getAllApplications():
-    applications = applicationService.getAllApplications()
-    applicationList = list(map(lambda x: x.to_json(), applications))
-    return jsonify(applicationList) if applications else jsonify({})
+@requiresUser
+def getApplicationBySelf():
+    ctx = _request_ctx_stack.top
+    user = ctx.user
+    userID = user.id
+    userApplication = applicationService.getApplicationByUserId(userID)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
+# TODO Should be admin protected
 @application.route("/<id>")
-def getApplication(id):
+@requiresUser
+def getApplicationByApplicationId(id):
     userApplication = applicationService.getApplicationById(id)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
+# TODO Should be admin protected
 @application.route("/byUser/<userid>")
+@requiresUser
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
+# TODO Should fetch user from stack, not from form field
 @application.route("/", methods=["POST"])
+@requiresUser
 def registerApplication():
     if request.is_json:
+        ctx = _request_ctx_stack.top
+        user = ctx.user
+        userID = user.id
+
         form = request.get_json()
-        username = form.get("username")
         needs = form.get("needs")
         comments = form.get("comments")
         partnerUsername = form.get("partnerUsername")
         responseText, statusCode = applicationService.registerApplication(
           comments=comments,
           needs=needs,
-          username=username,
+          id=userID,
           partnerUsername=partnerUsername)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)

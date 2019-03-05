@@ -25,9 +25,9 @@ def getApplicationByUsername(username):
 
 
 # TODO application should not be registered with username, it should verify the user.
-def registerApplication(comments, needs, username, partnerUsername):
+def registerApplication(comments, needs, id, partnerUsername):
     try:
-        user = db.session.query(User).filter_by(username=username).one()
+        user = db.session.query(User).filter_by(id=id).one()
         application = Application(
             status="SUBMITTED",
             needs=needs,

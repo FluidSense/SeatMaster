@@ -52,6 +52,16 @@ class Application(db.Model):
         remote_side="Application.id",
         post_update=True)
 
+    preferredRoom = db.Column(
+        "preferredRoom",
+        db.String(50)
+    )
+
+    seatRollover = db.Column(
+        "seatRollover",
+        db.Boolean()
+    )
+
     room_id = db.Column(db.Integer)
 
     seat_id = db.Column(db.String)
@@ -68,11 +78,13 @@ class Application(db.Model):
         foreign_keys='[Seat.room_id, Seat.seat_id]',
         primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
-    def __init__(self, status, needs, user, partnerUsername, comments):
+    def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments):
         self.status = status
         self.user = user
         self.needs = needs
         self.comments = comments
+        self.preferredRoom = preferredRoom
+        self.seatRollover = seatRollover
         self.partnerUsername = partnerUsername
 
     def to_json(self, self_referred=False):
@@ -81,6 +93,8 @@ class Application(db.Model):
             "status": self.status,
             "comments": self.comments,
             "needs": self.needs,
+            "preferredRoom": self.preferredRoom,
+            "seatRollover": self.seatRollover,
             "user": self.user.to_json() if self.user else None,
         }
         # Do not return partnerApplication if jsoning through a partner application.
