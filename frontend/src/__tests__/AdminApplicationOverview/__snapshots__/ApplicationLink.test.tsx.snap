@@ -3,7 +3,7 @@
 exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
 <LenkepanelBase
   border={false}
-  href=""
+  href="/admin/applications/1"
   key="1"
   linkCreator={[Function]}
 >
