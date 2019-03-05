@@ -5,6 +5,7 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IApplication } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { fetchAllApplications } from './actions';
+import './adminApplicationOverview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
