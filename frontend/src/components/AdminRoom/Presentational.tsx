@@ -59,6 +59,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           {_BUTTON_DELETE_ROOM}
         </KnappBase>)
       : null;
+
+  const seatsElement =
+    roomExists
+      ? (<Seats seats={seats} roomId={room.id} />)
+      : null;
+
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
     const changeEvent = event as ChangeEvent<HTMLInputElement>;
@@ -82,7 +88,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
-      <Seats seats={seats} roomId={room.id} />
+      {seatsElement}
       <div id="state-buttons">
         <KnappBase
           id={'create-room-button'}
