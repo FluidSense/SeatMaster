@@ -58,6 +58,8 @@ def registerApplication():
             seatRollover=seatRollover,
             preferredRoom=preferredRoom
         )
+        if "seat" in responseText:
+          del responseText["seat"]
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
