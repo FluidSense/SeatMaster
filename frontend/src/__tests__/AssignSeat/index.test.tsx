@@ -14,7 +14,7 @@ describe('assign seat index', () =>  {
   it('renders correctly', () => {
     const wrapper = mount(
       <Provider store={store} >
-        <AssignSeat application={app}/>
+        <AssignSeat rooms={[]} application={app}/>
       </Provider>,
     );
     const container = wrapper.find(AssignSeat);
