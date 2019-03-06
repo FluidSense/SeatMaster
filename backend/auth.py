@@ -4,6 +4,8 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 from services import userService
+from utils import dataporten
+
 
 DOMAIN = 'https://auth.dataporten.no'
 VERIFICATION_DOMAIN = DOMAIN + '/openid/jwks'
@@ -16,10 +18,10 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
-def get_token_auth_header():
+def get_token_auth_header(header):
     """Obtains the Access Token from the Authorization Header
     """
-    auth = request.headers.get('Authorization', None)
+    auth = request.headers.get(header, None)
     if not auth:
         return Response(json.dumps({'error': 'Authorization_header_missing'}), 401)
 
@@ -45,7 +47,7 @@ def requiresIdToken(verify=True):
         """
 
         def wrapper(*args, **kwargs):
-            token = get_token_auth_header()
+            token = get_token_auth_header("Authorization")
             jsonurl = urlopen(VERIFICATION_DOMAIN)
             jwks = json.loads(jsonurl.read())
             unverified_header = jwt.get_unverified_header(token)
@@ -101,4 +103,16 @@ def requiresUser(f):
         ctx.user = user
         return f(*args, **kwargs)
 
+    return decorated
+
+
+def requiresAdmin(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        accessToken = get_token_auth_header("accessToken")
+        groups = dataporten.getDataportenGroups(accessToken)
+        isAdmin = dataporten.checkIfAdmin(groups)
+        if(not isAdmin):
+            return Response("Access Denied", 403)
+        return f(*args, **kwargs)
     return decorated
