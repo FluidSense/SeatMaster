@@ -3,7 +3,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { IApplication } from '../Application';
-import { APP_APPROVED, APP_DENIED, APP_NOT_FOUND, APP_SUBMITTED } from '../Login/constants';
+import { APP_APPROVED, APP_DENIED, APP_NOT_FOUND, APP_SUBMITTED } from '../commonConstants';
 import { IRoom } from '../ViewRooms';
 import { ROUTE_TO } from './constants';
 import {
