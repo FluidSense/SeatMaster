@@ -11,7 +11,7 @@ import { assignUserToSeat } from './actions';
 import Presentational from './Presentational';
 
 interface IDispatchProps {
-  assignSeat: (user: IUser, room: IRoom, seat: ISeat) =>
+  assignSeat: (user: IUser, seat: ISeat) =>
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
 
@@ -31,9 +31,9 @@ class _Container extends React.Component<Props> {
     return (<Presentational assignUserToSeat={this.seatAssign} rooms={this.props.rooms} />);
   }
 
-  private seatAssign = (room: IRoom, seat: ISeat) => {
+  private seatAssign = (seat: ISeat) => {
     const user = this.props.application.user;
-    if (user) this.props.assignSeat(user, room, seat);
+    if (user) this.props.assignSeat(user, seat);
   }
 }
 
@@ -42,8 +42,8 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  assignSeat: (user: IUser, room: IRoom, seat: ISeat) =>
-    dispatch(assignUserToSeat(user, room, seat)),
+  assignSeat: (user: IUser, seat: ISeat) =>
+    dispatch(assignUserToSeat(user, seat)),
 });
 
 const Container = connect(

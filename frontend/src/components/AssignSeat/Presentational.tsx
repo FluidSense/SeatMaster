@@ -11,7 +11,7 @@ interface IState {
 
 interface IProps {
   rooms: IRoom[];
-  assignUserToSeat: (room: IRoom, seat: ISeat) => void;
+  assignUserToSeat: (seat: ISeat) => void;
 }
 
 class Presentational extends React.Component<IProps, IState> {
@@ -67,9 +67,9 @@ class Presentational extends React.Component<IProps, IState> {
 
   private submitSeatSelection = (e: React.FormEvent) => {
     e.preventDefault();
-    const { selectedRoom, selectedSeat } = this.state;
-    if (!(selectedRoom && selectedSeat)) return;
-    this.props.assignUserToSeat(selectedRoom, selectedSeat);
+    const { selectedSeat } = this.state;
+    if (!selectedSeat) return;
+    this.props.assignUserToSeat(selectedSeat);
   }
 }
 

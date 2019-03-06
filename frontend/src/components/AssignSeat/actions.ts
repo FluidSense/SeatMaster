@@ -9,10 +9,10 @@ const successfullyAssignedSeat = () => ({
   type: SUCCESSFULL_SEAT_ASSIGNMENT,
 });
 
-export const assignUserToSeat = (user: IUser, room: IRoom, seat: ISeat):
+export const assignUserToSeat = (user: IUser, seat: ISeat):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const response = await putUserOnSeat({
-      roomId: room.id,
+      roomId: seat.roomId,
       seatId: seat.id,
       userId: user.id,
     });
