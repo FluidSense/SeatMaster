@@ -29,7 +29,7 @@ const initialState = {
   partnerApplication: undefined,
   preferredRoom: undefined,
   seatRollover: undefined,
-  status: '_APP_NOT_FOUND',
+  status: 'NOT_FOUND',
   user: {
     email: undefined,
     id: undefined,

@@ -1,16 +1,28 @@
 import React from 'react';
 import { IRoomInfoObject, IUserInfoObject } from './ApplicationOverview';
 import InfoPanel from './InfoPanel';
+import { IInformationObject, IRoomInfoObject, IUserInfoObject } from './Presentational';
 interface IProps {
   information: validProps;
 }
 
-type validProps = IRoomInfoObject | IUserInfoObject;
+type validProps = IInformationObject | IRoomInfoObject | IUserInfoObject;
 
 const InformationList: React.FunctionComponent<IProps> = (props) => {
   const { information } = props;
-  const list = Object.entries(information).map(array => (
-    <InfoPanel key={array[0]} title={array[0]} text={array[1]} />));
+  const list = Object.entries(information).map((array) => {
+    const boolValue = typeof array[1] === 'boolean' && array[1] ? 'Yes' : 'No';
+
+    if (array[1] !== undefined) {
+      return (
+        <InfoPanel
+          key={array[0]}
+          title={array[0]}
+          text={typeof array[1] === 'boolean' ? boolValue : array[1]}
+        />);
+    }
+
+  });
   return (
     <>
       {list}
