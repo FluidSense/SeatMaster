@@ -4,7 +4,6 @@ import { Redirect } from 'react-router';
 import { ThunkDispatch } from 'redux-thunk';
 import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
-import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
 import './adminRoom.css';
@@ -14,10 +13,7 @@ import Presentational from './Presentational';
 interface IState {
   buttonDisabled: boolean;
   redirect: boolean;
-  roomName: string;
-  roomNotes: string;
-  room?: IRoom;
-  seats: ISeat[];
+  room: IRoom;
   showAlert: boolean;
 }
 
@@ -48,16 +44,21 @@ class _Container extends Component<Props, IState> {
     this.state = {
       buttonDisabled: true,
       redirect: false,
-      room: undefined,
-      roomName: '',
-      roomNotes: '',
-      seats: [],
+      room: {
+        id: -1,
+        info: '',
+        name: '',
+        seats: {
+          count: 0,
+          seats: [],
+        },
+      },
       showAlert: false,
     };
   }
 
   public componentDidUpdate = (prevProps: Props, prevState: IState) => {
-    const { roomName, roomNotes, showAlert } = this.state;
+    const { room, showAlert } = this.state;
     const { submitted, reset } = this.props;
     // Display alertstripe
     if (submitted === false && prevProps.submitted === undefined) {
@@ -66,8 +67,8 @@ class _Container extends Component<Props, IState> {
     }
     if (showAlert) setTimeout(() => this.setState({ showAlert: false }), 5000);
     // Disable or enable create room button
-    if (prevState.roomName !== roomName || prevState.roomNotes !== roomNotes) {
-      if (roomName.trim() !== '' && roomNotes.trim() !== '') {
+    if (prevState.room.name !== room.name || prevState.room.info !== room.info) {
+      if (room.name.trim() !== '' && room.name.trim() !== '') {
         this.setState({ buttonDisabled: false });
       } else {
         this.setState({ buttonDisabled: true });
@@ -80,26 +81,22 @@ class _Container extends Component<Props, IState> {
     if (room) {
       this.setState({
         room,
-        roomName: room.name,
-        roomNotes: room.info,
-        seats: room.seats.seats,
       });
     }
   }
 
   public render() {
-    const { buttonDisabled, roomName, roomNotes, room, showAlert, seats } = this.state;
+    const { buttonDisabled, room, showAlert } = this.state;
     const { submitted, reset, error } = this.props;
-    const onClick = room ? this.updateRoom : this.createRoom;
-    const roomExists = room ? true : false;
+    const roomExists = room.id !== -1;
+    const onClick = roomExists ? this.update : this.create;
     if (submitted) {
       reset();
       return <Redirect to={ROUTE_TO} />;
     }
     return (
       <Presentational
-        roomName={roomName}
-        roomNotes={roomNotes}
+        room={room}
         buttonDisabled={buttonDisabled}
         setNotes={this.setNotes}
         setName={this.setName}
@@ -108,22 +105,32 @@ class _Container extends Component<Props, IState> {
         showAlert={showAlert}
         alertMessage={error}
         roomExists={roomExists}
-        seats={seats}
       />
     );
   }
 
   private setNotes = (notesEvent: ChangeEvent<HTMLInputElement>) => {
     const roomNotes = notesEvent.target.value;
-    this.setState({ roomNotes });
-  }
-  private setName = (nameEvent: ChangeEvent<HTMLInputElement>) => {
-    const roomName = nameEvent.target.value;
-    this.setState({ roomName });
+    this.setState(prevState => ({
+      room: {
+        ...prevState.room,
+        info: roomNotes,
+      },
+    }));
   }
 
-  private createRoom = () => {
-    const { roomName, roomNotes } = this.state;
+  private setName = (nameEvent: ChangeEvent<HTMLInputElement>) => {
+    const roomName = nameEvent.target.value;
+    this.setState(prevState => ({
+      room: {
+        ...prevState.room,
+        name: roomName,
+      },
+    }));
+  }
+
+  private create = () => {
+    const { info: roomNotes, name: roomName } = this.state.room;
     const { createRoom } = this.props;
     const body = { info: roomNotes, name: roomName };
     createRoom(body);
@@ -136,8 +143,9 @@ class _Container extends Component<Props, IState> {
     deleteRoom(room.id);
   }
 
-  private updateRoom = () => {
-    const { roomName, roomNotes, room } = this.state;
+  private update = () => {
+    const { room } = this.state;
+    const { info: roomNotes, name: roomName } = room;
     const { updateRoom } = this.props;
     if (!room) return null;
     const body = { info: roomNotes, name: roomName };

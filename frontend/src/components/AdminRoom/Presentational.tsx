@@ -5,6 +5,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
 import Seats, { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import {
   _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,
@@ -17,14 +18,12 @@ import {
 } from './strings';
 
 interface IProps {
-  roomName: string;
-  roomNotes: string;
+  room: IRoom;
   setNotes: (roomNotes: ChangeEvent<HTMLInputElement>) => void;
   setName: (roomName: ChangeEvent<HTMLInputElement>) => void;
   buttonDisabled: boolean;
   onClick: () => void;
   deleteRoom: () => void;
-  seats: ISeat[];
   showAlert: boolean;
   alertMessage?: string;
   roomExists: boolean;
@@ -32,18 +31,18 @@ interface IProps {
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const {
-    roomName,
-    roomNotes,
+    room,
     roomExists,
     setNotes,
     setName,
     buttonDisabled,
     onClick,
     deleteRoom,
-    seats,
     showAlert,
     alertMessage,
   } = props;
+  const { name: roomName, info: roomNotes } = room;
+  const seats = room.seats.seats;
   const displayAlert =
     showAlert
       ? (
