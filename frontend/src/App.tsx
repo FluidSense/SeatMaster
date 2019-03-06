@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './App.css';
 import Routes from './components/Routes';
 
 import { ConnectedRouter } from 'connected-react-router';

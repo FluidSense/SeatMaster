@@ -19,8 +19,9 @@ export const Presentational: React.FunctionComponent<IProps> = (props) => {
   const onClickAction = (event: React.MouseEvent) => doLogout(event);
 
   return (
+    // TODO: make header show userInformation.fullname when backend supports it.
     <div id="student-header">
-      You're logged in as {userInformation.fullname}
+      You're logged in as {userInformation.username}
       <Link to="/admin">
         <KnappBase
           type="hoved"
