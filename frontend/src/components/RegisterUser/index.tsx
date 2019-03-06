@@ -8,6 +8,7 @@ import { Presentational } from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
   isLoadingUser: state.oidc.isLoadingUser,
+  loadingUserInformation: state.userInformation.loading,
   user: state.oidc.user,
 });
 

@@ -4,17 +4,21 @@ import KnappBase from 'nav-frontend-knapper';
 import { UserState } from 'redux-oidc';
 import userManager from '../../utils/userManager';
 
-import { _USER_REGISTRATION_TEXT, _USER_CONFIRMATION_TEXT } from './constants';
+import { _USER_CONFIRMATION_TEXT, _USER_REGISTRATION_TEXT } from './constants';
 
 interface IDispatchProps {
   postCreateUser: (accessToken: string) => void;
   push: (userId: string) => any;
 }
 
-type Props = UserState & IDispatchProps;
+interface IStateProps {
+  loadingUserInformation: boolean;
+}
+
+type Props = UserState & IDispatchProps & IStateProps;
 
 export const Presentational: React.FunctionComponent<Props> = (props) => {
-  const { postCreateUser, user } = props;
+  const { postCreateUser, user, loadingUserInformation } = props;
 
   const createUser = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -30,6 +34,10 @@ export const Presentational: React.FunctionComponent<Props> = (props) => {
     userManager.signoutRedirect();
   };
   const onClickAction = (event: React.MouseEvent) => doLogout(event);
+
+  if (loadingUserInformation) {
+    return <></>;
+  }
 
   return (
     <div style={{ padding: '2rem 2.5rem' }}>

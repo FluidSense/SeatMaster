@@ -4,6 +4,7 @@ export interface IRegisteredUserState {
   email?: string;
   fullname?: string;
   id?: number;
+  loading: boolean;
   masterStatus?: string;
   registered: boolean;
   username?: string;
@@ -13,6 +14,7 @@ const initialState = {
   email: undefined,
   fullname: undefined,
   id: undefined,
+  loading: false,
   masterStatus: undefined,
   registered: false,
   username: undefined,
@@ -29,6 +31,7 @@ export const registeredUserReducer = (
         email: payload.email,
         fullname: payload.fullname,
         id: payload.id,
+        loading: false,
         masterStatus: payload.masterStatus,
         registered: true,
         username: payload.username,
@@ -40,9 +43,16 @@ export const registeredUserReducer = (
         email: undefined,
         fullname: undefined,
         id: undefined,
+        loading: false,
         masterStatus: undefined,
         registered: false,
         username: undefined,
+      };
+    }
+    case 'LOAD_USER_DATA': {
+      return {
+        ...state,
+        loading: true,
       };
     }
     default:
