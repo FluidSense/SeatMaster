@@ -1,9 +1,9 @@
 import { AnyAction } from 'redux';
-import { IApplication } from './../../API/interfaces';
+import { IRegisteredApplicationState } from './../Home/reducer';
 import { GET_ALL_APPLICATIONS } from './constants';
 
 export interface IApplicationState {
-  applications: IApplication[];
+  applications: IRegisteredApplicationState[];
 }
 
 const initialState: IApplicationState = {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { IApplicationInfoObject } from '../ApplicationReview';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
+import { IRegisteredApplicationState } from './../Home/reducer';
 
 interface IProps {
-  application: IApplicationInfoObject;
+  application: IRegisteredApplicationState;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
@@ -11,7 +11,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <div className="main-content">
-      <ApplicationOverview applicationInfo={application} title={application.fullname}/>
+      <ApplicationOverview applicationInfo={application}/>
     </div>
   );
 };

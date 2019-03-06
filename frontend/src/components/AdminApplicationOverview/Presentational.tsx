@@ -1,11 +1,11 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { IApplication } from '../../API/interfaces';
+import { IRegisteredApplicationState } from './../Home/reducer';
 import ApplicationLink from './ApplicationLink';
 import { _APPLICATIONS_TITLE } from './strings';
 
 interface IProps {
-  applications: IApplication[];
+  applications: IRegisteredApplicationState[];
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {

@@ -16,9 +16,11 @@ export interface IRegisteredApplicationState {
   seatRollover?: boolean;
   status: string;
   user?: {
-    email?: string;
-    id?: number;
-    username?: string;
+    email: string;
+    fullname: string;
+    id: number;
+    masterStatus: string;
+    username: string;
   };
 }
 
@@ -30,11 +32,7 @@ const initialState = {
   preferredRoom: undefined,
   seatRollover: undefined,
   status: 'NOT_FOUND',
-  user: {
-    email: undefined,
-    id: undefined,
-    username: undefined,
-  },
+  user: undefined,
 };
 
 export const registeredApplicationReducer = (
@@ -75,15 +73,13 @@ export const registeredApplicationReducer = (
         ?
         {
           email: payload.user.email,
+          fullname: payload.user.fullname,
           id: payload.user.id,
+          masterStatus: payload.user.masterStatus,
           username: payload.user.username,
         }
         :
-        {
-          email: undefined,
-          id: undefined,
-          username: undefined,
-        },
+        undefined,
       };
     }
     case 'REMOVE_APPLICATION_DATA': {
@@ -96,11 +92,7 @@ export const registeredApplicationReducer = (
         preferredRoom: undefined,
         seatRollover: undefined,
         status: '_APP_NOT_FOUND',
-        user: {
-          email: undefined,
-          id: undefined,
-          username: undefined,
-        },
+        user: undefined,
       };
     }
     default:
