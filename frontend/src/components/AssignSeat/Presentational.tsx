@@ -1,8 +1,8 @@
+import KnappBase from 'nav-frontend-knapper';
 import React, { ChangeEvent } from 'react';
 import { IRoom, ISeat } from '../ViewRooms';
 import RoomPicker from './RoomPicker';
 import SeatPicker from './SeatPicker';
-import KnappBase from 'nav-frontend-knapper';
 
 interface IState {
   selectedRoom?: IRoom;

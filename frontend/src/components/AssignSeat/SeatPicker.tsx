@@ -22,13 +22,12 @@ const SeatPicker: React.FunctionComponent<IProps> = (props) => {
       </Select>
     );
   }
-  else {
-    return (
+  return (
       <Select label={'Sete'} bredde="m" disabled={true}>
         {defaultOption}
       </Select>
-    );
-  }
+  );
+
 };
 
 export default SeatPicker;
