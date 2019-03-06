@@ -102,6 +102,7 @@ class Application(db.Model):
         if not self_referred:
             applicationDict["partnerApplication"] = (self.partnerApplication.to_json(self_referred=True)
                                                      if self.partnerApplication else {})
+            applicationDict["seat"] = self.seat.to_json() if self.seat else None
 
         return applicationDict
 
