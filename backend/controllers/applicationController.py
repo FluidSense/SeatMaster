@@ -20,14 +20,14 @@ def getApplicationBySelf():
 @requiresAdmin
 def getApplication(id):
     userApplication = applicationService.getApplicationById(id)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
+    return jsonify(filterOnStatus(userApplication.to_json())) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/byUser/<userid>")
 @requiresAdmin
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
+    return jsonify(filterOnStatus(userApplication.to_json())) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/all")
@@ -60,3 +60,9 @@ def registerApplication():
         )
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+def filterOnStatus(applicationJson):
+    if applicationJson["status"] != "APPROVED":
+        del applicationJson["seat"]
+        return applicationJson
+    return applicationJson

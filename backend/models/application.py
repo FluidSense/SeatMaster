@@ -95,6 +95,7 @@ class Application(db.Model):
             "needs": self.needs,
             "preferredRoom": self.preferredRoom,
             "seatRollover": self.seatRollover,
+            "seat": self.seat.to_json() if self.seat else None,
             "user": self.user.to_json() if self.user else None,
         }
         # Do not return partnerApplication if jsoning through a partner application.
