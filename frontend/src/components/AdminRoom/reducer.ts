@@ -16,19 +16,49 @@ const reducer = (
   state: IAdminRoomState = initialState,
   action: AnyAction,
 ): IAdminRoomState => {
-  const { type, payload } = action;
+  const { type, created, updated, deleted } = action;
   switch (type) {
     case CREATE_ROOM:
-      if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_CREATED_MESSAGE, submitted: false };
+      if (created) {
+        return {
+          ...state,
+          submitted: created,
+        };
+      }
+      return {
+        ...state,
+        error: _ALERT_CREATED_MESSAGE,
+        submitted: false,
+      };
     case DELETE_ROOM:
-      if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_DELETED_MESSAGE, submitted: false };
+      if (deleted) {
+        return {
+          ...state,
+          submitted: deleted,
+        };
+      }
+      return {
+        ...state,
+        error: _ALERT_DELETED_MESSAGE,
+        submitted: false,
+      };
     case UPDATE_ROOM:
-      if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_UPDATED_MESSAGE, submitted: false };
+      if (updated) {
+        return {
+          ...state,
+          submitted: updated,
+        };
+      }
+      return {
+        ...state,
+        error: _ALERT_UPDATED_MESSAGE,
+        submitted: false,
+      };
     case RESET_PAGE:
-      return { ...state, submitted: undefined };
+      return {
+        ...state,
+        submitted: undefined,
+      };
     default:
       return state;
   }

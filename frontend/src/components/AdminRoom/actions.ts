@@ -4,18 +4,19 @@ import { deleteRoom, postRoom, putRoom } from '../../API/calls';
 import { IPostRoom } from '../../API/interfaces';
 import { CREATE_ROOM, DELETE_ROOM, RESET_PAGE, UPDATE_ROOM } from './constants';
 
-const roomCreated = (payload: boolean) => ({
-  payload,
+const roomCreated = (created: boolean) => ({
+  created,
   type: CREATE_ROOM,
 });
 
-const roomUpdated = (payload: boolean) => ({
-  payload,
+const roomUpdated = (updated: boolean) => ({
+  updated,
+  // tslint:disable-next-line:object-literal-sort-keys --contradicting rules--
   type: UPDATE_ROOM,
 });
 
-const roomDeleted = (payload: boolean) => ({
-  payload,
+const roomDeleted = (deleted: boolean) => ({
+  deleted,
   type: DELETE_ROOM,
 });
 
