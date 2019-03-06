@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
+import { createSeat } from './actions';
 import Presentational from './Presentational';
 
 export interface ISeat {
@@ -9,10 +10,6 @@ export interface ISeat {
   info: string;
   roomId: number;
 }
-
-const createSeat = () => {
-  // create seat
-};
 
 const editSeatID = () => {
   // edit seat
@@ -25,8 +22,8 @@ const deleteSeat = () => {
 const mapStateToProps = (state: IStore) => ({
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  createSeat: () => createSeat(),
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
+  createSeatClick: (seats: ISeat[]) => dispatch(createSeat(seats)),
 });
 
 const Container = connect(

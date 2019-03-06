@@ -2,13 +2,19 @@ import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom } from '../components/ViewRooms';
 import { deleteJson, getJson, postJson, putJson } from './callDefinitions';
 import {
-  GET_APPLICATION_BY_USERID_URL, GET_APPLICATIONS_URL, POST_FORM_DATA_URL, ROOM_URL, SEASON_URL,
+  GET_APPLICATION_BY_USERID_URL,
+  GET_APPLICATIONS_URL,
+  POST_FORM_DATA_URL,
+  ROOM_URL,
+  SEASON_URL,
+  SEAT_URL,
 } from './constants';
 import {
   IApplication,
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
+  IPostSeat,
 } from './interfaces';
 
 export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_URL);
@@ -49,4 +55,8 @@ export const putRoom = (data: IPostRoom, id: number): PromiseLike<IRoom> => {
 
 export const deleteRoom = (id: number): PromiseLike<IRoom> => {
   return deleteJson(ROOM_URL, id);
+};
+
+export const postSeat = (data: IPostSeat): PromiseLike<IRoom> => {
+  return postJson(SEAT_URL, data);
 };
