@@ -20,7 +20,7 @@ const seatDeleted = (payload: boolean) => ({
   type: DELETE_SEAT,
 });
 
-export const createSeat = (seats: ISeat[]):
+export const createSeat = (seats: ISeat[], idOfRoom: number):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: ThunkDispatch<{}, {}, any>) => {
     let nextID = 'A1';
     if (seats.length > 0) {
@@ -33,9 +33,9 @@ export const createSeat = (seats: ISeat[]):
     const seat: IPostSeat = {
       id: nextID,
       info: '',
-      roomId: 1,
+      roomId: idOfRoom,
     };
-    console.log("SEAT CREATED", nextID, 1);
+    console.log("SEAT CREATED", nextID, idOfRoom);
     dispatch(createSeatAction(seat));
   };
 

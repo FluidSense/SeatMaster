@@ -23,7 +23,7 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
-  createSeatClick: (seats: ISeat[]) => dispatch(createSeat(seats)),
+  createSeatClick: (seats: ISeat[], roomId: number) => dispatch(createSeat(seats, roomId)),
 });
 
 const Container = connect(

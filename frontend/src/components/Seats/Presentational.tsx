@@ -7,24 +7,25 @@ import { _SEATS_EXPAND } from './strings';
 
 interface IProps {
   seats: ISeat[];
-  createSeatClick: (seats: ISeat[]) => void;
+  createSeatClick: (seats: ISeat[], roomId: number) => void;
+  roomId: number;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { seats, createSeatClick, } = props;
+  const { seats, createSeatClick, roomId } = props;
 
   const seatElements = seats.map(seat => (
     <Seat id={seat.id} key={seat.id} />
   ));
 
   const createSeatButton = () => {
-    createSeatClick(seats);
+    createSeatClick(seats, roomId);
   };
 
   return (
     <Ekspanderbartpanel tittel={_SEATS_EXPAND} border={true}>
       {seatElements}
-      <Knapp onClick={createSeatButton} >Add seat</Knapp>
+      <Knapp onClick={createSeatButton}>Add seat</Knapp>
     </Ekspanderbartpanel>
   );
 };

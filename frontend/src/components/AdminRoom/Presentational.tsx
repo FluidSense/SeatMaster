@@ -82,7 +82,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
-      <Seats seats={seats} />
+      <Seats seats={seats} roomId={room.id} />
       <div id="state-buttons">
         <KnappBase
           id={'create-room-button'}
