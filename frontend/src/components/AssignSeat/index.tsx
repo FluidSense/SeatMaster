@@ -7,11 +7,10 @@ import { IStore } from '../../store';
 import { IApplicationInfoObject } from '../ApplicationReview';
 import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import Presentational from './Presentational';
 import { assignUserToSeat } from './actions';
+import Presentational from './Presentational';
 
 interface IDispatchProps {
-  getRooms: () => ThunkAction<Promise<void>, {}, {}, AnyAction>;
   assignSeat: (user: IUser, room: IRoom, seat: ISeat) =>
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
@@ -28,10 +27,6 @@ type Props = IDispatchProps & IStateProps & IOwnProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends React.Component<Props> {
-  public componentDidMount() {
-    this.props.getRooms();
-  }
-
   public render() {
     return (<Presentational assignUserToSeat={this.seatAssign} rooms={this.props.rooms} />);
   }
@@ -49,7 +44,6 @@ const mapStateToProps = (state: IStore) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   assignSeat: (user: IUser, room: IRoom, seat: ISeat) =>
     dispatch(assignUserToSeat(user, room, seat)),
-  getRooms: () => dispatch(fetchAllRooms()),
 });
 
 const Container = connect(
