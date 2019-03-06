@@ -40,6 +40,7 @@ class Presentational extends React.Component<IProps, IState> {
           htmlType="submit"
           autoDisableVedSpinner={true}
           spinner={false}
+          disabled={this.state.selectedSeat ? false : true}
         >
           Submit
         </KnappBase>
