@@ -1,5 +1,5 @@
 import json
-from flask import request, _request_ctx_stack
+from flask import Response, request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
@@ -21,30 +21,18 @@ def get_token_auth_header():
     """
     auth = request.headers.get('Authorization', None)
     if not auth:
-        raise AuthError({
-            'code': 'authorization_header_missing',
-            'description': 'Authorization header is expected.'
-        }, 401)
+        return Response(json.dumps({'error': 'Authorization_header_missing'}), 401)
 
     parts = auth.split()
 
     if parts[0].lower() != 'bearer':
-        raise AuthError({
-            'code': 'invalid_header',
-            'description': 'Authorization header must start with "Bearer".'
-        }, 401)
+        return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
     elif len(parts) == 1:
-        raise AuthError({
-            'code': 'invalid_header',
-            'description': 'Token not found.'
-        }, 401)
+        return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
     elif len(parts) > 2:
-        raise AuthError({
-            'code': 'invalid_header',
-            'description': 'Authorization header must be bearer token.'
-        }, 401)
+        return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
     token = parts[1]
     return token
@@ -80,29 +68,18 @@ def requiresIdToken(f):
                 )
 
             except jwt.ExpiredSignatureError:
-                raise AuthError({
-                    'code': 'token_expired',
-                    'description': 'Token expired.'
-                }, 401)
+                return Response(json.dumps({'error': 'Token_expired'}), 401)
 
             except jwt.JWTClaimsError:
-                raise AuthError({
-                    'code': 'invalid_claims',
-                    'description': 'Incorrect claims. Please, check the audience and issuer.'
-                }, 401)
+                return Response(json.dumps({'error': 'Invalid_claims'}), 401)
+
             except Exception:
-                raise AuthError({
-                    'code': 'invalid_header',
-                    'description': 'Unable to parse authentication token.'
-                }, 400)
+                return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
             _request_ctx_stack.top.idToken = payload
             return f(*args, **kwargs)
 
-        raise AuthError({
-            'code': 'invalid_header',
-            'description': 'Unable to find the appropriate key.'
-        }, 400)
+        return Response(json.dumps({'error': 'Invalid_header'}), 401)
 
     return decorated
 
@@ -118,10 +95,7 @@ def requiresUser(f):
         sub = ctx.idToken.get("sub")
         user = userService.getUserFromSub(sub)
         if(not user):
-            raise AuthError({
-                'code': 'User_not_exist',
-                'description': 'User not found in database'
-            }, 400)
+            return Response(json.dumps({'error': 'User_not_exist'}), 401)
         ctx.user = user
         return f(*args, **kwargs)
 
