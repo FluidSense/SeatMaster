@@ -41,7 +41,7 @@ def test_getApplication_with_application(mocker):
         applicationService.getApplicationById.return_value = createApplication()
         response = applicationController.getApplication(123)
         assert "200 OK" == response.status
-        assert jsonify(application.to_json()).data == response.data
+        assert jsonify(applicationController.filterOnStatus(application.to_json())).data == response.data
 
 
 def test_getApplicationByUser_with_no_application(mocker):
@@ -62,7 +62,7 @@ def test_getApplicationByUser_with_application(mocker):
     with app.app_context():
         response = applicationController.getApplicationByUser(123)
         assert "200 OK" == response.status
-        assert jsonify(application.to_json()).data == response.data
+        assert jsonify(applicationController.filterOnStatus(application.to_json())).data == response.data
 
 
 def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoom, seatRollover):
