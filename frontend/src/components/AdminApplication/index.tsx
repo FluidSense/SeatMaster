@@ -27,7 +27,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <div className="main-content">
       <ApplicationOverview application={application} title={application.user.fullname}/>
       <ApplicationSeatDisplay seat={application.seat} room={selectedRooms[0]}/>
-      <AssignSeat application={application}/>
+      <AssignSeat rooms={rooms} application={application}/>
     </div>
   );
 };

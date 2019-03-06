@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
-import { IStore } from '../../store';
 import { IApplicationInfoObject } from '../ApplicationReview';
 import { IRoom, ISeat } from '../ViewRooms';
-import { fetchAllRooms } from '../ViewRooms/actions';
 import { assignUserToSeat } from './actions';
 import Presentational from './Presentational';
 
@@ -15,15 +13,12 @@ interface IDispatchProps {
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
 }
 
-interface IStateProps {
+interface IOwnProps {
+  application: IApplicationInfoObject;
   rooms: IRoom[];
 }
 
-interface IOwnProps {
-  application: IApplicationInfoObject;
-}
-
-type Props = IDispatchProps & IStateProps & IOwnProps;
+type Props = IDispatchProps & IOwnProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends React.Component<Props> {
@@ -37,17 +32,13 @@ class _Container extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: IStore) => ({
-  rooms: state.rooms.rooms,
-});
-
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   assignSeat: (user: IUser, seat: ISeat) =>
     dispatch(assignUserToSeat(user, seat)),
 });
 
 const Container = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(_Container);
 
