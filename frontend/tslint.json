@@ -20,5 +20,10 @@
       "coverage/lcov-report/*.js",
       "src/registerServiceWorker.ts"
     ]
-  }
+  },
+  "object-literal-sort-keys": [
+    true,
+    "shorthand-first"
+  ],
+  "object-shorthand-properties-first": false,
 }
