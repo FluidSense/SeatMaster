@@ -16,7 +16,6 @@ def getDataportenGroups(token):
     return json.load(result)
 
 
-#  TODO change ID
 def checkIfAdmin(groups):
     print(groups[0], flush=True)
     for group in groups:

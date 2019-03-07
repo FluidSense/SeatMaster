@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 from services import roomService
+from auth import requiresAdmin
 room = Blueprint("room", __name__, url_prefix="/room")
 
 
@@ -10,12 +11,14 @@ def getRoom(id):
 
 
 @room.route("/<id>", methods=["DELETE"])
+@requiresAdmin
 def deleteRoom(id):
     responseText, statusCode = roomService.deleteRoom(id)
     return jsonify(responseText, statusCode)
 
 
 @room.route("/", methods=["POST"])
+@requiresAdmin
 def createRoom():
     if request.is_json:
         form = request.get_json()
@@ -27,6 +30,7 @@ def createRoom():
 
 
 @room.route("/<id>", methods=["PUT"])
+@requiresAdmin
 def updateRoom(id):
     if request.is_json:
         form = request.get_json()

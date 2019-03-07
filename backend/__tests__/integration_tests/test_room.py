@@ -5,6 +5,8 @@ from models.room import Room
 from flask import jsonify
 import json
 from unittest import TestCase
+from __tests__.testUtils.authentication import mock_authentication_context
+from __tests__.testUtils.constants import token, accessToken
 
 
 def createRoom():
@@ -23,24 +25,35 @@ class TestRoom(TestCase):
         db.init_app(self.app)
         self.ctx = self.app.app_context()
         self.ctx.push()
+        self.token = f'Bearer {token}'
+        self.accessToken = f'Bearer {accessToken}'
 
     def test_get_seat(self):
         room = createRoom()
         response = self.app.test_client().get(f"http://localhost:5000/room/{room.id}")
         assert response.data == jsonify(room.to_json()).data
         assert db.session.query(Room).first() == room
-
+    @mock_authentication_context
     def test_delete_seat(self):
+        headers = {
+            'Authorization': self.token,
+            'Accesstoken': self.accessToken
+        }
         room = createRoom()
-        response = self.app.test_client().delete(f"http://localhost:5000/room/{room.id}")
+        response = self.app.test_client().delete(
+            f"http://localhost:5000/room/{room.id}",
+            headers=headers)
         assert response.status == "200 OK"
         assert db.session.query(Room).first() is None
 
+    @mock_authentication_context
     def test_create_room(self):
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'Authorization': self.token,
+            'Accesstoken': self.accessToken
         }
         data = dict(
             name='X-wing',
@@ -58,12 +71,15 @@ class TestRoom(TestCase):
         data["id"] = 1
         assert db.session.query(Room).first().to_json() == data
 
+    @mock_authentication_context
     def test_updateRoom_success(self):
         room = createRoom()
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'Authorization': self.token,
+            'Accesstoken': self.accessToken
         }
         response = self.app.test_client().put(
             'http://localhost:5000/room/1',

@@ -1,7 +1,7 @@
-from flask import Blueprint, Response, jsonify, request, abort, make_response
+from flask import Blueprint, Response, jsonify, request, abort, make_response, _request_ctx_stack
 import json
 from services import applicationService
-from auth import requiresUser, requiresIdToken
+from auth import requiresUser, requiresIdToken, requiresAdmin
 from flask import _request_ctx_stack
 
 application = Blueprint("application", __name__, url_prefix="/application")
@@ -18,7 +18,7 @@ def getApplicationBySelf():
 
 # TODO Should be admin protected
 @application.route("/<id>")
-@requiresUser
+@requiresAdmin
 def getApplicationByApplicationId(id):
     userApplication = applicationService.getApplicationById(id)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
@@ -26,11 +26,17 @@ def getApplicationByApplicationId(id):
 
 # TODO Should be admin protected
 @application.route("/byUser/<userid>")
-@requiresUser
+@requiresAdmin
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
+@application.route("/")
+@requiresUser
+def getOwnApplication():
+    user = _request_ctx_stack.top.user
+    userApplication = applicationService.getApplicationByUserId(user.userid)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 # TODO Should fetch user from stack, not from form field
 @application.route("/", methods=["POST"])
@@ -44,6 +50,7 @@ def registerApplication():
         form = request.get_json()
         needs = form.get("needs")
         comments = form.get("comments")
+        username = _request_ctx_stack.top.user.username
         partnerUsername = form.get("partnerUsername")
         responseText, statusCode = applicationService.registerApplication(
           comments=comments,

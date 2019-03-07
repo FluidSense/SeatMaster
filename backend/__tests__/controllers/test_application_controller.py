@@ -5,6 +5,7 @@ from models.user import User
 from flask import jsonify, url_for
 from main import app
 import json
+from __tests__.testUtils.authentication import mock_authentication
 
 
 def createApplication():
@@ -20,6 +21,7 @@ def createApplication():
 
 
 def test_getApplication_with_no_application(mocker):
+    mock_authentication(mocker)
     mocker.patch.object(applicationService, "getApplicationById")
     applicationService.getApplicationById.return_value = {}
     with app.app_context():
@@ -29,6 +31,7 @@ def test_getApplication_with_no_application(mocker):
 
 
 def test_getApplication_with_application(mocker):
+    mock_authentication(mocker)
     application = createApplication()
     mocker.patch.object(applicationService, "getApplicationById")
     with app.app_context():
@@ -39,6 +42,7 @@ def test_getApplication_with_application(mocker):
 
 
 def test_getApplicationByUser_with_no_application(mocker):
+    mock_authentication(mocker)
     mocker.patch.object(applicationService, "getApplicationByUserId")
     applicationService.getApplicationByUserId.return_value = {}
     with app.app_context():
@@ -48,6 +52,7 @@ def test_getApplicationByUser_with_no_application(mocker):
 
 
 def test_getApplicationByUser_with_application(mocker):
+    mock_authentication(mocker)
     application = createApplication()
     mocker.patch.object(applicationService, "getApplicationByUserId")
     applicationService.getApplicationByUserId.return_value = createApplication()
@@ -68,6 +73,7 @@ def registerApplicationMock(comments, username, needs, partnerUsername):
 
 
 def test_registerNewApplication(mocker, client):
+    mock_authentication(mocker)
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,
@@ -92,4 +98,4 @@ def test_registerNewApplication(mocker, client):
             id=None,
             status="SUBMITTED",
             partnerApplication={},
-            ).data == response.data
+        ).data == response.data

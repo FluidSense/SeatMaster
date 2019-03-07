@@ -97,6 +97,7 @@ def requiresUser(f):
     def decorated(*args, **kwargs):
         ctx = _request_ctx_stack.top
         sub = ctx.idToken.get("sub")
+        #print(sub)
         user = userService.getUserFromSub(sub)
         if(not user):
             return Response(json.dumps({'error': 'User_not_exist'}), 401)
@@ -109,7 +110,7 @@ def requiresUser(f):
 def requiresAdmin(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        accessToken = get_token_auth_header("accessToken")
+        accessToken = get_token_auth_header("AccessToken")
         groups = dataporten.getDataportenGroups(accessToken)
         isAdmin = dataporten.checkIfAdmin(groups)
         if(not isAdmin):
