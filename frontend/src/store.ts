@@ -12,14 +12,13 @@ import {
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
 import history from './components/History';
-import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 import {
   IRegisteredApplicationState,
   registeredApplicationReducer,
 } from './components/Home/reducer';
 import { IRegisteredUserState, registeredUserReducer } from './components/RegisterUser/reducer';
+import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 import userManager from './utils/userManager';
-import { IRegisteredUserState, registeredUserReducer } from './components/RegisterUser/reducer';
 
 export interface IStore {
   applicationSeason: IApplicationSeasonState;
@@ -36,8 +35,8 @@ export const reducers = combineReducers({
   applicationInformation: registeredApplicationReducer,
   applicationSeason: applicationSeasonReducer,
   applications: ApplicationReducer,
-  rooms: viewRoomReducer,
   oidc: oidcReducer,
+  rooms: viewRoomReducer,
   router: connectRouter(history),
   userInformation: registeredUserReducer,
 });

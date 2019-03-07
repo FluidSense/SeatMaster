@@ -1,8 +1,8 @@
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
-import './header.css';
-import userManager from './../../utils/userManager';
 import { connect } from 'react-redux';
+import userManager from './../../utils/userManager';
+import './header.css';
 import { Presentational } from './Presentational';
 
 const mapStateToProps = (state: any) => ({

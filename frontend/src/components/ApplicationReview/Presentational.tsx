@@ -2,10 +2,10 @@ import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ApplicationOverview from './ApplicationOverview';
 import { APP_NOT_FOUND } from '../commonConstants';
 import { IRegisteredApplicationState } from './../Home/reducer';
 import { IRegisteredUserState } from './../RegisterUser/reducer';
+import ApplicationOverview from './ApplicationOverview';
 import InfoPanel from './InfoPanel';
 import InformationList from './InformationList';
 import {
