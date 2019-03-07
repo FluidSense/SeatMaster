@@ -1,22 +1,23 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { postSeat } from '../../API/calls';
 import { IPostSeat } from '../../API/interfaces';
 import { ISeat } from '../ViewRooms';
 import { CREATE_SEAT, DELETE_SEAT, UPDATE_SEAT } from './constants';
-import { postSeat } from '../../API/calls';
 
-const seatCreated = (payload: boolean) => ({
-  payload,
+const seatCreated = (success: boolean, seat?: ISeat) => ({
+  seat,
+  success,
   type: CREATE_SEAT,
 });
 
-const seatUpdated = (payload: boolean) => ({
-  payload,
+const seatUpdated = (success: boolean) => ({
+  success,
   type: UPDATE_SEAT,
 });
 
-const seatDeleted = (payload: boolean) => ({
-  payload,
+const seatDeleted = (success: boolean) => ({
+  success,
   type: DELETE_SEAT,
 });
 
@@ -35,13 +36,12 @@ export const createSeat = (seats: ISeat[], idOfRoom: number):
       info: '',
       roomId: idOfRoom,
     };
-    console.log("SEAT CREATED", nextID, idOfRoom);
     dispatch(createSeatAction(seat));
   };
 
 export const createSeatAction = (seat: IPostSeat):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const result = await postSeat(seat);
-    if (result) dispatch(seatCreated(true));
+    if (result) dispatch(seatCreated(true, result));
     else dispatch(seatCreated(false));
   };

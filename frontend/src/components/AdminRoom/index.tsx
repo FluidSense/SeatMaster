@@ -155,7 +155,7 @@ class _Container extends Component<Props, IState> {
 
 const mapStateToProps = (state: IStore) => ({
   error: state.adminRoom.error,
-  submitted: state.adminRoom.submitted,
+  submitted: state.adminRoom.success,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

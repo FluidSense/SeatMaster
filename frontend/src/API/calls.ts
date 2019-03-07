@@ -1,5 +1,5 @@
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
-import { IRoom } from '../components/ViewRooms';
+import { IRoom, ISeat } from '../components/ViewRooms';
 import { deleteJson, getJson, postJson, putJson } from './callDefinitions';
 import {
   GET_APPLICATION_BY_USERID_URL,
@@ -57,6 +57,6 @@ export const deleteRoom = (id: number): PromiseLike<IRoom> => {
   return deleteJson(ROOM_URL, id);
 };
 
-export const postSeat = (data: IPostSeat): PromiseLike<IRoom> => {
+export const postSeat = (data: IPostSeat): PromiseLike<ISeat> => {
   return postJson(SEAT_URL, data);
 };

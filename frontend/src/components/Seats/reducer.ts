@@ -1,25 +1,21 @@
 import { AnyAction } from 'redux';
-import { CREATE_ROOM, DELETE_ROOM, RESET_PAGE, UPDATE_ROOM } from './constants';
-import { _ALERT_CREATED_MESSAGE, _ALERT_DELETED_MESSAGE, _ALERT_UPDATED_MESSAGE } from './strings';
-import { CREATE_SEAT } from '../Seats/constants';
+import { CREATE_SEAT, DELETE_SEAT, UPDATE_SEAT } from './constants';
 
-export interface IAdminRoomState {
-  error?: string;
+export interface ISeatState {
   success?: boolean;
 }
 
 const initialState = {
-  error: undefined,
   success: undefined,
 };
 
 const reducer = (
-  state: IAdminRoomState = initialState,
+  state: ISeatState = initialState,
   action: AnyAction,
-): IAdminRoomState => {
+): ISeatState => {
   const { type, success } = action;
   switch (type) {
-    case CREATE_ROOM:
+    case CREATE_SEAT:
       if (success) {
         return {
           ...state,
@@ -28,10 +24,9 @@ const reducer = (
       }
       return {
         ...state,
-        error: _ALERT_CREATED_MESSAGE,
         success: false,
       };
-    case DELETE_ROOM:
+    case DELETE_SEAT:
       if (success) {
         return {
           ...state,
@@ -40,10 +35,9 @@ const reducer = (
       }
       return {
         ...state,
-        error: _ALERT_DELETED_MESSAGE,
         success: false,
       };
-    case UPDATE_ROOM:
+    case UPDATE_SEAT:
       if (success) {
         return {
           ...state,
@@ -52,13 +46,7 @@ const reducer = (
       }
       return {
         ...state,
-        error: _ALERT_UPDATED_MESSAGE,
         success: false,
-      };
-    case RESET_PAGE:
-      return {
-        ...state,
-        success: undefined,
       };
     default:
       return state;
