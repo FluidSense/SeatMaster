@@ -7,6 +7,7 @@ from main import app
 import json
 from __tests__.testUtils.authentication import mock_authentication
 
+
 def createSeat():
     room = Room("name", "info")
     seat = Seat("D1", room, "info")

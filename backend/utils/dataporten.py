@@ -17,7 +17,6 @@ def getDataportenGroups(token):
 
 
 def checkIfAdmin(groups):
-    print(groups[0], flush=True)
     for group in groups:
         if(group.get('id', None) == "fc:fs:fs:emne:ntnu.no:TDT4136:1"):
             return True

@@ -139,7 +139,7 @@ testGroups = [
         },
         "parent": "fc:org:ntnu.no"
     },
-    
+
     {
         "displayName": "Masteroppgave i informatikk: Kunstig intelligens",
         "id": "fc:fs:fs:emne:ntnu.no:IT3903:1",
@@ -154,5 +154,5 @@ testGroups = [
             "active": True
         }
     },
-    
+
 ]

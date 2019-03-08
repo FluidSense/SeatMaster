@@ -82,8 +82,6 @@ def requiresIdToken(verify=True):
 
                 _request_ctx_stack.top.idToken = payload
                 return f(*args, **kwargs)
-
-
         return wrapper
     return decorator
 
@@ -97,7 +95,6 @@ def requiresUser(f):
     def decorated(*args, **kwargs):
         ctx = _request_ctx_stack.top
         sub = ctx.idToken.get("sub")
-        #print(sub)
         user = userService.getUserFromSub(sub)
         if(not user):
             return Response(json.dumps({'error': 'User_not_exist'}), 401)

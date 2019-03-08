@@ -8,7 +8,6 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
-from unittest.mock import Mock, patch
 
 
 class TestApplication(TestCase):

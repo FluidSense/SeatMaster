@@ -1,10 +1,10 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response, _request_ctx_stack
 import json
 from services import applicationService
-from auth import requiresUser, requiresIdToken, requiresAdmin
-from flask import _request_ctx_stack
+from auth import requiresUser, requiresAdmin
 
 application = Blueprint("application", __name__, url_prefix="/application")
+
 
 @application.route("/")
 @requiresUser

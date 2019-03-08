@@ -33,6 +33,7 @@ class TestRoom(TestCase):
         response = self.app.test_client().get(f"http://localhost:5000/room/{room.id}")
         assert response.data == jsonify(room.to_json()).data
         assert db.session.query(Room).first() == room
+
     @mock_authentication_context
     def test_delete_seat(self):
         headers = {
