@@ -42,6 +42,8 @@ class TestApplication(TestCase):
                 needs="Pepsi is better than coke",
                 comments="Not Pepsi, but Pepsi Max",
                 partnerUsername="",
+                preferredRoom="d1",
+                seatRollover=True,
             )
             )
         )
@@ -52,6 +54,8 @@ class TestApplication(TestCase):
             status="SUBMITTED",
             user={"id": 1, "username": testuser.username, "email": "email"},
             partnerApplication={},
+            preferredRoom="d1",
+            seatRollover=True,
         ), 201)
         assert expectedResponse.status == response.status
         assert expectedResponse.data == response.data
@@ -76,6 +80,8 @@ class TestApplication(TestCase):
                 needs="Pepsi is better than coke",
                 comments="Not Pepsi, but Pepsi Max",
                 partnerUsername="Elon",
+                preferredRoom="d1",
+                seatRollover=True,
             )
             )
         )
@@ -85,7 +91,9 @@ class TestApplication(TestCase):
             id=1,
             status="SUBMITTED",
             user={"id": 1, "username": testuser.username, "email": "email"},
-            partnerApplication={}
+            partnerApplication={},
+            preferredRoom="d1",
+            seatRollover=True,
         ), 201)
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1', headers=headers)
         assert expectedApplicationResponse.status == response.status
@@ -98,10 +106,13 @@ class TestApplication(TestCase):
         testuser1 = User("Frank", decodedToken.get("sub"), "email")
         testuser2 = User("Monster", "sub", "emails")
         testApplication = Application(
-            "Unprocessed", 
-            "Fanta is better than solo", 
-            user=testuser2, 
-            partnerUsername="Frank")
+            "SUBMITTED",
+            "Pepsi is better than coke",
+            user=testuser2,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            comments="Not Pepsi, but Pepsi Max")
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.add(testApplication)
@@ -118,9 +129,11 @@ class TestApplication(TestCase):
             headers=headers,
             data=json.dumps(dict(
                 username=testuser1.username,
-                needs="Pepsi is better than coke",
-                comments="Not Pepsi, but Pepsi Max",
+                needs="Fanta is better than solo",
+                comments="Bruh wtf",
                 partnerUsername=testuser2.username,
+                preferredRoom="d1",
+                seatRollover=True,
             )
             )
         )
@@ -128,27 +141,36 @@ class TestApplication(TestCase):
             needs="Fanta is better than solo",
             comments="Bruh wtf",
             id=2,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 1, "username": testuser1.username, "email": testuser1.email},
+            preferredRoom="d1",
+            seatRollover=True,
             partnerApplication={
                 "needs": "Pepsi is better than coke",
                 "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
-                "status": "Unprocessed",
-                "user": {"id": 2, "username": testuser2.username, "email": testuser2.email}
+                "status": "SUBMITTED",
+                "user": {"id": 2, "username": testuser2.username, "email": testuser2.email},
+                "preferredRoom": "d1",
+                "seatRollover": True,
             },
         ), 201)
-        
+
         expectedConnectedApplication = jsonify(
-            comments="Fanta is better than solo",
+            needs="Pepsi is better than coke",
+            comments="Not Pepsi, but Pepsi Max",
             id=1,
-            status="Unprocessed",
+            status="SUBMITTED",
             user={"id": 2, "username": testuser2.username, "email": testuser2.email},
+            preferredRoom="d1",
+            seatRollover=True,
             partnerApplication={
-                "needs": "Pepsi is better than coke",
-                "comments": "Not Pepsi, but Pepsi Max",
+                "needs": "Fanta is better than solo",
+                "comments": "Bruh wtf",
                 "id": 2,
-                "status": "Unprocessed",
+                "status": "SUBMITTED",
+                "preferredRoom": "d1",
+                "seatRollover": True,
                 "user": {"id": 1, "username": testuser1.username, "email": testuser1.email}
             },
         )
@@ -158,20 +180,39 @@ class TestApplication(TestCase):
         assert getApplication.status == "200 OK"
         assert getApplication.data == expectedConnectedApplication.data
 
+    @mock_authentication_context
     def test_get_all_applications(self):
+        headers = {
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
+        }
         testuser1 = User("Frank", "sub", "email")
         testuser2 = User("Monster", "uuid", "email")
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()
-        testapplication1 = Application("SUBMITTED", "", testuser1, None, "")
-        testapplication2 = Application("SUBMITTED", "needs", testuser2, None, "comments")
-        db.session.add(testapplication1)
-        db.session.add(testapplication2)
+        testApplication1 = Application(
+            "Unprocessed",
+            "Fanta is better than solo",
+            user=testuser1,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication2 = Application(
+            "Unprocessed",
+            "Fanta is better than solo",
+            user=testuser2,
+            partnerUsername="Monster",
+            preferredRoom="d1",
+            seatRollover=True,
+            comments="Not Pepsi, but Pepsi Max")
+        db.session.add(testApplication1)
+        db.session.add(testApplication2)
         db.session.commit()
-        allApplications = self.app.test_client().get('http://localhost:5000/application/')
+        allApplications = self.app.test_client().get('http://localhost:5000/application/all', headers=headers)
         assert allApplications.status == "200 OK"
-        assert allApplications.data == jsonify([testapplication1.to_json(), testapplication2.to_json()]).data
+        assert allApplications.data == jsonify([testApplication1.to_json(), testApplication2.to_json()]).data
 
     def tearDown(self):
         self.postgres.stop()

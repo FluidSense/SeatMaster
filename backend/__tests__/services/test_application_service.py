@@ -12,14 +12,18 @@ def setUp(mocker):
         comments="whatever",
         needs="needs",
         user=user1,
-        partnerUsername="Obi Wan"
+        partnerUsername="Obi Wan",
+        preferredRoom="d1",
+        seatRollover=True,
     )
     app2 = Application(
         status="good",
         comments="whatever",
         needs="needs",
         user=user2,
-        partnerUsername="Yoda"
+        partnerUsername="Yoda",
+        preferredRoom="d1",
+        seatRollover=True,
     )
     mocker.patch.object(db.session, 'add')
     db.session.add.return_value = ""

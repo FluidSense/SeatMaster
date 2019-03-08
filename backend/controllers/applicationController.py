@@ -16,46 +16,47 @@ def getApplicationBySelf():
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
-# TODO Should be admin protected
 @application.route("/<id>")
 @requiresAdmin
-def getApplicationByApplicationId(id):
+def getApplication(id):
     userApplication = applicationService.getApplicationById(id)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
-# TODO Should be admin protected
 @application.route("/byUser/<userid>")
 @requiresAdmin
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
-@application.route("/")
-@requiresUser
-def getOwnApplication():
-    user = _request_ctx_stack.top.user
-    userApplication = applicationService.getApplicationByUserId(user.userid)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
-# TODO Should fetch user from stack, not from form field
+@application.route("/all")
+@requiresAdmin
+def getAllApplications():
+    applications = applicationService.getAllApplications()
+    applicationList = list(map(lambda x: x.to_json(), applications))
+    return jsonify(applicationList) if applications else jsonify({})
+
+
 @application.route("/", methods=["POST"])
 @requiresUser
 def registerApplication():
     if request.is_json:
         ctx = _request_ctx_stack.top
         user = ctx.user
-        userID = user.id
-
         form = request.get_json()
         needs = form.get("needs")
         comments = form.get("comments")
-        username = _request_ctx_stack.top.user.username
         partnerUsername = form.get("partnerUsername")
+        seatRollover = form.get("seatRollover")
+        preferredRoom = form.get("preferredRoom")
         responseText, statusCode = applicationService.registerApplication(
-          comments=comments,
-          needs=needs,
-          id=userID,
-          partnerUsername=partnerUsername)
+            comments=comments,
+            needs=needs,
+            user=user,
+            partnerUsername=partnerUsername,
+            seatRollover=seatRollover,
+            preferredRoom=preferredRoom
+        )
         return make_response(jsonify(responseText), statusCode)
     return abort(400)

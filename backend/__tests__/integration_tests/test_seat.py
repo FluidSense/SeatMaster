@@ -98,7 +98,9 @@ class TestSeat(TestCase):
             comments="lol",
             needs="needs",
             user=user,
-            partnerUsername="no"
+            partnerUsername="no",
+            preferredRoom="d1",
+            seatRollover=True,
         )
         db.session.add(application)
         db.session.commit()
@@ -133,7 +135,9 @@ class TestSeat(TestCase):
             comments="lol",
             needs="needs",
             user=user,
-            partnerUsername="no"
+            partnerUsername="no",
+            preferredRoom="d1",
+            seatRollover=True,
         )
         db.session.add(application)
         db.session.commit()

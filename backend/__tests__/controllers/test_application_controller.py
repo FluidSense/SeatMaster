@@ -16,6 +16,9 @@ def createApplication():
         comments="comments",
         user=user,
         partnerUsername="Jar Jar Binks",
+        preferredRoom="d1",
+        seatRollover=True,
+
     )
     return application
 
@@ -62,13 +65,15 @@ def test_getApplicationByUser_with_application(mocker):
         assert jsonify(application.to_json()).data == response.data
 
 
-def registerApplicationMock(comments, username, needs, partnerUsername):
+def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoom, seatRollover):
     return Application(
         status="SUBMITTED",
         comments=comments,
         needs=needs,
         user=User("Darth Plageus", "sub", "email"),
         partnerUsername=partnerUsername,
+        preferredRoom="d1",
+        seatRollover=True,
     ).to_json(), 201
 
 
@@ -89,7 +94,10 @@ def test_registerNewApplication(mocker, client):
                 username='Darth Plageus',
                 needs='needs',
                 comments='comments',
-                partnerUsername='Jar Jar Binks')))
+                partnerUsername='Jar Jar Binks',
+                preferredRoom="d1",
+                seatRollover=True,
+            )))
         assert "201 CREATED" == response.status
         assert jsonify(
             comments='comments',
@@ -97,5 +105,7 @@ def test_registerNewApplication(mocker, client):
             user={"id": None, "username": "Darth Plageus", "email": "email"},
             id=None,
             status="SUBMITTED",
+            preferredRoom="d1",
+            seatRollover=True,
             partnerApplication={},
         ).data == response.data
