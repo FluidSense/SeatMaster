@@ -8,6 +8,11 @@ def getUserByUsername(username):
     return user
 
 
+def getUserById(id):
+    user = db.session.query(User).get(id)
+    return user
+
+
 def registerUser(userInfo):
     userId = userInfo.get("dataporten-userid_sec", None)[0]
     regex = re.compile(r'(?<=:)(\w+)(?=@)')

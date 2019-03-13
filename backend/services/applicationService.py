@@ -24,7 +24,6 @@ def getApplicationByUsername(username):
     return userApplication
 
 
-# TODO application should not be registered with username, it should verify the user.
 def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom):
     try:
         application = Application(

@@ -4,6 +4,7 @@ from services import userService
 from auth import requiresUser, requiresIdToken, requiresAdmin
 from flask import _request_ctx_stack
 from utils import dataporten
+from urllib.error import HTTPError
 
 user = Blueprint("user", __name__, url_prefix="/user")
 
@@ -22,7 +23,10 @@ def registerUser():
         form = request.get_json()
         ctx = _request_ctx_stack.top
         accessToken = form.get("accessToken")
-        userInfo = dataporten.getDataportenUserInfo(accessToken)
+        try:
+            userInfo = dataporten.getDataportenUserInfo(accessToken)
+        except HTTPError:
+            return abort(401)
         if(ctx.idToken.get("sub") == userInfo.get("sub")):
             response, statusCode = userService.registerUser(userInfo)
             return make_response(jsonify(response), statusCode)

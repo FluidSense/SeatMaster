@@ -5,6 +5,7 @@ from jose import jwt
 from urllib.request import urlopen
 from services import userService
 from utils import dataporten
+from urllib.error import HTTPError
 
 
 DOMAIN = 'https://auth.dataporten.no'
@@ -96,7 +97,7 @@ def requiresUser(f):
         ctx = _request_ctx_stack.top
         sub = ctx.idToken.get("sub")
         user = userService.getUserFromSub(sub)
-        if(not user):
+        if not user:
             return Response(json.dumps({'error': 'User_not_exist'}), 401)
         ctx.user = user
         return f(*args, **kwargs)
@@ -108,9 +109,12 @@ def requiresAdmin(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         accessToken = get_token_auth_header("AccessToken")
-        groups = dataporten.getDataportenGroups(accessToken)
+        try:
+            groups = dataporten.getDataportenGroups(accessToken)
+        except HTTPError:
+            return Response("Not Authenticated", 401)
         isAdmin = dataporten.checkIfAdmin(groups)
-        if(not isAdmin):
+        if not isAdmin:
             return Response("Access Denied", 403)
         return f(*args, **kwargs)
     return decorated

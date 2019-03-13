@@ -17,7 +17,7 @@ class User(db.Model):
 
     username = db.Column(
         "username",
-        db.String(30),
+        db.String(60),
         unique=True)
 
     email = db.Column(
