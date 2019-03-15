@@ -10,6 +10,6 @@ const setUserData = (payload: IUser) => ({
 
 export const postCreateUser = (accessToken: string):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const result = await postNewCreateUser({ accessToken });
+    const result = await postNewCreateUser(accessToken);
     if (result) dispatch(setUserData(result));
   };
