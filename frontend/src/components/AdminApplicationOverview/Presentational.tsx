@@ -1,11 +1,11 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { IRegisteredApplicationState } from './../Home/reducer';
+import { IApplication } from '../Application';
 import ApplicationLink from './ApplicationLink';
 import { _APPLICATIONS_TITLE } from './strings';
 
 interface IProps {
-  applications: IRegisteredApplicationState[];
+  applications: IApplication[];
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
@@ -17,9 +17,9 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   ));
   return (
     <div className="main-content">
-    <Sidetittel>
-      {_APPLICATIONS_TITLE}
-    </Sidetittel>
+      <Sidetittel>
+        {_APPLICATIONS_TITLE}
+      </Sidetittel>
       {applicationList}
     </div>
   );

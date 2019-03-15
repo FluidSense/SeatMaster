@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
-import { IRegisteredApplicationState } from './../Home/reducer';
+import { IApplication } from '../Application';
 import { fetchAllApplications } from './actions';
 import './adminApplicationOverview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
-  applications: IRegisteredApplicationState[];
+  applications: IApplication[];
 }
 
 interface IDispatchProps {
@@ -33,7 +33,7 @@ class _Container extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: IStore) => ({
-  applications: state.adminApplicationList.applications,
+  applications: state.applications.applications,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

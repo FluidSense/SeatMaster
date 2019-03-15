@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { IRoom } from '../ViewRooms';
 import './applicationForm.css';
 import { Presentational } from './Presentational';
 

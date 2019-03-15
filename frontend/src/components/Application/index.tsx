@@ -1,6 +1,21 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
+import { IUser } from '../../API/interfaces';
 import Presentational from './Presentational';
+
+export interface IPartnerApplication {
+  comments?: string;
+  id?: number;
+  needs?: string;
+  preferredRoom?: string;
+  seatRollover?: boolean;
+  status: string;
+  user?: IUser;
+}
+
+export interface IApplication extends IPartnerApplication {
+  partnerApplication?: IPartnerApplication;
+}
 
 interface IState {
   modalIsOpen: boolean;

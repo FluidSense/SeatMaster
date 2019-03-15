@@ -1,17 +1,17 @@
 import React from 'react';
+import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
-import { IRegisteredApplicationState } from './../Home/reducer';
 
 interface IProps {
-  application: IRegisteredApplicationState;
+  application?: IApplication;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { application } = props;
-
+  if (!application) return null;
   return (
     <div className="main-content">
-      <ApplicationOverview applicationInfo={application}/>
+      <ApplicationOverview application={application} />
     </div>
   );
 };

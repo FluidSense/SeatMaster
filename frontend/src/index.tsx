@@ -11,7 +11,7 @@ import userManager from './utils/userManager';
 ReactDOM.render(
   <Provider store={store}>
     <OidcProvider store={store} userManager={userManager} >
-        <App />
+      <App />
     </OidcProvider>
   </Provider>,
   document.getElementById('root'),

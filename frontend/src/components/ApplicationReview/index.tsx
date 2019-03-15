@@ -1,28 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from '../../store';
-import { IRegisteredApplicationState } from './../Home/reducer';
+import { IApplication } from '../Application';
 import { IRegisteredUserState } from './../RegisterUser/reducer';
 import './applicationReview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
-  applicationInfo: IRegisteredApplicationState;
+  application: IApplication;
   userInfo: IRegisteredUserState;
 }
 
 // tslint:disable-next-line:class-name
 class _Container extends React.Component<IStateProps> {
   public render = () => {
-    const { applicationInfo, userInfo } = this.props;
+    const { application, userInfo } = this.props;
     return (
-      <Presentational applicationInfo={applicationInfo} userInfo={userInfo} />
+      <Presentational application={application} userInfo={userInfo} />
     );
   }
 }
 
 const mapStateToProps = (state: IStore) => ({
-  applicationInfo: state.applicationInformation,
+  applicationInfo: state.applications.registeredApplication,
   userInfo: state.userInformation,
 });
 

@@ -1,10 +1,10 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { getAllApplications } from '../../API/calls';
-import { IApplicationForm } from '../../API/interfaces';
+import { IApplication } from '../Application';
 import { FAILED_TO_RETRIEVE_ALL_APPLICATIONS, GET_ALL_APPLICATIONS } from './constants';
 
-const retrievedApplications = (payload: IApplicationForm[]) => ({
+const retrievedApplications = (payload: IApplication[]) => ({
   payload,
   type: GET_ALL_APPLICATIONS,
 });

@@ -12,10 +12,6 @@ import {
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
 import history from './components/History';
-import {
-  IRegisteredApplicationState,
-  registeredApplicationReducer,
-} from './components/Home/reducer';
 import { IRegisteredUserState, registeredUserReducer } from './components/RegisterUser/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 import userManager from './utils/userManager';
@@ -25,14 +21,12 @@ export interface IStore {
   rooms: IRoomState;
   adminRoom: IAdminRoomState;
   applications: IApplicationState;
-  applicationInformation: IRegisteredApplicationState;
   userInformation: IRegisteredUserState;
   oidc: UserState;
 }
 
 export const reducers = combineReducers({
   adminRoom: roomReducer,
-  applicationInformation: registeredApplicationReducer,
   applicationSeason: applicationSeasonReducer,
   applications: ApplicationReducer,
   oidc: oidcReducer,
@@ -49,8 +43,8 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const createStoreWithMiddleware = composeEnhancers(
-    applyMiddleware(reduxThunk, routerMiddleware(history)),
-  )(createStore);
+  applyMiddleware(reduxThunk, routerMiddleware(history)),
+)(createStore);
 
 const store = createStoreWithMiddleware(reducers);
 loadUser(store, userManager);

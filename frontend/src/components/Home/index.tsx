@@ -5,6 +5,7 @@ import { fetchApplicationInformation } from './actions';
 import { Presentational } from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
+  application: state.applications.registeredApplication,
   oidc: state.oidc,
 });
 

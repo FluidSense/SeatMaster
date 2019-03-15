@@ -2,13 +2,13 @@ import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { IApplication } from '../Application';
 import { APP_APPROVED, APP_DENIED, APP_SUBMITTED } from '../commonConstants';
-import { IRegisteredApplicationState } from './../Home/reducer';
 import { ROUTE_TO } from './constants';
 import { _LINK_APP_STATUS, _LINK_MASTER_STATUS, _LINK_NAME_TITLE } from './strings';
 
 interface IProps {
-  application: IRegisteredApplicationState;
+  application: IApplication;
 }
 
 const applicationStatus = (status: string) => {

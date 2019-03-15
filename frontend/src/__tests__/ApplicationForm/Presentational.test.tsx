@@ -6,26 +6,30 @@ import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
 import Presentational from '../../components/ApplicationForm/Presentational';
 import { _ALERT_USER_ERROR, POST_FORM_DATA } from '../../components/ApplicationForm/Strings';
-import { setTime } from '../../components/CreateSeason';
+import { IRegisteredUserState } from '../../components/RegisterUser/reducer';
+
+jest.mock('../../store', () => ({
+  getState: jest.fn(() => ({ oidc: { user: { id_token: 'test' } } })),
+}));
 
 describe('application form', () => {
+  const changeModalMock = () => null;
   const user = {
-    changeModal: () => '',
     email: 'london@starbucks.com',
     fullname: 'Starbucks London',
     phone: '22225555',
     status: '',
     username: 'Sutaba',
   };
+  const userInfo: IRegisteredUserState = {
+    loading: false,
+    registered: true,
+  };
   it('renders alertBox correctly', () => {
     const wrapper = shallow(
       <Presentational
-        username={user.username}
-        fullname={user.fullname}
-        email={user.email}
-        phone={user.phone}
-        status={user.status}
-        changeModal={user.changeModal}
+        userInformation={userInfo}
+        changeModal={changeModalMock}
       />);
     const preClickAlert = wrapper.find(AlertStripe);
     expect(preClickAlert.length).toBe(0);
@@ -41,12 +45,8 @@ describe('application form', () => {
     });
     const wrapper = mount(
       <Presentational
-        username={user.username}
-        fullname={user.fullname}
-        email={user.email}
-        phone={user.phone}
-        status={user.status}
-        changeModal={user.changeModal}
+        userInformation={userInfo}
+        changeModal={changeModalMock}
       />);
     const btn = wrapper.find(KnappBase).first();
     expect(btn.length).toBe(1);
@@ -65,15 +65,11 @@ describe('application form', () => {
       {
         overwriteRoutes: true,
       });
-    const changeModalMock = jest.fn();
+    const changeModal = jest.fn();
     const wrapper = mount(
       <Presentational
-        username={user.username}
-        fullname={user.fullname}
-        email={user.email}
-        phone={user.phone}
-        status={user.status}
-        changeModal={changeModalMock}
+        userInformation={userInfo}
+        changeModal={changeModal}
       />);
     const btn = wrapper.find(KnappBase).first();
     expect.assertions(2);
@@ -81,7 +77,7 @@ describe('application form', () => {
     btn.simulate('submit');
     setTimeout(
       () => {
-        expect(changeModalMock.mock.calls.length).toBe(1);
+        expect(changeModal.mock.calls.length).toBe(1);
         callback();
       },
       100);
@@ -90,12 +86,8 @@ describe('application form', () => {
   it('renders correctly', () => {
     const wrapper = shallow(
       <Presentational
-        username={user.username}
-        fullname={user.fullname}
-        email={user.email}
-        phone={user.phone}
-        status={user.status}
-        changeModal={user.changeModal}
+        userInformation={userInfo}
+        changeModal={changeModalMock}
       />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

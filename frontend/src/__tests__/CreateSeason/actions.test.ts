@@ -6,13 +6,17 @@ import * as actions from '../../components/CreateSeason/actions';
 import { SUBMITTED_APPLICATION_SEASON } from '../../components/CreateSeason/strings';
 
 const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const mockStoreFunc = configureMockStore(middlewares);
+
+jest.mock('../../store', () => ({
+  getState: jest.fn(() => ({ oidc: { user: { id_token: 'test' } } })),
+}));
 
 describe('actions', () => {
-  const store = mockStore();
+  const mockStore = mockStoreFunc();
   afterEach(() => {
     fetchMock.restore();
-    store.clearActions();
+    mockStore.clearActions();
   });
 
   const testApplicationSeason = {
@@ -40,8 +44,8 @@ describe('actions', () => {
       payload: true,
       type: SUBMITTED_APPLICATION_SEASON,
     };
-    await store.dispatch<any>(actions.postNewSeason(postSeason));
-    expect(store.getActions()).toContainEqual(expectedAction);
+    await mockStore.dispatch<any>(actions.postNewSeason(postSeason));
+    expect(mockStore.getActions()).toContainEqual(expectedAction);
   });
 
   it('should be false if no season returned', async () => {
@@ -53,7 +57,7 @@ describe('actions', () => {
       payload: false,
       type: SUBMITTED_APPLICATION_SEASON,
     };
-    await store.dispatch<any>(actions.postNewSeason(postSeason));
-    expect(store.getActions()).toContainEqual(expectedAction);
+    await mockStore.dispatch<any>(actions.postNewSeason(postSeason));
+    expect(mockStore.getActions()).toContainEqual(expectedAction);
   });
 });

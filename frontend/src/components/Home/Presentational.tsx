@@ -1,8 +1,10 @@
+import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { UserState } from 'redux-oidc';
+import { IApplication } from '../Application';
 import ApplicationReview from '../ApplicationReview';
-import _Container from '../ApplicationSeason/index';
-import Container from '../ApplicationStatus/index';
+import ApplicationSeason from '../ApplicationSeason/index';
+import ApplicationStatus from '../ApplicationStatus/index';
 
 interface IDispatchProps {
   fetchApplicationInformation: () => any;
@@ -10,22 +12,22 @@ interface IDispatchProps {
 
 interface IUserStates {
   oidc: UserState;
+  application: IApplication;
 }
 
 type Props = IUserStates & IDispatchProps;
 
-export class Presentational extends React.Component<Props, {}> {
-  constructor(props: Props) {
-    super(props);
-  }
+const _TITLE = 'My Status';
 
+export class Presentational extends React.Component<Props, {}> {
   public render() {
+    const { application } = this.props;
     return (
-      <div>
-        <h1>My status</h1>
-        <_Container />
-        <Container />
-        <ApplicationReview />
+      <div className="main-content">
+        <Sidetittel>{_TITLE}</Sidetittel>
+        <ApplicationSeason />
+        <ApplicationStatus />
+        <ApplicationReview application={application} />
       </div>
     );
   }

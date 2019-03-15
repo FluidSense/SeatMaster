@@ -1,9 +1,9 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { getApplicationFormBySelf } from '../../API/calls';
-import { IApplicationForm } from '../../API/interfaces';
+import { IApplication } from '../Application';
 
-const setApplicationData = (payload: IApplicationForm) => ({
+const setApplicationData = (payload: IApplication) => ({
   payload,
   type: 'SET_APPLICATION_DATA',
 });
@@ -13,8 +13,8 @@ const removeApplicationData = () => ({
 });
 
 export const fetchApplicationInformation = ():
-ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-  const result = await getApplicationFormBySelf();
-  (Object.keys(result).length > 0) ?
-    dispatch(setApplicationData(result)) : dispatch(removeApplicationData());
-};
+  ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+    const result = await getApplicationFormBySelf();
+    (Object.keys(result).length > 0) ?
+      dispatch(setApplicationData(result)) : dispatch(removeApplicationData());
+  };
