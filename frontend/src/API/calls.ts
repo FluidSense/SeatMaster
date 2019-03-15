@@ -1,7 +1,7 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom } from '../components/ViewRooms';
-import { deleteJson, getJson, postJson, putJson, elevatedPostJson } from './callDefinitions';
+import { deleteJson, elevatedPostJson, getJson, postJson, putJson } from './callDefinitions';
 import {
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
