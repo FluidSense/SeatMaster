@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { IApplication } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { IApplication } from '../Application';
 import { fetchAllApplications } from './actions';
 import './adminApplicationOverview.css';
 import Presentational from './Presentational';
@@ -30,7 +30,6 @@ class _Container extends React.Component<Props> {
         applications={this.props.applications}
       />);
   }
-
 }
 
 const mapStateToProps = (state: IStore) => ({

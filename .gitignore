@@ -56,5 +56,9 @@ htmlcov/
 
 .vscode/*
 !.vscode/snippets/
+
+# Secrets
+.secrets.tsx
+
 # Utilities
 .src/utils/*

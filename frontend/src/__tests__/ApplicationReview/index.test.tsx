@@ -1,29 +1,35 @@
 import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import { IApplication } from '../../components/Application';
 import ApplicationReview from '../../components/ApplicationReview/index';
 
-const mockStore = configureMockStore();
-const applicationInfoMock = {
-  applicationStatus: 'SUBMITTED',
-  email: 'test@test.com',
-  fullname: 'Teser Testersen',
-  partner: 'None',
-  phone: '91100999',
-  room: 'Space Commander',
-  seatRollover: 'Yes',
+const mockStoreFactory = configureMockStore();
+const applicationInfoMock: IApplication = {
+  id: 2,
+  preferredRoom: 'Space Commander',
+  seatRollover: true,
   status: 'Master of masters',
+  user: {
+    email: 'test@test.com',
+    fullname: 'Teser Testersen',
+    id: 1,
+    masterStatus: 'Master of masters',
+    username: 'wollawop',
+  },
 };
 
 describe('Application review index', () => {
   it('Renders correctly', () => {
-    const initialState = { userInformation: applicationInfoMock };
-    const store = mockStore(initialState);
+    const initialState = {
+      applications:  { registeredApplication: applicationInfoMock },
+      userInformation: applicationInfoMock,
+    };
+    const mockStore = mockStoreFactory(initialState);
     const wrapper = shallow(
-      <Provider store={store}>
-        <ApplicationReview />
+      <Provider store={mockStore}>
+        <ApplicationReview application={applicationInfoMock} />
       </Provider>,
     ).html();
     expect(wrapper).toMatchSnapshot();

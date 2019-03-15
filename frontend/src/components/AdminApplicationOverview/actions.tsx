@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { getAllApplications, getAllRooms } from '../../API/calls';
-import { IApplication } from '../../API/interfaces';
+import { getAllApplications } from '../../API/calls';
+import { IApplication } from '../Application';
 import { FAILED_TO_RETRIEVE_ALL_APPLICATIONS, GET_ALL_APPLICATIONS } from './constants';
 
 const retrievedApplications = (payload: IApplication[]) => ({

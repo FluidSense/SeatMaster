@@ -5,13 +5,17 @@ import * as actions from '../../components/ApplicationSeason/actions';
 import { SET_APPLICATION_SEASON } from '../../components/ApplicationSeason/constants';
 
 const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const mockStoreFactory = configureMockStore(middlewares);
+
+jest.mock('../../store', () => ({
+  getState: jest.fn(() => ({ oidc: { user: { id_token: 'test' } } })),
+}));
 
 describe('actions', () => {
-  const store = mockStore();
+  const mockStore = mockStoreFactory();
   afterEach(() => {
     fetchMock.restore();
-    store.clearActions();
+    mockStore.clearActions();
   });
 
   it('should create a thunk action', async () => {
@@ -32,8 +36,8 @@ describe('actions', () => {
       payload: testApplicationSeason,
       type: SET_APPLICATION_SEASON,
     };
-    await store.dispatch<any>(actions.fetchApplicationSeasonData());
-    expect(store.getActions()).toContainEqual(expectedAction);
+    await mockStore.dispatch<any>(actions.fetchApplicationSeasonData());
+    expect(mockStore.getActions()).toContainEqual(expectedAction);
   });
 
   it('should fail if no body returned', async () => {
@@ -43,6 +47,6 @@ describe('actions', () => {
         'Content-type': 'application/json',
       },
     });
-    expect(store.getActions()).toEqual([]);
+    expect(mockStore.getActions()).toEqual([]);
   });
 });
