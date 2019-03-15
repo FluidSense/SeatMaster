@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from flask import jsonify, url_for
 from main import app
 import json
+from __tests__.testUtils.authentication import mock_authentication
 
 
 def createBasicSeason():
@@ -16,6 +17,7 @@ def createBasicSeason():
 
 
 def test_getCurrentSeason_with_a_season(mocker):
+    mock_authentication(mocker)
     aSeason = createBasicSeason()
     mocker.patch.object(applicationSeasonService, "getCurrentOrNext")
     applicationSeasonService.getCurrentOrNext.return_value = aSeason
@@ -32,6 +34,7 @@ def test_getCurrentSeason_with_a_season(mocker):
 
 
 def test_getCurrentSeason_without_a_season(mocker):
+    mock_authentication(mocker)
     mocker.patch.object(applicationSeasonService, "getCurrentOrNext")
     applicationSeasonService.getCurrentOrNext.return_value = {}
     with app.app_context():
@@ -50,6 +53,7 @@ def registerApplicationSeasonMock(newPeriodStart, newPeriodEnd, newRoomStart, ne
 
 
 def test_createSeason(mocker, client):
+    mock_authentication(mocker)
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,

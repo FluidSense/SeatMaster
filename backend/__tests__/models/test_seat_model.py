@@ -71,7 +71,7 @@ def test_application_connect_to_seat(db_session):
         room=room,
         info="")
     db_session.add(seat)
-    user = User("yooyo")
+    user = User("yooyo", "sub", "email")
     db_session.add(user)
     application = Application(
         status="",
@@ -79,6 +79,8 @@ def test_application_connect_to_seat(db_session):
         comments="",
         user=user,
         partnerUsername="",
+        preferredRoom="d1",
+        seatRollover=True,
     )
     db_session.add(application)
     db_session.commit()

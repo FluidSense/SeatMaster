@@ -5,6 +5,7 @@ from models.seat import Seat
 from flask import jsonify, url_for, make_response
 from main import app
 import json
+from __tests__.testUtils.authentication import mock_authentication
 
 
 def createSeat():
@@ -14,6 +15,7 @@ def createSeat():
 
 
 def test_getSeat_with_noSeat(mocker):
+    mock_authentication(mocker)
     mocker.patch.object(seatService, "getSeatById")
     seatService.getSeatById.return_value = {}
     with app.app_context():
@@ -24,6 +26,7 @@ def test_getSeat_with_noSeat(mocker):
 
 
 def test_getSeat_with_seat(mocker):
+    mock_authentication(mocker)
     seat, room = createSeat()
     mocker.patch.object(seatService, "getSeatById")
     seatService.getSeatById.return_value = seat
@@ -39,6 +42,7 @@ def createSeatMock(id, room, info):
 
 
 def test_createSeat_success(mocker, client):
+    mock_authentication(mocker)
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,
@@ -65,6 +69,7 @@ def test_createSeat_success(mocker, client):
 
 
 def test_createRoom_fails(mocker, client):
+    mock_authentication(mocker)
     mocker.patch.object(seatService, "createSeat")
     seatService.createSeat = createSeatMock
     with app.app_context():
@@ -78,6 +83,7 @@ def test_createRoom_fails(mocker, client):
 
 
 def test_deleteSeat(mocker, client):
+    mock_authentication(mocker)
     mocker.patch.object(seatService, "deleteSeat")
     seatService.deleteSeat.return_value = "", 200
     with app.app_context():
