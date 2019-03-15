@@ -8,7 +8,8 @@ import CreateSeason from '../CreateSeason';
 import { Header } from '../Header';
 import Home from '../Home';
 import SideBar from '../SideBar/';
-import ViewRoom from '../ViewRooms';
+import ViewRooms from '../ViewRooms';
+import ViewStudents from '../ViewStudents';
 
 export const Routing = () => {
   return (
@@ -19,12 +20,13 @@ export const Routing = () => {
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/application" component={Application} />
-          <Route exact={true} path="/admin/rooms" component={ViewRoom} />
+          <Route exact={true} path="/admin/rooms" component={ViewRooms} />
           <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
           <Route path="/admin/create-season" component={CreateSeason} />
           <Route path="/admin/rooms/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/applications" component={AdminApplicationOverview} />
           <Route path="/admin/applications/:id" component={AdminApplication} />
+          <Route exact={true} path="/admin/students/" component={ViewStudents} />
         </Switch>
       </div>
     </>

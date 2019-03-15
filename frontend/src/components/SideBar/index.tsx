@@ -14,7 +14,8 @@ const adminUrls: IUrl[] = [
   { url: '/admin/', title: 'Admin' },
   { url: '/admin/rooms/', title: 'Rooms' },
   { url: '/admin/create-season/', title: 'Create Season' },
-  { url: '/admin/applications', title: 'Applications' },
+  { url: '/admin/applications/', title: 'Applications' },
+  { url: '/admin/students/', title: 'Students' },
 ];
 
 const Presentational: React.FunctionComponent<{}> = (props) => {
@@ -28,9 +29,7 @@ const Presentational: React.FunctionComponent<{}> = (props) => {
     <div id="admin-side-bar">
       <nav>
         <Systemtittel>{pageTitle}</Systemtittel>
-        <ul id="nav-list">
-          {urls}
-        </ul>
+        <ul id="nav-list">{urls}</ul>
       </nav>
     </div>
   );
