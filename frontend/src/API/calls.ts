@@ -1,7 +1,7 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom } from '../components/ViewRooms';
-import { deleteJson, getJson, postJson, putJson } from './callDefinitions';
+import { deleteJson, elevatedPostJson, getJson, postJson, putJson } from './callDefinitions';
 import {
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
@@ -48,9 +48,9 @@ export const postApplicationForm = (data: IPostApplicationForm):
 
 export const getUserData = (): PromiseLike<IUser> => getJson(GET_USER_URL);
 
-export const postNewCreateUser = (data: { accessToken: string }):
+export const postNewCreateUser = (accessToken: string):
   PromiseLike<IUser> => {
-  return postJson(POST_NEW_USER_URL, data);
+  return elevatedPostJson(POST_NEW_USER_URL, {}, accessToken);
 };
 
 export const getRoom = (id: number): PromiseLike<IRoom> => {
