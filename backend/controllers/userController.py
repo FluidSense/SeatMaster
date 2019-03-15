@@ -1,7 +1,7 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 import json
 from services import userService
-from auth import requiresUser, requiresIdToken, requiresAdmin
+from auth import requiresUser, requiresIdToken, requiresAdmin, get_token_auth_header
 from flask import _request_ctx_stack
 from utils import dataporten
 from urllib.error import HTTPError
@@ -20,9 +20,8 @@ def getUser(id):
 @requiresIdToken()
 def registerUser():
     if request.is_json:
-        form = request.get_json()
         ctx = _request_ctx_stack.top
-        accessToken = form.get("accessToken")
+        accessToken = get_token_auth_header("AccessToken")
         try:
             userInfo = dataporten.getDataportenUserInfo(accessToken)
         except HTTPError:
