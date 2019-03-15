@@ -8,13 +8,14 @@ const userManagerConfig = {
   client_id: DATAPORTEN_CLIENT_ID,
   filterProtocolClaims: true,
   loadUserInfo: true,
-  redirect_uri: `${window.location.protocol}//
-    ${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/callback`,
+  redirect_uri: `${window.location.protocol}//` +
+    `${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/callback`,
   response_type: 'code',
   scope: 'email openid profile userid userid-feide groups longterm',
-  silent_redirect_uri: `${window.location.protocol}//
-    ${window.location.hostname}${window.location.port
-      ? `:${window.location.port}` : ''}/silent_renew.html`,
+  silent_redirect_uri: `${window.location.protocol}//` +
+    `${window.location.hostname}${window.location.port
+      ? `:${window.location.port}` : ''
+    } / silent_renew.html`,
 };
 
 const userManager = createUserManager(userManagerConfig);
