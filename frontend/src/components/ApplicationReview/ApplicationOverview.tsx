@@ -1,6 +1,7 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { boolToString } from '../../utils/typeFormatter';
 import { IApplication } from '../Application/index';
 import InfoPanel from './InfoPanel';
 import InformationList from './InformationList';
@@ -39,8 +40,9 @@ export interface IUserInfoObject {
 export interface IRoomInfoObject {
   [_PARTNER]?: string;
   [_PREFERRED_ROOM]?: string;
-  [_SEAT_ROLLOVER]?: boolean;
+  [_SEAT_ROLLOVER]?: string;
 }
+
 const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   const { application, title } = props;
   let partnerObject;
@@ -59,7 +61,7 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   const roomInfoObject: IRoomInfoObject = {
     [_PARTNER]: partnerObject,
     [_PREFERRED_ROOM]: application.preferredRoom,
-    [_SEAT_ROLLOVER]: application.seatRollover,
+    [_SEAT_ROLLOVER]: boolToString(application.seatRollover),
   };
   return (
     <div id="application-review">

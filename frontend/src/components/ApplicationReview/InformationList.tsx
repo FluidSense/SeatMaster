@@ -9,15 +9,14 @@ type validProps = IInformationObject | IRoomInfoObject | IUserInfoObject;
 
 const InformationList: React.FunctionComponent<IProps> = (props) => {
   const { information } = props;
-  const list = Object.entries(information).map((array) => {
-    const boolValue = typeof array[1] === 'boolean' && array[1] ? 'Yes' : 'No';
+  const list = Object.entries(information).map((entry) => {
 
-    if (array[1] !== undefined) {
+    if (entry[1] !== undefined) {
       return (
         <InfoPanel
-          key={array[0]}
-          title={array[0]}
-          text={typeof array[1] === 'boolean' ? boolValue : array[1]}
+          key={entry[0]}
+          title={entry[0]}
+          text={entry[1]}
         />);
     }
 

@@ -25,12 +25,8 @@ export class Presentational extends React.Component<Props, {}> {
 
   public render() {
     const { oidc, userInformation } = this.props;
-    if (!oidc.user || oidc.user.expired) {
-      return <RoutesLogin />;
-    }
-    if (!userInformation.registered) { // Check user reg
-      return <RoutesRegister />;
-    }
+    if (!oidc.user || oidc.user.expired) return <RoutesLogin />;
+    if (!userInformation.registered) return <RoutesRegister />;
 
     // TODO: Add a check for admin privileges and add adminroutes
     return <RoutesUser />;

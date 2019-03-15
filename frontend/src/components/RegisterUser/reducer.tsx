@@ -28,13 +28,9 @@ export const registeredUserReducer = (
     case 'SET_USER_DATA': {
       return {
         ...state,
-        email: payload.email,
-        fullname: payload.fullname,
-        id: payload.id,
+        ...payload,
         loading: false,
-        masterStatus: payload.masterStatus,
         registered: true,
-        username: payload.username,
       };
     }
     case 'REMOVE_USER_DATA': {

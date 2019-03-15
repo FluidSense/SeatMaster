@@ -7,7 +7,7 @@ import ApplicationSeason from '../ApplicationSeason/index';
 import ApplicationStatus from '../ApplicationStatus/index';
 
 interface IDispatchProps {
-  fetchApplicationInformation: () => any;
+  fetchApplicationInformation: () => void;
 }
 
 interface IUserStates {

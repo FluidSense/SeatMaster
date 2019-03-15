@@ -1,14 +1,12 @@
-import * as React from 'react';
-
 import KnappBase from 'nav-frontend-knapper';
+import * as React from 'react';
 import { UserState } from 'redux-oidc';
 import userManager from '../../utils/userManager';
-
 import { _USER_CONFIRMATION_TEXT, _USER_REGISTRATION_TEXT } from './constants';
 
 interface IDispatchProps {
   postCreateUser: (accessToken: string) => void;
-  push: (userId: string) => any;
+  push: (userId: string) => void;
 }
 
 interface IStateProps {

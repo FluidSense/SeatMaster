@@ -27,14 +27,6 @@ export const ApplicationFormPersonal: React.FunctionComponent<IStateProps> = (pr
         disabled={true}
       />
       <Input
-        className="input-phone"
-        label="Phone number"
-        bredde="L"
-        name="phone"
-        value={'No number in user reducer'}
-        disabled={true}
-      />
-      <Input
         className="input-masterStatus"
         label="Master status"
         bredde="L"
