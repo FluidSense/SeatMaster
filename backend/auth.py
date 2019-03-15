@@ -13,12 +13,6 @@ VERIFICATION_DOMAIN = DOMAIN + '/openid/jwks'
 ALGORITHMS = ['RS256']
 
 
-class AuthError(Exception):
-    def __init__(self, error, status_code):
-        self.error = error
-        self.status_code = status_code
-
-
 def get_token_auth_header(header):
     """Obtains the Access Token from the Authorization Header
     """
@@ -29,13 +23,13 @@ def get_token_auth_header(header):
     parts = auth.split()
 
     if parts[0].lower() != 'bearer':
-        return Response(json.dumps({'error': 'Invalid_header'}), 401)
+        return Response("{'error': 'Invalid_header'}", 401)
 
     elif len(parts) == 1:
-        return Response(json.dumps({'error': 'Invalid_header'}), 401)
+        return Response("{'error': 'Invalid_header'}", 401)
 
     elif len(parts) > 2:
-        return Response(json.dumps({'error': 'Invalid_header'}), 401)
+        return Response("{'error': 'Invalid_header'}", 401)
 
     token = parts[1]
     return token
@@ -74,12 +68,12 @@ def requiresIdToken(verify=True):
                     )
 
                 except jwt.ExpiredSignatureError:
-                    return Response(json.dumps({'error': 'Token_expired'}), 401)
+                    return Response("{'error': 'Token_expired'}", 401)
 
                 except jwt.JWTClaimsError:
-                    return Response(json.dumps({'error': 'Invalid_claims'}), 401)
+                    return Response("{'error': 'Invalid_claims'}", 401)
                 except Exception:
-                    return Response(json.dumps({'error': 'Invalid_header'}), 401)
+                    return Response("{'error': 'Invalid_header'}", 401)
 
                 _request_ctx_stack.top.idToken = payload
                 return f(*args, **kwargs)
@@ -98,7 +92,7 @@ def requiresUser(f):
         sub = ctx.idToken.get("sub")
         user = userService.getUserFromSub(sub)
         if not user:
-            return Response(json.dumps({'error': 'User_not_exist'}), 401)
+            return Response("{'error': 'User_not_exist'}", 401)
         ctx.user = user
         return f(*args, **kwargs)
 
@@ -112,9 +106,9 @@ def requiresAdmin(f):
         try:
             groups = dataporten.getDataportenGroups(accessToken)
         except HTTPError:
-            return Response("Not Authenticated", 401)
+            return Response("{'error':'Access token not valid'}", 401)
         isAdmin = dataporten.checkIfAdmin(groups)
         if not isAdmin:
-            return Response("Access Denied", 403)
+            return Response("{'error':'Access Denied'}", 403)
         return f(*args, **kwargs)
     return decorated
