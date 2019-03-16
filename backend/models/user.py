@@ -20,6 +20,11 @@ class User(db.Model):
         db.String(60),
         unique=True)
 
+    fullname = db.Column(
+        "fullname",
+        db.String(60),
+        unique=False)
+
     email = db.Column(
         "email",
         db.String(30),
@@ -30,8 +35,9 @@ class User(db.Model):
         uselist=False,
         back_populates="user")
 
-    def __init__(self, username, sub, email):
+    def __init__(self, username, sub, email, fullname):
         self.username = username
+        self.fullname = fullname
         self.sub = sub
         self.email = email
 
@@ -39,6 +45,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "username": self.username,
+            "fullname": self.fullname,
             "email": self.email
         }
 

@@ -17,7 +17,7 @@ def registerUser(userInfo):
     userId = userInfo.get("dataporten-userid_sec", None)[0]
     regex = re.compile(r'(?<=:)(\w+)(?=@)')
     username = regex.search(userId).group(0)
-    user = User(username=username, sub=userInfo.get("sub"), email=userInfo.get("email"))
+    user = User(username=username, sub=userInfo.get("sub"), email=userInfo.get("email"), fullname=userInfo.get("name"))
     db.session.add(user)
     db.session.commit()
     return user.to_json(), 201
