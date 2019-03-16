@@ -1,6 +1,5 @@
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { IRegisteredUserState } from '../RegisterUser/reducer';
 import userManager from './../../utils/userManager';
 import './header.css';
