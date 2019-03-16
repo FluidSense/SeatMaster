@@ -24,23 +24,27 @@ const genericFetch = (fetchType: fetchTypes, url: string, data: any) => {
 };
 
 export const postJson = (url: string, data: any) => {
-  return postFetch(url, data).then(response => response.ok
-    ? response.json()
-    : false);
+  return postFetch(url, data)
+    .then(response => response.ok
+      ? response.json()
+      : false)
+    .catch(() => false);
 };
 
 export const putJson = (url: string, data: any) => {
   return putFetch(url, data)
     .then(response => response.ok
       ? response.json()
-      : false);
+      : false)
+    .catch(() => false);
 };
 
 export const deleteJson = (url: string, id: any) => {
   return deleteFetch(url, id)
     .then(response => response.ok
       ? response.json()
-      : false);
+      : false)
+    .catch(() => false);
 };
 
 export const getJson = (url: string) => fetch(url, {
@@ -48,7 +52,8 @@ export const getJson = (url: string) => fetch(url, {
 })
   .then(response => response.ok
     ? response.json()
-    : false);
+    : false)
+  .catch(() => false);
 
 // Admin calls
 const elevatedGenericFetch = (fetchType: fetchTypes, url: string, data: any, token: string) => {
@@ -78,21 +83,27 @@ const elevatedDeleteFetch = (url: string, id: any, token: string) => {
 };
 
 export const elevatedPostJson = (url: string, data: any, token: string) => {
-  return elevatedPostFetch(url, data, token).then(response => response.ok
-    ? response.json()
-    : false);
+  return elevatedPostFetch(url, data, token)
+    .then(response => response.ok
+      ? response.json()
+      : false)
+    .catch(() => false);
 };
 
 export const elevatedPutJson = (url: string, data: any, token: string) => {
-  return elevatedPutFetch(url, data, token).then(response => response.ok
-    ? response.json()
-    : false);
+  return elevatedPutFetch(url, data, token)
+    .then(response => response.ok
+      ? response.json()
+      : false)
+    .catch(() => false);
 };
 
 export const elevatedDeleteJson = (url: string, id: any, token: string) => {
-  return elevatedDeleteFetch(url, id, token).then(response => response.ok
-    ? response.json()
-    : false);
+  return elevatedDeleteFetch(url, id, token)
+    .then(response => response.ok
+      ? response.json()
+      : false)
+    .catch(() => false);
 };
 
 export const elevatedGetJson = (url: string, token: string) => fetch(url, {
