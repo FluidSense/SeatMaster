@@ -20,7 +20,7 @@ export const fetchUserData = ():
 ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
   dispatch(loadUserData());
   const result = await getUserData();
-  (Object.keys(result).length > 0 && instanceOfA(result))
+  (result && Object.keys(result).length > 0 && instanceOfA(result))
   ?
   dispatch(setUserData(result)) : dispatch(removeUserData());
 };
