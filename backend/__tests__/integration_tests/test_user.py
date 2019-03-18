@@ -11,7 +11,12 @@ from __tests__.testUtils.constants import token, decodedToken
 
 
 def createUser():
-    user = User("asbjorn_elevg", "55de7d71-4a25-4103-8e43-35df8c2d472a", "noreply@feide.no")
+    user = User(
+        username="asbjorn_elevg",
+        sub="55de7d71-4a25-4103-8e43-35df8c2d472a",
+        email="noreply@feide.no",
+        fullname="Asbjørn ELEVG baby"
+        )
     db.session.add(user)
     db.session.commit()
     return user

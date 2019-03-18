@@ -71,7 +71,7 @@ def test_application_connect_to_seat(db_session):
         room=room,
         info="")
     db_session.add(seat)
-    user = User("yooyo", "sub", "email")
+    user = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
     db_session.add(user)
     application = Application(
         status="",

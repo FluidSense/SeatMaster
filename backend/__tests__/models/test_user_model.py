@@ -2,7 +2,7 @@ from models.user import User
 
 
 def test_a_transaction(db_session):
-    test_user = User("John Lajoie", "sub", "email")
+    test_user = User(username="John Lajoie", sub="sub", email="email", fullname="Johnny McJohn")
 
     db_session.add(test_user)
     db_session.commit()
