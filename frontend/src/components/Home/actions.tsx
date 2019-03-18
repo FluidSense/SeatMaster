@@ -15,6 +15,6 @@ const removeApplicationData = () => ({
 export const fetchApplicationInformation = ():
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const result = await getApplicationFormBySelf();
-    (Object.keys(result).length > 0) ?
+    (result && Object.keys(result).length > 0) ?
       dispatch(setApplicationData(result)) : dispatch(removeApplicationData());
   };
