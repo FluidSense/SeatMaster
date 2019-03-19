@@ -2,10 +2,10 @@ import React from 'react';
 
 import { UserState } from 'redux-oidc';
 import { IRegisteredUserState } from '../RegisterUser/reducer';
+import { RoutesAdmin } from '../RoutesAdmin';
 import { RoutesLogin } from '../RoutesLogin';
 import { RoutesRegister } from '../RoutesRegister';
 import { RoutesUser } from '../RoutesUser';
-import { RoutesAdmin } from '../RoutesAdmin';
 
 interface IDispatchProps {
   fetchUserData: () => void;
