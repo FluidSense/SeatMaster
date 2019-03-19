@@ -13,21 +13,21 @@ def getApplicationBySelf():
     user = ctx.user
     userID = user.id
     userApplication = applicationService.getApplicationByUserId(userID)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
+    return jsonify(filterOnStatus(userApplication.to_json())) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/<id>")
 @requiresAdmin
 def getApplication(id):
     userApplication = applicationService.getApplicationById(id)
-    return jsonify(filterOnStatus(userApplication.to_json())) if userApplication else Response(json.dumps({}), 200)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/byUser/<userid>")
 @requiresAdmin
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
-    return jsonify(filterOnStatus(userApplication.to_json())) if userApplication else Response(json.dumps({}), 200)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/all")
