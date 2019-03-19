@@ -54,9 +54,9 @@ exports[`Presentation SideBar Renders correctly 1`] = `
           activeClassName="active"
           aria-current="page"
           exact={true}
-          to="/faq"
+          to="/admin/applications"
         >
-          FAQ
+          Applications
         </NavLink>
       </li>
       <li
@@ -66,9 +66,9 @@ exports[`Presentation SideBar Renders correctly 1`] = `
           activeClassName="active"
           aria-current="page"
           exact={true}
-          to="/rooms"
+          to="/faq"
         >
-          Rooms
+          FAQ
         </NavLink>
       </li>
       <li
@@ -78,9 +78,9 @@ exports[`Presentation SideBar Renders correctly 1`] = `
           activeClassName="active"
           aria-current="page"
           exact={true}
-          to="/admin/applications"
+          to="/rooms"
         >
-          Applications
+          Rooms
         </NavLink>
       </li>
     </ul>
