@@ -28,6 +28,14 @@ def registerUser():
             return abort(401)
         if(ctx.idToken.get("sub") == userInfo.get("sub")):
             response, statusCode = userService.registerUser(userInfo)
+
+            userIsAdmin = False
+            try:
+                userIsAdmin = dataporten.checkIfAdmin(accessToken)
+            except HTTPError:
+                userIsAdmin = False
+            response['admin'] = userIsAdmin
+            
             return make_response(jsonify(response), statusCode)
         else:
             abort(401)
