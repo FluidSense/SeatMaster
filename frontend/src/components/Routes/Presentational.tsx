@@ -5,6 +5,7 @@ import { IRegisteredUserState } from '../RegisterUser/reducer';
 import { RoutesLogin } from '../RoutesLogin';
 import { RoutesRegister } from '../RoutesRegister';
 import { RoutesUser } from '../RoutesUser';
+import { RoutesAdmin } from '../RoutesAdmin';
 
 interface IDispatchProps {
   fetchUserData: () => void;
@@ -27,9 +28,7 @@ export class Presentational extends React.Component<Props, {}> {
     const { oidc, userInformation } = this.props;
     if (!oidc.user || oidc.user.expired) return <RoutesLogin />;
     if (!userInformation.registered) return <RoutesRegister />;
-
-    // TODO: Add a check for admin privileges and add adminroutes
-    return <RoutesUser />;
+    return userInformation.admin ? <RoutesAdmin /> : <RoutesUser />;
   }
 
   public componentDidMount() {
