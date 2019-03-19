@@ -170,6 +170,8 @@ def test_cascading_seat(db_session):
         seatRollover=True)
     room = Room(name="room", info="info")
     seat = Seat(id="d1", room=room, info="info")
+    application.room_id = seat.room_id
+    application.seat_id = seat.seat_id
     db_session.add(user)
     db_session.add(application)
     db_session.add(room)
