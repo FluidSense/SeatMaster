@@ -6,7 +6,7 @@ import AdminRoom from '../AdminRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
 import FAQ from '../FAQ';
-import { Header } from '../Header';
+import Header from '../Header';
 import Home from '../Home';
 import Rooms from '../Rooms';
 import SideBar from '../SideBar';
