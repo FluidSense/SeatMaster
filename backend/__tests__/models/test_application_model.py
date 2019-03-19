@@ -103,17 +103,60 @@ def test_application_connect_to_seat(db_session):
     assert application.seat == seat
 
 
-def test_cascading(db_session):
+    dbuser = db_session.query(User).first()
+    assert dbuser == user
+    assert user.application is None
+
+
+def test_cascading_partnerApplication(db_session):
+    user1 = User(username="August")
+    application1 = Application(
+        status="statusss",
+        needs="needs",
+        user=user1,
+        partnerUsername="Øggøst",
+        comments="comments")
+    user2 = User(username="Øggøst")
+    application2 = Application(
+        status="statusss",
+        needs="needs",
+        user=user2,
+        partnerUsername="August",
+        comments="comments")
+    db_session.add(user1)
+    db_session.add(user2)
+    db_session.add(application1)
+    db_session.add(application2)
+    application1.partnerApplication = application2
+    application2.partnerApplication = application1
+    db_session.commit()
+    db_session.expire_all()
+    db_session.delete(application1)
+    db_session.commit()
+    dbapplication = db_session.query(Application).first()
+    assert dbapplication == application2
+    assert dbapplication.partnerApplication is None
+
+
+def test_cascading_seat(db_session):
     user = User(username="yoo")
     application = Application(
-        status="status",
+        status="statusss",
         needs="needs",
-        user="user",
+        user=user,
         partnerUsername="partnerUsername",
         comments="comments")
+    room = Room(name="room", info="info")
+    seat = Seat(id="d1", room=room, info="info")
+    # TODO check seat and partnerApplication as well
     db_session.add(user)
     db_session.add(application)
+    db_session.add(room)
+    db_session.add(seat)
     db_session.commit()
+    db_session.expire_all()
     db_session.delete(application)
-    assert db_session.query(User).first() == user
+    db_session.commit()
+    dbseat = db_session.query(Seat).first()
+    assert dbseat == seat
     assert user.application is None

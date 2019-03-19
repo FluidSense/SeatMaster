@@ -93,6 +93,7 @@ def test_application_connect_to_seat(db_session):
 def test_cascading(db_session):
     room = Room(name="Alko", info="info")
     seat = Seat(id="D1", room=room, info="info")
+    seat2 = Seat(id="D2", room=room, info="info")
     user = User(username="name")
     application = Application(
         status="SUBMITTED",
@@ -109,6 +110,9 @@ def test_cascading(db_session):
     db_session.commit()
     db_session.delete(seat)
     db_session.commit()
+    dbroom = db_session.query(Room).first()
+    assert dbroom == room
+    assert dbroom.seats == [seat2]
     assert db_session.query(Room).first() == room
     assert room.seats is None
     assert db_session.query(Application) == Application
