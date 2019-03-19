@@ -1,11 +1,6 @@
 from models.seat import Seat
 from models.room import Room
 
-from models.seat import Seat
-from models.room import Room
-from models.user import User
-from models.application import Application
-
 
 def createRoomWithSeats(db_session):
     room = Room(name="Alke", info="stuff")
@@ -21,6 +16,7 @@ def createRoomWithSeats(db_session):
 def test_rooms_are_connected_to_seats(db_session):
     room, seat1, seat2 = createRoomWithSeats(db_session)
     assert room.seats == [seat1, seat2]
+
 
 def test_cascading(db_session):
     room = Room("D1", "kek")
@@ -38,4 +34,3 @@ def test_cascading(db_session):
     dbroom = db_session.query(Room).first()
     assert dbseat is None
     assert dbroom is None
-

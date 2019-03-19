@@ -113,7 +113,6 @@ def test_cascading_user(db_session):
         comments="comments",
         preferredRoom="pref",
         seatRollover=True)
-    # TODO check seat and partnerApplication as well
     db_session.add(user)
     db_session.add(application)
     db_session.commit()
@@ -171,7 +170,6 @@ def test_cascading_seat(db_session):
         seatRollover=True)
     room = Room(name="room", info="info")
     seat = Seat(id="d1", room=room, info="info")
-    # TODO check seat and partnerApplication as well
     db_session.add(user)
     db_session.add(application)
     db_session.add(room)
