@@ -71,7 +71,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       </ul>
     </nav>
   </div>
-);
+  );
 
 };
 
