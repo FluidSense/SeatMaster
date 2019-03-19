@@ -39,4 +39,15 @@ def registerUser():
 def getSelf():
     ctx = _request_ctx_stack.top
     user = ctx.user
-    return jsonify(user.to_json()) if user else Response("{}", 401)
+    if not user:
+        return Response("{}", 401)
+
+    accessToken = get_token_auth_header("AccessToken")
+    userIsAdmin = False
+    try:
+        userIsAdmin = dataporten.checkIfAdmin(accessToken)
+    except HTTPError:
+        userIsAdmin = False
+    userJson = user.to_json()
+    userJson['admin'] = userIsAdmin
+    return jsonify(userJson)
