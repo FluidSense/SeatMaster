@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, request, abort, jsonify, make_response
 from services import applicationSeasonService
+from auth import requiresAdmin
 
 applicationSeason = Blueprint('applicationSeason', __name__)
 
@@ -11,6 +12,7 @@ def getCurrentSeason():
 
 
 @applicationSeason.route("/", methods=["POST"])
+@requiresAdmin
 def createNewSeason():
     if request.is_json:
         form = request.get_json()

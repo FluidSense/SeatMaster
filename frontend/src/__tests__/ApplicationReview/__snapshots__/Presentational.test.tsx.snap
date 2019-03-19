@@ -2,16 +2,21 @@
 
 exports[`Application review presentational Renders correctly 1`] = `
 <ApplicationOverview
-  applicationInfo={
+  application={
     Object {
-      "applicationStatus": "SUBMITTED",
-      "email": "test@test.com",
-      "fullname": "Teser Testersen",
-      "partner": "None",
-      "phone": "91100999",
-      "room": "Space Commander",
-      "seatRollover": "Yes",
-      "status": "Master of masters",
+      "comments": "These are some comments",
+      "id": 1,
+      "needs": "Tehse are some needs",
+      "preferredRoom": "X-Wing",
+      "seatRollover": true,
+      "status": "APP_NOT_FOUND",
+      "user": Object {
+        "email": "Test@testersen.com",
+        "fullname": "Teser Testersen",
+        "id": 2,
+        "masterStatus": "Poor",
+        "username": "tst.tsx",
+      },
     }
   }
 />

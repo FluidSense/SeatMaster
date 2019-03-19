@@ -1,15 +1,17 @@
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import userManager from './../../utils/userManager';
 import './header.css';
+import { Presentational } from './Presentational';
 
-export const Header: React.FunctionComponent = (props) => {
-  return (
-    <div id="student-header">
-      You're logged in as Christoffer Lofsberg
-      <Link to="/login">
-        <KnappBase type="hoved" htmlType="button" id="logoutButton">Log Out</KnappBase>
-      </Link>
-    </div>
-  );
-};
+const mapStateToProps = (state: any) => ({
+  userInformation: state.userInformation,
+});
+
+const Header = connect(
+  mapStateToProps,
+  null,
+)(Presentational);
+
+export default Header;

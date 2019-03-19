@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response
 from services import seatService
+from auth import requiresAdmin
 
 seat = Blueprint("seat", __name__, url_prefix="/seat")
 
@@ -11,12 +12,14 @@ def getSeat(roomId, id):
 
 
 @seat.route("/<roomId>/<id>", methods=["DELETE"])
+@requiresAdmin
 def deleteSeat(roomId, id):
     responseText, statusCode = seatService.deleteSeat(roomId, id)
     return Response(responseText, statusCode)
 
 
 @seat.route("/", methods=["POST"])
+@requiresAdmin
 def createSeat():
     if request.is_json:
         form = request.get_json()
@@ -29,6 +32,7 @@ def createSeat():
 
 
 @seat.route("/assignSeat", methods=["PUT"])
+@requiresAdmin
 def assignSeat():
     if request.is_json:
         form = request.get_json()
@@ -41,6 +45,7 @@ def assignSeat():
 
 
 @seat.route("/removeStudent", methods=["PUT"])
+@requiresAdmin
 def removeStudentFromSeat():
     if request.is_json:
         form = request.get_json()

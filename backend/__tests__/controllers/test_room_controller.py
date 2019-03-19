@@ -4,6 +4,7 @@ from models.room import Room
 from flask import jsonify, url_for, make_response
 from main import app
 import json
+from __tests__.testUtils.authentication import mock_authentication
 
 
 def createRoom():
@@ -11,6 +12,7 @@ def createRoom():
 
 
 def test_getRoom_with_no_room(mocker):
+    mock_authentication(mocker)
     mocker.patch.object(roomService, "getRoomById")
     roomService.getRoomById.return_value = {}
     with app.app_context():
@@ -20,6 +22,7 @@ def test_getRoom_with_no_room(mocker):
 
 
 def test_getApplication_with_room(mocker):
+    mock_authentication(mocker)
     room = createRoom()
     mocker.patch.object(roomService, "getRoomById")
     roomService.getRoomById.return_value = room
@@ -34,6 +37,7 @@ def createRoomMock(name, info):
 
 
 def test_createRoom_success(mocker, client):
+    mock_authentication(mocker)
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,
@@ -67,6 +71,7 @@ def test_createRoom_success(mocker, client):
 
 
 def test_createRoom_fails(mocker, client):
+    mock_authentication(mocker)
     mocker.patch.object(roomService, "createRoom")
     roomService.createRoom = createRoomMock
     with app.app_context():
@@ -80,6 +85,7 @@ def test_createRoom_fails(mocker, client):
 
 
 def test_deleteRoom(mocker, client):
+    mock_authentication(mocker)
     mocker.patch.object(roomService, "deleteRoom")
     roomService.deleteRoom.return_value = "", 200
     with app.app_context():
@@ -92,6 +98,7 @@ def updateRoomMock(id, form):
 
 
 def test_updateRoom_success(mocker, client):
+    mock_authentication(mocker)
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,
@@ -125,6 +132,7 @@ def test_updateRoom_success(mocker, client):
 
 
 def test_updateRoom_fails(mocker, client):
+    mock_authentication(mocker)
     mocker.patch.object(roomService, "updateRoom")
     roomService.updateRoom = updateRoomMock
     with app.app_context():

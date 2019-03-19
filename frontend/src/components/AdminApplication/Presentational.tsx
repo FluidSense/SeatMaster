@@ -1,17 +1,17 @@
 import React from 'react';
-import { IApplicationInfoObject } from '../ApplicationReview';
+import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
 
 interface IProps {
-  application: IApplicationInfoObject;
+  application?: IApplication;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { application } = props;
-
+  if (!application) return null;
   return (
     <div className="main-content">
-      <ApplicationOverview applicationInfo={application} title={application.fullname}/>
+      <ApplicationOverview application={application} />
     </div>
   );
 };

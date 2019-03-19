@@ -1,14 +1,22 @@
+import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom } from '../components/ViewRooms';
-import { deleteJson, getJson, postJson, putJson } from './callDefinitions';
+import { deleteJson, elevatedPostJson, getJson, postJson, putJson } from './callDefinitions';
 import {
-  GET_APPLICATION_BY_USERID_URL, GET_APPLICATIONS_URL, POST_FORM_DATA_URL, ROOM_URL, SEASON_URL,
+  GET_ALL_APPLICATIONS_URL,
+  GET_APPLICATION_BY_SELF_URL,
+  GET_APPLICATION_BY_USERID_URL,
+  GET_USER_URL,
+  POST_FORM_DATA_URL,
+  POST_NEW_USER_URL,
+  ROOM_URL,
+  SEASON_URL,
 } from './constants';
 import {
-  IApplication,
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
+  IUser,
 } from './interfaces';
 
 export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_URL);
@@ -18,19 +26,31 @@ export const postSeason = (data: IPostApplicationSeason):
   return postJson(SEASON_URL, data);
 };
 
-export const getApplicationForm = (id: number):
+export const getApplicationFormBySelf = ():
   PromiseLike<IApplication> => {
-  return getJson(`${GET_APPLICATION_BY_USERID_URL}${id}`);
+  return getJson(`${GET_APPLICATION_BY_SELF_URL}`);
+};
+
+export const getApplicationFormByUsername = (username: string):
+  PromiseLike<IApplication> => {
+  return getJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
 };
 
 export const getAllApplications = ():
   PromiseLike<IApplication[]> => {
-  return getJson(GET_APPLICATIONS_URL);
+  return getJson(GET_ALL_APPLICATIONS_URL);
 };
 
 export const postApplicationForm = (data: IPostApplicationForm):
   PromiseLike<IApplication> => {
   return postJson(POST_FORM_DATA_URL, data);
+};
+
+export const getUserData = (): PromiseLike<IUser> => getJson(GET_USER_URL);
+
+export const postNewCreateUser = (accessToken: string):
+  PromiseLike<IUser> => {
+  return elevatedPostJson(POST_NEW_USER_URL, {}, accessToken);
 };
 
 export const getRoom = (id: number): PromiseLike<IRoom> => {

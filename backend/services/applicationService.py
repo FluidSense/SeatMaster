@@ -24,16 +24,16 @@ def getApplicationByUsername(username):
     return userApplication
 
 
-# TODO application should not be registered with username, it should verify the user.
-def registerApplication(comments, needs, username, partnerUsername):
+def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom):
     try:
-        user = db.session.query(User).filter_by(username=username).one()
         application = Application(
             status="SUBMITTED",
             needs=needs,
             user=user,
             partnerUsername=partnerUsername,
             comments=comments,
+            seatRollover=seatRollover,
+            preferredRoom=preferredRoom
         )
         db.session.add(application)
         db.session.commit()
