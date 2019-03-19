@@ -5,7 +5,13 @@ import { NavLink } from 'react-router-dom';
 import { IApplication } from '../Application';
 import { APP_APPROVED, APP_DENIED, APP_SUBMITTED } from '../commonConstants';
 import { ROUTE_TO } from './constants';
-import { _LINK_APP_STATUS, _LINK_MASTER_STATUS, _LINK_NAME_TITLE } from './strings';
+import {
+  _LINK_APP_STATUS,
+  _LINK_MASTER_STATUS,
+  _LINK_NAME_TITLE,
+  _LINK_ROOM_STATUS,
+  _LINK_SEAT_STATUS,
+} from './strings';
 
 interface IProps {
   application: IApplication;
@@ -41,6 +47,8 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
         <div className="link-name"><Element>{_LINK_NAME_TITLE}</Element>{user.username}</div>
         <div className="link-master"><Element>{_LINK_MASTER_STATUS}</Element>{'Status'}</div>
         <div className="link-status"><Element>{_LINK_APP_STATUS}</Element>{status}</div>
+        <div className="link-room"><Element>{_LINK_ROOM_STATUS}</Element>{''}</div>
+        <div className="link-seat"><Element>{_LINK_SEAT_STATUS}</Element>{''}</div>
       </div>
     </LenkepanelBase>
   );

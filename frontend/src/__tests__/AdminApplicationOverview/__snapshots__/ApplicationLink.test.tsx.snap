@@ -34,6 +34,20 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
       </Element>
       Waiting list
     </div>
+    <div
+      className="link-room"
+    >
+      <Element>
+        Allocated room
+      </Element>
+    </div>
+    <div
+      className="link-seat"
+    >
+      <Element>
+        Allocated seat
+      </Element>
+    </div>
   </div>
 </LenkepanelBase>
 `;

@@ -9,21 +9,24 @@ interface IProps extends IStateProps {
   onClick: () => void;
 }
 
+const createRoom = (onClick: () => void) => (
+  <div id="create-room-title">
+    <Sidetittel>{_VIEW_ROOM_TITLE}</Sidetittel>
+    <KnappBase id="redirect-new-room" type="hoved" onClick={onClick}>
+      {_CREATE_ROOM_BUTTON}
+    </KnappBase>
+  </div>
+);
+
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { rooms, onClick } = props;
-  if (!rooms) return null;
-  if (!rooms.length) return null;
+  if (!rooms || !rooms.length) return <div className="main-content">{createRoom(onClick)}</div>;
   const roomList = rooms.map(room => (
     <RoomLink key={room.id} room={room} />
   ));
   return (
     <div className="main-content">
-      <div id="create-room-title">
-        <Sidetittel>{_VIEW_ROOM_TITLE}</Sidetittel>
-        <KnappBase id="redirect-new-room" type="hoved" onClick={onClick}>
-          {_CREATE_ROOM_BUTTON}
-        </KnappBase>
-      </div>
+      {createRoom(onClick)}
       {roomList}
     </div>
   );
