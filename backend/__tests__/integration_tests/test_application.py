@@ -230,7 +230,7 @@ class TestApplication(TestCase):
         assert application1.status == "200 OK"
         assert application1.data == jsonify(filterOnStatus(testapplication1.to_json())).data
         assert application2.status == "200 OK"
-        assert application2.data == jsonify(testapplication2.to_json()).data 
+        assert application2.data == jsonify(testapplication2.to_json()).data
 
     def tearDown(self):
         self.postgres.stop()

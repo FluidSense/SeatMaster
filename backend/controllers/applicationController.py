@@ -59,9 +59,10 @@ def registerApplication():
             preferredRoom=preferredRoom
         )
         if "seat" in responseText:
-          del responseText["seat"]
+            del responseText["seat"]
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
 
 def filterOnStatus(applicationJson):
     if applicationJson["status"] != "APPROVED":
