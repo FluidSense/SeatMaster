@@ -17,14 +17,16 @@ def test_db_drop(db_session):
 
 
 def test_cascading(db_session):
-    user = User("hello")
+    user = User("hello", sub="sub", email="email")
     application = Application(status="Submitted",
                               needs="needs",
                               user=user,
                               partnerUsername="partner",
-                              comments="comments")
+                              comments="comments",
+                              preferredRoom="pref",
+                              seatRollover=True)
     db_session.add(user)
     db_session.add(application)
     db_session.commit()
     db_session.delete(user)
-    assert db_session.query(Application).all() is None
+    assert db_session.query(Application).first() is None

@@ -103,26 +103,47 @@ def test_application_connect_to_seat(db_session):
     assert application.seat == seat
 
 
+def test_cascading_user(db_session):
+    user = User(username="yoo", sub="sub", email="email")
+    application = Application(
+        status="statusss",
+        needs="needs",
+        user=user,
+        partnerUsername="partnerUsername",
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
+    # TODO check seat and partnerApplication as well
+    db_session.add(user)
+    db_session.add(application)
+    db_session.commit()
+    db_session.expire_all()
+    db_session.delete(application)
+    db_session.commit()
     dbuser = db_session.query(User).first()
     assert dbuser == user
     assert user.application is None
 
 
 def test_cascading_partnerApplication(db_session):
-    user1 = User(username="August")
+    user1 = User(username="August", sub="sub", email="email")
     application1 = Application(
         status="statusss",
         needs="needs",
         user=user1,
         partnerUsername="Øggøst",
-        comments="comments")
-    user2 = User(username="Øggøst")
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
+    user2 = User(username="Øggøst", sub="sub2", email="email2")
     application2 = Application(
         status="statusss",
         needs="needs",
         user=user2,
         partnerUsername="August",
-        comments="comments")
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
     db_session.add(user1)
     db_session.add(user2)
     db_session.add(application1)
@@ -139,13 +160,15 @@ def test_cascading_partnerApplication(db_session):
 
 
 def test_cascading_seat(db_session):
-    user = User(username="yoo")
+    user = User(username="yoo", sub="sub", email="email")
     application = Application(
         status="statusss",
         needs="needs",
         user=user,
         partnerUsername="partnerUsername",
-        comments="comments")
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
     room = Room(name="room", info="info")
     seat = Seat(id="d1", room=room, info="info")
     # TODO check seat and partnerApplication as well
