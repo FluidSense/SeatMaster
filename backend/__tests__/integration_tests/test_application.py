@@ -8,7 +8,6 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
-from controllers.applicationController import filterOnStatus
 
 
 class TestApplication(TestCase):
@@ -213,24 +212,6 @@ class TestApplication(TestCase):
         allApplications = self.app.test_client().get('http://localhost:5000/application/all', headers=headers)
         assert allApplications.status == "200 OK"
         assert allApplications.data == jsonify([testApplication1.to_json(), testApplication2.to_json()]).data
-
-    def test_conditional_seat_return(self):
-        testuser1 = User("Frank")
-        testuser2 = User("Monster")
-        db.session.add(testuser1)
-        db.session.add(testuser2)
-        db.session.commit()
-        testapplication1 = Application("SUBMITTED", "", testuser1, None, "")
-        testapplication2 = Application("APPROVED", "needs", testuser2, None, "comments")
-        db.session.add(testapplication1)
-        db.session.add(testapplication2)
-        db.session.commit()
-        application1 = self.app.test_client().get('http://localhost:5000/application/1')
-        application2 = self.app.test_client().get('http://localhost:5000/application/2')
-        assert application1.status == "200 OK"
-        assert application1.data == jsonify(filterOnStatus(testapplication1.to_json())).data
-        assert application2.status == "200 OK"
-        assert application2.data == jsonify(testapplication2.to_json()).data
 
     def tearDown(self):
         self.postgres.stop()
