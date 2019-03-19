@@ -8,7 +8,23 @@ exports[`ViewRoom Renders 1 room correctly 1`] = `
   >
     <Presentational
       applications={Array []}
-    />
+    >
+      <div
+        className="main-content"
+      >
+        <Sidetittel>
+          <TypografiBase
+            type="sidetittel"
+          >
+            <h1
+              className="typo-sidetittel"
+            >
+              Applications
+            </h1>
+          </TypografiBase>
+        </Sidetittel>
+      </div>
+    </Presentational>
   </_Container>
 </Connect(_Container)>
 `;
@@ -21,7 +37,23 @@ exports[`ViewRoom Renders nothing correctly 1`] = `
   >
     <Presentational
       applications={Array []}
-    />
+    >
+      <div
+        className="main-content"
+      >
+        <Sidetittel>
+          <TypografiBase
+            type="sidetittel"
+          >
+            <h1
+              className="typo-sidetittel"
+            >
+              Applications
+            </h1>
+          </TypografiBase>
+        </Sidetittel>
+      </div>
+    </Presentational>
   </_Container>
 </Connect(_Container)>
 `;

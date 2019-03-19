@@ -5,7 +5,7 @@ import ApplicationLink from '../../components/AdminApplicationOverview/Applicati
 import Presentational from '../../components/AdminApplicationOverview/Presentational';
 
 const defaultUser = {
-  id:1,
+  id: 1,
   username: 'Kek',
 };
 
@@ -23,12 +23,12 @@ export const mockApplication = (
   user,
 });
 
-describe('View Room Presentational', () => {
+describe('AdminApplicationOverview Presentational', () => {
   it('Renders nothing', () => {
     const mockEmptyList: IApplication[] = [];
     const wrapper = shallow(<Presentational applications={mockEmptyList} />);
-    const links = wrapper.getElements()[0];
-    expect(links).toEqual(null);
+    const links = wrapper.find(ApplicationLink);
+    expect(links.length).toEqual(0);
   });
 
   it('Renders one item', () => {
