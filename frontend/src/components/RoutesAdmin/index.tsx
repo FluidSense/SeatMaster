@@ -5,8 +5,10 @@ import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
+import FAQ from '../FAQ';
 import Header from '../Header';
 import Home from '../Home';
+import Rooms from '../Rooms';
 import SideBar from '../SideBar';
 import ViewRoom from '../ViewRooms';
 
@@ -20,6 +22,9 @@ export const RoutesAdmin = () => {
           <Route exact={true} path="/" component={Home} />
 
           <Route path="/application" component={Application} />
+          <Route path="/FAQ" component={FAQ} />
+          <Route path="/rooms" component={Rooms} />
+
           <Route exact={true} path="/admin/rooms" component={ViewRoom} />
           <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
           <Route path="/admin/create-season" component={CreateSeason} />

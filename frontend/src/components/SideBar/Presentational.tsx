@@ -40,13 +40,6 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       </NavLink>
     </li>));
 
-  const adminUrlList = adminUrls.map(url => (
-    <li key={adminUrls.indexOf(url)}>
-      <NavLink to={url.url} exact={true}>
-        {url.title}
-      </NavLink>
-    </li>));
-
   if (!userInformation.admin) {
     return (
       <div id="side-bar">
@@ -59,6 +52,13 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       </div>
     );
   }
+
+  const adminUrlList = adminUrls.map(url => (
+    <li key={adminUrls.indexOf(url)}>
+      <NavLink to={url.url} exact={true}>
+        {url.title}
+      </NavLink>
+    </li>));
 
   return (
   <div id="side-bar">
