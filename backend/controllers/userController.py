@@ -28,6 +28,13 @@ def registerUser():
             return abort(401)
         if(ctx.idToken.get("sub") == userInfo.get("sub")):
             response, statusCode = userService.registerUser(userInfo)
+
+            userIsAdmin = False
+            try:
+                userIsAdmin = dataporten.checkIfAdmin(accessToken)
+            except HTTPError:
+                userIsAdmin = False
+            response['admin'] = userIsAdmin
             return make_response(jsonify(response), statusCode)
         else:
             abort(401)
@@ -39,4 +46,15 @@ def registerUser():
 def getSelf():
     ctx = _request_ctx_stack.top
     user = ctx.user
-    return jsonify(user.to_json()) if user else Response("{}", 401)
+    if not user:
+        return Response("{}", 401)
+
+    accessToken = get_token_auth_header("AccessToken")
+    userIsAdmin = False
+    try:
+        userIsAdmin = dataporten.checkIfAdmin(accessToken)
+    except HTTPError:
+        userIsAdmin = False
+    userJson = user.to_json()
+    userJson['admin'] = userIsAdmin
+    return jsonify(userJson)

@@ -104,10 +104,9 @@ def requiresAdmin(f):
     def decorated(*args, **kwargs):
         accessToken = get_token_auth_header("AccessToken")
         try:
-            groups = dataporten.getDataportenGroups(accessToken)
+            isAdmin = dataporten.checkIfAdmin(accessToken)
         except HTTPError:
             return Response("{'error':'Access token not valid'}", 401)
-        isAdmin = dataporten.checkIfAdmin(groups)
         if not isAdmin:
             return Response("{'error':'Access Denied'}", 403)
         return f(*args, **kwargs)
