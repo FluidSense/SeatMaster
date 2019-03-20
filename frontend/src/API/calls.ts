@@ -5,10 +5,10 @@ import {
   deleteJson,
   elevatedGetJson,
   elevatedPostJson,
+  elevatedPutJson,
   getJson,
   postJson,
   putJson,
-  elevatedPutJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
