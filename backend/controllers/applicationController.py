@@ -60,6 +60,8 @@ def registerApplication():
         )
         if "seat" in responseText:
             del responseText["seat"]
+        if "partnerApplication" in responseText and "seat" in responseText["partnerApplication"]:
+            del responseText["partnerApplication"]["seat"]
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
