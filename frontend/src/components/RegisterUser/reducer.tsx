@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux';
 
 export interface IRegisteredUserState {
+  admin: boolean;
   email?: string;
   fullname?: string;
   id?: number;
@@ -11,6 +12,7 @@ export interface IRegisteredUserState {
 }
 
 const initialState = {
+  admin: false,
   email: undefined,
   fullname: undefined,
   id: undefined,
@@ -36,6 +38,7 @@ export const registeredUserReducer = (
     case 'REMOVE_USER_DATA': {
       return {
         ...state,
+        admin: false,
         email: undefined,
         fullname: undefined,
         id: undefined,
