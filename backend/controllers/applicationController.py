@@ -13,7 +13,7 @@ def getApplicationBySelf():
     user = ctx.user
     userID = user.id
     userApplication = applicationService.getApplicationByUserId(userID)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
+    return jsonify(filterOnStatus(userApplication.to_json())) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/<id>")
@@ -58,5 +58,16 @@ def registerApplication():
             seatRollover=seatRollover,
             preferredRoom=preferredRoom
         )
+        if "seat" in responseText:
+            del responseText["seat"]
+        if "partnerApplication" in responseText and "seat" in responseText["partnerApplication"]:
+            del responseText["partnerApplication"]["seat"]
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+
+def filterOnStatus(applicationJson):
+    if applicationJson["status"] != "APPROVED":
+        del applicationJson["seat"]
+        return applicationJson
+    return applicationJson
