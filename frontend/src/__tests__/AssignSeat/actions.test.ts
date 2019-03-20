@@ -8,13 +8,17 @@ import { assignUserToSeat } from './../../components/AssignSeat/actions';
 import { SUCCESSFULL_SEAT_ASSIGNMENT } from './../../components/AssignSeat/constants';
 
 const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const mockStoreFactory = configureMockStore(middlewares);
+
+jest.mock('../../store', () => ({
+  getState: jest.fn(() => ({ oidc:{ user: { id_token: 'test' } } })),
+}));
 
 describe('actions', () => {
-  const store = mockStore();
+  const mockStore = mockStoreFactory();
   afterEach(() => {
     fetchMock.restore();
-    store.clearActions();
+    mockStore.clearActions();
   });
 
   const testUser: IUser = {
@@ -40,8 +44,8 @@ describe('actions', () => {
       type: SUCCESSFULL_SEAT_ASSIGNMENT,
     };
 
-    await store.dispatch<any>(assignUserToSeat(testUser, testSeat));
-    expect(store.getActions()).toContainEqual(expectedAction);
+    await mockStore.dispatch<any>(assignUserToSeat(testUser, testSeat));
+    expect(mockStore.getActions()).toContainEqual(expectedAction);
   });
 
   it('dispatches error if not success', async () => {
@@ -53,7 +57,7 @@ describe('actions', () => {
       status: 400,
     });
 
-    await store.dispatch<any>(assignUserToSeat(testUser, testSeat));
-    expect(store.getActions()).toEqual([]);
+    await mockStore.dispatch<any>(assignUserToSeat(testUser, testSeat));
+    expect(mockStore.getActions()).toEqual([]);
   });
 });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
-import { IApplicationInfoObject } from '../ApplicationReview';
+import { IApplication } from '../Application';
 import { IRoom, ISeat } from '../ViewRooms';
 import { assignUserToSeat } from './actions';
 import Presentational from './Presentational';
@@ -14,7 +14,7 @@ interface IDispatchProps {
 }
 
 interface IOwnProps {
-  application: IApplicationInfoObject;
+  application: IApplication;
   rooms: IRoom[];
 }
 
