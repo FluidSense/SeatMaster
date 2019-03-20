@@ -30,7 +30,7 @@ export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_U
 
 export const postSeason = (data: IPostApplicationSeason):
   PromiseLike<IApplicationSeason> => {
-  return postJson(SEASON_URL, data);
+  return elevatedPostJson(SEASON_URL, data);
 };
 
 export const getApplicationFormBySelf = ():
