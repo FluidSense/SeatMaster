@@ -6,9 +6,9 @@ const mapStateToProps = (state: IStore) => ({
   userInformation: state.userInformation,
 });
 
-const Routes = connect(
+const SideBar = connect(
   mapStateToProps,
   null,
 )(Presentational);
 
-export default Routes;
+export default SideBar;
