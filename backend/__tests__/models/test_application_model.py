@@ -101,3 +101,85 @@ def test_application_connect_to_seat(db_session):
     application.room_id = seat.room_id
     application.seat_id = seat.seat_id
     assert application.seat == seat
+
+
+def test_cascading_user(db_session):
+    user = User(username="yoo", sub="sub", email="email")
+    application = Application(
+        status="statusss",
+        needs="needs",
+        user=user,
+        partnerUsername="partnerUsername",
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
+    db_session.add(user)
+    db_session.add(application)
+    db_session.commit()
+    db_session.expire_all()
+    db_session.delete(application)
+    db_session.commit()
+    dbuser = db_session.query(User).first()
+    assert dbuser == user
+    assert user.application is None
+
+
+def test_cascading_partnerApplication(db_session):
+    user1 = User(username="August", sub="sub", email="email")
+    application1 = Application(
+        status="statusss",
+        needs="needs",
+        user=user1,
+        partnerUsername="Øggøst",
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
+    user2 = User(username="Øggøst", sub="sub2", email="email2")
+    application2 = Application(
+        status="statusss",
+        needs="needs",
+        user=user2,
+        partnerUsername="August",
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
+    db_session.add(user1)
+    db_session.add(user2)
+    db_session.add(application1)
+    db_session.add(application2)
+    application1.partnerApplication = application2
+    application2.partnerApplication = application1
+    db_session.commit()
+    db_session.expire_all()
+    db_session.delete(application1)
+    db_session.commit()
+    dbapplication = db_session.query(Application).first()
+    assert dbapplication == application2
+    assert dbapplication.partnerApplication is None
+
+
+def test_cascading_seat(db_session):
+    user = User(username="yoo", sub="sub", email="email")
+    application = Application(
+        status="statusss",
+        needs="needs",
+        user=user,
+        partnerUsername="partnerUsername",
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True)
+    room = Room(name="room", info="info")
+    seat = Seat(id="d1", room=room, info="info")
+    application.room_id = seat.room_id
+    application.seat_id = seat.seat_id
+    db_session.add(user)
+    db_session.add(application)
+    db_session.add(room)
+    db_session.add(seat)
+    db_session.commit()
+    db_session.expire_all()
+    db_session.delete(application)
+    db_session.commit()
+    dbseat = db_session.query(Seat).first()
+    assert dbseat == seat
+    assert user.application is None
