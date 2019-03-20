@@ -8,8 +8,8 @@ const setUserData = (payload: IUser) => ({
   type: 'SET_USER_DATA',
 });
 
-export const postCreateUser = (accessToken: string):
+export const postCreateUser = ():
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const result = await postNewCreateUser(accessToken);
+    const result = await postNewCreateUser();
     if (result) dispatch(setUserData(result));
   };

@@ -32,4 +32,5 @@ export interface IUser {
   id: number;
   masterStatus: string;
   username: string;
+  admin: boolean;
 }
