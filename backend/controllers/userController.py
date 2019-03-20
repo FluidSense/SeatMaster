@@ -35,7 +35,6 @@ def registerUser():
             except HTTPError:
                 userIsAdmin = False
             response['admin'] = userIsAdmin
-            
             return make_response(jsonify(response), statusCode)
         else:
             abort(401)

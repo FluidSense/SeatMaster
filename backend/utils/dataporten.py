@@ -20,7 +20,7 @@ def checkIfAdmin(accessToken):
     groups = {}
     groups = getDataportenGroups(accessToken)
     for group in groups:
-        #TODO: Make call to actual admin BAS endpoint
+        # TODO: Make call to actual admin BAS endpoint
         if(group.get('id', None) == "fc:fs:fs:emne:ntnu.no:TDT4136:1"):
             return True
     return False
