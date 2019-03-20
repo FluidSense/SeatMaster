@@ -8,6 +8,7 @@ import {
   getJson,
   postJson,
   putJson,
+  elevatedPutJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
@@ -42,12 +43,12 @@ export const getApplicationFormBySelf = ():
 
 export const getApplicationFormByUsername = (username: string):
   PromiseLike<IApplication> => {
-  return getJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
+  return elevatedGetJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
 };
 
 export const getAllApplications = ():
   PromiseLike<IApplication[]> => {
-  return getJson(GET_ALL_APPLICATIONS_URL);
+  return elevatedGetJson(GET_ALL_APPLICATIONS_URL);
 };
 
 export const postApplicationForm = (data: IPostApplicationForm):
@@ -83,5 +84,5 @@ export const deleteRoom = (id: number): PromiseLike<IRoom> => {
 };
 
 export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
-  return putJson(ASSIGN_SEAT_URL, data);
+  return elevatedPutJson(ASSIGN_SEAT_URL, data);
 };
