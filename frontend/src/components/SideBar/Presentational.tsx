@@ -51,7 +51,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     return (
       <div id="side-bar">
         <nav>
-          <Systemtittel>{userTitle}</Systemtittel>
+          <Systemtittel className="user-title">{userTitle}</Systemtittel>
           <ul className="nav-list">
             {userUrlList}
           </ul>
@@ -63,11 +63,11 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   return (
   <div id="side-bar">
     <nav>
-      <Systemtittel>{userTitle}</Systemtittel>
+      <Systemtittel className="user-title">{userTitle}</Systemtittel>
       <ul className="nav-list">
         {userUrlList}
       </ul>
-      <Systemtittel>{adminTitle}</Systemtittel>
+      <Systemtittel className="admin-title">{adminTitle}</Systemtittel>
       <ul className="nav-list">
         {adminUrlList}
       </ul>
