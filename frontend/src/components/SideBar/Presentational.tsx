@@ -19,6 +19,8 @@ const adminTitle = 'Administrator tools';
 const userUrls: IUrl[] = [
   { url: '/', title: 'Home' },
   { url: '/application/', title: 'Application' },
+  { url: '/rooms/', title: 'Room list' },
+  { url: '/FAQ/', title: 'FAQ' },
 ];
 
 const adminUrls: IUrl[] = [
