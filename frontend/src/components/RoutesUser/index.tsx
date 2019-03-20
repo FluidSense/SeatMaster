@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Application from '../Application/index';
-import CreateSeason from '../CreateSeason';
 import FAQ from '../FAQ';
 import Header from '../Header';
 import Home from '../Home';
