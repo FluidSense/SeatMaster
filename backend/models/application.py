@@ -27,12 +27,12 @@ class Application(db.Model):
 
     userid = db.Column(
         db.Integer,
-        db.ForeignKey("users.userid"))
+        db.ForeignKey("users.userid")
+    )
 
     user = db.relationship(
         "User",
         uselist=False,
-        cascade="all, delete",
         back_populates="application")
 
     partnerUsername = db.Column(
@@ -47,7 +47,6 @@ class Application(db.Model):
     partnerApplication = db.relationship(
         "Application",
         uselist=False,
-        cascade="all, delete",
         backref='partnersApplication',
         remote_side="Application.id",
         post_update=True)
@@ -70,7 +69,8 @@ class Application(db.Model):
         db.ForeignKeyConstraint(
             [room_id, seat_id],
             [Seat.room_id, Seat.seat_id]),
-        {})
+        {}
+    )
 
     seat = db.relationship(
         Seat,

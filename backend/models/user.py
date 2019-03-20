@@ -28,6 +28,7 @@ class User(db.Model):
     application = db.relationship(
         "Application",
         uselist=False,
+        cascade="all, delete",
         back_populates="user")
 
     def __init__(self, username, sub, email):
