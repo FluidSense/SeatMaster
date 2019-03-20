@@ -8,10 +8,11 @@ interface IProps {
   applications: IApplication[];
 }
 
+const title = <Sidetittel>{_APPLICATIONS_TITLE}</Sidetittel>;
+
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { applications } = props;
-  if (!applications) return null;
-  if (!applications.length) return null;
+  if (!applications || !applications.length) return <div className="main-content">{title}</div>;
   const applicationList = applications.map(application => (
     <ApplicationLink key={application.id} application={application} />
   ));
