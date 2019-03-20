@@ -8,6 +8,7 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
+from controllers.applicationController import filterOnStatus
 
 
 class TestApplication(TestCase):
@@ -98,7 +99,7 @@ class TestApplication(TestCase):
         assert expectedApplicationResponse.status == response.status
         assert expectedApplicationResponse.data == response.data
         assert getApplication.status == "200 OK"
-        assert getApplication.data == expectedApplicationResponse.data
+        assert filterOnStatus(json.loads(getApplication.data)) == json.loads(expectedApplicationResponse.data)
 
     @mock_authentication_context
     def test_new_application_with_existing_partner(self):
@@ -170,14 +171,16 @@ class TestApplication(TestCase):
                 "status": "SUBMITTED",
                 "preferredRoom": "d1",
                 "seatRollover": True,
-                "user": {"id": 1, "username": testuser1.username, "email": testuser1.email}
+                "user": {"id": 1, "username": testuser1.username, "email": testuser1.email},
+                "seat": None,
             },
+            seat=None,
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2', headers=headers)
         assert user1expectedResponse.status == user1Response.status
         assert user1expectedResponse.data == user1Response.data
         assert getApplication.status == "200 OK"
-        assert getApplication.data == expectedConnectedApplication.data
+        assert json.loads(getApplication.data) == json.loads(expectedConnectedApplication.data)
 
     @mock_authentication_context
     def test_get_all_applications(self):
