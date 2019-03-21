@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { postSeat } from '../../API/calls';
+import { postSeat, deleteSeat } from '../../API/calls';
 import { IPostSeat } from '../../API/interfaces';
 import { ISeat } from '../ViewRooms';
 import { CREATE_SEAT, DELETE_SEAT, UPDATE_SEAT } from './constants';
@@ -44,4 +44,11 @@ export const createSeatAction = (seat: IPostSeat):
     const result = await postSeat(seat);
     if (result) dispatch(seatCreated(true, result));
     else dispatch(seatCreated(false));
+  };
+
+export const deleteSeatAction = (roomId: number, seatId: string):
+  ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+    const result = await deleteSeat(roomId, seatId);
+    if (result) dispatch(seatDeleted(true));
+    else dispatch(seatDeleted(false))
   };

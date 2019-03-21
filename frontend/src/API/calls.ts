@@ -60,3 +60,7 @@ export const deleteRoom = (id: number): PromiseLike<IRoom> => {
 export const postSeat = (data: IPostSeat): PromiseLike<ISeat> => {
   return postJson(SEAT_URL, data);
 };
+
+export const deleteSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
+  return deleteJson(SEAT_URL, roomId, seatId)
+}

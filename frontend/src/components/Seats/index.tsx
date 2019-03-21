@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
-import { createSeatAction } from './actions';
+import { createSeatAction, deleteSeatAction } from './actions';
 import Presentational from './Presentational';
 import { IPostSeat } from '../../API/interfaces';
 
@@ -24,6 +24,7 @@ interface IProps {
 
 interface IDispatchProps {
   createSeat: (data: IPostSeat, roomId: number) => void;
+  deleteSeat: (roomId: number, seatId: string) => void;
   createSeatClick: (seats: ISeat[], roomId: number) => void;
 }
 
@@ -57,12 +58,13 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { roomId, seats } = this.state;
-    const { createSeatClick } = this.props;
+
     return (
       <Presentational
         roomId={roomId}
         seats={seats}
-        createSeatClick={this.create}
+        createSeat={this.create}
+        deleteSeat={this.delete}
       />
     );
   }
@@ -93,6 +95,15 @@ class _Container extends Component<Props, IState> {
 
     createSeat(seat, roomId);
   }
+
+  private delete = (id: string) => {
+    const { deleteSeat } = this.props;
+    const { roomId } = this.state;
+    this.setState(prevState => ({
+      seats: prevState.seats.filter(seat => seat.id !== id),
+    }))
+    deleteSeat(roomId, id);
+  }
 }
 
 const mapStateToProps = (state: IStore, ownProps: any) => ({
@@ -100,6 +111,7 @@ const mapStateToProps = (state: IStore, ownProps: any) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
   createSeat: (data: IPostSeat) => dispatch(createSeatAction(data)),
+  deleteSeat: (roomId: number, seatId: string) => dispatch(deleteSeatAction(roomId, seatId)),
 });
 
 const Container = connect(

@@ -7,17 +7,27 @@ import { _CHANGE_ID } from './strings';
 
 interface IProps {
   id: string;
+  deleteSelf: (id: string) => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { id } = props;
+  const { id, deleteSelf } = props;
+
+  const deleteSeat = () => {
+    console.log('called delete', id);
+    deleteSelf(id);
+  }
+
+  const changeId = () => {
+    console.log('changeId button pressed.')
+  }
 
   return (
     <>
       <Panel border={true}>
         <Input label={'Seat ID'} bredde="S" placeholder={id} />
-        <Knapp>{_CHANGE_ID}</Knapp>
-        <Lukknapp bla={true} />
+        <Knapp onClick={changeId}>{_CHANGE_ID}</Knapp>
+        <Lukknapp bla={true} onClick={deleteSeat} />
       </Panel>
     </>
   );
