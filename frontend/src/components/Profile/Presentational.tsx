@@ -34,6 +34,7 @@ export class Presentational extends React.Component<IProps, IState> {
     return (
       <>
       <Modal
+        className="deletionModal"
         isOpen={this.state.modalOpen}
         onRequestClose={this.changeModal}
         closeButton={true}
@@ -45,6 +46,7 @@ export class Presentational extends React.Component<IProps, IState> {
           <br />
           <br />
           <KnappBase
+            className="deleteButton"
             type="fare"
             htmlType="submit"
             autoDisableVedSpinner={true}
@@ -88,6 +90,7 @@ export class Presentational extends React.Component<IProps, IState> {
         <br />
 
         <KnappBase
+          className="modalButton"
           type="hoved"
           htmlType="submit"
           autoDisableVedSpinner={true}
