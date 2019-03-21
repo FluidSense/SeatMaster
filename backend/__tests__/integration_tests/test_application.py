@@ -169,6 +169,7 @@ class TestApplication(TestCase):
             user={"id": 2, "username": testuser2.username, "email": testuser2.email, "fullname": testuser2.fullname},
             preferredRoom="d1",
             seatRollover=True,
+            seat=None,
             partnerApplication={
                 "needs": "Fanta is better than solo",
                 "comments": "Bruh wtf",
@@ -176,21 +177,20 @@ class TestApplication(TestCase):
                 "status": "SUBMITTED",
                 "preferredRoom": "d1",
                 "seatRollover": True,
+                "seat": None,
                 "user": {
                     "id": 1,
                     "username": testuser1.username,
                     "email": testuser1.email,
                     "fullname": testuser1.fullname
                 },
-                "seat": None,
             },
-            seat=None,
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2', headers=headers)
         assert user1expectedResponse.status == user1Response.status
         assert user1expectedResponse.data == user1Response.data
         assert getApplication.status == "200 OK"
-        assert json.loads(getApplication.data) == json.loads(expectedConnectedApplication.data)
+        assert json.loads(expectedConnectedApplication.data) == json.loads(getApplication.data)
 
     @mock_authentication_context
     def test_get_all_applications(self):

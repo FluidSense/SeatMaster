@@ -5,7 +5,13 @@ import { ThunkDispatch } from 'redux-thunk';
 import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IRoom } from '../ViewRooms';
-import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
+import {
+  createRoomAction,
+  deleteRoomAction,
+  fetchRoomInformation,
+  resetPage,
+  updateRoomAction,
+} from './actions';
 import './adminRoom.css';
 import { ROUTE_TO } from './constants';
 import Presentational from './Presentational';
@@ -29,12 +35,14 @@ interface IDispatchProps {
   createRoom: (data: IPostRoom) => void;
   updateRoom: (data: IPostRoom, id: number) => void;
   deleteRoom: (id: number) => void;
+  fetchRoomInfo: (id: number) => void;
   reset: () => void;
 }
 
 interface IStateProps {
   submitted?: boolean;
   error?: string;
+  room: any;
 }
 
 type Props = IDispatchProps & IStateProps & IProps;
@@ -79,9 +87,10 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { buttonDisabled, roomName, roomNotes, room, showAlert } = this.state;
-    const { submitted, reset, error } = this.props;
+    const { submitted, reset, error, fetchRoomInfo } = this.props;
     const onClick = room ? this.updateRoom : this.createRoom;
     const roomExists = room ? true : false;
+    const roomId = room ? room.id : -1;
     if (submitted) {
       reset();
       return <Redirect to={ROUTE_TO} />;
@@ -98,6 +107,8 @@ class _Container extends Component<Props, IState> {
         showAlert={showAlert}
         alertMessage={error}
         roomExists={roomExists}
+        room={room}
+        fetchRoom={fetchRoomInfo}
       />
     );
   }
@@ -136,12 +147,14 @@ class _Container extends Component<Props, IState> {
 
 const mapStateToProps = (state: IStore) => ({
   error: state.adminRoom.error,
+  room: state.adminRoom.room,
   submitted: state.adminRoom.submitted,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   createRoom: (data: IPostRoom) => dispatch(createRoomAction(data)),
   deleteRoom: (id: number) => dispatch(deleteRoomAction(id)),
+  fetchRoomInfo: (roomId: number) => dispatch(fetchRoomInformation(roomId)),
   reset: () => dispatch(resetPage()),
   updateRoom: (data: IPostRoom, id: number) => dispatch(updateRoomAction(data, id)),
 });

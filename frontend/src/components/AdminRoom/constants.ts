@@ -4,3 +4,4 @@ export const DELETE_ROOM = 'DELETE_ROOM';
 export const ROOM_SUCCESS = 'ROOM_SUCCESS';
 export const RESET_PAGE = 'RESET_PAGE';
 export const ROUTE_TO = '/admin/rooms';
+export const FETCH_ROOM_CSV = 'FETCH_ROOM_CSV';

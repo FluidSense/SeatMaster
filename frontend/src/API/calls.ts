@@ -16,6 +16,7 @@ import {
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
+  GET_SEAT_URL,
   GET_USER_URL,
   POST_FORM_DATA_URL,
   POST_NEW_USER_URL,
@@ -91,4 +92,8 @@ export const deleteRoom = (id: number): PromiseLike<IRoom> => {
 
 export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
   return elevatedPutJson(ASSIGN_SEAT_URL, data);
+};
+
+export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
+  return getJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
 };
