@@ -19,7 +19,7 @@ export const Presentational: React.FunctionComponent<IProps> = (props) => {
 
   return (
     // TODO: make header show userInformation.fullname when backend supports it.
-    <div id="student-header">
+    <div className="student-header">
       {`You're logged in as ${userInformation.fullname}`}
       <KnappBase
         type="hoved"
