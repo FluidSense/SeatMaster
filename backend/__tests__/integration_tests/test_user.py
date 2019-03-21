@@ -8,6 +8,7 @@ from unittest import TestCase
 from jose import jwt
 import json
 from __tests__.testUtils.constants import token, decodedToken
+from __tests__.testUtils.authentication import mock_authentication_context
 
 
 def createUser():
@@ -104,6 +105,64 @@ class TestRoom(TestCase):
             assert user.username == "elevG"
             assert user.email == "4s8j0rng@ELEV_GGGGGG.no"
             assert response.data == jsonify(user.to_json()).data
+
+    @mock_authentication_context
+    def test_delete_all_students(self):
+        user1 = User("name", "sub", "email")
+        user2 = User("name2", "sub2", "email2")
+        db.session.add(user1)
+        db.session.add(user2)
+        db.session.commit()
+        headers = {
+            "Authorization": self.token,
+            "Content-type": "application/json",
+            "AccessToken": "123"
+        }
+
+        response = self.app.test_client().delete(
+            "http://localhost:5000/user/deleteAll",
+            headers=headers)
+        user = db.session.query(User).first()
+        assert response.status == "200 OK"
+        assert user is None
+
+    @mock_authentication_context
+    def test_delete_single_student(self):
+        user1 = User("name", "sub", "email")
+        user2 = User("name2", "sub2", "email2")
+        db.session.add(user1)
+        db.session.add(user2)
+        db.session.commit()
+        headers = {
+            "Authorization": self.token,
+            "Content-type": "application/json",
+            "AccessToken": "123"
+        }
+
+        response = self.app.test_client().delete(
+            "http://localhost:5000/user/1",
+            headers=headers)
+        user = db.session.query(User).all()
+        assert response.status == "200 OK"
+        assert user == [user2]
+
+    @mock_authentication_context
+    def test_delete_self(self):
+        user = User("name", "55de7d71-4a25-4103-8e43-35df8c2d472a", "email")
+        db.session.add(user)
+        db.session.commit()
+        headers = {
+            "Authorization": self.token,
+            "Content-type": "application/json",
+            "AccessToken": "123"
+        }
+
+        response = self.app.test_client().delete(
+            "http://localhost:5000/user/",
+            headers=headers)
+        user = db.session.query(User).all()
+        assert response.status == "200 OK"
+        assert user == []
 
     def tearDown(self):
         self.postgres.stop()

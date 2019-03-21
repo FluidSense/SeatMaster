@@ -40,3 +40,28 @@ def getSelf():
     ctx = _request_ctx_stack.top
     user = ctx.user
     return jsonify(user.to_json()) if user else Response("{}", 401)
+
+
+@user.route("/", methods=["DELETE"])
+@requiresUser
+def deleteSelf():
+    ctx = _request_ctx_stack.top
+    user = ctx.user
+    print(ctx.user)
+    print(ctx.idToken)
+    response, successCode = userService.deleteUser(user.id)
+    return Response(jsonify(response), successCode)
+
+
+@user.route("/<id>", methods=["DELETE"])
+@requiresAdmin
+def deleteUser(id):
+    response, successCode = userService.deleteUser(id)
+    return Response(jsonify(response), successCode)
+
+
+@user.route("/deleteAll", methods=["DELETE"])
+@requiresAdmin
+def deleteAllUsers():
+    response, successCode = userService.deleteAllUsers()
+    return Response(jsonify(response), successCode)
