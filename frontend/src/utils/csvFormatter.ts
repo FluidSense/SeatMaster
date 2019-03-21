@@ -1,32 +1,33 @@
 import { IRoom, ISeat } from '../components/ViewRooms';
 
-export const columns = [{
-  displayName: 'Full name',
-  id: 'name',
-}, {
-  displayName: 'NTNU Username',
-  id: 'username',
-}];
+export const headers = [
+  { label: 'Full Name', key: 'fullname' },
+  { label: 'NTNU Username', key: 'username' },
+];
 
 interface ISeatWithUser extends ISeat {
-  user: {
+  user?: {
     id: number;
     username: string;
     name: string;
   };
 }
 
-interface IRoomWithUsers extends IRoom {
+export interface IRoomWithUsers extends IRoom {
   seats: {
     count: number,
     seats: ISeatWithUser[],
   };
 }
 
-export const formatCsv = (data: IRoomWithUsers) => {
-  const users = data.seats.seats.map((seat: ISeatWithUser) => {
+const formatCsv = (data: IRoomWithUsers) => {
+  const filteredSeats = data.seats.seats.filter((seat: ISeatWithUser) => seat.user !== undefined);
+  const users = filteredSeats.map((seat: ISeatWithUser) => {
     const { user } = seat;
-    return ({ name: user.name, username: user.username });
+    if (!user) return {};
+    return ({ fullname: user.name, username: user.username });
   });
   return users;
 };
+
+export default formatCsv;

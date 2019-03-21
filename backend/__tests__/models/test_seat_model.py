@@ -40,7 +40,7 @@ def test_seat_serialization(db_session):
         info="",)
     db_session.add(seat)
     db_session.commit()
-    expectedJson = dict(id=seat.seat_id, info=seat.info, roomId=seat.room_id)
+    expectedJson = dict(id=seat.seat_id, info=seat.info, roomId=seat.room_id, user=None)
     seat = db_session.query(Seat).first()
     assert seat.to_json() == expectedJson
 
