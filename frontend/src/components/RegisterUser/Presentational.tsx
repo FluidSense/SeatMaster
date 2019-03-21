@@ -1,8 +1,10 @@
 import KnappBase from 'nav-frontend-knapper';
+import Veilederpanel from 'nav-frontend-veilederpanel';
 import * as React from 'react';
 import { UserState } from 'redux-oidc';
 import userManager from '../../utils/userManager';
 import { _USER_CONFIRMATION_TEXT, _USER_REGISTRATION_TEXT } from './constants';
+import veileder from './veileder';
 
 interface IDispatchProps {
   postCreateUser: () => void;
@@ -39,10 +41,12 @@ export const Presentational: React.FunctionComponent<Props> = (props) => {
 
   return (
     <div style={{ padding: '2rem 2.5rem' }}>
-      {_USER_REGISTRATION_TEXT}
-      <br />
-      {_USER_CONFIRMATION_TEXT}
-      <br />
+      <Veilederpanel type={'plakat'} kompakt={true} svg={veileder}>
+        {_USER_REGISTRATION_TEXT}
+        <br />
+        {_USER_CONFIRMATION_TEXT}
+        <br />
+      </Veilederpanel>
       <KnappBase
         type="hoved"
         htmlType="submit"
