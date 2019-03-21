@@ -7,11 +7,12 @@ import thunk from 'redux-thunk';
 import AdminApplicationOverview from '../../components/AdminApplicationOverview';
 import { mockApplication } from './Presentational.test';
 
-describe('ViewRoom', () => {
+describe('AdminApplicationOverview', () => {
   const middlewares = [thunk];
   const mockStore = configureMockStore(middlewares);
   const store = mockStore({
     applications: { applications: [] },
+    rooms: { rooms: [] },
   });
   it('Renders nothing correctly', () => {
     const wrapper = mount(

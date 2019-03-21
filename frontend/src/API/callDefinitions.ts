@@ -56,59 +56,63 @@ export const getJson = (url: string) => fetch(url, {
   .catch(() => false);
 
 // Admin calls
-const elevatedGenericFetch = (fetchType: fetchTypes, url: string, data: any, token: string) => {
+const elevatedGenericFetch = (fetchType: fetchTypes, url: string, data: any) => {
   return fetch(url, {
     body: JSON.stringify(data),
     headers: {
+      AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
       Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
       'Content-Type': 'application/json',
-      accessToken: `Bearer ${token}`,
     },
     method: fetchType,
   });
 };
 
-const elevatedPostFetch = (url: string, data: any, token: string) =>
-  elevatedGenericFetch('POST', url, data, token);
-const elevatedPutFetch = (url: string, data: any, token: string) =>
-  elevatedGenericFetch('PUT', url, data, token);
-const elevatedDeleteFetch = (url: string, id: any, token: string) => {
+const elevatedPostFetch = (url: string, data: any) =>
+  elevatedGenericFetch('POST', url, data);
+const elevatedPutFetch = (url: string, data: any) =>
+  elevatedGenericFetch('PUT', url, data);
+const elevatedDeleteFetch = (url: string, id: any) => {
   return fetch(`${url}${id}`, {
     headers: {
+      AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
       Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
-      accessToken: `Bearer ${token}`,
     },
     method: 'DELETE',
   });
 };
 
-export const elevatedPostJson = (url: string, data: any, token: string) => {
-  return elevatedPostFetch(url, data, token)
+export const elevatedPostJson = (url: string, data: any) => {
+  return elevatedPostFetch(url, data)
     .then(response => response.ok
       ? response.json()
       : false)
     .catch(() => false);
 };
 
-export const elevatedPutJson = (url: string, data: any, token: string) => {
-  return elevatedPutFetch(url, data, token)
+export const elevatedPutJson = (url: string, data: any) => {
+  return elevatedPutFetch(url, data)
     .then(response => response.ok
       ? response.json()
       : false)
     .catch(() => false);
 };
 
-export const elevatedDeleteJson = (url: string, id: any, token: string) => {
-  return elevatedDeleteFetch(url, id, token)
+export const elevatedDeleteJson = (url: string, id: any) => {
+  return elevatedDeleteFetch(url, id)
     .then(response => response.ok
       ? response.json()
       : false)
     .catch(() => false);
 };
 
-export const elevatedGetJson = (url: string, token: string) => fetch(url, {
+export const elevatedGetJson = (url: string) => fetch(url, {
   headers: {
+    AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
     Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
-    accessToken: token,
   },
-});
+})
+  .then(response => response.ok
+    ? response.json()
+    : false)
+  .catch(() => false);

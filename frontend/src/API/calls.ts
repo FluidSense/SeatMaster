@@ -1,8 +1,16 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
-import { IRoom } from '../components/ViewRooms';
-import { deleteJson, elevatedPostJson, getJson, postJson, putJson } from './callDefinitions';
+import { IRoom, ISeat } from '../components/ViewRooms';
 import {
+  elevatedDeleteJson,
+  elevatedGetJson,
+  elevatedPostJson,
+  elevatedPutJson,
+  getJson,
+  postJson,
+} from './callDefinitions';
+import {
+  ASSIGN_SEAT_URL,
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
@@ -16,6 +24,7 @@ import {
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
+  IPutUserOnSeat,
   IUser,
 } from './interfaces';
 
@@ -23,7 +32,7 @@ export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_U
 
 export const postSeason = (data: IPostApplicationSeason):
   PromiseLike<IApplicationSeason> => {
-  return postJson(SEASON_URL, data);
+  return elevatedPostJson(SEASON_URL, data);
 };
 
 export const getApplicationFormBySelf = ():
@@ -33,12 +42,12 @@ export const getApplicationFormBySelf = ():
 
 export const getApplicationFormByUsername = (username: string):
   PromiseLike<IApplication> => {
-  return getJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
+  return elevatedGetJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
 };
 
 export const getAllApplications = ():
   PromiseLike<IApplication[]> => {
-  return getJson(GET_ALL_APPLICATIONS_URL);
+  return elevatedGetJson(GET_ALL_APPLICATIONS_URL);
 };
 
 export const postApplicationForm = (data: IPostApplicationForm):
@@ -46,11 +55,13 @@ export const postApplicationForm = (data: IPostApplicationForm):
   return postJson(POST_FORM_DATA_URL, data);
 };
 
-export const getUserData = (): PromiseLike<IUser> => getJson(GET_USER_URL);
+export const getUserData = (): PromiseLike<IUser> => {
+  return elevatedGetJson(GET_USER_URL);
+};
 
-export const postNewCreateUser = (accessToken: string):
+export const postNewCreateUser = ():
   PromiseLike<IUser> => {
-  return elevatedPostJson(POST_NEW_USER_URL, {}, accessToken);
+  return elevatedPostJson(POST_NEW_USER_URL, {});
 };
 
 export const getRoom = (id: number): PromiseLike<IRoom> => {
@@ -60,13 +71,17 @@ export const getRoom = (id: number): PromiseLike<IRoom> => {
 export const getAllRooms = (): PromiseLike<[IRoom]> => getJson(ROOM_URL);
 
 export const postRoom = (data: IPostRoom): PromiseLike<IRoom> => {
-  return postJson(ROOM_URL, data);
+  return elevatedPostJson(ROOM_URL, data);
 };
 
 export const putRoom = (data: IPostRoom, id: number): PromiseLike<IRoom> => {
-  return putJson(`${ROOM_URL}${id}`, data);
+  return elevatedPutJson(`${ROOM_URL}${id}`, data);
 };
 
 export const deleteRoom = (id: number): PromiseLike<IRoom> => {
-  return deleteJson(ROOM_URL, id);
+  return elevatedDeleteJson(ROOM_URL, id);
+};
+
+export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
+  return elevatedPutJson(ASSIGN_SEAT_URL, data);
 };

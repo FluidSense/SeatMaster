@@ -91,7 +91,7 @@ class TestSeat(TestCase):
     @mock_authentication_context
     def test_assign_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello", "sub", "email")
+        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
             status="lol",
@@ -128,7 +128,7 @@ class TestSeat(TestCase):
     @mock_authentication_context
     def test_remove_student_from_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello", "sub", "email")
+        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
             status="lol",
