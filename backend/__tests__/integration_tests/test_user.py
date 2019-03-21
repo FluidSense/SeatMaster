@@ -17,7 +17,7 @@ def createUser():
         sub="55de7d71-4a25-4103-8e43-35df8c2d472a",
         email="noreply@feide.no",
         fullname="Asbjørn ELEVG baby"
-        )
+    )
     db.session.add(user)
     db.session.commit()
     return user
@@ -114,8 +114,8 @@ class TestRoom(TestCase):
 
     @mock_authentication_context
     def test_delete_all_students(self):
-        user1 = User("name", "sub", "email")
-        user2 = User("name2", "sub2", "email2")
+        user1 = createUser()
+        user2 = User(username="name2", sub="sub2", email="email2", fullname="hei")
         db.session.add(user1)
         db.session.add(user2)
         db.session.commit()
@@ -134,8 +134,8 @@ class TestRoom(TestCase):
 
     @mock_authentication_context
     def test_delete_single_student(self):
-        user1 = User("name", "sub", "email")
-        user2 = User("name2", "sub2", "email2")
+        user1 = createUser()
+        user2 = User(username="name2", sub="sub2", email="email2", fullname="sad")
         db.session.add(user1)
         db.session.add(user2)
         db.session.commit()
@@ -154,7 +154,7 @@ class TestRoom(TestCase):
 
     @mock_authentication_context
     def test_delete_self(self):
-        user = User("name", "55de7d71-4a25-4103-8e43-35df8c2d472a", "email")
+        user = createUser()
         db.session.add(user)
         db.session.commit()
         headers = {
