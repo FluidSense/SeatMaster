@@ -5,8 +5,9 @@ type fetchTypes = 'POST' | 'PUT' | 'DELETE';
 // User
 const postFetch = (url: string, data: any) => genericFetch('POST', url, data);
 const putFetch = (url: string, data: any) => genericFetch('PUT', url, data);
-const deleteFetch = (url: string, id: any) => {
-  return fetch(`${url}${id}`, {
+const deleteFetch = (url: string, id?: any) => {
+  const param = id ? id : '';
+  return fetch(`${url}${param}`, {
     headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
     method: 'DELETE',
   });
@@ -39,7 +40,7 @@ export const putJson = (url: string, data: any) => {
     .catch(() => false);
 };
 
-export const deleteJson = (url: string, id: any) => {
+export const deleteJson = (url: string, id?: any) => {
   return deleteFetch(url, id)
     .then(response => response.ok
       ? response.json()
@@ -72,8 +73,9 @@ const elevatedPostFetch = (url: string, data: any) =>
   elevatedGenericFetch('POST', url, data);
 const elevatedPutFetch = (url: string, data: any) =>
   elevatedGenericFetch('PUT', url, data);
-const elevatedDeleteFetch = (url: string, id: any) => {
-  return fetch(`${url}${id}`, {
+const elevatedDeleteFetch = (url: string, id?: any) => {
+  const param = id ? id : '';
+  return fetch(`${url}${param}`, {
     headers: {
       AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
       Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
@@ -98,7 +100,7 @@ export const elevatedPutJson = (url: string, data: any) => {
     .catch(() => false);
 };
 
-export const elevatedDeleteJson = (url: string, id: any) => {
+export const elevatedDeleteJson = (url: string, id?: any) => {
   return elevatedDeleteFetch(url, id)
     .then(response => response.ok
       ? response.json()
