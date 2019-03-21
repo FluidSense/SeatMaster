@@ -71,7 +71,7 @@ def test_application_connect_to_seat(db_session):
         room=room,
         info="")
     db_session.add(seat)
-    user = User("yooyo", "sub", "email")
+    user = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
     db_session.add(user)
     application = Application(
         status="",
@@ -96,7 +96,7 @@ def test_cascading(db_session):
     db_session.commit()
     seat = Seat(id="D1", room=room, info="info")
     seat2 = Seat(id="D2", room=room, info="info")
-    user = User(username="name", sub="sub", email="email")
+    user = User(username="name", sub="sub", email="email", fullname="Dudeman")
     application = Application(
         status="SUBMITTED",
         needs="needs",

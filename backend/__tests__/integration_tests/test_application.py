@@ -24,7 +24,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_without_partner(self):
-        testuser = User("Frank", decodedToken.get("sub"), "email")
+        testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
@@ -52,7 +52,7 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username, "email": "email"},
+            user={"id": 1, "username": testuser.username, "email": "email", "fullname": "Franky Frank"},
             partnerApplication={},
             preferredRoom="d1",
             seatRollover=True,
@@ -62,7 +62,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_without_existing_partner(self):
-        testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email")
+        testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
@@ -90,7 +90,7 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username, "email": "email"},
+            user={"id": 1, "username": testuser.username, "email": "email", "fullname": "Franky Frank"},
             partnerApplication={},
             preferredRoom="d1",
             seatRollover=True,
@@ -103,8 +103,8 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_with_existing_partner(self):
-        testuser1 = User("Frank", decodedToken.get("sub"), "email")
-        testuser2 = User("Monster", "sub", "emails")
+        testuser1 = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="sub", email="emails", fullname="Schmemails")
         testApplication = Application(
             "SUBMITTED",
             "Pepsi is better than coke",
@@ -142,7 +142,7 @@ class TestApplication(TestCase):
             comments="Bruh wtf",
             id=2,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser1.username, "email": testuser1.email},
+            user={"id": 1, "username": testuser1.username, "email": testuser1.email, "fullname": testuser1.fullname},
             preferredRoom="d1",
             seatRollover=True,
             partnerApplication={
@@ -150,7 +150,12 @@ class TestApplication(TestCase):
                 "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
                 "status": "SUBMITTED",
-                "user": {"id": 2, "username": testuser2.username, "email": testuser2.email},
+                "user": {
+                    "id": 2,
+                    "username": testuser2.username,
+                    "email": testuser2.email,
+                    "fullname": testuser2.fullname
+                },
                 "preferredRoom": "d1",
                 "seatRollover": True,
             },
@@ -161,7 +166,7 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 2, "username": testuser2.username, "email": testuser2.email},
+            user={"id": 2, "username": testuser2.username, "email": testuser2.email, "fullname": testuser2.fullname},
             preferredRoom="d1",
             seatRollover=True,
             partnerApplication={
@@ -171,7 +176,12 @@ class TestApplication(TestCase):
                 "status": "SUBMITTED",
                 "preferredRoom": "d1",
                 "seatRollover": True,
-                "user": {"id": 1, "username": testuser1.username, "email": testuser1.email},
+                "user": {
+                    "id": 1,
+                    "username": testuser1.username,
+                    "email": testuser1.email,
+                    "fullname": testuser1.fullname
+                },
                 "seat": None,
             },
             seat=None,
@@ -188,8 +198,8 @@ class TestApplication(TestCase):
             'Authorization': self.token,
             'AccessToken': self.accessToken
         }
-        testuser1 = User("Frank", "sub", "email")
-        testuser2 = User("Monster", "uuid", "email")
+        testuser1 = User(username="Frank", sub="sub", email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="uuid", email="email", fullname="Schmemail")
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()

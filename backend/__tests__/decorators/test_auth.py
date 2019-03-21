@@ -30,7 +30,7 @@ def test_requires_id_token(mocker):
 
 
 def test_requires_user(mocker):
-    user = User("Username", decodedToken.get("sub"), "email")
+    user = User(username="Username", sub=decodedToken.get("sub"), email="email", fullname="Full Name")
     mocker.patch.object(auth, "get_token_auth_header")
     auth.get_token_auth_header.return_value = token
     mocker.patch.object(jwt, "decode")

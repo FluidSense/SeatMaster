@@ -5,7 +5,12 @@ from functools import wraps
 
 
 def mock_authentication(mocker):
-    user = User("elevg", "76a7a061-3c55-430d-8ee0-6f82ec42501f", "4s8j0rng@ELEV_GGGGGG.no",)
+    user = User(
+        username="elevg",
+        sub="76a7a061-3c55-430d-8ee0-6f82ec42501f",
+        email="4s8j0rng@ELEV_GGGGGG.no",
+        fullname="Asbjørn ELEVG baby"
+        )
     mock_decode = mocker.Mock(name="decode")
     mock_decode.return_value = decodedToken
     mock_dataporten_getUserInfo = mocker.Mock(name="mock_dataporten")
