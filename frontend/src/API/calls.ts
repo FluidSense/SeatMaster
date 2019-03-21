@@ -9,6 +9,7 @@ import {
   getJson,
   postJson,
   putJson,
+  elevatedDeleteJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
@@ -72,15 +73,15 @@ export const getRoom = (id: number): PromiseLike<IRoom> => {
 export const getAllRooms = (): PromiseLike<[IRoom]> => getJson(ROOM_URL);
 
 export const postRoom = (data: IPostRoom): PromiseLike<IRoom> => {
-  return postJson(ROOM_URL, data);
+  return elevatedPostJson(ROOM_URL, data);
 };
 
 export const putRoom = (data: IPostRoom, id: number): PromiseLike<IRoom> => {
-  return putJson(`${ROOM_URL}${id}`, data);
+  return elevatedPutJson(`${ROOM_URL}${id}`, data);
 };
 
 export const deleteRoom = (id: number): PromiseLike<IRoom> => {
-  return deleteJson(ROOM_URL, id);
+  return elevatedDeleteJson(ROOM_URL, id);
 };
 
 export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
