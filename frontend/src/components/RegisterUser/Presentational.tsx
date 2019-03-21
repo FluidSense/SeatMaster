@@ -4,6 +4,7 @@ import * as React from 'react';
 import { UserState } from 'redux-oidc';
 import userManager from '../../utils/userManager';
 import { _USER_CONFIRMATION_TEXT, _USER_REGISTRATION_TEXT } from './constants';
+import './registeruser.css';
 import veileder from './veileder';
 
 interface IDispatchProps {
@@ -40,30 +41,35 @@ export const Presentational: React.FunctionComponent<Props> = (props) => {
   }
 
   return (
-    <div style={{ padding: '2rem 2.5rem' }}>
-      <Veilederpanel type={'plakat'} kompakt={true} svg={veileder}>
-        {_USER_REGISTRATION_TEXT}
-        <br />
-        {_USER_CONFIRMATION_TEXT}
-        <br />
-      </Veilederpanel>
-      <KnappBase
-        type="hoved"
-        htmlType="submit"
-        autoDisableVedSpinner={true}
-        onClick={createUser}
-      >
-        Register
-      </KnappBase>
-      <KnappBase
-        type="hoved"
-        htmlType="submit"
-        autoDisableVedSpinner={true}
-        onClick={onClickAction}
-      >
-        Log out
-      </KnappBase>
-    </div>
+    <>
+      <div className="student-header" style={{ height: '2rem' }}/>
+      <div style={{ padding: '2rem 2.5rem' }}>
+        <Veilederpanel type={'plakat'} kompakt={true} svg={veileder}>
+          {_USER_REGISTRATION_TEXT}
+          <br />
+          {_USER_CONFIRMATION_TEXT}
+          <br />
+          <div id={'register-buttons'}>
+            <KnappBase
+              type="hoved"
+              htmlType="submit"
+              autoDisableVedSpinner={true}
+              onClick={createUser}
+            >
+              Register
+            </KnappBase>
+            <KnappBase
+              type="hoved"
+              htmlType="submit"
+              autoDisableVedSpinner={true}
+              onClick={onClickAction}
+            >
+              Log out
+            </KnappBase>
+          </div>
+        </Veilederpanel>
+      </div>
+    </>
   );
 };
 
