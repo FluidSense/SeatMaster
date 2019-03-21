@@ -46,7 +46,9 @@ class TestRoom(TestCase):
             response = self.app.test_client().get(
                 "http://localhost:5000/user/",
                 headers={"Authorization": self.token})
-            assert response.data == jsonify(user.to_json()).data
+            dbUser = user.to_json()
+            dbUser["admin"] = False
+            assert response.data == jsonify(dbUser).data
 
     def test_create_should_fail(self):
         mock_decode = mock_jwt_decode()
@@ -90,10 +92,8 @@ class TestRoom(TestCase):
             "email_verified": True,
             "picture": "https://auth.dataporten.no/openid/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
         }
-        data = {
-            "accessToken": "123"
-        }
         headers = {
+            "AccessToken": "123",
             "Authorization": self.token,
             "Content-type": "application/json"
         }
@@ -102,13 +102,14 @@ class TestRoom(TestCase):
                 patch("utils.dataporten.getDataportenUserInfo", mock_dataporten):
             response = self.app.test_client().post(
                 "http://localhost:5000/user/",
-                headers=headers,
-                data=json.dumps(data))
+                headers=headers)
             user = db.session.query(User).first()
+            dbUser = user.to_json()
+            dbUser["admin"] = False
             assert response.status == "201 CREATED"
             assert user.username == "elevG"
             assert user.email == "4s8j0rng@ELEV_GGGGGG.no"
-            assert response.data == jsonify(user.to_json()).data
+            assert response.data == jsonify(dbUser).data
 
     def tearDown(self):
         self.postgres.stop()

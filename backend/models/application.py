@@ -27,12 +27,12 @@ class Application(db.Model):
 
     userid = db.Column(
         db.Integer,
-        db.ForeignKey("users.userid"))
+        db.ForeignKey("users.userid")
+    )
 
     user = db.relationship(
         "User",
         uselist=False,
-        cascade="all, delete",
         back_populates="application")
 
     partnerUsername = db.Column(
@@ -47,7 +47,6 @@ class Application(db.Model):
     partnerApplication = db.relationship(
         "Application",
         uselist=False,
-        cascade="all, delete",
         backref='partnersApplication',
         remote_side="Application.id",
         post_update=True)
@@ -70,7 +69,8 @@ class Application(db.Model):
         db.ForeignKeyConstraint(
             [room_id, seat_id],
             [Seat.room_id, Seat.seat_id]),
-        {})
+        {}
+    )
 
     seat = db.relationship(
         Seat,
@@ -95,12 +95,14 @@ class Application(db.Model):
             "needs": self.needs,
             "preferredRoom": self.preferredRoom,
             "seatRollover": self.seatRollover,
+            "seat": self.seat.to_json() if self.seat else None,
             "user": self.user.to_json() if self.user else None,
         }
         # Do not return partnerApplication if jsoning through a partner application.
         if not self_referred:
             applicationDict["partnerApplication"] = (self.partnerApplication.to_json(self_referred=True)
                                                      if self.partnerApplication else {})
+            applicationDict["seat"] = self.seat.to_json() if self.seat else None
 
         return applicationDict
 

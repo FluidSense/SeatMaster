@@ -9,7 +9,8 @@ class Seat(db.Model):
 
     room_id = db.Column(
         db.ForeignKey('rooms.room_id'),
-        primary_key=True)
+        primary_key=True,
+        )
 
     seat_id = db.Column(
         "seat_id",

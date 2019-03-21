@@ -1,27 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ViewRoom Renders 1 room correctly 1`] = `
+exports[`AdminApplicationOverview Renders 1 room correctly 1`] = `
 <Connect(_Container)>
   <_Container
     applications={Array []}
     getAllApplications={[Function]}
+    getRooms={[Function]}
+    rooms={Array []}
   >
     <Presentational
       applications={Array []}
-    />
+      rooms={Array []}
+    >
+      <div
+        className="main-content"
+      >
+        <Sidetittel>
+          <TypografiBase
+            type="sidetittel"
+          >
+            <h1
+              className="typo-sidetittel"
+            >
+              Applications
+            </h1>
+          </TypografiBase>
+        </Sidetittel>
+      </div>
+    </Presentational>
   </_Container>
 </Connect(_Container)>
 `;
 
-exports[`ViewRoom Renders nothing correctly 1`] = `
+exports[`AdminApplicationOverview Renders nothing correctly 1`] = `
 <Connect(_Container)>
   <_Container
     applications={Array []}
     getAllApplications={[Function]}
+    getRooms={[Function]}
+    rooms={Array []}
   >
     <Presentational
       applications={Array []}
-    />
+      rooms={Array []}
+    >
+      <div
+        className="main-content"
+      >
+        <Sidetittel>
+          <TypografiBase
+            type="sidetittel"
+          >
+            <h1
+              className="typo-sidetittel"
+            >
+              Applications
+            </h1>
+          </TypografiBase>
+        </Sidetittel>
+      </div>
+    </Presentational>
   </_Container>
 </Connect(_Container)>
 `;
