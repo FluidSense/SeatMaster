@@ -2,14 +2,12 @@ import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom, ISeat } from '../components/ViewRooms';
 import {
-  deleteJson,
+  elevatedDeleteJson,
   elevatedGetJson,
   elevatedPostJson,
   elevatedPutJson,
   getJson,
   postJson,
-  putJson,
-  elevatedDeleteJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
