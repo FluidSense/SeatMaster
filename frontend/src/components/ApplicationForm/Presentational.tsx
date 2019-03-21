@@ -12,7 +12,9 @@ import { _ALERT_USER_ERROR } from './Strings';
 
 interface IProps {
   userInformation: IRegisteredUserState;
+  rooms: IRoom[];
   changeModal: (modalOpen: boolean) => void;
+  getRooms: () => void;
 }
 
 interface IState {
@@ -44,6 +46,10 @@ export class Presentational extends React.Component<IProps, IState> {
     };
   }
 
+  public componentDidMount() {
+    this.props.getRooms();
+  }
+
   public render() {
     const { userInformation } = this.props;
     const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
@@ -62,6 +68,7 @@ export class Presentational extends React.Component<IProps, IState> {
           <ApplicationFormPreferences
             updateApplicationFormData={this.updateApplicationFormData}
             partner={this.state.partner}
+            rooms={this.props.rooms}
           />
           <ApplicationFormComments
             updateApplicationFormData={this.updateApplicationFormData}
