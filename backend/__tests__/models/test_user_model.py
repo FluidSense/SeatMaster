@@ -17,7 +17,7 @@ def test_db_drop(db_session):
 
 
 def test_cascading(db_session):
-    user = User("hello", sub="sub", email="email")
+    user = User("hello", sub="sub", email="email", fullname="McHelloesen")
     application = Application(status="Submitted",
                               needs="needs",
                               user=user,

@@ -104,7 +104,7 @@ def test_application_connect_to_seat(db_session):
 
 
 def test_cascading_user(db_session):
-    user = User(username="yoo", sub="sub", email="email")
+    user = User(username="yoo", sub="sub", email="email", fullname="Dudeman")
     application = Application(
         status="statusss",
         needs="needs",
@@ -125,7 +125,7 @@ def test_cascading_user(db_session):
 
 
 def test_cascading_partnerApplication(db_session):
-    user1 = User(username="August", sub="sub", email="email")
+    user1 = User(username="August", sub="sub", email="email", fullname="Solvæng")
     application1 = Application(
         status="statusss",
         needs="needs",
@@ -134,7 +134,7 @@ def test_cascading_partnerApplication(db_session):
         comments="comments",
         preferredRoom="pref",
         seatRollover=True)
-    user2 = User(username="Øggøst", sub="sub2", email="email2")
+    user2 = User(username="Øggøst", sub="sub2", email="email2", fullname="Sålvong")
     application2 = Application(
         status="statusss",
         needs="needs",
@@ -159,7 +159,7 @@ def test_cascading_partnerApplication(db_session):
 
 
 def test_cascading_seat(db_session):
-    user = User(username="yoo", sub="sub", email="email")
+    user = User(username="yoo", sub="sub", email="email", fullname="Man Man McMan")
     application = Application(
         status="statusss",
         needs="needs",
