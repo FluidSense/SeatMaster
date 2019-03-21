@@ -65,8 +65,6 @@ def getSelf():
 def deleteSelf():
     ctx = _request_ctx_stack.top
     user = ctx.user
-    print(ctx.user)
-    print(ctx.idToken)
     response, successCode = userService.deleteUser(user.id)
     return Response(jsonify(response), successCode)
 
