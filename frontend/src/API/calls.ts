@@ -2,6 +2,7 @@ import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom, ISeat } from '../components/ViewRooms';
 import {
+  deleteJson,
   elevatedDeleteJson,
   elevatedGetJson,
   elevatedPostJson,
@@ -11,6 +12,7 @@ import {
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
+  DELETE_USER_URL,
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
@@ -62,6 +64,11 @@ export const getUserData = (): PromiseLike<IUser> => {
 export const postNewCreateUser = ():
   PromiseLike<IUser> => {
   return elevatedPostJson(POST_NEW_USER_URL, {});
+};
+
+export const deleteUser = ():
+  PromiseLike<IUser> => {
+  return deleteJson(DELETE_USER_URL);
 };
 
 export const getRoom = (id: number): PromiseLike<IRoom> => {
