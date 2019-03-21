@@ -1,15 +1,17 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
-import { IRoom } from '../components/ViewRooms';
+import { IRoom, ISeat } from '../components/ViewRooms';
 import {
   deleteJson,
   elevatedGetJson,
   elevatedPostJson,
+  elevatedPutJson,
   getJson,
   postJson,
   putJson,
 } from './callDefinitions';
 import {
+  ASSIGN_SEAT_URL,
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
@@ -23,6 +25,7 @@ import {
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
+  IPutUserOnSeat,
   IUser,
 } from './interfaces';
 
@@ -40,12 +43,12 @@ export const getApplicationFormBySelf = ():
 
 export const getApplicationFormByUsername = (username: string):
   PromiseLike<IApplication> => {
-  return getJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
+  return elevatedGetJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
 };
 
 export const getAllApplications = ():
   PromiseLike<IApplication[]> => {
-  return getJson(GET_ALL_APPLICATIONS_URL);
+  return elevatedGetJson(GET_ALL_APPLICATIONS_URL);
 };
 
 export const postApplicationForm = (data: IPostApplicationForm):
@@ -78,4 +81,8 @@ export const putRoom = (data: IPostRoom, id: number): PromiseLike<IRoom> => {
 
 export const deleteRoom = (id: number): PromiseLike<IRoom> => {
   return deleteJson(ROOM_URL, id);
+};
+
+export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
+  return elevatedPutJson(ASSIGN_SEAT_URL, data);
 };

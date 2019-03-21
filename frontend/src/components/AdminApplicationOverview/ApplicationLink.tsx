@@ -3,7 +3,8 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { IApplication } from '../Application';
-import { APP_APPROVED, APP_DENIED, APP_SUBMITTED } from '../commonConstants';
+import { APP_APPROVED, APP_DENIED, APP_NOT_FOUND, APP_SUBMITTED } from '../commonConstants';
+import { IRoom } from '../ViewRooms';
 import { ROUTE_TO } from './constants';
 import {
   _LINK_APP_STATUS,
@@ -15,6 +16,7 @@ import {
 
 interface IProps {
   application: IApplication;
+  rooms: IRoom[];
 }
 
 const applicationStatus = (status: string) => {
@@ -26,13 +28,13 @@ const applicationStatus = (status: string) => {
 };
 
 const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
-  const { application } = props;
+  const { application, rooms } = props;
   const user = application.user;
   if (!user) return null;
   const status = applicationStatus(application.status);
   const link = (panelProps: any) => (
     <NavLink
-      to={{ pathname: panelProps.href, application: { ...application } }}
+      to={{ pathname: panelProps.href, application: { ...application }, rooms: [...rooms] }}
       className="lenkepanel lenkepanel--border"
     >
       {panelProps.children}
