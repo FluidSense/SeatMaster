@@ -33,14 +33,6 @@ interface IStateProps {
 
 type Props = IDispatchProps & IStateProps & IProps;
 
-const editSeatID = () => {
-  // edit seat
-};
-
-const deleteSeat = () => {
-  // delete seat
-};
-
 // tslint:disable-next-line:class-name
 class _Container extends Component<Props, IState> {
   constructor(props: Props) {
@@ -109,7 +101,6 @@ class _Container extends Component<Props, IState> {
   private update = (oldId: string, newId: string) => {
     const { updateSeat } = this.props;
     const { roomId } = this.state;
-
 
     const newSeat: IPostSeat = {
       id: newId,

@@ -1,5 +1,5 @@
 import { AnyAction, Dispatch } from 'redux';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ThunkAction } from 'redux-thunk';
 import { postSeat, deleteSeat } from '../../API/calls';
 import { IPostSeat } from '../../API/interfaces';
 import { ISeat } from '../ViewRooms';
@@ -20,24 +20,6 @@ const seatDeleted = (success: boolean) => ({
   success,
   type: DELETE_SEAT,
 });
-
-// export const createSeat = (seats: ISeat[], idOfRoom: number):
-//   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: ThunkDispatch<{}, {}, any>) => {
-//     let nextID = 'A1';
-//     if (seats.length > 0) {
-//       // Splits id in letters and numbers
-//       const idParts = seats[seats.length - 1].id.split(/([0-9]+)/);
-//       // Creates new id by incrementing the number on the last id
-//       nextID = `${idParts[0]}${parseInt(idParts[1], 10) + 1}`;
-//     }
-
-//     const seat: IPostSeat = {
-//       id: nextID,
-//       info: '',
-//       roomId: idOfRoom,
-//     };
-//     dispatch(createSeatAction(seat));
-//   };
 
 export const createSeatAction = (seat: IPostSeat):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {

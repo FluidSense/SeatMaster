@@ -32,7 +32,6 @@ class Seat extends Component<IProps, IState> {
     const { id, updateSelf } = this.props;
     const { inputContent } = this.state;
     updateSelf(id, inputContent);
-    this.setState({ inputContent: '' });
   }
 
   private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
