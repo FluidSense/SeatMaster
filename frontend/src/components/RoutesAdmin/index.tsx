@@ -13,6 +13,7 @@ import Profile from '../Profile';
 import Rooms from '../Rooms';
 import SideBar from '../SideBar';
 import ViewRoom from '../ViewRooms';
+import EditApplication from '../EditApplication';
 
 export const RoutesAdmin = () => {
   return (
@@ -33,7 +34,8 @@ export const RoutesAdmin = () => {
           <Route path="/admin/create-season" component={CreateSeason} />
           <Route path="/admin/rooms/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/applications" component={AdminApplicationOverview} />
-          <Route path="/admin/applications/:id" component={AdminApplication} />
+          <Route exact={true} path="/admin/applications/:id" component={AdminApplication} />
+          <Route path="/admin/applications/:id/edit" component={EditApplication} />
 
           <Redirect from="/registerUser" to="/" />
           <Route path="/" component={Page404} />
