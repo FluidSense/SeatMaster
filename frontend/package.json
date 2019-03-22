@@ -55,7 +55,6 @@
     "redux": "^4.0.1",
     "redux-oidc": "^3.1.0",
     "redux-thunk": "^2.3.0",
-    "svg-react-loader": "^0.4.6",
     "tslint": "^5.12.1",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-react": "^3.6.0"
