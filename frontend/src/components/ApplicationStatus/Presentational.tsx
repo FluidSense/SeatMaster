@@ -1,7 +1,13 @@
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
-import { ETIKETT_SUCCESS, ETIKETT_WARNING } from '../commonConstants';
-import { APP_APPROVED, APP_DENIED, APP_NOT_FOUND, APP_SUBMITTED } from '../Login/constants';
+import {
+  APP_APPROVED,
+  APP_DENIED,
+  APP_NOT_FOUND,
+  APP_SUBMITTED,
+  ETIKETT_SUCCESS,
+  ETIKETT_WARNING,
+} from '../commonConstants';
 import { _APP_APPROVED, _APP_DENIED, _APP_NOT_FOUND, _APP_SUBMITTED } from './strings';
 
 interface IApplicationStatusProps {

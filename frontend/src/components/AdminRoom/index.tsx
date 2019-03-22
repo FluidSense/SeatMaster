@@ -5,7 +5,13 @@ import { ThunkDispatch } from 'redux-thunk';
 import { IPostRoom } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IRoom } from '../ViewRooms';
-import { createRoomAction, deleteRoomAction, resetPage, updateRoomAction } from './actions';
+import {
+  createRoomAction,
+  deleteRoomAction,
+  fetchRoomInformation,
+  resetPage,
+  updateRoomAction,
+} from './actions';
 import './adminRoom.css';
 import { ROUTE_TO } from './constants';
 import Presentational from './Presentational';
@@ -27,12 +33,14 @@ interface IDispatchProps {
   createRoom: (data: IPostRoom) => void;
   updateRoom: (data: IPostRoom, id: number) => void;
   deleteRoom: (id: number) => void;
+  fetchRoomInfo: (id: number) => void;
   reset: () => void;
 }
 
 interface IStateProps {
   submitted?: boolean;
   error?: string;
+  room: any;
 }
 
 type Props = IDispatchProps & IStateProps & IProps;
@@ -87,24 +95,26 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { buttonDisabled, room, showAlert } = this.state;
-    const { submitted, reset, error } = this.props;
+    const { submitted, reset, error, fetchRoomInfo } = this.props;
     const roomExists = room.id !== -1;
     const onClick = roomExists ? this.update : this.create;
+
     if (submitted) {
       reset();
       return <Redirect to={ROUTE_TO} />;
     }
     return (
       <Presentational
-        room={room}
-        buttonDisabled={buttonDisabled}
-        setNotes={this.setNotes}
-        setName={this.setName}
-        onClick={onClick}
-        deleteRoom={this.delete}
-        showAlert={showAlert}
         alertMessage={error}
+        buttonDisabled={buttonDisabled}
+        deleteRoom={this.delete}
+        fetchRoom={fetchRoomInfo}
+        onClick={onClick}
+        room={room}
         roomExists={roomExists}
+        setName={this.setName}
+        setNotes={this.setNotes}
+        showAlert={showAlert}
       />
     );
   }
@@ -156,11 +166,13 @@ class _Container extends Component<Props, IState> {
 const mapStateToProps = (state: IStore) => ({
   error: state.adminRoom.error,
   submitted: state.adminRoom.success,
+  room: state.adminRoom.room,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   createRoom: (data: IPostRoom) => dispatch(createRoomAction(data)),
   deleteRoom: (id: number) => dispatch(deleteRoomAction(id)),
+  fetchRoomInfo: (roomId: number) => dispatch(fetchRoomInformation(roomId)),
   reset: () => dispatch(resetPage()),
   updateRoom: (data: IPostRoom, id: number) => dispatch(updateRoomAction(data, id)),
 });

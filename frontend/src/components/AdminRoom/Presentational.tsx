@@ -4,13 +4,15 @@ import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
-import Seats, { ISeat } from '../Seats';
+import Seats from '../Seats';
 import { IRoom } from '../ViewRooms';
+import CSVButton from './CSVButton';
 import {
   _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,
   _BUTTON_DELETE_ROOM,
   _BUTTON_UPDATE_ROOM,
+  _DOWNLOAD_ROOM_AS_CSV,
   _INPUT_LABEL_NAME,
   _INPUT_LABEL_NOTES,
   _TITLE_CREATE_NEW_ROOM,
@@ -27,6 +29,7 @@ interface IProps {
   showAlert: boolean;
   alertMessage?: string;
   roomExists: boolean;
+  fetchRoom: (roomId: number) => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
@@ -40,6 +43,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     deleteRoom,
     showAlert,
     alertMessage,
+    fetchRoom,
   } = props;
   const { name: roomName, info: roomNotes } = room;
   const seats = room.seats.seats;
@@ -73,7 +77,10 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <div className="main-content">
-      <Sidetittel>{titleText}</Sidetittel>
+      <div className="title-and-button">
+        <Sidetittel>{titleText}</Sidetittel>
+        <CSVButton room={room} fetchRoomInfo={fetchRoom} />
+      </div>
       {displayAlert}
       <Input
         id={'input-room-name'}

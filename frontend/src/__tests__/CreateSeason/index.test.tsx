@@ -12,14 +12,18 @@ import Presentational from '../../components/CreateSeason/Presentational';
 
 fetchMock.mock(SEASON_URL, 201);
 
+jest.mock('../../store', () => ({
+  getState: jest.fn(() => ({ oidc: { user: { id_token: 'test' } } })),
+}));
+
 describe('Create season', () => {
   const middlewares = [thunk];
-  const mockStore = configureMockStore(middlewares);
-  const store = mockStore({ applicationSeason: {} });
+  const mockStoreFactory = configureMockStore(middlewares);
+  const mockStore = mockStoreFactory({ applicationSeason: {} });
   it('renders itself and children', () => {
     Date.now = jest.fn(() => new Date(Date.UTC(2017, 0, 1)).valueOf());
     const wrapper = mount(
-    <Provider store={store}>
+    <Provider store={mockStore}>
       <CreateSeason />
     </Provider>);
     const season = wrapper.find(CreateSeason);
@@ -30,7 +34,7 @@ describe('Create season', () => {
 
   it('Check if creating is available', () => {
     const wrapper = mount(
-    <Provider store={store}>
+    <Provider store={mockStore}>
       <CreateSeason />
     </Provider>);
     const component = wrapper.find('_CreateSeason');
@@ -44,6 +48,7 @@ describe('Create season', () => {
     const newSeasonButton = wrapper.find('#new-season-btn').hostNodes();
     newSeasonButton.simulate('click');
     const fetchOptions = fetchMock.lastOptions();
+    expect(fetchOptions).toHaveProperty('body');
     expect(fetchOptions.body).toEqual(body);
   });
 });

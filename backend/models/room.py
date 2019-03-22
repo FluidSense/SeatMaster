@@ -22,7 +22,8 @@ class Room(db.Model):
     seats = db.relationship(
         'Seat',
         back_populates="room",
-        foreign_keys=[Seat.room_id, Seat.seat_id]
+        foreign_keys=[Seat.room_id, Seat.seat_id],
+        cascade="all, delete"
     )
 
     def __init__(self, name, info):
@@ -31,7 +32,8 @@ class Room(db.Model):
 
     def get_seat_list(self):
         seat_list = list(map(lambda x: x.to_json(), self.seats))
-        return seat_list
+        sorted_seat_list = sorted(seat_list, key=lambda x: x['id'])
+        return sorted_seat_list
 
     def to_json(self):
         return {

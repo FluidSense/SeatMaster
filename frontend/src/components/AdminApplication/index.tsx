@@ -1,13 +1,38 @@
-import { connect } from 'react-redux';
-import { IStore } from '../../store';
-import Presentational from './Presentational';
+import React from 'react';
+import { IApplication } from '../Application';
+import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
+import AssignSeat from '../AssignSeat';
+import { IRoom, ISeat } from '../ViewRooms';
+import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 
-const mapStateToProps = (state: IStore) => ({
-  application: state.userInformation,
-});
+interface IAdminApplication extends IApplication {
+  seat?: ISeat;
+}
 
-const Container = connect(
-  mapStateToProps,
-)(Presentational);
+interface IProps {
+  location: {
+    application?: IAdminApplication;
+    rooms?: IRoom[];
+  };
+}
 
-export default Container;
+const Presentational: React.FunctionComponent<IProps> = (props) => {
+  const { application, rooms } = props.location;
+  if (!(application && rooms)) return null;
+  const givenSeat = application.seat;
+  const givenRoomId = givenSeat ? givenSeat.roomId : 0;
+  const selectedRooms = rooms.filter(obj => obj.id === givenRoomId);
+
+  return (
+    <div className="main-content">
+      <ApplicationOverview
+        application={application}
+        title={application.user ? application.user.fullname : ''}
+      />
+      <ApplicationSeatDisplay seat={application.seat} room={selectedRooms[0]}/>
+      <AssignSeat rooms={rooms} application={application}/>
+    </div>
+  );
+};
+
+export default Presentational;

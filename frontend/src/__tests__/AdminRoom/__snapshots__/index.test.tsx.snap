@@ -31,6 +31,7 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
     <_Container
       createRoom={[Function]}
       deleteRoom={[Function]}
+      fetchRoomInfo={[Function]}
       location={
         Object {
           "room": Object {
@@ -50,7 +51,19 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
       <Presentational
         buttonDisabled={false}
         deleteRoom={[Function]}
+        fetchRoom={[Function]}
         onClick={[Function]}
+        room={
+          Object {
+            "id": 64,
+            "info": "wasd",
+            "name": "qwerty",
+            "seats": Object {
+              "count": 0,
+              "seats": Array [],
+            },
+          }
+        }
         roomExists={true}
         roomName="qwerty"
         roomNotes="wasd"
@@ -62,17 +75,35 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
         <div
           className="main-content"
         >
-          <Sidetittel>
-            <TypografiBase
-              type="sidetittel"
-            >
-              <h1
-                className="typo-sidetittel"
+          <div
+            className="title-and-button"
+          >
+            <Sidetittel>
+              <TypografiBase
+                type="sidetittel"
               >
-                Update room
-              </h1>
-            </TypografiBase>
-          </Sidetittel>
+                <h1
+                  className="typo-sidetittel"
+                >
+                  Update room
+                </h1>
+              </TypografiBase>
+            </Sidetittel>
+            <CSVButton
+              fetchRoomInfo={[Function]}
+              room={
+                Object {
+                  "id": 64,
+                  "info": "wasd",
+                  "name": "qwerty",
+                  "seats": Object {
+                    "count": 0,
+                    "seats": Array [],
+                  },
+                }
+              }
+            />
+          </div>
           <Input
             bredde="XL"
             id="input-room-name"
@@ -318,6 +349,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
     <_Container
       createRoom={[Function]}
       deleteRoom={[Function]}
+      fetchRoomInfo={[Function]}
       location={
         Object {
           "room": undefined,
@@ -329,6 +361,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
       <Presentational
         buttonDisabled={true}
         deleteRoom={[Function]}
+        fetchRoom={[Function]}
         onClick={[Function]}
         roomExists={false}
         roomName=""
@@ -341,17 +374,24 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
         <div
           className="main-content"
         >
-          <Sidetittel>
-            <TypografiBase
-              type="sidetittel"
-            >
-              <h1
-                className="typo-sidetittel"
+          <div
+            className="title-and-button"
+          >
+            <Sidetittel>
+              <TypografiBase
+                type="sidetittel"
               >
-                Create new room
-              </h1>
-            </TypografiBase>
-          </Sidetittel>
+                <h1
+                  className="typo-sidetittel"
+                >
+                  Create new room
+                </h1>
+              </TypografiBase>
+            </Sidetittel>
+            <CSVButton
+              fetchRoomInfo={[Function]}
+            />
+          </div>
           <Input
             bredde="XL"
             id="input-room-name"

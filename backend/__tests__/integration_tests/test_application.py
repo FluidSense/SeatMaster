@@ -6,6 +6,9 @@ from shared import db
 import json
 from unittest import TestCase
 from flask import jsonify, make_response
+from __tests__.testUtils.authentication import mock_authentication_context
+from __tests__.testUtils.constants import token, accessToken, decodedToken
+from controllers.applicationController import filterOnStatus
 
 
 class TestApplication(TestCase):
@@ -16,15 +19,20 @@ class TestApplication(TestCase):
         db.init_app(self.app)
         self.ctx = self.app.app_context()
         self.ctx.push()
+        self.token = f'Bearer {token}'
+        self.accessToken = f'Bearer {accessToken}'
 
+    @mock_authentication_context
     def test_new_application_without_partner(self):
-        testuser = User("Frank")
+        testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
         }
         response = self.app.test_client().post(
             'http://localhost:5000/application/',
@@ -34,7 +42,9 @@ class TestApplication(TestCase):
                 needs="Pepsi is better than coke",
                 comments="Not Pepsi, but Pepsi Max",
                 partnerUsername="",
-                )
+                preferredRoom="d1",
+                seatRollover=True,
+            )
             )
         )
         expectedResponse = make_response(jsonify(
@@ -42,20 +52,25 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username},
+            user={"id": 1, "username": testuser.username, "email": "email", "fullname": "Franky Frank"},
             partnerApplication={},
-            ), 201)
+            preferredRoom="d1",
+            seatRollover=True,
+        ), 201)
         assert expectedResponse.status == response.status
         assert expectedResponse.data == response.data
 
+    @mock_authentication_context
     def test_new_application_without_existing_partner(self):
-        testuser = User("Frank")
+        testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
         }
         response = self.app.test_client().post(
             'http://localhost:5000/application/',
@@ -65,7 +80,9 @@ class TestApplication(TestCase):
                 needs="Pepsi is better than coke",
                 comments="Not Pepsi, but Pepsi Max",
                 partnerUsername="Elon",
-                )
+                preferredRoom="d1",
+                seatRollover=True,
+            )
             )
         )
         expectedApplicationResponse = make_response(jsonify(
@@ -73,106 +90,141 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username},
-            partnerApplication={}
+            user={"id": 1, "username": testuser.username, "email": "email", "fullname": "Franky Frank"},
+            partnerApplication={},
+            preferredRoom="d1",
+            seatRollover=True,
         ), 201)
-        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1')
+        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1', headers=headers)
         assert expectedApplicationResponse.status == response.status
         assert expectedApplicationResponse.data == response.data
         assert getApplication.status == "200 OK"
-        assert getApplication.data == expectedApplicationResponse.data
+        assert filterOnStatus(json.loads(getApplication.data)) == json.loads(expectedApplicationResponse.data)
 
+    @mock_authentication_context
     def test_new_application_with_existing_partner(self):
-        testuser1 = User("Frank")
-        testuser2 = User("Monster")
+        testuser1 = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="sub", email="emails", fullname="Schmemails")
+        testApplication = Application(
+            "SUBMITTED",
+            "Pepsi is better than coke",
+            user=testuser2,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            comments="Not Pepsi, but Pepsi Max")
         db.session.add(testuser1)
         db.session.add(testuser2)
+        db.session.add(testApplication)
         db.session.commit()
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
         }
         user1Response = self.app.test_client().post(
             'http://localhost:5000/application/',
             headers=headers,
             data=json.dumps(dict(
                 username=testuser1.username,
-                needs="Pepsi is better than coke",
-                comments="Not Pepsi, but Pepsi Max",
-                partnerUsername=testuser2.username,
-                )
-            )
-        )
-        user2Response = self.app.test_client().post(
-            'http://localhost:5000/application/',
-            headers=headers,
-            data=json.dumps(dict(
-                username=testuser2.username,
                 needs="Fanta is better than solo",
                 comments="Bruh wtf",
-                partnerUsername=testuser1.username,
-                )
+                partnerUsername=testuser2.username,
+                preferredRoom="d1",
+                seatRollover=True,
+            )
             )
         )
         user1expectedResponse = make_response(jsonify(
+            needs="Fanta is better than solo",
+            comments="Bruh wtf",
+            id=2,
+            status="SUBMITTED",
+            user={"id": 1, "username": testuser1.username, "email": testuser1.email, "fullname": testuser1.fullname},
+            preferredRoom="d1",
+            seatRollover=True,
+            partnerApplication={
+                "needs": "Pepsi is better than coke",
+                "comments": "Not Pepsi, but Pepsi Max",
+                "id": 1,
+                "status": "SUBMITTED",
+                "user": {
+                    "id": 2,
+                    "username": testuser2.username,
+                    "email": testuser2.email,
+                    "fullname": testuser2.fullname
+                },
+                "preferredRoom": "d1",
+                "seatRollover": True,
+            },
+        ), 201)
+
+        expectedConnectedApplication = jsonify(
             needs="Pepsi is better than coke",
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser1.username},
-            partnerApplication={}
-        ), 201)
-        user2expectedResponse = make_response(jsonify(
-            needs="Fanta is better than solo",
-            comments="Bruh wtf",
-            id=2,
-            status="SUBMITTED",
-            user={"id": 2, "username": testuser2.username},
+            user={"id": 2, "username": testuser2.username, "email": testuser2.email, "fullname": testuser2.fullname},
+            preferredRoom="d1",
+            seatRollover=True,
+            seat=None,
             partnerApplication={
-                "needs": "Pepsi is better than coke",
-                "comments": "Not Pepsi, but Pepsi Max",
-                "id": 1,
+                "needs": "Fanta is better than solo",
+                "comments": "Bruh wtf",
+                "id": 2,
                 "status": "SUBMITTED",
-                "user": {"id": 1, "username": testuser1.username}
-            },
-        ), 201)
-        expectedConnectedApplication = jsonify(
-            needs="Fanta is better than solo",
-            comments="Bruh wtf",
-            id=2,
-            status="SUBMITTED",
-            user={"id": 2, "username": testuser2.username},
-            partnerApplication={
-                "needs": "Pepsi is better than coke",
-                "comments": "Not Pepsi, but Pepsi Max",
-                "id": 1,
-                "status": "SUBMITTED",
-                "user": {"id": 1, "username": testuser1.username}
+                "preferredRoom": "d1",
+                "seatRollover": True,
+                "seat": None,
+                "user": {
+                    "id": 1,
+                    "username": testuser1.username,
+                    "email": testuser1.email,
+                    "fullname": testuser1.fullname
+                },
             },
         )
-        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2')
+        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2', headers=headers)
         assert user1expectedResponse.status == user1Response.status
-        assert user2expectedResponse.status == user2Response.status
-        assert user2expectedResponse.data == user2Response.data
         assert user1expectedResponse.data == user1Response.data
         assert getApplication.status == "200 OK"
-        assert getApplication.data == expectedConnectedApplication.data
+        assert json.loads(expectedConnectedApplication.data) == json.loads(getApplication.data)
 
+    @mock_authentication_context
     def test_get_all_applications(self):
-        testuser1 = User("Frank")
-        testuser2 = User("Monster")
+        headers = {
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
+        }
+        testuser1 = User(username="Frank", sub="sub", email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="uuid", email="email", fullname="Schmemail")
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()
-        testapplication1 = Application("SUBMITTED", "", testuser1, None, "")
-        testapplication2 = Application("SUBMITTED", "needs", testuser2, None, "comments")
-        db.session.add(testapplication1)
-        db.session.add(testapplication2)
+        testApplication1 = Application(
+            "Unprocessed",
+            "Fanta is better than solo",
+            user=testuser1,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication2 = Application(
+            "Unprocessed",
+            "Fanta is better than solo",
+            user=testuser2,
+            partnerUsername="Monster",
+            preferredRoom="d1",
+            seatRollover=True,
+            comments="Not Pepsi, but Pepsi Max")
+        db.session.add(testApplication1)
+        db.session.add(testApplication2)
         db.session.commit()
-        allApplications = self.app.test_client().get('http://localhost:5000/application/')
+        allApplications = self.app.test_client().get('http://localhost:5000/application/all', headers=headers)
         assert allApplications.status == "200 OK"
-        assert allApplications.data == jsonify([testapplication1.to_json(), testapplication2.to_json()]).data
+        assert allApplications.data == jsonify([testApplication1.to_json(), testApplication2.to_json()]).data
 
     def tearDown(self):
         self.postgres.stop()

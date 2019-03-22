@@ -8,8 +8,8 @@ from shared import db
 from main import app
 
 with app.app_context():
-    the_annoying_user = User("usrnam")
-    the_annoyinger_user = User("putnam")
+    the_annoying_user = User("usrnam", "sub1", "email@epost.no", "lening glenin")
+    the_annoyinger_user = User("putnam", "sub2", "email@epost.no", "putnin mutnin")
     db.session.add(the_annoying_user)
     db.session.add(the_annoyinger_user)
     db.session.commit()
@@ -23,15 +23,21 @@ with app.app_context():
     some_applicationseason = ApplicationSeason(starttime, endtime, acceptstart, acceptend)
 
     application1 = applicationService.registerApplication(
-        username=the_annoying_user.username,
+        user=the_annoying_user,
         partnerUsername=the_annoyinger_user.username,
         comments='comments',
-        needs='needs')
+        needs='needs',
+        preferredRoom="no",
+        seatRollover=False,
+    )
     application2 = applicationService.registerApplication(
-        username=the_annoyinger_user.username,
+        user=the_annoyinger_user,
         partnerUsername=the_annoying_user.username,
         comments='comments',
-        needs='needs')
+        needs='needs',
+        preferredRoom="someroom",
+        seatRollover=False,
+    )
 
     db.session.add(some_applicationseason)
     db.session.commit()

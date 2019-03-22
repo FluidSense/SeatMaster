@@ -40,7 +40,7 @@ def test_seat_serialization(db_session):
         info="",)
     db_session.add(seat)
     db_session.commit()
-    expectedJson = dict(id=seat.seat_id, info=seat.info, roomId=seat.room_id)
+    expectedJson = dict(id=seat.seat_id, info=seat.info, roomId=seat.room_id, user=None)
     seat = db_session.query(Seat).first()
     assert seat.to_json() == expectedJson
 
@@ -71,7 +71,7 @@ def test_application_connect_to_seat(db_session):
         room=room,
         info="")
     db_session.add(seat)
-    user = User("yooyo")
+    user = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
     db_session.add(user)
     application = Application(
         status="",
@@ -79,6 +79,8 @@ def test_application_connect_to_seat(db_session):
         comments="",
         user=user,
         partnerUsername="",
+        preferredRoom="d1",
+        seatRollover=True,
     )
     db_session.add(application)
     db_session.commit()
@@ -86,3 +88,82 @@ def test_application_connect_to_seat(db_session):
     db_session.add(seat)
     db_session.commit()
     assert application.seat == seat
+
+
+def test_application_multiple_connect_to_seat(db_session):
+    room = Room("D1", "kek")
+    db_session.add(room)
+    seat = Seat(
+        id="D1",
+        room=room,
+        info="")
+    db_session.add(seat)
+    user1 = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
+    user2 = User(username="yooyo2", sub="sub2", email="email2", fullname="schnep schmep2")
+    db_session.add(user1)
+    db_session.add(user2)
+    application1 = Application(
+        status="",
+        needs="",
+        comments="",
+        user=user1,
+        partnerUsername="",
+        preferredRoom="d1",
+        seatRollover=True,
+    )
+    application2 = Application(
+        status="",
+        needs="",
+        comments="",
+        user=user2,
+        partnerUsername="",
+        preferredRoom="d1",
+        seatRollover=True,
+    )
+    db_session.add(application1)
+    db_session.add(application2)
+    db_session.commit()
+    seat.assignedApplication = application1
+    db_session.add(seat)
+    db_session.commit()
+    seat.assignedApplication = application2
+    db_session.add(seat)
+    db_session.commit()
+    assert not application1.seat == seat
+    assert application2.seat == seat
+    assert seat.assignedApplication == application2
+
+
+def test_cascading(db_session):
+    room = Room(name="Alko", info="info")
+    db_session.add(room)
+    db_session.commit()
+    seat = Seat(id="D1", room=room, info="info")
+    seat2 = Seat(id="D2", room=room, info="info")
+    user = User(username="name", sub="sub", email="email", fullname="Dudeman")
+    application = Application(
+        status="SUBMITTED",
+        needs="needs",
+        user=user,
+        partnerUsername="hello",
+        comments="comments",
+        preferredRoom="D1",
+        seatRollover=True
+    )
+    db_session.add(seat)
+    db_session.add(seat2)
+    db_session.add(user)
+    db_session.add(application)
+    application.seat_id = seat.seat_id
+    application.room_id = seat.room_id
+    db_session.commit()
+    db_session.expire_all()
+
+    db_session.delete(seat)
+    db_session.commit()
+
+    dbroom = db_session.query(Room).first()
+    assert dbroom == room
+    assert dbroom.seats == [seat2]
+    assert db_session.query(Application).first() == application
+    assert application.seat is None

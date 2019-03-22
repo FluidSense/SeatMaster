@@ -27,12 +27,12 @@ class Application(db.Model):
 
     userid = db.Column(
         db.Integer,
-        db.ForeignKey("users.userid"))
+        db.ForeignKey("users.userid")
+    )
 
     user = db.relationship(
         "User",
         uselist=False,
-        cascade="all, delete",
         back_populates="application")
 
     partnerUsername = db.Column(
@@ -47,10 +47,19 @@ class Application(db.Model):
     partnerApplication = db.relationship(
         "Application",
         uselist=False,
-        cascade="all, delete",
         backref='partnersApplication',
         remote_side="Application.id",
         post_update=True)
+
+    preferredRoom = db.Column(
+        "preferredRoom",
+        db.String(50)
+    )
+
+    seatRollover = db.Column(
+        "seatRollover",
+        db.Boolean()
+    )
 
     room_id = db.Column(db.Integer)
 
@@ -60,7 +69,8 @@ class Application(db.Model):
         db.ForeignKeyConstraint(
             [room_id, seat_id],
             [Seat.room_id, Seat.seat_id]),
-        {})
+        {}
+    )
 
     seat = db.relationship(
         Seat,
@@ -68,11 +78,13 @@ class Application(db.Model):
         foreign_keys='[Seat.room_id, Seat.seat_id]',
         primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
-    def __init__(self, status, needs, user, partnerUsername, comments):
+    def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments):
         self.status = status
         self.user = user
         self.needs = needs
         self.comments = comments
+        self.preferredRoom = preferredRoom
+        self.seatRollover = seatRollover
         self.partnerUsername = partnerUsername
 
     def to_json(self, self_referred=False):
@@ -81,12 +93,16 @@ class Application(db.Model):
             "status": self.status,
             "comments": self.comments,
             "needs": self.needs,
+            "preferredRoom": self.preferredRoom,
+            "seatRollover": self.seatRollover,
+            "seat": self.seat.to_json(False) if self.seat else None,
             "user": self.user.to_json() if self.user else None,
         }
         # Do not return partnerApplication if jsoning through a partner application.
         if not self_referred:
             applicationDict["partnerApplication"] = (self.partnerApplication.to_json(self_referred=True)
                                                      if self.partnerApplication else {})
+            applicationDict["seat"] = self.seat.to_json() if self.seat else None
 
         return applicationDict
 

@@ -1,11 +1,12 @@
 import { AnyAction } from 'redux';
-import { CREATE_ROOM, DELETE_ROOM, RESET_PAGE, UPDATE_ROOM } from './constants';
+import { IRoom } from '../ViewRooms';
+import { CREATE_ROOM, DELETE_ROOM, FETCH_ROOM_CSV, RESET_PAGE, UPDATE_ROOM } from './constants';
 import { _ALERT_CREATED_MESSAGE, _ALERT_DELETED_MESSAGE, _ALERT_UPDATED_MESSAGE } from './strings';
-import { CREATE_SEAT } from '../Seats/constants';
 
 export interface IAdminRoomState {
   error?: string;
   success?: boolean;
+  room?: IRoom;
 }
 
 const initialState = {
@@ -17,7 +18,7 @@ const reducer = (
   state: IAdminRoomState = initialState,
   action: AnyAction,
 ): IAdminRoomState => {
-  const { type, success } = action;
+  const { type, success, room } = action;
   switch (type) {
     case CREATE_ROOM:
       if (success) {
@@ -54,6 +55,12 @@ const reducer = (
         ...state,
         error: _ALERT_UPDATED_MESSAGE,
         success: false,
+      };
+
+    case FETCH_ROOM_CSV:
+      return {
+        ...state,
+        room,
       };
     case RESET_PAGE:
       return {
