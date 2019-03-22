@@ -4,18 +4,17 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import veileder from './../RegisterUser/veileder';
+import { _VEILEDER_TEXT } from './constants';
 import './page404.css';
 
 const Page404: React.FunctionComponent = () => {
-
-  const _VELEDER_TEXT = 'There does not seem to be a page here. Click the button below to go back.';
 
   return (
     <div className="main-content veileder-wrapper">
       <Veilederpanel type={'plakat'} kompakt={true} svg={veileder}>
         <div className="contents">
           <Sidetittel tag="h1">404</Sidetittel>
-          {_VELEDER_TEXT}
+          {_VEILEDER_TEXT}
           <br />
           <Link to="/" >
             <KnappBase
