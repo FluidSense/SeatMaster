@@ -9,7 +9,7 @@ from __tests__.testUtils.authentication import mock_authentication
 
 
 def createApplication():
-    user = User("Darth plageus", "sub", "email")
+    user = User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep")
     application = Application(
         status="status",
         needs="needs",
@@ -70,7 +70,7 @@ def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoo
         status="SUBMITTED",
         comments=comments,
         needs=needs,
-        user=User("Darth Plageus", "sub", "email"),
+        user=User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep"),
         partnerUsername=partnerUsername,
         preferredRoom="d1",
         seatRollover=True,
@@ -102,7 +102,7 @@ def test_registerNewApplication(mocker, client):
         assert jsonify(
             comments='comments',
             needs='needs',
-            user={"id": None, "username": "Darth Plageus", "email": "email"},
+            user={"id": None, "username": "Darth plageus", "email": "email", "fullname": "Schnep Schmep"},
             id=None,
             status="SUBMITTED",
             preferredRoom="d1",

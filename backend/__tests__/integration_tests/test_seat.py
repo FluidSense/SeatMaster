@@ -73,6 +73,7 @@ class TestSeat(TestCase):
             id='D2',
             roomId=room.id,
             info='nice ship dude',
+            user=None
         )
         response = self.app.test_client().post(
             "http://localhost:5000/seat/",
@@ -85,13 +86,14 @@ class TestSeat(TestCase):
                 id="D2",
                 roomId=room.id,
                 info='nice ship dude',
+                user=None
             )).data == response.data
         assert db.session.query(Seat).all()[1].to_json() == data
 
     @mock_authentication_context
     def test_assign_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello", "sub", "email")
+        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
             status="lol",
@@ -128,7 +130,7 @@ class TestSeat(TestCase):
     @mock_authentication_context
     def test_remove_student_from_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello", "sub", "email")
+        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
             status="lol",

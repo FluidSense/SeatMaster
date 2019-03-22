@@ -3,7 +3,7 @@ from models.application import Application
 
 
 def test_a_transaction(db_session):
-    test_user = User("John Lajoie", "sub", "email")
+    test_user = User(username="John Lajoie", sub="sub", email="email", fullname="Johnny McJohn")
 
     db_session.add(test_user)
     db_session.commit()
@@ -17,7 +17,7 @@ def test_db_drop(db_session):
 
 
 def test_cascading(db_session):
-    user = User("hello", sub="sub", email="email")
+    user = User("hello", sub="sub", email="email", fullname="McHelloesen")
     application = Application(status="Submitted",
                               needs="needs",
                               user=user,

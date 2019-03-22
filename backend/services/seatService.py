@@ -35,9 +35,9 @@ def deleteSeat(roomId, seatId):
 
 def assignSeat(roomId, seatId, userId):
     try:
+        seat = getSeatById(roomId, seatId)
         application = applicationService.getApplicationByUserId(userId)
-        application.seat_id = seatId
-        application.room_id = roomId
+        seat.assignedApplication = application
         db.session.add(application)
         db.session.commit()
         return application.seat.to_json(), 200

@@ -10,7 +10,7 @@ class Seat(db.Model):
     room_id = db.Column(
         db.ForeignKey('rooms.room_id'),
         primary_key=True,
-        )
+    )
 
     seat_id = db.Column(
         "seat_id",
@@ -38,12 +38,15 @@ class Seat(db.Model):
         self.room = room
         self.info = info
 
-    def to_json(self):
-        return {
+    def to_json(self, refer_user=True):
+        seatDict = {
             "id": self.seat_id,
             "info": self.info,
             "roomId": self.room.id,
         }
+        if refer_user:
+            seatDict["user"] = self.assignedApplication.user.to_json() if self.assignedApplication else None
+        return seatDict
 
     def __str__(self):
         return str(self.__class__) + ":" + str(self.__dict__)

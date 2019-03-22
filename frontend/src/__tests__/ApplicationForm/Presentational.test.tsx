@@ -25,11 +25,14 @@ describe('application form', () => {
     loading: false,
     registered: true,
   };
+  const doNothing = () => { return; };
   it('renders alertBox correctly', () => {
     const wrapper = shallow(
       <Presentational
         userInformation={userInfo}
         changeModal={changeModalMock}
+        rooms={[]}
+        getRooms={doNothing}
       />);
     const preClickAlert = wrapper.find(AlertStripe);
     expect(preClickAlert.length).toBe(0);
@@ -47,6 +50,8 @@ describe('application form', () => {
       <Presentational
         userInformation={userInfo}
         changeModal={changeModalMock}
+        rooms={[]}
+        getRooms={doNothing}
       />);
     const btn = wrapper.find(KnappBase).first();
     expect(btn.length).toBe(1);
@@ -70,6 +75,8 @@ describe('application form', () => {
       <Presentational
         userInformation={userInfo}
         changeModal={changeModal}
+        rooms={[]}
+        getRooms={doNothing}
       />);
     const btn = wrapper.find(KnappBase).first();
     expect.assertions(2);
@@ -88,6 +95,8 @@ describe('application form', () => {
       <Presentational
         userInformation={userInfo}
         changeModal={changeModalMock}
+        rooms={[]}
+        getRooms={doNothing}
       />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

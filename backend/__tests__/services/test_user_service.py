@@ -21,7 +21,7 @@ def test_register_user(mocker):
         "picture": "https://auth.dataporten.no/openid/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
     }
     responseText, statusCode = userService.registerUser(userInfo)
-    user = dict(username="elevG", id=None, email="4s8j0rng@ELEV_GGGGGG.no")
+    user = dict(username="elevG", id=None, email="4s8j0rng@ELEV_GGGGGG.no", fullname="Asbjørn ELEVG baby")
     assert 201 == statusCode
     assert user == responseText
     db.session.add.assert_called()

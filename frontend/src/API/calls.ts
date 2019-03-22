@@ -2,19 +2,19 @@ import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
 import { IRoom, ISeat } from '../components/ViewRooms';
 import {
-  deleteJson,
+  elevatedDeleteJson,
   elevatedGetJson,
   elevatedPostJson,
   elevatedPutJson,
   getJson,
   postJson,
-  putJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
   GET_ALL_APPLICATIONS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
+  GET_SEAT_URL,
   GET_USER_URL,
   POST_FORM_DATA_URL,
   POST_NEW_USER_URL,
@@ -72,17 +72,21 @@ export const getRoom = (id: number): PromiseLike<IRoom> => {
 export const getAllRooms = (): PromiseLike<[IRoom]> => getJson(ROOM_URL);
 
 export const postRoom = (data: IPostRoom): PromiseLike<IRoom> => {
-  return postJson(ROOM_URL, data);
+  return elevatedPostJson(ROOM_URL, data);
 };
 
 export const putRoom = (data: IPostRoom, id: number): PromiseLike<IRoom> => {
-  return putJson(`${ROOM_URL}${id}`, data);
+  return elevatedPutJson(`${ROOM_URL}${id}`, data);
 };
 
 export const deleteRoom = (id: number): PromiseLike<IRoom> => {
-  return deleteJson(ROOM_URL, id);
+  return elevatedDeleteJson(ROOM_URL, id);
 };
 
 export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
   return elevatedPutJson(ASSIGN_SEAT_URL, data);
+};
+
+export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
+  return getJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
 };

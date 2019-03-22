@@ -58,6 +58,7 @@ def test_createSeat_success(mocker, client):
                 id='D1',
                 roomId='12',
                 info='nice ship dude',
+                user=None
             )))
         assert "201 CREATED" == response.status
         assert make_response(
@@ -65,6 +66,7 @@ def test_createSeat_success(mocker, client):
                 id="D1",
                 roomId=None,
                 info='nice ship dude',
+                user=None
             )).data == response.data
 
 
