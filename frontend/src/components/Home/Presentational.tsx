@@ -2,19 +2,22 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { UserState } from 'redux-oidc';
 import { IApplication } from '../Application';
+import ApplicationAccepted from '../ApplicationAccepted';
 import ApplicationReview from '../ApplicationReview';
 import ApplicationSeason from '../ApplicationSeason/index';
 import ApplicationStatus from '../ApplicationStatus/index';
 import { APP_APPROVED } from '../commonConstants';
-import ApplicationAccepted from '../ApplicationAccepted';
+import { IRoom } from '../ViewRooms';
 
 interface IDispatchProps {
   fetchApplicationInformation: () => void;
+  fetchRoomInfo: (id: number) => void;
 }
 
 interface IUserStates {
   oidc: UserState;
   application: IApplication;
+  rooms: IRoom[];
 }
 
 type Props = IUserStates & IDispatchProps;
@@ -30,7 +33,11 @@ export class Presentational extends React.Component<Props, {}> {
           <Sidetittel>{_TITLE}</Sidetittel>
           <ApplicationSeason />
           <ApplicationStatus />
-          <ApplicationAccepted application={application}/>
+          <ApplicationAccepted
+            application={application}
+            fetchRoomInfo={this.props.fetchRoomInfo}
+            rooms={this.props.rooms}
+          />
         </div>
       );
     }
