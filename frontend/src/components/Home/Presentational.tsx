@@ -5,6 +5,8 @@ import { IApplication } from '../Application';
 import ApplicationReview from '../ApplicationReview';
 import ApplicationSeason from '../ApplicationSeason/index';
 import ApplicationStatus from '../ApplicationStatus/index';
+import { APP_APPROVED } from '../commonConstants';
+import ApplicationAccepted from '../ApplicationAccepted';
 
 interface IDispatchProps {
   fetchApplicationInformation: () => void;
@@ -22,6 +24,16 @@ const _TITLE = 'My Status';
 export class Presentational extends React.Component<Props, {}> {
   public render() {
     const { application } = this.props;
+    if (application.status === APP_APPROVED) {
+      return (
+        <div className="main-content">
+          <Sidetittel>{_TITLE}</Sidetittel>
+          <ApplicationSeason />
+          <ApplicationStatus />
+          <ApplicationAccepted application={application}/>
+        </div>
+      );
+    }
     return (
       <div className="main-content">
         <Sidetittel>{_TITLE}</Sidetittel>
