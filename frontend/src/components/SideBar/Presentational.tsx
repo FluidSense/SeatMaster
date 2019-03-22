@@ -21,6 +21,7 @@ const userUrls: IUrl[] = [
   { url: '/application/', title: 'Application' },
   { url: '/rooms/', title: 'Room list' },
   { url: '/FAQ/', title: 'FAQ' },
+  { url: '/profile/', title: 'Profile' },
 ];
 
 const adminUrls: IUrl[] = [
