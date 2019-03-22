@@ -1,7 +1,8 @@
-import * as React from 'react';
-import userManager from '../../utils/userManager';
-
 import KnappBase from 'nav-frontend-knapper';
+import * as React from 'react';
+import Logo_Ntnu from '../../assets/Logo-Ntnu.svg';
+import userManager from '../../utils/userManager';
+import './login.css';
 
 export const Login: React.FunctionComponent<{}> = (props) => {
   const doLogin = (event: React.MouseEvent) => {
@@ -10,7 +11,8 @@ export const Login: React.FunctionComponent<{}> = (props) => {
   };
   const onClickAction = (event: React.MouseEvent) => doLogin(event);
   return (
-    <div className="main-content">
+    <div className="mainContent">
+      <img src={Logo_Ntnu} id="ntnuLogo" />
       <h1>
         Welcome!
       </h1>

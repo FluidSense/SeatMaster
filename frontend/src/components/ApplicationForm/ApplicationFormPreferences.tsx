@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Checkbox, Input, Select, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Undertittel } from 'nav-frontend-typografi';
 import { IRoom } from '../ViewRooms';
 
 interface IProps {
@@ -18,38 +19,41 @@ export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (prop
   const onUpdateForm = (item: React.FormEvent) => updateApplicationFormData(item);
   const roomOptions = roomsToOptions(rooms);
   return (
-    <SkjemaGruppe title="Preferences">
-      <Select
-        label="Choose preferred room"
-        bredde="xxl"
-        name="room"
-        defaultValue="initial"
-        onChangeCapture={onUpdateForm}
-      >
-        <option disabled={true} value="initial" hidden={true} >Select room</option>
-        {roomOptions}
-      </Select>
-      <Checkbox
-        label="I wish to sit with my partner"
-        name="partner"
-        key="partner"
-        onChangeCapture={onUpdateForm}
-      />
-      <Input
-        label="Partner username"
-        bredde="M"
-        name="partnerUsername"
-        key="partnerUsername"
-        disabled={!props.partner ? true : false}
-        onChangeCapture={onUpdateForm}
-      />
-      <Checkbox
-        label="I would like to keep my seat from the previous semester"
-        name="keepSeat"
-        key="keepSeat"
-        onChangeCapture={onUpdateForm}
-      />
-    </SkjemaGruppe>
+    <>
+      <Undertittel>Preferences</Undertittel>
+      <SkjemaGruppe >
+        <Select
+          label="Choose preferred room"
+          bredde="xxl"
+          name="room"
+          defaultValue="initial"
+          onChangeCapture={onUpdateForm}
+        >
+          <option disabled={true} value="initial" hidden={true} >Select room</option>
+          {roomOptions}
+        </Select>
+        <Checkbox
+          label="I wish to sit with my partner"
+          name="partner"
+          key="partner"
+          onChangeCapture={onUpdateForm}
+        />
+        <Input
+          label="Partner username"
+          bredde="M"
+          name="partnerUsername"
+          key="partnerUsername"
+          disabled={!props.partner ? true : false}
+          onChangeCapture={onUpdateForm}
+        />
+        <Checkbox
+          label="I would like to keep my seat from the previous semester"
+          name="keepSeat"
+          key="keepSeat"
+          onChangeCapture={onUpdateForm}
+        />
+      </SkjemaGruppe>
+    </>
   );
 };
 
