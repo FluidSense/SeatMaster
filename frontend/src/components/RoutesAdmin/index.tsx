@@ -5,6 +5,7 @@ import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
+import EditApplication from '../EditApplication';
 import FAQ from '../FAQ';
 import Header from '../Header';
 import Home from '../Home';
@@ -13,7 +14,6 @@ import Profile from '../Profile';
 import Rooms from '../Rooms';
 import SideBar from '../SideBar';
 import ViewRoom from '../ViewRooms';
-import EditApplication from '../EditApplication';
 
 export const RoutesAdmin = () => {
   return (
