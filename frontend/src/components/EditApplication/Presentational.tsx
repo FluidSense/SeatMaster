@@ -4,7 +4,11 @@ import { boolToString } from '../../utils/typeFormatter';
 import { IApplication } from '../Application';
 import './editApplication.css';
 
-interface IProps {
+interface IDispatchProps {
+  updateApplication: (id: number, application: IApplication) => void;
+}
+
+interface IStateProps {
   applications: IApplication[];
   match?: {
     params: {
