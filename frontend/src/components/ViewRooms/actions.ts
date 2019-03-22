@@ -4,7 +4,7 @@ import { getAllRooms } from '../../API/calls';
 import { FETCH_ROOMS } from './constants';
 import { IRoom } from './index';
 
-const retrievedRooms = (payload: IRoom[]) => ({
+export const retrievedRooms = (payload: IRoom[]) => ({
   payload,
   type: FETCH_ROOMS,
 });
