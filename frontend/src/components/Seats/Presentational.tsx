@@ -10,13 +10,14 @@ interface IProps {
   seats: ISeat[];
   createSeat: () => void;
   roomId: number;
+  updateSeat: (oldId: string, newId: string) => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { seats, createSeat, deleteSeat } = props;
+  const { seats, createSeat, deleteSeat, updateSeat } = props;
 
   const seatElements = seats.map(seat => (
-    <Seat id={seat.id} key={seat.id} deleteSelf={deleteSeat} />
+    <Seat id={seat.id} key={seat.id} deleteSelf={deleteSeat} updateSelf={updateSeat} />
   ));
 
   return (

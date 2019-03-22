@@ -52,3 +52,13 @@ export const deleteSeatAction = (roomId: number, seatId: string):
     if (result) dispatch(seatDeleted(true));
     else dispatch(seatDeleted(false))
   };
+
+export const updateSeatAction = (roomId: number, oldSeatId: string, newSeat: IPostSeat):
+  ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+    const deleteResults = await deleteSeat(roomId, oldSeatId);
+    if (deleteResults) {
+      const createResult = await postSeat(newSeat);
+      if (createResult) dispatch(seatUpdated(true))
+    }
+    dispatch(seatUpdated(false))
+  };

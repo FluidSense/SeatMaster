@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
-import { createSeatAction, deleteSeatAction } from './actions';
+import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
 import { IPostSeat } from '../../API/interfaces';
 
@@ -25,7 +25,7 @@ interface IProps {
 interface IDispatchProps {
   createSeat: (data: IPostSeat, roomId: number) => void;
   deleteSeat: (roomId: number, seatId: string) => void;
-  createSeatClick: (seats: ISeat[], roomId: number) => void;
+  updateSeat: (roomId: number, oldSeatId: string, newSeat: IPostSeat) => void;
 }
 
 interface IStateProps {
@@ -65,6 +65,7 @@ class _Container extends Component<Props, IState> {
         seats={seats}
         createSeat={this.create}
         deleteSeat={this.delete}
+        updateSeat={this.update}
       />
     );
   }
@@ -104,6 +105,19 @@ class _Container extends Component<Props, IState> {
     }))
     deleteSeat(roomId, id);
   }
+
+  private update = (oldId: string, newId: string) => {
+    const { updateSeat } = this.props;
+    const { roomId } = this.state;
+
+
+    const newSeat: IPostSeat = {
+      id: newId,
+      info: '',
+      roomId,
+    }
+    updateSeat(roomId, oldId, newSeat)
+  }
 }
 
 const mapStateToProps = (state: IStore, ownProps: any) => ({
@@ -112,6 +126,7 @@ const mapStateToProps = (state: IStore, ownProps: any) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
   createSeat: (data: IPostSeat) => dispatch(createSeatAction(data)),
   deleteSeat: (roomId: number, seatId: string) => dispatch(deleteSeatAction(roomId, seatId)),
+  updateSeat: (roomId: number, oldId: string, newSeat: IPostSeat) => dispatch(updateSeatAction(roomId, oldId, newSeat)),
 });
 
 const Container = connect(
