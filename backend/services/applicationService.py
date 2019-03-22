@@ -44,6 +44,20 @@ def registerApplication(comments, needs, user, partnerUsername, seatRollover, pr
         return "", 400
 
 
+def updateApplication(userid, form):
+    try:
+        application = getApplicationByUserId(userid)
+        for field in form.keys():
+            if(form[field]):
+                setattr(application, field, form[field])
+        db.session.add(application)
+        db.session.commit()
+        return application.to_json(), 200
+    except SQLAlchemyError as err:
+        print(err)
+        return "", 400
+
+
 # makes relation between two applications if their userids match
 def connectApplication(application):
     partnerApplication = getApplicationByUsername(application.partnerUsername)
