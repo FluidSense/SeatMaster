@@ -9,7 +9,7 @@ const middlewares = [thunk];
 const mockStoreFunc = configureMockStore(middlewares);
 
 jest.mock('../../store', () => ({
-  getState: jest.fn(() => ({ oidc:{ user: { id_token: 'test' } } })),
+  getState: jest.fn(() => ({ oidc: { user: { id_token: 'test' } } })),
 }));
 
 describe('actions', () => {
@@ -28,7 +28,7 @@ describe('actions', () => {
       },
     });
     const expectedAction = {
-      payload: true,
+      success: true,
       type: CREATE_ROOM,
     };
     await mockStore.dispatch<any>(actions.createRoomAction(testCreateRoom));
@@ -38,7 +38,7 @@ describe('actions', () => {
   it('should delete a room', async () => {
     fetchMock.delete(`${ROOM_URL}${200}`, {});
     const expectedAction = {
-      payload: true,
+      success: true,
       type: DELETE_ROOM,
     };
     await mockStore.dispatch<any>(actions.deleteRoomAction(200));
@@ -54,7 +54,7 @@ describe('actions', () => {
       },
     });
     const expectedAction = {
-      payload: true,
+      success: true,
       type: UPDATE_ROOM,
     };
     await mockStore.dispatch<any>(actions.updateRoomAction(testCreateRoom, 1));
