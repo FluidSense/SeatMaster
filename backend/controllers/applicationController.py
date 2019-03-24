@@ -83,7 +83,7 @@ def updateApplication():
 def updateApplicationByApplicationId(id):
     if request.is_json:
         form = request.get_json()
-        response, statusCode = applicationService.updateApplication(userid=id, form=form)
+        response, statusCode = applicationService.updateApplicationById(id=id, form=form)
         return make_response(jsonify(response), statusCode)
     return abort(400)
 
