@@ -34,35 +34,41 @@ class EditForm extends React.Component<IProps, IEditState> {
         <Input
           label="Name"
           bredde="L"
+          name="name"
           defaultValue={application.user.fullname}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Input
           label="Master status"
           bredde="L"
+          name="masterStatus"
           defaultValue={application.user.masterStatus}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Input
           label="E-Mail"
           bredde="L"
+          name="email"
           defaultValue={application.user.email}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Input
           label="Partner username"
           bredde="L"
+          name="partnerUsername"
           defaultValue={partnerName}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Input
           label="Preferred room"
           bredde="L"
+          name="preferredRoom"
           defaultValue={application.preferredRoom}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Checkbox
           label="Seat Rollover"
+          name="seatRollover"
           defaultChecked={application.seatRollover}
           onChangeCapture={this.updateApplicationFormData}
         />
@@ -70,12 +76,14 @@ class EditForm extends React.Component<IProps, IEditState> {
           label="Needs"
           bredde="L"
           id="edit-needs"
+          name="needs"
           defaultValue={application.needs}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Input
           label="Comments"
           bredde="L"
+          name="comments"
           defaultValue={application.comments}
           onChangeCapture={this.updateApplicationFormData}
         />
@@ -94,7 +102,8 @@ class EditForm extends React.Component<IProps, IEditState> {
   private updateApplicationFormData = (item: React.FormEvent) => {
     const eventTarget = item.target as HTMLFormElement;
     const name: string = eventTarget.name;
-    const value: string = eventTarget.value;
+    const value: string | boolean =
+      eventTarget.type === 'checkbox' ? eventTarget.checked : eventTarget.value;
     this.setState({ [name]: value });
   }
 
