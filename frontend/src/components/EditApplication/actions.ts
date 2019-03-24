@@ -13,16 +13,9 @@ const faultyAppUpdate = () => ({
   type: UNSUCCESSFULL_APPLICATION_UPDATE,
 });
 
-export const updateSingleApplication = (id: number, application: IApplication):
+export const updateSingleApplication = (id: number, application: IPostAdminApplicationForm):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const applicationForm: IPostAdminApplicationForm = {
-      comments: application.comments,
-      masterStatus: application.user ? application.user.masterStatus : '',
-      needs: application.needs,
-      preferredRoom: application.preferredRoom,
-      // TODO: Add partnerUsername
-    };
-    const result = await putAdminApplicationForm(id, applicationForm);
+    const result = await putAdminApplicationForm(id, application);
     if (result) dispatch(successfullAppUpdate());
     else dispatch(faultyAppUpdate());
   };

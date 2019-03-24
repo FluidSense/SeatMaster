@@ -1,11 +1,11 @@
-import { Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
-import { boolToString } from '../../utils/typeFormatter';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import './editApplication.css';
+import EditForm from './EditForm';
 
 interface IDispatchProps {
-  updateApplication: (id: number, application: IApplication) => void;
+  updateApplication: (id: number, application: IPostAdminApplicationForm) => void;
 }
 
 interface IStateProps {
@@ -17,62 +17,24 @@ interface IStateProps {
   };
 }
 
-const Presentational: React.FunctionComponent<IProps> = (props) => {
+type Props = IStateProps & IDispatchProps;
+
+const Presentational: React.FunctionComponent<Props> = (props) => {
   const { applications, match } = props;
 
   if (!match) return null;
   const application = applications.filter(app => app.id === parseInt(match.params.id, 10))[0];
 
-  if (!(application && application.user)) return null;
-  const partnerApplication = application.partnerApplication;
-  const partner = partnerApplication ? partnerApplication.user : undefined;
-  const partnerName = partner ? partner.fullname : '';
+  const finalize = (input: IPostAdminApplicationForm) => {
+    if (application.id) props.updateApplication(application.id, input);
+  };
 
   return (
     <div className="main-content">
-      <SkjemaGruppe className="edit-application">
-        <Input
-          label="Name"
-          bredde="L"
-          defaultValue={application.user.fullname}
-        />
-        <Input
-          label="Master status"
-          bredde="L"
-          defaultValue={application.user.masterStatus}
-        />
-        <Input
-          label="E-Mail"
-          bredde="L"
-          defaultValue={application.user.email}
-        />
-        <Input
-          label="Partner username"
-          bredde="L"
-          defaultValue={partnerName}
-        />
-        <Input
-          label="Preferred room"
-          bredde="L"
-          defaultValue={application.preferredRoom}
-        />
-        <Input
-          label="Seat Rollover"
-          bredde="L"
-          defaultValue={boolToString(application.seatRollover)}
-        />
-        <Input
-          label="Needs"
-          bredde="L"
-          id="edit-needs"
-          defaultValue={application.needs}
-        />
-        <Input
-          label="Comments"
-          bredde="L"
-          defaultValue={application.comments}
-        />
-      </SkjemaGruppe>
+    <EditForm
+      application={application}
+      finalize={finalize}
+    />
     </div>
   );
 };
