@@ -72,8 +72,6 @@ def updateApplication():
     if request.is_json:
         ctx = _request_ctx_stack.top
         user = ctx.user
-        if not user:
-            return Response("{}", 401)
         form = request.get_json()
         response, statusCode = applicationService.updateApplication(userid=user.id, form=form)
         return make_response(jsonify(response), statusCode)
