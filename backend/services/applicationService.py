@@ -61,7 +61,7 @@ def updateApplication(userid, form):
 def updateApplicationById(id, form):
     try: 
         application = getApplicationById(id)
-        for field im form.keys():
+        for field in form.keys():
             setattr(application, field, form[field])
         db.session.add(application)
         db.session.commit()
