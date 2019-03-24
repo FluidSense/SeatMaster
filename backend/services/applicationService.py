@@ -59,7 +59,7 @@ def updateApplication(userid, form):
 
 
 def updateApplicationById(id, form):
-    try: 
+    try:
         application = getApplicationById(id)
         for field in form.keys():
             setattr(application, field, form[field])
