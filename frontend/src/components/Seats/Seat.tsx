@@ -23,21 +23,6 @@ class Seat extends Component<IProps, IState> {
     };
   }
 
-  private deleteSeat = () => {
-    const { id, deleteSelf } = this.props;
-    deleteSelf(id);
-  }
-
-  private changeId = () => {
-    const { id, updateSelf } = this.props;
-    const { inputContent } = this.state;
-    updateSelf(id, inputContent);
-  }
-
-  private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputContent: e.target.value })
-  }
-
   public render() {
     const { id } = this.props;
 
@@ -50,6 +35,21 @@ class Seat extends Component<IProps, IState> {
         </Panel>
       </>
     );
+  }
+
+  private deleteSeat = () => {
+    const { id, deleteSelf } = this.props;
+    deleteSelf(id);
+  }
+
+  private changeId = () => {
+    const { id, updateSelf } = this.props;
+    const { inputContent } = this.state;
+    updateSelf(id, inputContent);
+  }
+
+  private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ inputContent: e.target.value });
   }
 }
 

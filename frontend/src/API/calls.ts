@@ -105,5 +105,5 @@ export const postSeat = (data: IPostSeat): PromiseLike<ISeat> => {
 };
 
 export const deleteSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
-  return elevatedDeleteJson(SEAT_URL, roomId, seatId)
-}
+  return elevatedDeleteJson(SEAT_URL, roomId, seatId);
+};

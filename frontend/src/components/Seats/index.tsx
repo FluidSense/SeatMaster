@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IPostSeat } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
-import { IPostSeat } from '../../API/interfaces';
 
 export interface ISeat {
   id: string;
@@ -28,10 +28,7 @@ interface IDispatchProps {
   updateSeat: (roomId: number, oldSeatId: string, newSeat: IPostSeat) => void;
 }
 
-interface IStateProps {
-}
-
-type Props = IDispatchProps & IStateProps & IProps;
+type Props = IDispatchProps & IProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends Component<Props, IState> {
@@ -76,6 +73,7 @@ class _Container extends Component<Props, IState> {
     const seat: IPostSeat = {
       id: nextID,
       info: '',
+      // tslint:disable-next-line:object-shorthand-properties-first
       roomId,
     };
 
@@ -83,8 +81,8 @@ class _Container extends Component<Props, IState> {
       seats: [
         ...prevState.seats,
         seat,
-      ]
-    }))
+      ],
+    }));
 
     createSeat(seat, roomId);
   }
@@ -94,7 +92,7 @@ class _Container extends Component<Props, IState> {
     const { roomId } = this.state;
     this.setState(prevState => ({
       seats: prevState.seats.filter(seat => seat.id !== id),
-    }))
+    }));
     deleteSeat(roomId, id);
   }
 
@@ -105,9 +103,10 @@ class _Container extends Component<Props, IState> {
     const newSeat: IPostSeat = {
       id: newId,
       info: '',
+      // tslint:disable-next-line:object-shorthand-properties-first
       roomId,
-    }
-    updateSeat(roomId, oldId, newSeat)
+    };
+    updateSeat(roomId, oldId, newSeat);
   }
 }
 
@@ -117,7 +116,11 @@ const mapStateToProps = (state: IStore, ownProps: any) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
   createSeat: (data: IPostSeat) => dispatch(createSeatAction(data)),
   deleteSeat: (roomId: number, seatId: string) => dispatch(deleteSeatAction(roomId, seatId)),
-  updateSeat: (roomId: number, oldId: string, newSeat: IPostSeat) => dispatch(updateSeatAction(roomId, oldId, newSeat)),
+  updateSeat: (
+    roomId: number,
+    oldId: string,
+    newSeat: IPostSeat,
+  ) => dispatch(updateSeatAction(roomId, oldId, newSeat)),
 });
 
 const Container = connect(

@@ -12,12 +12,11 @@ const deleteFetch = (url: string, id?: any, additionalId?: any) => {
       headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
       method: 'DELETE',
     });
-  } else {
-    return fetch(`${url}${param}/${additionalId}`, {
-      headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
-      method: 'DELETE',
-    });
   }
+  return fetch(`${url}${param}/${additionalId}`, {
+    headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
+    method: 'DELETE',
+  });
 };
 
 const genericFetch = (fetchType: fetchTypes, url: string, data: any) => {
@@ -54,13 +53,13 @@ export const deleteJson = (url: string, id?: any, additionalId?: any) => {
         ? response.json()
         : false)
       .catch(() => false);
-  } else {
-    return deleteFetch(url, id, additionalId)
-      .then(response => response.ok
-        ? {}
-        : false)
-      .catch(() => false);
   }
+  return deleteFetch(url, id, additionalId)
+    .then(response => response.ok
+      ? {}
+      : false)
+    .catch(() => false);
+
 };
 
 export const getJson = (url: string) => fetch(url, {
@@ -98,15 +97,15 @@ const elevatedDeleteFetch = (url: string, id?: any, additionalId?: any) => {
       },
       method: 'DELETE',
     });
-  } else {
-    return fetch(`${url}${param}/${additionalId}`, {
-      headers: {
-        AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
-        Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
-      },
-      method: 'DELETE',
-    })
   }
+  return fetch(`${url}${param}/${additionalId}`, {
+    headers: {
+      AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
+      Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
+    },
+    method: 'DELETE',
+  });
+
 };
 
 export const elevatedPostJson = (url: string, data: any) => {
@@ -132,13 +131,13 @@ export const elevatedDeleteJson = (url: string, id?: any, additionalId?: any) =>
         ? response.json()
         : false)
       .catch(() => false);
-  } else {
-    return elevatedDeleteFetch(url, id, additionalId)
-      .then(response => response.ok
-        ? response.json()
-        : false)
-      .catch(() => false);
   }
+  return elevatedDeleteFetch(url, id, additionalId)
+    .then(response => response.ok
+      ? response.json()
+      : false)
+    .catch(() => false);
+
 };
 
 export const elevatedGetJson = (url: string) => fetch(url, {

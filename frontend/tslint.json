@@ -22,8 +22,8 @@
     ]
   },
   "object-literal-sort-keys": [
-    true,
+    false,
     "shorthand-first"
   ],
-  "object-shorthand-properties-first": false,
+  "object-shorthand-properties-first": false
 }
