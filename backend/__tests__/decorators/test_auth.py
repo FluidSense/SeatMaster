@@ -3,14 +3,16 @@ import auth
 from jose import jwt
 from flask import _request_ctx_stack
 from main import app
-from __tests__.testUtils.constants import token, decodedToken, rsa_key
+from __tests__.testUtils.constants import token, accessToken, decodedToken, rsa_key
 from services import userService
 from models.user import User
 
 
 def test_requires_id_token(mocker):
     mocker.patch.object(auth, "get_token_auth_header")
+    mocker.patch.object(auth, "eval_access_token")
     auth.get_token_auth_header.return_value = token
+    auth.eval_access_token.return_value = accessToken, True
     mocker.patch.object(jwt, "decode")
     mocker.patch.object(jwt, "get_unverified_header")
     jwt.decode.return_value = decodedToken
@@ -26,7 +28,9 @@ def test_requires_id_token(mocker):
                                       issuer='https://auth.dataporten.no',
                                       audience='77ee33cd-cc7f-4b7a-bce9-241c96458f14',
                                       options={"verify_signature": True,
-                                               "verify_exp": True})
+                                               "verify_exp": True,
+                                               "verify_at_hash": True},
+                                      access_token='eca448c7-b0f0-487d-98c5-946c3bb29868')
 
 
 def test_requires_user(mocker):

@@ -1,4 +1,4 @@
-from __tests__.testUtils.constants import decodedToken, token, testGroups
+from __tests__.testUtils.constants import decodedToken, token, verify_at_hash, accessToken, testGroups
 from models.user import User
 from unittest.mock import Mock, patch
 from functools import wraps
@@ -30,6 +30,7 @@ def mock_authentication(mocker):
     mocker.patch("utils.dataporten.getDataportenGroups", lambda x: testGroups)
     mocker.patch("utils.dataporten.checkIfAdmin", lambda x: True)
     mocker.patch("auth.get_token_auth_header", lambda x: token)
+    mocker.patch("auth.eval_access_token", lambda x, y: (x, y))
     mocker.patch("services.userService.getUserFromSub", lambda x: user)
 
 
