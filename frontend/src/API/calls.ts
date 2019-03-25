@@ -23,6 +23,7 @@ import {
   POST_NEW_USER_URL,
   ROOM_URL,
   SEASON_URL,
+  SEAT_URL,
 } from './constants';
 import {
   IPostAdminApplicationForm,
@@ -107,5 +108,13 @@ export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
 };
 
 export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
-  return getJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
+  return elevatedGetJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
+};
+
+export const postSeat = (data: ISeat): PromiseLike<ISeat> => {
+  return elevatedPostJson(SEAT_URL, data);
+};
+
+export const deleteSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
+  return elevatedDeleteJson(SEAT_URL, roomId, seatId);
 };
