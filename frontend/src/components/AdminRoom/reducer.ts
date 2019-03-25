@@ -5,34 +5,68 @@ import { _ALERT_CREATED_MESSAGE, _ALERT_DELETED_MESSAGE, _ALERT_UPDATED_MESSAGE 
 
 export interface IAdminRoomState {
   error?: string;
-  submitted?: boolean;
+  success?: boolean;
   room?: IRoom;
 }
 
 const initialState = {
   error: undefined,
-  submitted: undefined,
+  success: undefined,
 };
 
 const reducer = (
   state: IAdminRoomState = initialState,
   action: AnyAction,
 ): IAdminRoomState => {
-  const { type, payload } = action;
+  const { type, success, room } = action;
   switch (type) {
     case CREATE_ROOM:
-      if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_CREATED_MESSAGE, submitted: false };
+      if (success) {
+        return {
+          ...state,
+          success,
+        };
+      }
+      return {
+        ...state,
+        error: _ALERT_CREATED_MESSAGE,
+        success: false,
+      };
     case DELETE_ROOM:
-      if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_DELETED_MESSAGE, submitted: false };
+      if (success) {
+        return {
+          ...state,
+          success,
+        };
+      }
+      return {
+        ...state,
+        error: _ALERT_DELETED_MESSAGE,
+        success: false,
+      };
     case UPDATE_ROOM:
-      if (payload) return { ...state, submitted: payload };
-      return { ...state, error: _ALERT_UPDATED_MESSAGE, submitted: false };
+      if (success) {
+        return {
+          ...state,
+          success,
+        };
+      }
+      return {
+        ...state,
+        error: _ALERT_UPDATED_MESSAGE,
+        success: false,
+      };
+
     case FETCH_ROOM_CSV:
-      return { ...state, room: payload };
+      return {
+        ...state,
+        room,
+      };
     case RESET_PAGE:
-      return { ...state, submitted: undefined };
+      return {
+        ...state,
+        success: undefined,
+      };
     default:
       return state;
   }
