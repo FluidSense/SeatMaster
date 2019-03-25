@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IApplication } from '../Application';
 import { updateSingleApplication } from './actions';
 import Presentational from './Presentational';
-import { IPostAdminApplicationForm } from '../../API/interfaces';
 
 const mapStateToProps = (state: IStore) => ({
   applications: state.applications.applications,
