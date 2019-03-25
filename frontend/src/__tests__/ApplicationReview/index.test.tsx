@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { IApplication } from '../../components/Application';
 import ApplicationReview from '../../components/ApplicationReview/index';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const mockStoreFactory = configureMockStore();
 const applicationInfoMock: IApplication = {
@@ -24,13 +25,18 @@ describe('Application review index', () => {
   it('Renders correctly', () => {
     const initialState = {
       applications:  { registeredApplication: applicationInfoMock },
+      router: {},
       userInformation: applicationInfoMock,
     };
+    const context = { router: { isActive: (a, b) => true } };
     const mockStore = mockStoreFactory(initialState);
     const wrapper = shallow(
       <Provider store={mockStore}>
-        <ApplicationReview application={applicationInfoMock} />
+        <Router>
+          <ApplicationReview application={applicationInfoMock} />
+        </Router>
       </Provider>,
+      { context },
     ).html();
     expect(wrapper).toMatchSnapshot();
   });
