@@ -6,14 +6,19 @@ type fetchTypes = 'POST' | 'PUT' | 'DELETE';
 const postFetch = (url: string, data: any) => genericFetch('POST', url, data);
 const putFetch = (url: string, data: any) => genericFetch('PUT', url, data);
 const deleteFetch = (url: string, id?: any, additionalId?: any) => {
-  const param = id ? id : '';
+  let params = '';
+  if (id && additionalId) {
+    params = `${id}/${additionalId}`;
+  } else if (id) {
+    params = id;
+  }
   if (!additionalId) {
-    return fetch(`${url}${param}`, {
+    return fetch(`${url}${params}`, {
       headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
       method: 'DELETE',
     });
   }
-  return fetch(`${url}${param}/${additionalId}`, {
+  return fetch(`${url}${params}/${additionalId}`, {
     headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
     method: 'DELETE',
   });
@@ -134,7 +139,7 @@ export const elevatedDeleteJson = (url: string, id?: any, additionalId?: any) =>
   }
   return elevatedDeleteFetch(url, id, additionalId)
     .then(response => response.ok
-      ? response.json()
+      ? {}
       : false)
     .catch(() => false);
 

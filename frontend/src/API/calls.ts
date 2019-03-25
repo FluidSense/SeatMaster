@@ -28,7 +28,6 @@ import {
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
-  IPostSeat,
   IPutUserOnSeat,
   IUser,
 } from './interfaces';
@@ -100,7 +99,7 @@ export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
   return elevatedGetJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
 };
 
-export const postSeat = (data: IPostSeat): PromiseLike<ISeat> => {
+export const postSeat = (data: ISeat): PromiseLike<ISeat> => {
   return elevatedPostJson(SEAT_URL, data);
 };
 

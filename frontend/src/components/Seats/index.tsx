@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { IPostSeat } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
@@ -23,9 +22,9 @@ interface IProps {
 }
 
 interface IDispatchProps {
-  createSeat: (data: IPostSeat, roomId: number) => void;
+  createSeat: (data: ISeat, roomId: number) => void;
   deleteSeat: (roomId: number, seatId: string) => void;
-  updateSeat: (roomId: number, oldSeatId: string, newSeat: IPostSeat) => void;
+  updateSeat: (roomId: number, oldSeatId: string, newSeat: ISeat) => void;
 }
 
 type Props = IDispatchProps & IProps;
@@ -70,7 +69,7 @@ class _Container extends Component<Props, IState> {
       nextID = `${idParts[0]}${parseInt(idParts[1], 10) + 1}`;
     }
 
-    const seat: IPostSeat = {
+    const seat: ISeat = {
       id: nextID,
       info: '',
       // tslint:disable-next-line:object-shorthand-properties-first
@@ -100,7 +99,7 @@ class _Container extends Component<Props, IState> {
     const { updateSeat } = this.props;
     const { roomId } = this.state;
 
-    const newSeat: IPostSeat = {
+    const newSeat: ISeat = {
       id: newId,
       info: '',
       // tslint:disable-next-line:object-shorthand-properties-first
@@ -110,21 +109,18 @@ class _Container extends Component<Props, IState> {
   }
 }
 
-const mapStateToProps = (state: IStore, ownProps: any) => ({
-});
-
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
-  createSeat: (data: IPostSeat) => dispatch(createSeatAction(data)),
+  createSeat: (data: ISeat) => dispatch(createSeatAction(data)),
   deleteSeat: (roomId: number, seatId: string) => dispatch(deleteSeatAction(roomId, seatId)),
   updateSeat: (
     roomId: number,
     oldId: string,
-    newSeat: IPostSeat,
+    newSeat: ISeat,
   ) => dispatch(updateSeatAction(roomId, oldId, newSeat)),
 });
 
 const Container = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(_Container);
 
