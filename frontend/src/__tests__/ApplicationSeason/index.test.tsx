@@ -26,12 +26,21 @@ describe('ApplicationSeasonContainer', () => {
   Date.now = jest.fn(() => new Date(Date.UTC(2017, 0, 1)).valueOf());
   it('renders correctly', () => {
     const wrapper = mount(
-    <Provider store={store} >
-      <ApplicationSeason />
-    </Provider>,
+      <Provider store={store} >
+        <ApplicationSeason />
+      </Provider>,
     );
     const container = wrapper.find(ApplicationSeason);
     expect(container.length).toBeTruthy();
+  });
+
+  it('matches snapshot', () => {
+    const wrapper = mount(
+      <Provider store={store} >
+        <ApplicationSeason />
+      </Provider>,
+    );
+    const container = wrapper.find(ApplicationSeason);
     expect(toJson(container)).toMatchSnapshot();
   });
 });
