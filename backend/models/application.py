@@ -1,5 +1,6 @@
 from shared import db
 from models.seat import Seat
+from utils.rank import Rank
 import json
 
 
@@ -20,6 +21,11 @@ class Application(db.Model):
         "status",
         db.String(50),
         nullable=False)
+
+    rank = db.Column(
+        "rank",
+        db.Enum(Rank)
+    )
 
     comments = db.Column(
         "comments",
@@ -78,7 +84,7 @@ class Application(db.Model):
         foreign_keys='[Seat.room_id, Seat.seat_id]',
         primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
-    def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments):
+    def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments, rank=Rank.OTHER):
         self.status = status
         self.user = user
         self.needs = needs
@@ -86,6 +92,7 @@ class Application(db.Model):
         self.preferredRoom = preferredRoom
         self.seatRollover = seatRollover
         self.partnerUsername = partnerUsername
+        self.rank = rank
 
     def to_json(self, self_referred=False):
         applicationDict = {
@@ -93,6 +100,7 @@ class Application(db.Model):
             "status": self.status,
             "comments": self.comments,
             "needs": self.needs,
+            "rank": self.rank.name,
             "preferredRoom": self.preferredRoom,
             "seatRollover": self.seatRollover,
             "seat": self.seat.to_json(False) if self.seat else None,
