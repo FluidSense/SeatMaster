@@ -7,14 +7,27 @@ import AssignSeat from '../../components/AssignSeat';
 import Presentational from '../../components/AssignSeat/Presentational';
 import { mockApplication } from '../AdminApplicationOverview/Presentational.test';
 
-describe('assign seat index', () =>  {
+describe('assign seat index', () => {
+  const seat1 = {
+    id: 'b2',
+    info: 'WARNING: Seat is actually a dildo if you are brave enough',
+    roomId: 2,
+    user: {
+      admin: false,
+      email: 'email',
+      fullname: 'fullname1',
+      id: 2,
+      masterStatus: 'goteem',
+      username: 'user',
+    },
+  };
   const app = mockApplication(1);
   const mockStore = configureMockStore([thunk]);
-  const store = mockStore({ rooms: { rooms: [] } });
+  const store = mockStore({ rooms: { rooms: [] }, assignSeat: { seat: seat1 } });
   it('renders correctly', () => {
     const wrapper = mount(
       <Provider store={store} >
-        <AssignSeat rooms={[]} application={app}/>
+        <AssignSeat rooms={[]} application={app} />
       </Provider>,
     );
     const container = wrapper.find(AssignSeat);

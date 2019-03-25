@@ -1,10 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`assign seat presentational renders correctly 1`] = `
-<form
-  onSubmit={[Function]}
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
 >
-  <RoomPicker
+  <Presentational
+    accept={[Function]}
+    assignUserToSeat={[Function]}
+    checkSeat={[Function]}
+    modalOpen={false}
     rooms={
       Array [
         Object {
@@ -21,62 +34,253 @@ exports[`assign seat presentational renders correctly 1`] = `
           "info": "NZXT",
           "name": "420",
           "seats": Object {
-            "count": 1,
+            "count": 2,
             "seats": Array [
               Object {
-                "id": "bc2",
+                "id": "b2",
                 "info": "WARNING: Seat is actually a dildo if you are brave enough",
                 "roomId": 2,
+                "user": Object {
+                  "admin": false,
+                  "email": "email",
+                  "fullname": "fullname1",
+                  "id": 2,
+                  "masterStatus": "goteem",
+                  "username": "user",
+                },
+              },
+              Object {
+                "id": "b3",
+                "info": "some new room",
+                "roomId": 1,
               },
             ],
           },
         },
       ]
     }
-    setSelected={[Function]}
-  />
-  <SeatPicker
-    setSelected={[Function]}
-  />
-  <KnappBase
-    autoDisableVedSpinner={true}
-    className={null}
-    disabled={true}
-    htmlType="submit"
-    id="submit-application"
-    inaktivKlasseVedDisabled={false}
-    mini={false}
-    spinner={false}
-    type="hoved"
+    toggleModal={[Function]}
   >
-    Submit
-  </KnappBase>
-</form>
+    <Innholdstittel>
+      <TypografiBase
+        type="innholdstittel"
+      >
+        <h1
+          className="typo-innholdstittel"
+        >
+          Assign seat
+        </h1>
+      </TypografiBase>
+    </Innholdstittel>
+    <form
+      onSubmit={[Function]}
+    >
+      <RoomPicker
+        rooms={
+          Array [
+            Object {
+              "id": 1,
+              "info": "CoolerMaster",
+              "name": "Coolio",
+              "seats": Object {
+                "count": 0,
+                "seats": Array [],
+              },
+            },
+            Object {
+              "id": 2,
+              "info": "NZXT",
+              "name": "420",
+              "seats": Object {
+                "count": 2,
+                "seats": Array [
+                  Object {
+                    "id": "b2",
+                    "info": "WARNING: Seat is actually a dildo if you are brave enough",
+                    "roomId": 2,
+                    "user": Object {
+                      "admin": false,
+                      "email": "email",
+                      "fullname": "fullname1",
+                      "id": 2,
+                      "masterStatus": "goteem",
+                      "username": "user",
+                    },
+                  },
+                  Object {
+                    "id": "b3",
+                    "info": "some new room",
+                    "roomId": 1,
+                  },
+                ],
+              },
+            },
+          ]
+        }
+        setSelected={[Function]}
+      >
+        <Select
+          bredde="m"
+          disabled={false}
+          label="Room"
+          onChange={[Function]}
+        >
+          <div
+            className="skjemaelement"
+          >
+            <label
+              className="skjemaelement__label"
+              htmlFor="644116805-13092-5564-1271-21792923013286"
+            >
+              Room
+            </label>
+            <div
+              className="selectContainer input--m"
+            >
+              <select
+                className="skjemaelement__input"
+                disabled={false}
+                id="644116805-13092-5564-1271-21792923013286"
+                onChange={[Function]}
+              >
+                <option
+                  key="0"
+                  value={0}
+                >
+                  Velg et rom
+                </option>
+                <option
+                  key="1"
+                  value={1}
+                >
+                  Coolio
+                </option>
+                <option
+                  key="2"
+                  value={2}
+                >
+                  420
+                </option>
+              </select>
+            </div>
+            <SkjemaelementFeilmelding>
+              <div
+                aria-live="assertive"
+                role="alert"
+              />
+            </SkjemaelementFeilmelding>
+          </div>
+        </Select>
+      </RoomPicker>
+      <SeatPicker
+        setSelected={[Function]}
+      >
+        <Select
+          bredde="m"
+          disabled={true}
+          label="Sete"
+        >
+          <div
+            className="skjemaelement"
+          >
+            <label
+              className="skjemaelement__label"
+              htmlFor="19344561-9028-4118-2969-1314667080594"
+            >
+              Sete
+            </label>
+            <div
+              className="selectContainer input--m"
+            >
+              <select
+                className="skjemaelement__input"
+                disabled={true}
+                id="19344561-9028-4118-2969-1314667080594"
+              >
+                <option
+                  key="0"
+                  label=""
+                >
+                  Velg sete
+                </option>
+              </select>
+            </div>
+            <SkjemaelementFeilmelding>
+              <div
+                aria-live="assertive"
+                role="alert"
+              />
+            </SkjemaelementFeilmelding>
+          </div>
+        </Select>
+      </SeatPicker>
+      <KnappBase
+        autoDisableVedSpinner={true}
+        className={null}
+        disabled={true}
+        htmlType="submit"
+        id="submit-application"
+        inaktivKlasseVedDisabled={false}
+        mini={false}
+        spinner={false}
+        type="hoved"
+      >
+        <button
+          className="knapp knapp--hoved knapp--disabled"
+          disabled={true}
+          id="submit-application"
+          type="submit"
+        >
+          Assign seat
+        </button>
+      </KnappBase>
+    </form>
+    <CustomModal
+      accept={[Function]}
+      close={[Function]}
+      modalOpen={false}
+      text="A student already has a seat here. Do you want to change their allocation?"
+      toggleModal={[Function]}
+    />
+  </Presentational>
+</Provider>
 `;
 
 exports[`assign seat presentational renders nothing correctly 1`] = `
-<form
-  onSubmit={[Function]}
->
-  <RoomPicker
-    rooms={Array []}
-    setSelected={[Function]}
-  />
-  <SeatPicker
-    setSelected={[Function]}
-  />
-  <KnappBase
-    autoDisableVedSpinner={true}
-    className={null}
-    disabled={true}
-    htmlType="submit"
-    id="submit-application"
-    inaktivKlasseVedDisabled={false}
-    mini={false}
-    spinner={false}
-    type="hoved"
+<Fragment>
+  <Innholdstittel>
+    Assign seat
+  </Innholdstittel>
+  <form
+    onSubmit={[Function]}
   >
-    Submit
-  </KnappBase>
-</form>
+    <RoomPicker
+      rooms={Array []}
+      setSelected={[Function]}
+    />
+    <SeatPicker
+      setSelected={[Function]}
+    />
+    <KnappBase
+      autoDisableVedSpinner={true}
+      className={null}
+      disabled={true}
+      htmlType="submit"
+      id="submit-application"
+      inaktivKlasseVedDisabled={false}
+      mini={false}
+      spinner={false}
+      type="hoved"
+    >
+      Assign seat
+    </KnappBase>
+  </form>
+  <CustomModal
+    accept={[Function]}
+    close={[Function]}
+    modalOpen={false}
+    text="A student already has a seat here. Do you want to change their allocation?"
+    toggleModal={[Function]}
+  />
+</Fragment>
 `;
