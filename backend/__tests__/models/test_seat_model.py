@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from utils.enums import Rank, ApplicationStatus
 
+
 def test_add_room_without_room(db_session):
     testuser1 = Seat("D1", None, "info")
     with raises(IntegrityError):
@@ -81,7 +82,7 @@ def test_application_connect_to_seat(db_session):
         preferredRoom="d1",
         seatRollover=True,
         status=ApplicationStatus.SUBMITTED,
-        rank= Rank.WRITING_MASTER,
+        rank=Rank.WRITING_MASTER,
     )
     db_session.add(application)
     db_session.commit()
@@ -111,7 +112,7 @@ def test_application_multiple_connect_to_seat(db_session):
         preferredRoom="d1",
         seatRollover=True,
         status=ApplicationStatus.SUBMITTED,
-        rank= Rank.WRITING_MASTER,
+        rank=Rank.WRITING_MASTER,
     )
     application2 = Application(
         needs="",
@@ -121,7 +122,7 @@ def test_application_multiple_connect_to_seat(db_session):
         preferredRoom="d1",
         seatRollover=True,
         status=ApplicationStatus.SUBMITTED,
-        rank= Rank.WRITING_MASTER,
+        rank=Rank.WRITING_MASTER,
     )
     db_session.add(application1)
     db_session.add(application2)
@@ -152,7 +153,7 @@ def test_cascading(db_session):
         preferredRoom="D1",
         seatRollover=True,
         status=ApplicationStatus.SUBMITTED,
-        rank= Rank.WRITING_MASTER,
+        rank=Rank.WRITING_MASTER,
     )
     db_session.add(seat)
     db_session.add(seat2)

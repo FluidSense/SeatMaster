@@ -9,7 +9,7 @@ from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
 from controllers.applicationController import filterOnStatus
-from utils.enums import Rank, ApplicationStatus
+from utils.enums import ApplicationStatus
 
 
 class TestApplication(TestCase):

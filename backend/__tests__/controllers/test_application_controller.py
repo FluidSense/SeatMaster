@@ -8,6 +8,7 @@ import json
 from __tests__.testUtils.authentication import mock_authentication
 from utils.enums import Rank, ApplicationStatus
 
+
 def createApplication():
     user = User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep")
     application = Application(
