@@ -102,7 +102,7 @@ export class Presentational extends React.Component<IProps, IState> {
 
     postApplicationForm({
       comments: this.state.infoText,
-      needs: this.state.needsText,
+      needs: this.state.needs ? this.state.needsText : '',
       partnerUsername: this.state.partnerUsername,
       preferredRoom: this.state.room ? this.state.room.name : this.state.room,
       seatRollover: this.state.keepSeat,

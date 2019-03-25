@@ -71,6 +71,28 @@ def registerApplication():
     return abort(400)
 
 
+@application.route("/", methods=["PUT"])
+@requiresUser
+def updateApplication():
+    if request.is_json:
+        ctx = _request_ctx_stack.top
+        user = ctx.user
+        form = request.get_json()
+        response, statusCode = applicationService.updateApplication(userid=user.id, form=form)
+        return make_response(jsonify(response), statusCode)
+    return abort(400)
+
+
+@application.route("/<id>", methods=["PUT"])
+@requiresAdmin
+def updateApplicationByApplicationId(id):
+    if request.is_json:
+        form = request.get_json()
+        response, statusCode = applicationService.updateApplicationById(id=id, form=form)
+        return make_response(jsonify(response), statusCode)
+    return abort(400)
+
+
 def filterOnStatus(applicationJson):
     if applicationJson["status"] != "APPROVED":
         del applicationJson["seat"]

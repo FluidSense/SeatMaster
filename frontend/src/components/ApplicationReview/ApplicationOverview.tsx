@@ -69,7 +69,8 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
-        {<InfoPanel title={_NEEDS} text={application.needs} />}
+        <InfoPanel title={_NEEDS} text={application.needs} />
+        <InfoPanel title={_COMMENTS} text={application.comments} />
       </div>
       <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
     </div>

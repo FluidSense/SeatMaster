@@ -8,6 +8,8 @@ import CreateSeason from '../CreateSeason';
 import FAQ from '../FAQ';
 import Header from '../Header';
 import Home from '../Home';
+import Page404 from '../Page404';
+import Profile from '../Profile';
 import Rooms from '../Rooms';
 import SideBar from '../SideBar';
 import ViewRoom from '../ViewRooms';
@@ -24,6 +26,7 @@ export const RoutesAdmin = () => {
           <Route path="/application" component={Application} />
           <Route path="/FAQ" component={FAQ} />
           <Route path="/rooms" component={Rooms} />
+          <Route path="/profile" component={Profile} />
 
           <Route exact={true} path="/admin/rooms" component={ViewRoom} />
           <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
@@ -33,7 +36,7 @@ export const RoutesAdmin = () => {
           <Route path="/admin/applications/:id" component={AdminApplication} />
 
           <Redirect from="/registerUser" to="/" />
-          <Redirect from="/" to="/" /> {/** TODO add 404 */}
+          <Route path="/" component={Page404} />
         </Switch>
       </div>
     </>
