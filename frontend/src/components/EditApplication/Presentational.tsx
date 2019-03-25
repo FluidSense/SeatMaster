@@ -4,6 +4,7 @@ import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import './editApplication.css';
 import EditForm from './EditForm';
+import { Redirect } from 'react-router';
 
 interface IDispatchProps {
   updateApplication: (id: number, application: IPostAdminApplicationForm) => void;
@@ -41,8 +42,8 @@ const Presentational: React.FunctionComponent<Props> = (props) => {
   // TODO: Add redirect
   if (status === 200) {
     resetStatus();
-    return null;
-  };
+    return <Redirect to="/admin/applications" />;
+  }
 
   return (
     <div className="main-content">
