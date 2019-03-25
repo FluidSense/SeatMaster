@@ -31,6 +31,26 @@ class Application(db.Model):
         "comments",
         db.String(100))
 
+    applicationSeasonId = db.Column(
+        "applicationSeasonId",
+        db.ForeignKey("application_season.id")
+    )
+
+    applicationSeason = db.relationship(
+        "application_season",
+        back_populates="application",
+    )
+
+    queuePlacement = db.Column(
+        "queuePlaceent",
+        db.Integer()
+    )
+
+    db.UniqueConstraint(
+        'applicationSeasonId',
+        'queuePlacement',
+        name='uix_1')
+
     userid = db.Column(
         db.Integer,
         db.ForeignKey("users.userid")

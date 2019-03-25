@@ -29,6 +29,10 @@ class ApplicationSeason(db.Model):
         db.DateTime,
         nullable=False)
 
+    applicationSeasons = db.relationship(
+        backref="application_season"
+    )
+
     def __init__(self, start, end, applicationPeriodStart, applicationPeriodEnd):
         self.start = start
         self.end = end
