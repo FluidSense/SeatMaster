@@ -2,6 +2,7 @@ from models.application import Application
 from models.user import User
 from models.room import Room
 from models.seat import Seat
+from utils.enums import Rank, ApplicationStatus
 
 
 def test_add_application_without_partner(db_session):
@@ -9,13 +10,14 @@ def test_add_application_without_partner(db_session):
     db_session.add(testuser1)
     db_session.commit()
     application = Application(
-        status="",
         needs="",
         comments="",
         user=testuser1,
         partnerUsername=None,
         preferredRoom="d1",
         seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
     )
     db_session.add(application)
     db_session.commit()
@@ -29,13 +31,14 @@ def test_proper_user_serialization(db_session):
     testuser1 = User(username="Powerking", sub="sub", email="email", fullname="Asbjørn ELEVG baby")
     db_session.add(testuser1)
     application = Application(
-        status="",
         needs="",
         comments="",
         user=testuser1,
         partnerUsername=None,
         preferredRoom="d1",
         seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
     )
     db_session.add(application)
     db_session.commit()
@@ -49,22 +52,24 @@ def test_users_connect_each_other(db_session):
     db_session.add(testuser1)
     db_session.add(testuser2)
     application2 = Application(
-        status="",
         needs="",
         comments="",
         user=testuser2,
         partnerUsername=testuser1.username,
         preferredRoom="d1",
         seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
     )
     application1 = Application(
-        status="",
         needs="",
         comments="",
         user=testuser1,
         partnerUsername=testuser2.username,
         preferredRoom="d1",
         seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
     )
     application1.partnerApplication = application2
     application2.partnerApplication = application1
@@ -88,13 +93,14 @@ def test_application_connect_to_seat(db_session):
     user = User(username="yoyoyo", sub="sub", email="email", fullname="schnep scmep")
     db_session.add(user)
     application = Application(
-        status="",
         needs="",
         comments="",
         user=user,
         partnerUsername="",
         preferredRoom="d1",
         seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
     )
     db_session.add(application)
     db_session.commit()
@@ -106,13 +112,16 @@ def test_application_connect_to_seat(db_session):
 def test_cascading_user(db_session):
     user = User(username="yoo", sub="sub", email="email", fullname="Dudeman")
     application = Application(
-        status="statusss",
         needs="needs",
         user=user,
         partnerUsername="partnerUsername",
         comments="comments",
         preferredRoom="pref",
-        seatRollover=True)
+        seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
+        )
+
     db_session.add(user)
     db_session.add(application)
     db_session.commit()
@@ -127,22 +136,25 @@ def test_cascading_user(db_session):
 def test_cascading_partnerApplication(db_session):
     user1 = User(username="August", sub="sub", email="email", fullname="Solvæng")
     application1 = Application(
-        status="statusss",
         needs="needs",
         user=user1,
         partnerUsername="Øggøst",
         comments="comments",
         preferredRoom="pref",
-        seatRollover=True)
+        seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
+        )
     user2 = User(username="Øggøst", sub="sub2", email="email2", fullname="Sålvong")
     application2 = Application(
-        status="statusss",
         needs="needs",
         user=user2,
         partnerUsername="August",
         comments="comments",
         preferredRoom="pref",
-        seatRollover=True)
+        seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,)
     db_session.add(user1)
     db_session.add(user2)
     db_session.add(application1)
@@ -161,13 +173,15 @@ def test_cascading_partnerApplication(db_session):
 def test_cascading_seat(db_session):
     user = User(username="yoo", sub="sub", email="email", fullname="Man Man McMan")
     application = Application(
-        status="statusss",
         needs="needs",
         user=user,
         partnerUsername="partnerUsername",
         comments="comments",
         preferredRoom="pref",
-        seatRollover=True)
+        seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
+        )
     room = Room(name="room", info="info")
     seat = Seat(id="d1", room=room, info="info")
     application.room_id = seat.room_id
