@@ -15,7 +15,6 @@ const applicationInfoMock: IApplication = {
     email: 'test@test.com',
     fullname: 'Teser Testersen',
     id: 1,
-    masterStatus: 'Master of masters',
     username: 'wollawop',
   },
 };
