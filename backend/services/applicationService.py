@@ -52,6 +52,8 @@ def updateApplication(userid, form):
                 setattr(application, field, form[field])
         db.session.add(application)
         db.session.commit()
+        if ("partnerUsername" in form.keys()):
+            connectApplication(application)
         return application.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
@@ -65,6 +67,8 @@ def updateApplicationById(id, form):
             setattr(application, field, form[field])
         db.session.add(application)
         db.session.commit()
+        if ("partnerUsername" in form.keys()):
+            connectApplication(application)
         return application.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
