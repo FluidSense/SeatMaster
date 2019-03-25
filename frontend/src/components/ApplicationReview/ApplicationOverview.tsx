@@ -50,7 +50,7 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   const userInfoObject: IUserInfoObject = {
     [_NAME]: application.user.fullname,
     [_EMAIL]: application.user.email,
-    [_MASTER_STATUS]: application.status,
+    [_MASTER_STATUS]: application.rank,
   };
   if (application.partnerApplication && application.partnerApplication.user) {
     partnerObject = application.partnerApplication.user !== undefined
