@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import { IApplication } from '../../components/Application';
 import ApplicationReview from '../../components/ApplicationReview/index';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 const mockStoreFactory = configureMockStore();
 const applicationInfoMock: IApplication = {
