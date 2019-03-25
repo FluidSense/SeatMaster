@@ -22,6 +22,7 @@ describe('application form', () => {
     username: 'Sutaba',
   };
   const userInfo: IRegisteredUserState = {
+    admin: false,
     loading: false,
     registered: true,
   };
