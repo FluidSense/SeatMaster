@@ -13,6 +13,7 @@ const applicationInfoMock: IApplication = {
   seatRollover: true,
   status: 'Master of masters',
   user: {
+    admin: false,
     email: 'test@test.com',
     fullname: 'Teser Testersen',
     id: 1,
