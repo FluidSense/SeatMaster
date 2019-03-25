@@ -2,6 +2,7 @@ from models.application import Application
 from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
+from utils.enums import ApplicationStatus
 
 
 def getAllApplications():
@@ -27,7 +28,7 @@ def getApplicationByUsername(username):
 def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom, rank):
     try:
         application = Application(
-            status="SUBMITTED",
+            status=ApplicationStatus.SUBMITTED,
             needs=needs,
             user=user,
             partnerUsername=partnerUsername,

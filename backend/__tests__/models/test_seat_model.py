@@ -5,7 +5,7 @@ from models.application import Application
 from pytest import raises
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
-
+from utils.enums import Rank, ApplicationStatus
 
 def test_add_room_without_room(db_session):
     testuser1 = Seat("D1", None, "info")
@@ -74,13 +74,14 @@ def test_application_connect_to_seat(db_session):
     user = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
     db_session.add(user)
     application = Application(
-        status="",
         needs="",
         comments="",
         user=user,
         partnerUsername="",
         preferredRoom="d1",
         seatRollover=True,
+        status=ApplicationStatus.SUBMITTED,
+        rank= Rank.WRITING_MASTER,
     )
     db_session.add(application)
     db_session.commit()
@@ -103,22 +104,24 @@ def test_application_multiple_connect_to_seat(db_session):
     db_session.add(user1)
     db_session.add(user2)
     application1 = Application(
-        status="",
         needs="",
         comments="",
         user=user1,
         partnerUsername="",
         preferredRoom="d1",
         seatRollover=True,
+        status=ApplicationStatus.SUBMITTED,
+        rank= Rank.WRITING_MASTER,
     )
     application2 = Application(
-        status="",
         needs="",
         comments="",
         user=user2,
         partnerUsername="",
         preferredRoom="d1",
         seatRollover=True,
+        status=ApplicationStatus.SUBMITTED,
+        rank= Rank.WRITING_MASTER,
     )
     db_session.add(application1)
     db_session.add(application2)
@@ -142,13 +145,14 @@ def test_cascading(db_session):
     seat2 = Seat(id="D2", room=room, info="info")
     user = User(username="name", sub="sub", email="email", fullname="Dudeman")
     application = Application(
-        status="SUBMITTED",
         needs="needs",
         user=user,
         partnerUsername="hello",
         comments="comments",
         preferredRoom="D1",
-        seatRollover=True
+        seatRollover=True,
+        status=ApplicationStatus.SUBMITTED,
+        rank= Rank.WRITING_MASTER,
     )
     db_session.add(seat)
     db_session.add(seat2)

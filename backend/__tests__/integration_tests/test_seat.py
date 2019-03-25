@@ -10,6 +10,7 @@ from flask import jsonify, make_response
 import json
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
+from utils.enums import Rank, ApplicationStatus
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
 
@@ -96,13 +97,14 @@ class TestSeat(TestCase):
         user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
-            status="lol",
             comments="lol",
             needs="needs",
             user=user,
             partnerUsername="no",
             preferredRoom="d1",
             seatRollover=True,
+            rank=Rank.WRITING_MASTER,
+            status=ApplicationStatus.SUBMITTED,
         )
         db.session.add(application)
         db.session.commit()
@@ -133,13 +135,14 @@ class TestSeat(TestCase):
         user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
-            status="lol",
             comments="lol",
             needs="needs",
             user=user,
             partnerUsername="no",
             preferredRoom="d1",
             seatRollover=True,
+            rank=Rank.WRITING_MASTER,
+            status=ApplicationStatus.SUBMITTED,
         )
         db.session.add(application)
         db.session.commit()

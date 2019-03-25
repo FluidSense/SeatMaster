@@ -6,18 +6,19 @@ from flask import jsonify, url_for
 from main import app
 import json
 from __tests__.testUtils.authentication import mock_authentication
-
+from utils.enums import Rank, ApplicationStatus
 
 def createApplication():
     user = User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep")
     application = Application(
-        status="status",
         needs="needs",
         comments="comments",
         user=user,
         partnerUsername="Jar Jar Binks",
         preferredRoom="d1",
         seatRollover=True,
+        status=ApplicationStatus.SUBMITTED,
+        rank=Rank.WRITING_MASTER,
 
     )
     return application
@@ -67,7 +68,7 @@ def test_getApplicationByUser_with_application(mocker):
 
 def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoom, seatRollover, rank):
     return Application(
-        status="SUBMITTED",
+        status=ApplicationStatus.SUBMITTED,
         comments=comments,
         needs=needs,
         user=User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep"),

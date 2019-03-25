@@ -7,3 +7,9 @@ class Rank(Enum):
     MASTER_STUDENT = 3
     BACHELOR_STUDENT = 4
     OTHER = 5
+
+
+class ApplicationStatus(Enum):
+    SUBMITTED = 1
+    APPROVED = 2
+    DECLINED = 3
