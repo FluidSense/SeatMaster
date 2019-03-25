@@ -2,7 +2,6 @@ import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { putAdminApplicationForm } from '../../API/calls';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
-import { IApplication } from '../Application';
 import { SUCCESSFULL_APPLICATION_UPDATE, UNSUCCESSFULL_APPLICATION_UPDATE } from './constants';
 
 const successfullAppUpdate = () => ({

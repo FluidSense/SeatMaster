@@ -1,3 +1,4 @@
+import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
@@ -15,12 +16,13 @@ interface IStateProps {
       id: string;
     },
   };
+  status: number;
 }
 
 type Props = IStateProps & IDispatchProps;
 
 const Presentational: React.FunctionComponent<Props> = (props) => {
-  const { applications, match } = props;
+  const { applications, match, status } = props;
 
   if (!match) return null;
   const application = applications.filter(app => app.id === parseInt(match.params.id, 10))[0];
@@ -29,8 +31,18 @@ const Presentational: React.FunctionComponent<Props> = (props) => {
     if (application.id) props.updateApplication(application.id, input);
   };
 
+  const alert = (
+    <AlertStripe type="advarsel" solid={true}>
+      Failed to submit the edited application. Please check your network connection.
+    </AlertStripe>
+  );
+
+  // TODO: Add redirect
+  if (status === 200) return null;
+
   return (
     <div className="main-content">
+    {status === 400 ? alert : false}
     <EditForm
       application={application}
       finalize={finalize}
