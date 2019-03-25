@@ -24,7 +24,7 @@ def getApplicationByUsername(username):
     return userApplication
 
 
-def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom):
+def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom, rank):
     try:
         application = Application(
             status="SUBMITTED",
@@ -33,7 +33,8 @@ def registerApplication(comments, needs, user, partnerUsername, seatRollover, pr
             partnerUsername=partnerUsername,
             comments=comments,
             seatRollover=seatRollover,
-            preferredRoom=preferredRoom
+            preferredRoom=preferredRoom,
+            rank=rank,
         )
         db.session.add(application)
         db.session.commit()

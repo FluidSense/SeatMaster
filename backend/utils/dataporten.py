@@ -1,5 +1,7 @@
 import urllib
 import json
+from utils.groups import MASTERS, PROJECT_ASSIGNMENTS, MASTER_STUDIES, BACHELOR_STUDIES
+from utils.rank import Rank
 
 
 def getDataportenUserInfo(token):
@@ -24,3 +26,21 @@ def checkIfAdmin(accessToken):
         if(group.get('id', None) == "fc:fs:fs:emne:ntnu.no:TDT4136:1"):
             return True
     return False
+
+
+def getRank(accessToken):
+    groups = getDataportenGroups(accessToken)
+    groupIds = list(map(lambda group: group["id"], groups))
+    for subjectId in MASTERS:
+        if(subjectId in groupIds):
+            return Rank.WRITING_MASTER
+    for subjectId in PROJECT_ASSIGNMENTS:
+        if(subjectId in groupIds):
+            return Rank.PROJECT_ASSIGNMENT
+    for subjectId in MASTER_STUDIES:
+        if(subjectId in groupIds):
+            return Rank.MASTER_STUDENT
+    for subjectId in BACHELOR_STUDIES:
+        if(subjectId in groupIds):
+            return Rank.BACHELOR_STUDENT
+    return Rank.OTHER
