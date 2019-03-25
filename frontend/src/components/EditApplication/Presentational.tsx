@@ -1,10 +1,10 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
+import { Redirect } from 'react-router';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import './editApplication.css';
 import EditForm from './EditForm';
-import { Redirect } from 'react-router';
 
 interface IDispatchProps {
   updateApplication: (id: number, application: IPostAdminApplicationForm) => void;

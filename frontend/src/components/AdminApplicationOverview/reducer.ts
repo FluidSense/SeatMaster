@@ -2,9 +2,9 @@ import { AnyAction } from 'redux';
 import { IApplication } from '../Application';
 import { APP_NOT_FOUND } from '../commonConstants';
 import {
+  RESET_APPLICATION_STATUS,
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
-  RESET_APPLICATION_STATUS,
 } from '../EditApplication/constants';
 import { GET_ALL_APPLICATIONS } from './constants';
 
