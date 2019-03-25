@@ -1,5 +1,6 @@
 from models.user import User
 from models.application import Application
+from utils.enums import ApplicationStatus, Rank
 
 
 def test_a_transaction(db_session):
@@ -18,13 +19,14 @@ def test_db_drop(db_session):
 
 def test_cascading(db_session):
     user = User("hello", sub="sub", email="email", fullname="McHelloesen")
-    application = Application(status="Submitted",
+    application = Application(status=ApplicationStatus.SUBMITTED,
                               needs="needs",
                               user=user,
                               partnerUsername="partner",
                               comments="comments",
                               preferredRoom="pref",
-                              seatRollover=True)
+                              seatRollover=True,
+                              rank=Rank.WRITING_MASTER)
     db_session.add(user)
     db_session.add(application)
     db_session.commit()

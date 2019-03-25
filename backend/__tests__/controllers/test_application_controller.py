@@ -6,18 +6,20 @@ from flask import jsonify, url_for
 from main import app
 import json
 from __tests__.testUtils.authentication import mock_authentication
+from utils.enums import Rank, ApplicationStatus
 
 
 def createApplication():
     user = User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep")
     application = Application(
-        status="status",
         needs="needs",
         comments="comments",
         user=user,
         partnerUsername="Jar Jar Binks",
         preferredRoom="d1",
         seatRollover=True,
+        status=ApplicationStatus.SUBMITTED,
+        rank=Rank.WRITING_MASTER,
 
     )
     return application
@@ -65,15 +67,16 @@ def test_getApplicationByUser_with_application(mocker):
         assert jsonify(application.to_json()).data == response.data
 
 
-def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoom, seatRollover):
+def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoom, seatRollover, rank):
     return Application(
-        status="SUBMITTED",
+        status=ApplicationStatus.SUBMITTED,
         comments=comments,
         needs=needs,
         user=User(username="Darth plageus", sub="sub", email="email", fullname="Schnep Schmep"),
         partnerUsername=partnerUsername,
         preferredRoom="d1",
         seatRollover=True,
+        rank=rank,
     ).to_json(), 201
 
 
@@ -99,7 +102,7 @@ def test_registerNewApplication(mocker, client):
                 seatRollover=True,
             )))
         assert "201 CREATED" == response.status
-        assert jsonify(
+        assert json.loads(jsonify(
             comments='comments',
             needs='needs',
             user={"id": None, "username": "Darth plageus", "email": "email", "fullname": "Schnep Schmep"},
@@ -108,4 +111,5 @@ def test_registerNewApplication(mocker, client):
             preferredRoom="d1",
             seatRollover=True,
             partnerApplication={},
-        ).data == response.data
+            rank="WRITING_MASTER"
+        ).data) == json.loads(response.data)

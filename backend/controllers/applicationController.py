@@ -1,8 +1,9 @@
 from flask import Blueprint, Response, jsonify, request, abort, make_response, _request_ctx_stack
 import json
 from services import applicationService
-from auth import requiresUser, requiresAdmin
-
+from auth import requiresUser, requiresAdmin, get_token_auth_header
+from utils.enums import Rank, ApplicationStatus
+from utils import dataporten
 application = Blueprint("application", __name__, url_prefix="/application")
 
 
@@ -44,19 +45,22 @@ def registerApplication():
     if request.is_json:
         ctx = _request_ctx_stack.top
         user = ctx.user
+        accessToken = get_token_auth_header("accessToken")
         form = request.get_json()
         needs = form.get("needs")
         comments = form.get("comments")
         partnerUsername = form.get("partnerUsername")
         seatRollover = form.get("seatRollover")
         preferredRoom = form.get("preferredRoom")
+        rank = dataporten.getRank(accessToken) if accessToken else Rank.OTHER
         responseText, statusCode = applicationService.registerApplication(
             comments=comments,
             needs=needs,
             user=user,
             partnerUsername=partnerUsername,
             seatRollover=seatRollover,
-            preferredRoom=preferredRoom
+            preferredRoom=preferredRoom,
+            rank=rank,
         )
         if "seat" in responseText:
             del responseText["seat"]
@@ -89,7 +93,7 @@ def updateApplicationByApplicationId(id):
 
 
 def filterOnStatus(applicationJson):
-    if applicationJson["status"] != "APPROVED":
+    if not applicationJson["status"] is ApplicationStatus.APPROVED:
         del applicationJson["seat"]
         return applicationJson
     return applicationJson

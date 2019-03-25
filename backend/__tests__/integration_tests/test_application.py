@@ -9,6 +9,7 @@ from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
 from controllers.applicationController import filterOnStatus
+from utils.enums import ApplicationStatus
 
 
 class TestApplication(TestCase):
@@ -54,11 +55,12 @@ class TestApplication(TestCase):
             status="SUBMITTED",
             user={"id": 1, "username": testuser.username, "email": "email", "fullname": "Franky Frank"},
             partnerApplication={},
+            rank="WRITING_MASTER",
             preferredRoom="d1",
             seatRollover=True,
         ), 201)
         assert expectedResponse.status == response.status
-        assert expectedResponse.data == response.data
+        assert json.loads(expectedResponse.data) == json.loads(response.data)
 
     @mock_authentication_context
     def test_new_application_without_existing_partner(self):
@@ -94,10 +96,11 @@ class TestApplication(TestCase):
             partnerApplication={},
             preferredRoom="d1",
             seatRollover=True,
+            rank="WRITING_MASTER",
         ), 201)
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1', headers=headers)
         assert expectedApplicationResponse.status == response.status
-        assert expectedApplicationResponse.data == response.data
+        assert json.loads(expectedApplicationResponse.data) == json.loads(response.data)
         assert getApplication.status == "200 OK"
         assert filterOnStatus(json.loads(getApplication.data)) == json.loads(expectedApplicationResponse.data)
 
@@ -106,7 +109,7 @@ class TestApplication(TestCase):
         testuser1 = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         testuser2 = User(username="Monster", sub="sub", email="emails", fullname="Schmemails")
         testApplication = Application(
-            "SUBMITTED",
+            ApplicationStatus.SUBMITTED,
             "Pepsi is better than coke",
             user=testuser2,
             partnerUsername="Frank",
@@ -144,12 +147,14 @@ class TestApplication(TestCase):
             status="SUBMITTED",
             user={"id": 1, "username": testuser1.username, "email": testuser1.email, "fullname": testuser1.fullname},
             preferredRoom="d1",
+            rank="WRITING_MASTER",
             seatRollover=True,
             partnerApplication={
                 "needs": "Pepsi is better than coke",
                 "comments": "Not Pepsi, but Pepsi Max",
                 "id": 1,
                 "status": "SUBMITTED",
+                "rank": "OTHER",
                 "user": {
                     "id": 2,
                     "username": testuser2.username,
@@ -170,6 +175,7 @@ class TestApplication(TestCase):
             preferredRoom="d1",
             seatRollover=True,
             seat=None,
+            rank="OTHER",
             partnerApplication={
                 "needs": "Fanta is better than solo",
                 "comments": "Bruh wtf",
@@ -177,6 +183,7 @@ class TestApplication(TestCase):
                 "status": "SUBMITTED",
                 "preferredRoom": "d1",
                 "seatRollover": True,
+                "rank": "WRITING_MASTER",
                 "seat": None,
                 "user": {
                     "id": 1,
@@ -188,7 +195,7 @@ class TestApplication(TestCase):
         )
         getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2', headers=headers)
         assert user1expectedResponse.status == user1Response.status
-        assert user1expectedResponse.data == user1Response.data
+        assert json.loads(user1expectedResponse.data) == json.loads(user1Response.data)
         assert getApplication.status == "200 OK"
         assert json.loads(expectedConnectedApplication.data) == json.loads(getApplication.data)
 
@@ -204,7 +211,7 @@ class TestApplication(TestCase):
         db.session.add(testuser2)
         db.session.commit()
         testApplication1 = Application(
-            "Unprocessed",
+            ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
             user=testuser1,
             partnerUsername="Frank",
@@ -212,7 +219,7 @@ class TestApplication(TestCase):
             seatRollover=True,
             comments="Not Pepsi, but Pepsi Max")
         testApplication2 = Application(
-            "Unprocessed",
+            ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
             user=testuser2,
             partnerUsername="Monster",

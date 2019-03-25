@@ -5,9 +5,20 @@ type fetchTypes = 'POST' | 'PUT' | 'DELETE';
 // User
 const postFetch = (url: string, data: any) => genericFetch('POST', url, data);
 const putFetch = (url: string, data: any) => genericFetch('PUT', url, data);
-const deleteFetch = (url: string, id?: any) => {
-  const param = id ? id : '';
-  return fetch(`${url}${param}`, {
+const deleteFetch = (url: string, id?: any, additionalId?: any) => {
+  let params = '';
+  if (id && additionalId) {
+    params = `${id}/${additionalId}`;
+  } else if (id) {
+    params = id;
+  }
+  if (!additionalId) {
+    return fetch(`${url}${params}`, {
+      headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
+      method: 'DELETE',
+    });
+  }
+  return fetch(`${url}${params}/${additionalId}`, {
     headers: { Authorization: `Bearer ${store.getState().oidc.user.id_token}` },
     method: 'DELETE',
   });
@@ -40,12 +51,20 @@ export const putJson = (url: string, data: any) => {
     .catch(() => false);
 };
 
-export const deleteJson = (url: string, id?: any) => {
-  return deleteFetch(url, id)
+export const deleteJson = (url: string, id?: any, additionalId?: any) => {
+  if (!additionalId) {
+    return deleteFetch(url, id)
+      .then(response => response.ok
+        ? response.json()
+        : false)
+      .catch(() => false);
+  }
+  return deleteFetch(url, id, additionalId)
     .then(response => response.ok
-      ? response.json()
+      ? {}
       : false)
     .catch(() => false);
+
 };
 
 export const getJson = (url: string) => fetch(url, {
@@ -73,15 +92,25 @@ const elevatedPostFetch = (url: string, data: any) =>
   elevatedGenericFetch('POST', url, data);
 const elevatedPutFetch = (url: string, data: any) =>
   elevatedGenericFetch('PUT', url, data);
-const elevatedDeleteFetch = (url: string, id?: any) => {
+const elevatedDeleteFetch = (url: string, id?: any, additionalId?: any) => {
   const param = id ? id : '';
-  return fetch(`${url}${param}`, {
+  if (!additionalId) {
+    return fetch(`${url}${param}`, {
+      headers: {
+        AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
+        Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
+      },
+      method: 'DELETE',
+    });
+  }
+  return fetch(`${url}${param}/${additionalId}`, {
     headers: {
       AccessToken: `Bearer ${store.getState().oidc.user.access_token}`,
       Authorization: `Bearer ${store.getState().oidc.user.id_token}`,
     },
     method: 'DELETE',
   });
+
 };
 
 export const elevatedPostJson = (url: string, data: any) => {
@@ -100,12 +129,20 @@ export const elevatedPutJson = (url: string, data: any) => {
     .catch(() => false);
 };
 
-export const elevatedDeleteJson = (url: string, id?: any) => {
-  return elevatedDeleteFetch(url, id)
+export const elevatedDeleteJson = (url: string, id?: any, additionalId?: any) => {
+  if (!additionalId) {
+    return elevatedDeleteFetch(url, id)
+      .then(response => response.ok
+        ? response.json()
+        : false)
+      .catch(() => false);
+  }
+  return elevatedDeleteFetch(url, id, additionalId)
     .then(response => response.ok
-      ? response.json()
+      ? {}
       : false)
     .catch(() => false);
+
 };
 
 export const elevatedGetJson = (url: string) => fetch(url, {

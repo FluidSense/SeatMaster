@@ -9,8 +9,8 @@ import './viewRooms.css';
 
 export interface IRoom {
   id: number;
-  name: string;
   info: string;
+  name: string;
   seats: {
     count: number;
     seats: ISeat[];

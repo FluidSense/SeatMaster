@@ -2,6 +2,7 @@ export const BASEPATH = 'http://localhost:5000/';
 
 // Room
 export const ROOM_URL = `${BASEPATH}room/`;
+export const SEAT_URL = `${BASEPATH}seat/`;
 
 // Application
 export const POST_FORM_DATA_URL = `${BASEPATH}application/`;
