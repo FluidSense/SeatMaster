@@ -9,6 +9,7 @@ from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
 from controllers.applicationController import filterOnStatus
+from utils.enums import ApplicationStatus
 
 
 class TestApplication(TestCase):
@@ -108,7 +109,7 @@ class TestApplication(TestCase):
         testuser1 = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         testuser2 = User(username="Monster", sub="sub", email="emails", fullname="Schmemails")
         testApplication = Application(
-            "SUBMITTED",
+            ApplicationStatus.SUBMITTED,
             "Pepsi is better than coke",
             user=testuser2,
             partnerUsername="Frank",
@@ -210,7 +211,7 @@ class TestApplication(TestCase):
         db.session.add(testuser2)
         db.session.commit()
         testApplication1 = Application(
-            "Unprocessed",
+            ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
             user=testuser1,
             partnerUsername="Frank",
@@ -218,7 +219,7 @@ class TestApplication(TestCase):
             seatRollover=True,
             comments="Not Pepsi, but Pepsi Max")
         testApplication2 = Application(
-            "Unprocessed",
+            ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
             user=testuser2,
             partnerUsername="Monster",

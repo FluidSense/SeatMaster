@@ -1,6 +1,6 @@
 from shared import db
 from models.seat import Seat
-from utils.rank import Rank
+from utils.enums import Rank, ApplicationStatus
 import json
 
 
@@ -19,7 +19,7 @@ class Application(db.Model):
 
     status = db.Column(
         "status",
-        db.String(50),
+        db.Enum(ApplicationStatus),
         nullable=False)
 
     rank = db.Column(
@@ -97,7 +97,7 @@ class Application(db.Model):
     def to_json(self, self_referred=False):
         applicationDict = {
             "id": self.id,
-            "status": self.status,
+            "status": self.status.name,
             "comments": self.comments,
             "needs": self.needs,
             "rank": self.rank.name,

@@ -1,7 +1,7 @@
 import urllib
 import json
 from utils.groups import MASTERS, PROJECT_ASSIGNMENTS, MASTER_STUDIES, BACHELOR_STUDIES
-from utils.rank import Rank
+from utils.enums import Rank
 
 
 def getDataportenUserInfo(token):
