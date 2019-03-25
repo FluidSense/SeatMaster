@@ -9,7 +9,7 @@ from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
 from controllers.applicationController import filterOnStatus
-from utils.rank import Rank
+
 
 class TestApplication(TestCase):
     def setUp(self):
@@ -115,7 +115,6 @@ class TestApplication(TestCase):
             preferredRoom="d1",
             seatRollover=True,
             comments="Not Pepsi, but Pepsi Max")
-        testApplication.rank = Rank.OTHER
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.add(testApplication)
