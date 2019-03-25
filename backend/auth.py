@@ -14,7 +14,7 @@ ALGORITHMS = ['RS256']
 
 
 def get_token_auth_header(header):
-    """Obtains the Access Token from the Authorization Header
+    """Obtains the token from a given header
     """
     auth = request.headers.get(header, None)
     if not auth:
@@ -38,7 +38,7 @@ def get_token_auth_header(header):
 def requiresIdToken(verify=True):
 
     def decorator(f):
-        """Determines if the Access Token is valid
+        """Determines if the ID token is valid
         """
 
         def wrapper(*args, **kwargs):
@@ -82,7 +82,7 @@ def requiresIdToken(verify=True):
 
 
 def requiresUser(f):
-    """Determines if the Access Token is valid
+    """Determines if the user exists backend
     """
 
     @wraps(f)
