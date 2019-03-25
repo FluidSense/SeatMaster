@@ -48,7 +48,7 @@ def updateApplication(userid, form):
     try:
         application = getApplicationByUserId(userid)
         for field in form.keys():
-            if(form[field]):
+            if(field in application.userEditableFields()):
                 setattr(application, field, form[field])
         db.session.add(application)
         db.session.commit()
