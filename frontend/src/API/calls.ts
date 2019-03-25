@@ -56,7 +56,7 @@ export const getAllApplications = ():
 
 export const postApplicationForm = (data: IPostApplicationForm):
   PromiseLike<IApplication> => {
-  return postJson(POST_FORM_DATA_URL, data);
+  return elevatedPostJson(POST_FORM_DATA_URL, data);
 };
 
 export const getUserData = (): PromiseLike<IUser> => {
