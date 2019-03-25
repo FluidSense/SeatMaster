@@ -4,6 +4,7 @@ import { APP_NOT_FOUND } from '../commonConstants';
 import {
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
+  RESET_APPLICATION_STATUS,
 } from '../EditApplication/constants';
 import { GET_ALL_APPLICATIONS } from './constants';
 
@@ -63,6 +64,15 @@ export const ApplicationReducer = (
         api: {
           ...state.api,
           status: 400,
+        },
+      };
+    }
+    case RESET_APPLICATION_STATUS: {
+      return {
+        ...state,
+        api: {
+          ...state.api,
+          status: 0,
         },
       };
     }
