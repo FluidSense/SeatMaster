@@ -108,3 +108,6 @@ class Application(db.Model):
 
     def __str__(self):
         return json.dumps(self.to_json())
+
+    def userEditableFields(self):
+        return ["comments", "needs", "preferredRoom", "seatRollover"]
