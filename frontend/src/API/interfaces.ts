@@ -25,6 +25,11 @@ export interface IPostRoom {
   info: string;
 }
 
+export interface IRemoveStudentFromSeat {
+  roomId: number;
+  seatId: string;
+}
+
 // FIXME Move this to a fitting place and export the hell out of it
 export interface IUser {
   email: string;
