@@ -16,23 +16,31 @@ ALGORITHMS = ['RS256']
 def get_token_auth_header(header):
     """Obtains the token from a given header
     """
-    auth = request.headers.get(header, None)
-    if not auth:
-        return Response(json.dumps({'error': 'Authorization_header_missing'}), 401)
 
-    parts = auth.split()
+    headerString = ""
+    try:
+        headerString = request.headers.get(header, None)
+    except HTTPError:
+        raise HTTPError("Cannot parse header")
 
-    if parts[0].lower() != 'bearer':
-        return Response("{'error': 'Invalid_header'}", 401)
+    if headerString is None:
+        raise TypeError("Header is missing")
 
-    elif len(parts) == 1:
-        return Response("{'error': 'Invalid_header'}", 401)
+    parts = headerString.split()
 
-    elif len(parts) > 2:
-        return Response("{'error': 'Invalid_header'}", 401)
+    if parts[0].lower() != 'bearer' or len(parts) == 1 or len(parts) > 2:
+        raise TypeError("Header invalid")
 
     token = parts[1]
     return token
+
+
+def eval_access_token():
+    try:
+        access_token = get_token_auth_header("AccessToken")
+        return access_token, True
+    except (HTTPError, TypeError):
+        return None, False
 
 
 def requiresIdToken(verify=True):
@@ -43,6 +51,7 @@ def requiresIdToken(verify=True):
 
         def wrapper(*args, **kwargs):
             token = get_token_auth_header("Authorization")
+            access_token, verify_at_hash = eval_access_token()
             jsonurl = urlopen(VERIFICATION_DOMAIN)
             jwks = json.loads(jsonurl.read())
             unverified_header = jwt.get_unverified_header(token)
@@ -64,7 +73,9 @@ def requiresIdToken(verify=True):
                         issuer=DOMAIN,
                         audience='77ee33cd-cc7f-4b7a-bce9-241c96458f14',
                         options={"verify_signature": verify,
-                                 "verify_exp": verify}
+                                 "verify_exp": verify,
+                                 "verify_at_hash": verify_at_hash},
+                        access_token=access_token
                     )
 
                 except jwt.ExpiredSignatureError:
@@ -102,10 +113,10 @@ def requiresUser(f):
 def requiresAdmin(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        accessToken = get_token_auth_header("AccessToken")
         try:
+            accessToken = get_token_auth_header("AccessToken")
             isAdmin = dataporten.checkIfAdmin(accessToken)
-        except HTTPError:
+        except (HTTPError, TypeError):
             return Response("{'error':'Access token not valid'}", 401)
         if not isAdmin:
             return Response("{'error':'Access Denied'}", 403)
