@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ApplicationSeasonContainer renders correctly 1`] = `
+exports[`ApplicationSeasonContainer matches snapshot 1`] = `
 <Connect(_Container)>
   <_Container
     applicationSeason={
