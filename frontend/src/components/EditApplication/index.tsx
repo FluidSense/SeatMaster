@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IStore } from '../../store';
-import { updateSingleApplication } from './actions';
+import { resetAppStatus, updateSingleApplication } from './actions';
 import Presentational from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
@@ -11,6 +11,7 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  resetStatus: () => dispatch(resetAppStatus()),
   updateApplication: (id: number, application: IPostAdminApplicationForm) => {
     return dispatch(updateSingleApplication(id, application));
   },

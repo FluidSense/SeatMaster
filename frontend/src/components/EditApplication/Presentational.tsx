@@ -7,6 +7,7 @@ import EditForm from './EditForm';
 
 interface IDispatchProps {
   updateApplication: (id: number, application: IPostAdminApplicationForm) => void;
+  resetStatus: () => void;
 }
 
 interface IStateProps {
@@ -22,7 +23,7 @@ interface IStateProps {
 type Props = IStateProps & IDispatchProps;
 
 const Presentational: React.FunctionComponent<Props> = (props) => {
-  const { applications, match, status } = props;
+  const { applications, match, status, resetStatus } = props;
 
   if (!match) return null;
   const application = applications.filter(app => app.id === parseInt(match.params.id, 10))[0];
@@ -38,7 +39,10 @@ const Presentational: React.FunctionComponent<Props> = (props) => {
   );
 
   // TODO: Add redirect
-  if (status === 200) return null;
+  if (status === 200) {
+    resetStatus();
+    return null;
+  };
 
   return (
     <div className="main-content">
