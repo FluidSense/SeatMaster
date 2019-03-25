@@ -72,7 +72,7 @@ describe('assign seat presentational', () => {
   });
 
   it('renders correctly', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Provider store={store}>
         <Presentational
           accept={accept}
@@ -83,7 +83,8 @@ describe('assign seat presentational', () => {
           toggleModal={toggleModal}
         />
       </Provider>);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const presentational = wrapper.find(Presentational);
+    expect(toJson(presentational)).toMatchSnapshot();
   });
 
   it('submits properly', () => {
