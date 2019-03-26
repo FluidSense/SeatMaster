@@ -6,6 +6,15 @@ exports[`application form renders correctly 1`] = `
     id="new-application-form"
     onSubmit={[Function]}
   >
+    <p
+      style={
+        Object {
+          "fontStyle": "italic",
+        }
+      }
+    >
+      Additional information about your courses at NTNU will be gathered for the purpose of finding your master status.
+    </p>
     <ApplicationFormPersonal />
     <ApplicationFormPreferences
       partner={false}

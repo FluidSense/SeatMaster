@@ -27,8 +27,21 @@ describe('admin application container', () => {
       application: {},
       rooms: [room],
     };
+    const seat1 = {
+      id: 'b2',
+      info: 'WARNING: Seat is actually a dildo if you are brave enough',
+      roomId: 2,
+      user: {
+        admin: false,
+        email: 'email',
+        fullname: 'fullname1',
+        id: 2,
+        masterStatus: 'goteem',
+        username: 'user',
+      },
+    };
     const mockStore = configureMockStore([thunk]);
-    const store = mockStore({});
+    const store = mockStore({ assignSeat: { seat: seat1 } });
     const wrapper = mount(
       <Provider store={store}>
         <AdminApplication location={location} />
