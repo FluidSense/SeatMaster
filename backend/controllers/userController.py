@@ -41,6 +41,14 @@ def registerUser():
     return abort(400)
 
 
+@user.route("/all")
+@requiresAdmin
+def getAllUsers():
+    users = userService.getAllUsers()
+    userList = list(map(lambda x: x.to_json(), users))
+    return jsonify(userList) if users else Response("{}", 200)
+
+
 @user.route("/")
 @requiresUser
 def getSelf():
