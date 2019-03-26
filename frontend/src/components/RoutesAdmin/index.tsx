@@ -5,6 +5,7 @@ import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
+import EditApplication from '../EditApplication';
 import FAQ from '../FAQ';
 import Header from '../Header';
 import Home from '../Home';
@@ -25,16 +26,17 @@ export const RoutesAdmin = () => {
           <Route exact={true} path="/" component={Home} />
 
           <Route path="/application" component={Application} />
-          <Route exact={true} path="/admin/rooms" component={ViewRooms} />
           <Route path="/FAQ" component={FAQ} />
           <Route path="/rooms" component={Rooms} />
           <Route path="/profile" component={Profile} />
 
-          <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
-          <Route path="/admin/create-season" component={CreateSeason} />
-          <Route path="/admin/rooms/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/applications" component={AdminApplicationOverview} />
-          <Route path="/admin/applications/:id" component={AdminApplication} />
+          <Route exact={true} path="/admin/applications/:id" component={AdminApplication} />
+          <Route path="/admin/applications/:id/edit" component={EditApplication} />
+          <Route path="/admin/create-season" component={CreateSeason} />
+          <Route exact={true} path="/admin/rooms" component={ViewRooms} />
+          <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
+          <Route path="/admin/rooms/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/students/" component={ViewStudents} />
 
           <Redirect from="/registerUser" to="/" />
