@@ -1,22 +1,28 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { deleteRoom, postRoom, putRoom } from '../../API/calls';
+import { deleteRoom, getRoom, postRoom, putRoom } from '../../API/calls';
 import { IPostRoom } from '../../API/interfaces';
-import { CREATE_ROOM, DELETE_ROOM, RESET_PAGE, UPDATE_ROOM } from './constants';
+import { IRoom } from '../ViewRooms';
+import { CREATE_ROOM, DELETE_ROOM, FETCH_ROOM_CSV, RESET_PAGE, UPDATE_ROOM } from './constants';
 
-const roomCreated = (payload: boolean) => ({
-  payload,
+const roomCreated = (success: boolean) => ({
+  success,
   type: CREATE_ROOM,
 });
 
-const roomUpdated = (payload: boolean) => ({
-  payload,
+const roomUpdated = (success: boolean) => ({
+  success,
   type: UPDATE_ROOM,
 });
 
-const roomDeleted = (payload: boolean) => ({
-  payload,
+const roomDeleted = (success: boolean) => ({
+  success,
   type: DELETE_ROOM,
+});
+
+const fetchedRoomInfo = (payload: IRoom) => ({
+  payload,
+  type: FETCH_ROOM_CSV,
 });
 
 export const createRoomAction = (room: IPostRoom):
@@ -41,3 +47,9 @@ export const updateRoomAction = (data: IPostRoom, id: number):
   };
 
 export const resetPage = () => ({ payload: undefined, type: RESET_PAGE });
+
+export const fetchRoomInformation = (roomId: number):
+  ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+    const result = await getRoom(roomId);
+    if (result) dispatch(fetchedRoomInfo(result));
+  };

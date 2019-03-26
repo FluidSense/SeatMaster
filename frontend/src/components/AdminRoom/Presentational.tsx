@@ -4,11 +4,15 @@ import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
+import Seats from '../Seats';
+import { IRoom } from '../ViewRooms';
+import CSVButton from './CSVButton';
 import {
   _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,
   _BUTTON_DELETE_ROOM,
   _BUTTON_UPDATE_ROOM,
+  _DOWNLOAD_ROOM_AS_CSV,
   _INPUT_LABEL_NAME,
   _INPUT_LABEL_NOTES,
   _TITLE_CREATE_NEW_ROOM,
@@ -16,8 +20,7 @@ import {
 } from './strings';
 
 interface IProps {
-  roomName: string;
-  roomNotes: string;
+  room: IRoom;
   setNotes: (roomNotes: ChangeEvent<HTMLInputElement>) => void;
   setName: (roomName: ChangeEvent<HTMLInputElement>) => void;
   buttonDisabled: boolean;
@@ -26,12 +29,12 @@ interface IProps {
   showAlert: boolean;
   alertMessage?: string;
   roomExists: boolean;
+  fetchRoom: (roomId: number) => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const {
-    roomName,
-    roomNotes,
+    room,
     roomExists,
     setNotes,
     setName,
@@ -40,7 +43,10 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     deleteRoom,
     showAlert,
     alertMessage,
+    fetchRoom,
   } = props;
+  const { name: roomName, info: roomNotes } = room;
+  const seats = room.seats.seats;
   const displayAlert =
     showAlert
       ? (
@@ -57,6 +63,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           {_BUTTON_DELETE_ROOM}
         </KnappBase>)
       : null;
+
+  const seatsElement =
+    roomExists
+      ? (<Seats seats={seats} roomId={room.id} />)
+      : null;
+
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
     const changeEvent = event as ChangeEvent<HTMLInputElement>;
@@ -65,7 +77,10 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <div className="main-content">
-      <Sidetittel>{titleText}</Sidetittel>
+      <div className="title-and-button">
+        <Sidetittel>{titleText}</Sidetittel>
+        <CSVButton room={room} fetchRoomInfo={fetchRoom} />
+      </div>
       {displayAlert}
       <Input
         id={'input-room-name'}
@@ -80,6 +95,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
+      {seatsElement}
       <div id="state-buttons">
         <KnappBase
           id={'create-room-button'}

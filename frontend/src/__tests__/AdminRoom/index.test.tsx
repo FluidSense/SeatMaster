@@ -29,7 +29,7 @@ describe('Admin room functions', () => {
     const inputName = component.find('#input-room-name').hostNodes();
     inputName.simulate('change', { target: { value: name } });
     const state = component.children().state();
-    expect(state.roomName).toEqual(name);
+    expect(state.room.name).toEqual(name);
   });
 
   it('Updates roomNotes state through onchange', () => {
@@ -39,12 +39,19 @@ describe('Admin room functions', () => {
     const inputNotes = component.find('#input-room-notes').hostNodes();
     inputNotes.simulate('change', { target: { value: notes } });
     const state = component.children().state();
-    expect(state.roomNotes).toEqual(notes);
+    expect(state.room.info).toEqual(notes);
   });
 
   it('Renders correctly when room as prop', () => {
-    const location2 = { room: { id: 64, info: 'wasd', name: 'qwerty', seat: 0 } };
-    const wrapper = mount(
+    const location2 = {
+      room: {
+        id: 64,
+        info: 'wasd',
+        name: 'qwerty',
+        seats: { count: 0, seats: [] },
+      },
+    };
+    const wrapper = shallow(
       <Provider store={store}><AdminRoom location={location2} /></Provider>);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

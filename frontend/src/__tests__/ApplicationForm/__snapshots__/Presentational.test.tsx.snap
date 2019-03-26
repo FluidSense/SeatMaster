@@ -6,15 +6,10 @@ exports[`application form renders correctly 1`] = `
     id="new-application-form"
     onSubmit={[Function]}
   >
-    <ApplicationFormPersonal
-      email="london@starbucks.com"
-      fullname="Starbucks London"
-      phone="22225555"
-      status=""
-      username="Sutaba"
-    />
+    <ApplicationFormPersonal />
     <ApplicationFormPreferences
       partner={false}
+      rooms={Array []}
       updateApplicationFormData={[Function]}
     />
     <ApplicationFormComments

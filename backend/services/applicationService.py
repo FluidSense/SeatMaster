@@ -2,6 +2,7 @@ from models.application import Application
 from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
+from utils.enums import ApplicationStatus
 
 
 def getAllApplications():
@@ -24,21 +25,53 @@ def getApplicationByUsername(username):
     return userApplication
 
 
-# TODO application should not be registered with username, it should verify the user.
-def registerApplication(comments, needs, username, partnerUsername):
+def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom, rank):
     try:
-        user = db.session.query(User).filter_by(username=username).one()
         application = Application(
-            status="SUBMITTED",
+            status=ApplicationStatus.SUBMITTED,
             needs=needs,
             user=user,
             partnerUsername=partnerUsername,
             comments=comments,
+            seatRollover=seatRollover,
+            preferredRoom=preferredRoom,
+            rank=rank,
         )
         db.session.add(application)
         db.session.commit()
         connectApplication(application)
         return application.to_json(), 201
+    except SQLAlchemyError as err:
+        print(err)
+        return "", 400
+
+
+def updateApplication(userid, form):
+    try:
+        application = getApplicationByUserId(userid)
+        for field in form.keys():
+            if(field in application.userEditableFields()):
+                setattr(application, field, form[field])
+        db.session.add(application)
+        db.session.commit()
+        if ("partnerUsername" in form.keys()):
+            connectApplication(application)
+        return application.to_json(), 200
+    except SQLAlchemyError as err:
+        print(err)
+        return "", 400
+
+
+def updateApplicationById(id, form):
+    try:
+        application = getApplicationById(id)
+        for field in form.keys():
+            setattr(application, field, form[field])
+        db.session.add(application)
+        db.session.commit()
+        if ("partnerUsername" in form.keys()):
+            connectApplication(application)
+        return application.to_json(), 200
     except SQLAlchemyError as err:
         print(err)
         return "", 400

@@ -1,10 +1,12 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { IApplicationInfoObject } from '.';
+import { boolToString } from '../../utils/typeFormatter';
+import { IApplication } from '../Application/index';
 import InfoPanel from './InfoPanel';
 import InformationList from './InformationList';
 import {
+  _COMMENTS,
   _EDIT_APPLICATION,
   _EMAIL,
   _MASTER_STATUS,
@@ -19,8 +21,13 @@ import {
 } from './strings';
 
 interface IProps {
-  applicationInfo: IApplicationInfoObject;
+  application: IApplication;
   title?: string;
+}
+
+export interface IInformationObject {
+  [_COMMENTS]?: string;
+  [_NEEDS]?: string;
 }
 
 export interface IUserInfoObject {
@@ -35,20 +42,26 @@ export interface IRoomInfoObject {
   [_PREFERRED_ROOM]?: string;
   [_SEAT_ROLLOVER]?: string;
 }
+
 const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
-  const { applicationInfo, title } = props;
+  const { application, title } = props;
+  let partnerObject;
+  if (!application.user) return null;
   const userInfoObject: IUserInfoObject = {
-    [_NAME]: applicationInfo.user !== undefined
-      ? applicationInfo.user.username
-      : applicationInfo.fullname,
-    [_EMAIL]: applicationInfo.email,
-    [_PHONE]: applicationInfo.phone,
-    [_MASTER_STATUS]: applicationInfo.status,
+    [_NAME]: application.user.fullname,
+    [_EMAIL]: application.user.email,
+    [_MASTER_STATUS]: application.status,
   };
+  if (application.partnerApplication && application.partnerApplication.user) {
+    partnerObject = application.partnerApplication.user !== undefined
+      ? application.partnerApplication.user.fullname
+      : undefined;
+  }
+
   const roomInfoObject: IRoomInfoObject = {
-    [_PARTNER]: applicationInfo.partner,
-    [_PREFERRED_ROOM]: applicationInfo.room,
-    [_SEAT_ROLLOVER]: applicationInfo.seatRollover,
+    [_PARTNER]: partnerObject,
+    [_PREFERRED_ROOM]: application.preferredRoom,
+    [_SEAT_ROLLOVER]: boolToString(application.seatRollover),
   };
   return (
     <div id="application-review">
@@ -56,7 +69,8 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
-        {<InfoPanel title={_NEEDS} text={applicationInfo.needs} />}
+        <InfoPanel title={_NEEDS} text={application.needs} />
+        <InfoPanel title={_COMMENTS} text={application.comments} />
       </div>
       <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
     </div>

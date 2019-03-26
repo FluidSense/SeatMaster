@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import { CREATE_SEAT } from '../Seats/constants';
 import { FETCH_ROOMS } from './constants';
 import { IRoom } from './index';
 
@@ -17,7 +18,7 @@ const reducer = (
   const { type, payload } = action;
   switch (type) {
     case FETCH_ROOMS:
-      return { ...state, rooms: payload };
+      return { ...state, rooms: Object.values(payload) };
     default:
       return state;
   }

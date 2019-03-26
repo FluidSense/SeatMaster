@@ -1,19 +1,21 @@
 import KnappBase from 'nav-frontend-knapper';
-import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { APP_NOT_FOUND } from '../Login/constants';
+import { IApplication } from '../Application';
+import { APP_NOT_FOUND } from '../commonConstants';
+import { IRegisteredUserState } from './../RegisterUser/reducer';
 import ApplicationOverview from './ApplicationOverview';
-import { IApplicationInfoObject } from './index';
 import { _NEW_APPLICATION } from './strings';
 
-interface IProps {
-  applicationInfo: IApplicationInfoObject;
+interface IStateProps {
+  application: IApplication;
+  userInfo: IRegisteredUserState;
 }
 
-const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { applicationInfo } = props;
-  if (applicationInfo.applicationStatus === APP_NOT_FOUND) {
+const Presentational: React.FunctionComponent<IStateProps> = (props) => {
+  const { application } = props;
+
+  if (application.status === APP_NOT_FOUND) {
     return (
       <Link to="/application">
         <KnappBase type="hoved" htmlType="button" id="newAppButton">{_NEW_APPLICATION}</KnappBase>
@@ -21,7 +23,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     );
   }
   return (
-    <ApplicationOverview applicationInfo={applicationInfo}/>
+    <ApplicationOverview application={application} />
   );
 };
 

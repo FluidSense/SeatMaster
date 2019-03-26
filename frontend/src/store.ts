@@ -1,4 +1,6 @@
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { loadUser, reducer as oidcReducer, UserState } from 'redux-oidc';
 import reduxThunk from 'redux-thunk';
 import {
   ApplicationReducer,
@@ -9,23 +11,31 @@ import {
   applicationSeasonReducer,
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
-import { ILoginState, loginReducer } from './components/Login/reducer';
+import history from './components/History';
+import { IRegisteredUserState, registeredUserReducer } from './components/RegisterUser/reducer';
+import seatsReducer, { ISeatState } from './components/Seats/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
+import userManager from './utils/userManager';
 
 export interface IStore {
-  userInformation: ILoginState;
-  applicationSeason: IApplicationSeasonState;
-  rooms: IRoomState;
   adminRoom: IAdminRoomState;
+  applicationSeason: IApplicationSeasonState;
   applications: IApplicationState;
+  rooms: IRoomState;
+  seats: ISeatState;
+  userInformation: IRegisteredUserState;
+  oidc: UserState;
 }
 
 export const reducers = combineReducers({
   adminRoom: roomReducer,
   applicationSeason: applicationSeasonReducer,
   applications: ApplicationReducer,
+  oidc: oidcReducer,
   rooms: viewRoomReducer,
-  userInformation: loginReducer,
+  router: connectRouter(history),
+  seats: seatsReducer,
+  userInformation: registeredUserReducer,
 });
 
 declare global {
@@ -35,6 +45,11 @@ declare global {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(reduxThunk));
+const createStoreWithMiddleware = composeEnhancers(
+  applyMiddleware(reduxThunk, routerMiddleware(history)),
+)(createStore);
 
-export const configureStore = () => createStore(reducers, enhancer);
+const store = createStoreWithMiddleware(reducers);
+loadUser(store, userManager);
+
+export default store;

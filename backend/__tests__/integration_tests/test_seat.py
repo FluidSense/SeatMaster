@@ -8,6 +8,9 @@ from models.user import User
 from models.application import Application
 from flask import jsonify, make_response
 import json
+from __tests__.testUtils.authentication import mock_authentication_context
+from __tests__.testUtils.constants import token, accessToken
+from utils.enums import Rank, ApplicationStatus
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
 
@@ -29,30 +32,49 @@ class TestSeat(TestCase):
         db.init_app(self.app)
         self.ctx = self.app.app_context()
         self.ctx.push()
+        self.token = f'Bearer {token}'
+        self.accessToken = f'Bearer {accessToken}'
 
+    @mock_authentication_context
     def test_get_seat(self):
         room, seat = createSeatAndRoom()
-        response = self.app.test_client().get(f"http://localhost:5000/seat/{room.id}/{seat.seat_id}")
+        headers = {
+            'AccessToken': self.accessToken,
+            'Authorization': self.token
+        }
+        response = self.app.test_client().get(
+            f"http://localhost:5000/seat/{room.id}/{seat.seat_id}",
+            headers=headers)
         assert response.data == jsonify(seat.to_json()).data
         assert db.session.query(Seat).first() == seat
 
+    @mock_authentication_context
     def test_delete_seat(self):
+        headers = {
+            'AccessToken': self.accessToken,
+            'Authorization': self.token
+        }
         room, seat = createSeatAndRoom()
-        response = self.app.test_client().delete(f"http://localhost:5000/seat/{room.id}/{seat.seat_id}")
+        response = self.app.test_client().delete(
+            f"http://localhost:5000/seat/{room.id}/{seat.seat_id}",
+            headers=headers)
         assert response.status == "200 OK"
         assert db.session.query(Seat).first() is None
 
+    @mock_authentication_context
     def test_create_seat(self):
         room, seat = createSeatAndRoom()
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'AccessToken': self.accessToken,
         }
         data = dict(
             id='D2',
             roomId=room.id,
             info='nice ship dude',
+            user=None
         )
         response = self.app.test_client().post(
             "http://localhost:5000/seat/",
@@ -65,26 +87,32 @@ class TestSeat(TestCase):
                 id="D2",
                 roomId=room.id,
                 info='nice ship dude',
+                user=None
             )).data == response.data
         assert db.session.query(Seat).all()[1].to_json() == data
 
+    @mock_authentication_context
     def test_assign_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello")
+        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
-            status="lol",
             comments="lol",
             needs="needs",
             user=user,
-            partnerUsername="no"
+            partnerUsername="no",
+            preferredRoom="d1",
+            seatRollover=True,
+            rank=Rank.WRITING_MASTER,
+            status=ApplicationStatus.SUBMITTED,
         )
         db.session.add(application)
         db.session.commit()
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'AccessToken': self.accessToken,
         }
         data = dict(
             seatId='D1',
@@ -101,16 +129,20 @@ class TestSeat(TestCase):
         assert seat.assignedApplication == application
         assert application.seat == seat
 
+    @mock_authentication_context
     def test_remove_student_from_seat(self):
         room, seat = createSeatAndRoom()
-        user = User("hello")
+        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
         db.session.add(user)
         application = Application(
-            status="lol",
             comments="lol",
             needs="needs",
             user=user,
-            partnerUsername="no"
+            partnerUsername="no",
+            preferredRoom="d1",
+            seatRollover=True,
+            rank=Rank.WRITING_MASTER,
+            status=ApplicationStatus.SUBMITTED,
         )
         db.session.add(application)
         db.session.commit()
@@ -121,7 +153,8 @@ class TestSeat(TestCase):
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
-            'Accept': mimetype
+            'Accept': mimetype,
+            'AccessToken': self.accessToken
         }
         data = dict(
             seatId='D1',
