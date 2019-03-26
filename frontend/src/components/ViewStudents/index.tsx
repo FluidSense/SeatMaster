@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
-import { fetchAllStudents } from './actions';
+import { deleteAllStudents, deleteSingleStudent, fetchAllStudents } from './actions';
 import Presentational from './Presentational';
 import './viewStudents.css';
 
@@ -13,6 +13,8 @@ export interface IStateProps {
 
 interface IDispatchProps {
   fetchStudents: () => void;
+  deleteStudent: (id: number) => void;
+  deleteStudents: () => void;
 }
 
 export interface IRouterProps {
@@ -39,7 +41,7 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { usersToBeDeleted } = this.state;
-    const { students } = this.props;
+    const { students, deleteStudent, deleteStudents } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
@@ -48,6 +50,8 @@ class _Container extends Component<Props, IState> {
         userToBeDeleted={this.addUserToBeDeleted}
         usersToBeDeleted={usersToBeDeleted}
         checkAll={this.checkAllOrNone}
+        deleteStudent={this.deleteSingleStudent}
+        deleteStudents={deleteStudents}
       />);
   }
 
@@ -69,6 +73,11 @@ class _Container extends Component<Props, IState> {
       this.setState({ usersToBeDeleted: filteredUsers });
     }
   }
+
+  private deleteSingleStudent = (studentIds: number[]) => {
+    const { deleteStudent } = this.props;
+    studentIds.forEach(id => deleteStudent(id));
+  }
 }
 
 const mapStateToProps = (state: IStore) => ({
@@ -76,6 +85,8 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  deleteStudent: (id: number) => dispatch(deleteSingleStudent(id)),
+  deleteStudents: () => dispatch(deleteAllStudents()),
   fetchStudents: () => dispatch(fetchAllStudents()),
 });
 
