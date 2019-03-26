@@ -42,7 +42,7 @@ class EditForm extends React.Component<IProps, IEditState> {
           label="Master status"
           bredde="L"
           name="masterStatus"
-          defaultValue={application.user.masterStatus}
+          defaultValue={application.rank}
           onChangeCapture={this.updateApplicationFormData}
         />
         <Input
