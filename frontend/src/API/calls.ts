@@ -25,6 +25,7 @@ import {
   ROOM_URL,
   SEASON_URL,
   SEAT_URL,
+  GET_ALL_USERS_URL,
 } from './constants';
 import {
   IPostAdminApplicationForm,
@@ -123,4 +124,8 @@ export const postSeat = (data: ISeat): PromiseLike<ISeat> => {
 
 export const deleteSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
   return elevatedDeleteJson(SEAT_URL, roomId, seatId);
+};
+
+export const getAllUsers = (): PromiseLike<[IUser]> => {
+  return elevatedGetJson(GET_ALL_USERS_URL);
 };

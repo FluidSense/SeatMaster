@@ -12,6 +12,7 @@ export const GET_APPLICATION_BY_USERID_URL = `${BASEPATH}application/byUser/`;
 
 // User
 export const GET_USER_URL = `${BASEPATH}user/`;
+export const GET_ALL_USERS_URL = `${GET_USER_URL}all`;
 export const POST_NEW_USER_URL = `${BASEPATH}user/`;
 export const DELETE_USER_URL = `${BASEPATH}user/`;
 
