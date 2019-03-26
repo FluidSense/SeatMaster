@@ -92,7 +92,7 @@ export class Presentational extends React.Component<IProps, IState> {
 
           <KnappBase
             className="modalButton"
-            type="hoved"
+            type="fare"
             htmlType="submit"
             autoDisableVedSpinner={true}
             disabled={isLoadingUser}
