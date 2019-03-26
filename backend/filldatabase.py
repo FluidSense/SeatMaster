@@ -6,6 +6,7 @@ from services import applicationService
 from datetime import datetime, timedelta
 from shared import db
 from main import app
+from utils.enums import Rank
 
 with app.app_context():
     the_annoying_user = User("usrnam", "sub1", "email@epost.no", "lening glenin")
@@ -29,6 +30,7 @@ with app.app_context():
         needs='needs',
         preferredRoom="no",
         seatRollover=False,
+        rank=Rank.OTHER,
     )
     application2 = applicationService.registerApplication(
         user=the_annoyinger_user,
@@ -37,6 +39,7 @@ with app.app_context():
         needs='needs',
         preferredRoom="someroom",
         seatRollover=False,
+        rank=Rank.OTHER,
     )
 
     db.session.add(some_applicationseason)
