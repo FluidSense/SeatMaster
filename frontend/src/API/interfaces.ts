@@ -35,7 +35,6 @@ export interface IUser {
   email: string;
   fullname: string;
   id: number;
-  masterStatus: string;
   username: string;
   admin: boolean;
 }

@@ -6,7 +6,6 @@ export interface IRegisteredUserState {
   fullname?: string;
   id?: number;
   loading: boolean;
-  masterStatus?: string;
   registered: boolean;
   username?: string;
 }
@@ -17,7 +16,6 @@ const initialState = {
   fullname: undefined,
   id: undefined,
   loading: false,
-  masterStatus: undefined,
   registered: false,
   username: undefined,
 };
@@ -43,7 +41,6 @@ export const registeredUserReducer = (
         fullname: undefined,
         id: undefined,
         loading: false,
-        masterStatus: undefined,
         registered: false,
         username: undefined,
       };
