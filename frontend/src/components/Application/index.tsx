@@ -11,6 +11,7 @@ export interface IPartnerApplication {
   preferredRoom?: string;
   seatRollover?: boolean;
   status: string;
+  rank?: string;
   user?: IUser;
 }
 
