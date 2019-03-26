@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import { CREATE_SEAT } from '../Seats/constants';
 import { FETCH_ROOMS } from './constants';
 import { IRoom } from './index';
 

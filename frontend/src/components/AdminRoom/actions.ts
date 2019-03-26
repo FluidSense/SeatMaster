@@ -5,18 +5,18 @@ import { IPostRoom } from '../../API/interfaces';
 import { IRoom } from '../ViewRooms';
 import { CREATE_ROOM, DELETE_ROOM, FETCH_ROOM_CSV, RESET_PAGE, UPDATE_ROOM } from './constants';
 
-const roomCreated = (payload: boolean) => ({
-  payload,
+const roomCreated = (success: boolean) => ({
+  success,
   type: CREATE_ROOM,
 });
 
-const roomUpdated = (payload: boolean) => ({
-  payload,
+const roomUpdated = (success: boolean) => ({
+  success,
   type: UPDATE_ROOM,
 });
 
-const roomDeleted = (payload: boolean) => ({
-  payload,
+const roomDeleted = (success: boolean) => ({
+  success,
   type: DELETE_ROOM,
 });
 

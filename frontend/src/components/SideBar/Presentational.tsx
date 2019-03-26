@@ -29,6 +29,7 @@ const adminUrls: IUrl[] = [
   { url: '/admin/rooms/', title: 'Rooms' },
   { url: '/admin/create-season/', title: 'Create Season' },
   { url: '/admin/applications/', title: 'Applications' },
+  { url: '/admin/students/', title: 'Students' },
 ];
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
@@ -62,18 +63,18 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     </li>));
 
   return (
-  <div id="side-bar">
-    <nav>
-      <Systemtittel className="user-title">{userTitle}</Systemtittel>
-      <ul className="nav-list">
-        {userUrlList}
-      </ul>
-      <Systemtittel className="admin-title">{adminTitle}</Systemtittel>
-      <ul className="nav-list">
-        {adminUrlList}
-      </ul>
-    </nav>
-  </div>
+    <div id="side-bar">
+      <nav>
+        <Systemtittel className="user-title">{userTitle}</Systemtittel>
+        <ul className="nav-list">
+          {userUrlList}
+        </ul>
+        <Systemtittel className="admin-title">{adminTitle}</Systemtittel>
+        <ul className="nav-list">
+          {adminUrlList}
+        </ul>
+      </nav>
+    </div>
   );
 
 };

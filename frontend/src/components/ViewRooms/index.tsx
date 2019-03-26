@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
@@ -8,8 +9,8 @@ import './viewRooms.css';
 
 export interface IRoom {
   id: number;
-  name: string;
   info: string;
+  name: string;
   seats: {
     count: number;
     seats: ISeat[];
@@ -20,6 +21,7 @@ export interface ISeat {
   id: string;
   info: string;
   roomId: number;
+  user?: IUser;
 }
 
 export interface IStateProps {
