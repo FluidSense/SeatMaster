@@ -1,6 +1,7 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { boolToString } from '../../utils/typeFormatter';
 import { IApplication } from '../Application/index';
 import InfoPanel from './InfoPanel';
@@ -23,6 +24,7 @@ import {
 interface IProps {
   application: IApplication;
   title?: string;
+  pathToEdit?: string;
 }
 
 export interface IInformationObject {
@@ -75,7 +77,9 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
         <InfoPanel title={_NEEDS} text={application.needs} />
         <InfoPanel title={_COMMENTS} text={application.comments} />
       </div>
-      <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
+      <Link to={props.pathToEdit ? props.pathToEdit : ''}>
+        <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
+      </Link>
     </div>
   );
 };

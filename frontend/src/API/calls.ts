@@ -9,6 +9,7 @@ import {
   elevatedPutJson,
   getJson,
   postJson,
+  putJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
@@ -25,6 +26,7 @@ import {
   SEAT_URL,
 } from './constants';
 import {
+  IPostAdminApplicationForm,
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
@@ -57,6 +59,16 @@ export const getAllApplications = ():
 export const postApplicationForm = (data: IPostApplicationForm):
   PromiseLike<IApplication> => {
   return elevatedPostJson(POST_FORM_DATA_URL, data);
+};
+
+export const putApplicationForm = (data: IPostApplicationForm):
+  PromiseLike<IApplication> => {
+  return putJson(POST_FORM_DATA_URL, data);
+};
+
+export const putAdminApplicationForm = (id: number, data: IPostAdminApplicationForm):
+  PromiseLike<IApplication> => {
+  return elevatedPutJson(`${POST_FORM_DATA_URL}${id}`, data);
 };
 
 export const getUserData = (): PromiseLike<IUser> => {
