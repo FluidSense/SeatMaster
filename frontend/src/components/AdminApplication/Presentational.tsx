@@ -1,39 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
 import AssignSeat from '../AssignSeat';
-import { removeStudent } from '../AssignSeat/actions';
 import { IRoom, ISeat } from '../ViewRooms';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
+import { IAdminApplication } from './index';
 
-export interface IAdminApplication extends IApplication {
-  seat?: ISeat;
-}
-
-interface IStateProps {
-  seatInfo?: ISeat;
-  modalOpen: boolean;
-}
-
-interface ILinkProps {
-  location: {
-    application?: IAdminApplication;
-    rooms?: IRoom[];
-  };
-}
-
-interface IDispatchProps {
+interface IProps {
+  rooms: IRoom[];
+  application: IAdminApplication;
   removeStudentFromSeat: (roomId: number, seatId: string) => void;
 }
 
-type Props = IStateProps & ILinkProps & IDispatchProps;
-
-// tslint:disable-next-line:variable-name
-const _Container: React.FunctionComponent<Props> = (props) => {
-  const { removeStudentFromSeat } = props;
-  const { application, rooms } = props.location;
+const Presentational: React.FunctionComponent<IProps> = (props) => {
+  const { application, rooms, removeStudentFromSeat } = props;
   if (!(application && rooms)) return null;
   const givenSeat = application.seat;
   const givenRoomId = givenSeat ? givenSeat.roomId : 0;
@@ -55,14 +35,4 @@ const _Container: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  removeStudentFromSeat: (roomId: number, seatId: string) =>
-    dispatch(removeStudent(roomId, seatId)),
-});
-
-const Container = connect(
-  null,
-  mapDispatchToProps,
-)(_Container);
-
-export default Container;
+export default Presentational;
