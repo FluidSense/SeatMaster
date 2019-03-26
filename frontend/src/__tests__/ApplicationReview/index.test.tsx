@@ -10,13 +10,14 @@ const mockStoreFactory = configureMockStore();
 const applicationInfoMock: IApplication = {
   id: 2,
   preferredRoom: 'Space Commander',
+  rank: 'Master of masters',
   seatRollover: true,
   status: 'Master of masters',
   user: {
+    admin: false,
     email: 'test@test.com',
     fullname: 'Teser Testersen',
     id: 1,
-    masterStatus: 'Master of masters',
     username: 'wollawop',
   },
 };
