@@ -5,6 +5,7 @@ import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
+import EditApplication from '../EditApplication';
 import FAQ from '../FAQ';
 import Header from '../Header';
 import Home from '../Home';
@@ -33,7 +34,8 @@ export const RoutesAdmin = () => {
           <Route path="/admin/create-season" component={CreateSeason} />
           <Route path="/admin/rooms/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/applications" component={AdminApplicationOverview} />
-          <Route path="/admin/applications/:id" component={AdminApplication} />
+          <Route exact={true} path="/admin/applications/:id" component={AdminApplication} />
+          <Route path="/admin/applications/:id/edit" component={EditApplication} />
 
           <Redirect from="/registerUser" to="/" />
           <Route path="/" component={Page404} />
