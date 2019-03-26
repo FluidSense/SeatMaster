@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { fetchAllStudents } from './actions';
 import Presentational from './Presentational';
 import './viewStudents.css';
 
 export interface IStateProps {
-  students?: any;
+  students: IUser[];
 }
 
 interface IDispatchProps {
-  someting?: any;
-  // fetchStudents: () => void;
+  fetchStudents: () => void;
 }
 
 export interface IRouterProps {
@@ -23,7 +23,6 @@ export interface IRouterProps {
 
 interface IState {
   usersToBeDeleted: number[];
-  students: IUser[];
 }
 
 type Props = IStateProps & IDispatchProps & IRouterProps;
@@ -33,19 +32,14 @@ class _Container extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      students: [
-        { id: 1, username: 'usrnam' },
-        { id: 2, username: 'putnam' },
-        { id: 3, username: 'sumnam' },
-      ],
       usersToBeDeleted: [],
     };
   }
-  // public componentDidMount = () => this.props.fetchStudents();
+  public componentDidMount = () => this.props.fetchStudents();
 
   public render() {
-    const { history } = this.props;
-    const { usersToBeDeleted, students } = this.state;
+    const { usersToBeDeleted } = this.state;
+    const { students } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
@@ -61,7 +55,7 @@ class _Container extends Component<Props, IState> {
     if (all) {
       this.setState({ usersToBeDeleted: [] });
     } else {
-      const allUserIds = this.state.students.map(student => student.id);
+      const allUserIds = this.props.students.map(student => student.id);
       this.setState({ usersToBeDeleted: allUserIds });
     }
   }
@@ -78,10 +72,11 @@ class _Container extends Component<Props, IState> {
 }
 
 const mapStateToProps = (state: IStore) => ({
+  students: state.students.users,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  // fetchRooms: () => dispatch(fetchAllRooms()),
+  fetchStudents: () => dispatch(fetchAllStudents()),
 });
 
 const ViewStudents = connect(
