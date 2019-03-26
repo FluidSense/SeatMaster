@@ -17,17 +17,11 @@ interface IDispatchProps {
   deleteStudents: () => void;
 }
 
-export interface IRouterProps {
-  history: {
-    push: (path: string) => void;
-  };
-}
-
 interface IState {
   usersToBeDeleted: number[];
 }
 
-type Props = IStateProps & IDispatchProps & IRouterProps;
+type Props = IStateProps & IDispatchProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends Component<Props, IState> {
@@ -41,7 +35,7 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { usersToBeDeleted } = this.state;
-    const { students, deleteStudent, deleteStudents } = this.props;
+    const { students, deleteStudents } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
