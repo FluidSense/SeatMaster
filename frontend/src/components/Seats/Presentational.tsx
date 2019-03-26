@@ -3,6 +3,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { ISeat } from './index';
 import Seat from './Seat';
+import './seats.css';
 import { _SEATS_EXPAND } from './strings';
 
 interface IProps {
@@ -21,10 +22,13 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   ));
 
   return (
-    <Ekspanderbartpanel tittel={_SEATS_EXPAND} border={true}>
-      {seatElements}
-      <Knapp onClick={createSeat}>Add seat</Knapp>
-    </Ekspanderbartpanel>
+    <div className="mainPanel">
+      <Ekspanderbartpanel tittel={_SEATS_EXPAND} border={true}>
+        {seatElements}
+        <Knapp onClick={createSeat}>Add seat</Knapp>
+      </Ekspanderbartpanel>
+    </div>
+
   );
 };
 

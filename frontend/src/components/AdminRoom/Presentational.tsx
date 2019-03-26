@@ -96,7 +96,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         label={_INPUT_LABEL_NOTES}
       />
       {seatsElement}
-      <div id="state-buttons">
+      <div className="title-and-button">
         <KnappBase
           id={'create-room-button'}
           type="hoved"
