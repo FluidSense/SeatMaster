@@ -2,9 +2,11 @@ import KnappBase from 'nav-frontend-knapper';
 import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { IApplication } from '../Application';
+import { SecureFields } from './SecureFields';
 
 interface IProps {
   application: IApplication;
+  isAdmin: boolean;
   finalize: (state: IEditState) => void;
 }
 
@@ -23,11 +25,16 @@ export interface IEditState {
 class EditForm extends React.Component<IProps, IEditState> {
 
   public render() {
-    const { application } = this.props;
+    const { application, isAdmin } = this.props;
     if (!(application && application.user)) return null;
     const partnerApplication = application.partnerApplication;
     const partner = partnerApplication ? partnerApplication.user : undefined;
     const partnerName = partner ? partner.fullname : '';
+    const secureFields = SecureFields(
+      isAdmin,
+      application,
+      isAdmin ? this.updateApplicationFormData : undefined,
+      );
     return (
       <form onSubmit={this.submitForm}>
       <SkjemaGruppe className="edit-application">
@@ -35,22 +42,16 @@ class EditForm extends React.Component<IProps, IEditState> {
           label="Name"
           bredde="L"
           name="name"
-          defaultValue={application.user.fullname}
-          onChangeCapture={this.updateApplicationFormData}
+          value={application.user.fullname}
+          disabled={true}
         />
-        <Input
-          label="Master status"
-          bredde="L"
-          name="masterStatus"
-          defaultValue={application.rank}
-          onChangeCapture={this.updateApplicationFormData}
-        />
+        {secureFields}
         <Input
           label="E-Mail"
           bredde="L"
           name="email"
-          defaultValue={application.user.email}
-          onChangeCapture={this.updateApplicationFormData}
+          value={application.user.email}
+          disabled={true}
         />
         <Input
           label="Partner username"

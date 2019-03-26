@@ -8,11 +8,11 @@ import {
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from './constants';
 
-const successfullAppUpdate = () => ({
+export const successfullAppUpdate = () => ({
   type: SUCCESSFULL_APPLICATION_UPDATE,
 });
 
-const faultyAppUpdate = () => ({
+export const faultyAppUpdate = () => ({
   type: UNSUCCESSFULL_APPLICATION_UPDATE,
 });
 
