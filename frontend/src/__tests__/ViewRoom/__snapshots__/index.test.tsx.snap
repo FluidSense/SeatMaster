@@ -37,7 +37,7 @@ exports[`ViewRoom Renders nothing correctly 1`] = `
           className="main-content"
         >
           <div
-            id="create-room-title"
+            className="title-and-button"
           >
             <Sidetittel>
               <TypografiBase
