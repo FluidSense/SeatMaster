@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { getAllUsers, deleteSingleUser, deleteAllUsers } from '../../API/calls';
+import { deleteAllUsers, deleteSingleUser, getAllUsers } from '../../API/calls';
 import { IUser } from '../../API/interfaces';
 import {
   SUCCESFULLY_FETCHED_STUDENTS,

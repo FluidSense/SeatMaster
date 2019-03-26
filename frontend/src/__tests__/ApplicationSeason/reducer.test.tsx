@@ -163,6 +163,9 @@ test('reducers', () => {
       },
     },
     seats: { success: undefined },
+    students: {
+      users: [],
+    },
     userInformation: {
       email: 'paaledwl@stud.ntnu.no',
       id: 1,

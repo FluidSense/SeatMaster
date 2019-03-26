@@ -13,8 +13,10 @@ import {
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
+  DELETE_ALL_USERS_URL,
   DELETE_USER_URL,
   GET_ALL_APPLICATIONS_URL,
+  GET_ALL_USERS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
   GET_SEAT_URL,
@@ -25,8 +27,6 @@ import {
   ROOM_URL,
   SEASON_URL,
   SEAT_URL,
-  GET_ALL_USERS_URL,
-  DELETE_ALL_USERS_URL,
 } from './constants';
 import {
   IPostAdminApplicationForm,
