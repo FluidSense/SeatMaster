@@ -1,4 +1,3 @@
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 import { AnyAction } from 'redux';
 import { IApplication } from '../Application';
 import { APP_NOT_FOUND } from '../commonConstants';
@@ -8,7 +7,6 @@ import {
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
 import {
-  FETCH_APPLICATION_DIRECTLY,
   GET_ALL_APPLICATIONS,
   REMOVE_APPLICATION_DATA,
   SET_APPLICATION_DATA,
@@ -16,7 +14,6 @@ import {
 
 export interface IApplicationState {
   applications: IApplication[];
-  fetchedApplication?: IApplication;
   registeredApplication: IApplication;
   api: {
     status: number,
@@ -28,7 +25,6 @@ const initialState: IApplicationState = {
     status: 0,
   },
   applications: [],
-  fetchedApplication: undefined,
   registeredApplication: {
     status: APP_NOT_FOUND,
   },
@@ -82,12 +78,6 @@ export const ApplicationReducer = (
           ...state.api,
           status: 0,
         },
-      };
-    }
-    case FETCH_APPLICATION_DIRECTLY: {
-      return {
-        ...state,
-        fetchedApplication: action.payload,
       };
     }
     default:
