@@ -21,14 +21,14 @@ def getApplicationBySelf():
 @requiresAdmin
 def getApplication(id):
     userApplication = applicationService.getApplicationById(id)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 404)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/byUser/<userid>")
 @requiresAdmin
 def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
-    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 404)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
 
 @application.route("/all")
