@@ -25,7 +25,7 @@ export const SecureFields = (
         />
         <Select
           label="Master status"
-          name="masterStatus"
+          name="rank"
           defaultValue={application.rank}
           onChangeCapture={update}
         >
