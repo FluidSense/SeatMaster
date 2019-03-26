@@ -7,6 +7,7 @@ import Home from '../Home';
 import Page404 from '../Page404';
 import Profile from '../Profile';
 import Rooms from '../Rooms';
+import SelfEditApplication from '../SelfEditApplication';
 import SideBar from '../SideBar';
 
 export const RoutesUser = () => {
@@ -17,7 +18,7 @@ export const RoutesUser = () => {
         <SideBar />
         <Switch>
           <Route exact={true} path="/" component={Home} />
-
+          <Route path="/edit" component={SelfEditApplication} />
           <Route path="/application" component={Application} />
           <Route path="/FAQ" component={FAQ} />
           <Route path="/rooms" component={Rooms} />
