@@ -28,6 +28,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       <ApplicationOverview
         application={application}
         title={application.user ? application.user.fullname : ''}
+        pathToEdit={`/admin/applications/${application.id}/edit`}
       />
       <ApplicationSeatDisplay seat={application.seat} room={selectedRooms[0]} />
       <AssignSeat rooms={rooms} application={application} />
