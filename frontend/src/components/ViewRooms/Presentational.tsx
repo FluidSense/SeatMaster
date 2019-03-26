@@ -10,7 +10,7 @@ interface IProps extends IStateProps {
 }
 
 const createRoom = (onClick: () => void) => (
-  <div id="create-room-title">
+  <div className="title-and-button">
     <Sidetittel>{_VIEW_ROOM_TITLE}</Sidetittel>
     <KnappBase id="redirect-new-room" type="hoved" onClick={onClick}>
       {_CREATE_ROOM_BUTTON}
