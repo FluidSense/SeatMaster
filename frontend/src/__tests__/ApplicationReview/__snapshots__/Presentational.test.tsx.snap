@@ -20,5 +20,6 @@ exports[`Application review presentational Renders correctly 1`] = `
       },
     }
   }
+  pathToEdit="/edit"
 />
 `;
