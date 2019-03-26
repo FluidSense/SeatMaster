@@ -56,7 +56,10 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
     >
       <div className="application-link">
         <div className="link-name"><Element>{_LINK_NAME_TITLE}</Element>{user.username}</div>
-        <div className="link-master"><Element>{_LINK_MASTER_STATUS}</Element>{'Status'}</div>
+        <div className="link-master">
+          <Element>{_LINK_MASTER_STATUS}</Element>
+          {application.rank}
+        </div>
         <div className="link-status"><Element>{_LINK_APP_STATUS}</Element>{status}</div>
         <div className="link-room"><Element>{_LINK_ROOM_STATUS}</Element>{roomName}</div>
         <div className="link-seat"><Element>{_LINK_SEAT_STATUS}</Element>{seatId}</div>

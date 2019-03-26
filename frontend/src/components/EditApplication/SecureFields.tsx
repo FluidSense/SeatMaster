@@ -1,6 +1,11 @@
-import { Input } from 'nav-frontend-skjema';
+import { Input, Select } from 'nav-frontend-skjema';
 import React from 'react';
 import { IApplication } from '../Application';
+import { MASTER_STATUS } from './constants';
+
+const options = MASTER_STATUS.map((status, index) => {
+  return <option key={index} value={status}>{status}</option>;
+});
 
 export const SecureFields = (
   isAdmin: boolean,
@@ -11,13 +16,14 @@ export const SecureFields = (
   if (isAdmin && update) {
     return (
       <>
-        <Input
+        <Select
           label="Master status"
-          bredde="L"
-          name="masterStatus"
+          name="rank"
           defaultValue={application.rank}
           onChangeCapture={update}
-        />
+        >
+          {options}
+        </Select>
       </>
     );
   }

@@ -24,7 +24,6 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
       <Element>
         Master Status
       </Element>
-      Status
     </div>
     <div
       className="link-status"
