@@ -21,3 +21,4 @@ export const SEASON_URL = `${BASEPATH}season/`;
 // Seat
 export const ASSIGN_SEAT_URL = `${BASEPATH}seat/assignSeat`;
 export const GET_SEAT_URL = `${BASEPATH}seat/`;
+export const REMOVE_STUDENT_FROM_SEAT_URL = `${BASEPATH}seat/removeStudent`;

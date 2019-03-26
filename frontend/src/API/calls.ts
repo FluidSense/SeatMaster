@@ -21,6 +21,7 @@ import {
   GET_USER_URL,
   POST_FORM_DATA_URL,
   POST_NEW_USER_URL,
+  REMOVE_STUDENT_FROM_SEAT_URL,
   ROOM_URL,
   SEASON_URL,
   SEAT_URL,
@@ -31,6 +32,7 @@ import {
   IPostApplicationSeason,
   IPostRoom,
   IPutUserOnSeat,
+  IRemoveStudentFromSeat,
   IUser,
 } from './interfaces';
 
@@ -105,6 +107,10 @@ export const deleteRoom = (id: number): PromiseLike<IRoom> => {
 
 export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
   return elevatedPutJson(ASSIGN_SEAT_URL, data);
+};
+
+export const removeStudentFromSeat = (data: IRemoveStudentFromSeat): PromiseLike<ISeat> => {
+  return elevatedPutJson(REMOVE_STUDENT_FROM_SEAT_URL, data);
 };
 
 export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
