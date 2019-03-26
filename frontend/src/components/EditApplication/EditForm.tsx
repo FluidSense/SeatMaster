@@ -30,30 +30,15 @@ class EditForm extends React.Component<IProps, IEditState> {
     const partnerApplication = application.partnerApplication;
     const partner = partnerApplication ? partnerApplication.user : undefined;
     const partnerName = partner ? partner.fullname : '';
+    const secureFields = SecureFields(
+      isAdmin,
+      application,
+      isAdmin ? this.updateApplicationFormData : undefined,
+      );
     return (
       <form onSubmit={this.submitForm}>
       <SkjemaGruppe className="edit-application">
-        <Input
-          label="Name"
-          bredde="L"
-          name="name"
-          defaultValue={application.user.fullname}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-        <Input
-          label="Master status"
-          bredde="L"
-          name="masterStatus"
-          defaultValue={application.rank}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-        <Input
-          label="E-Mail"
-          bredde="L"
-          name="email"
-          defaultValue={application.user.email}
-          onChangeCapture={this.updateApplicationFormData}
-        />
+        {secureFields}
         <Input
           label="Partner username"
           bredde="L"
