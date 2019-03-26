@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { IUser } from '../../API/interfaces';
-import { SUCCESFULLY_FETCHED_STUDENTS } from './constants';
+import { SUCCESSFULLY_FETCHED_STUDENTS } from './constants';
 
 export interface IUserState {
   users: IUser[];
@@ -16,7 +16,7 @@ const studentReducer = (
 ): IUserState => {
   const { type, payload } = action;
   switch (type) {
-    case SUCCESFULLY_FETCHED_STUDENTS:
+    case SUCCESSFULLY_FETCHED_STUDENTS:
       return { ...state, users: Object.values(payload) };
     default:
       return state;

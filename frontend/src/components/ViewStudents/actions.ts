@@ -3,14 +3,14 @@ import { ThunkAction } from 'redux-thunk';
 import { deleteAllUsers, deleteSingleUser, getAllUsers } from '../../API/calls';
 import { IUser } from '../../API/interfaces';
 import {
-  SUCCESFULLY_FETCHED_STUDENTS,
   SUCCESSFULLY_DELETED_ALL_STUDENTS,
   SUCCESSFULLY_DELETED_STUDENT,
+  SUCCESSFULLY_FETCHED_STUDENTS,
 } from './constants';
 
 export const retrievedUsers = (payload: IUser[]) => ({
   payload,
-  type: SUCCESFULLY_FETCHED_STUDENTS,
+  type: SUCCESSFULLY_FETCHED_STUDENTS,
 });
 
 export const fetchAllStudents = ():

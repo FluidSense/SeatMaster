@@ -38,8 +38,8 @@ const UserLink: React.FunctionComponent<IProps> = (props) => {
         href={ROUTE_TO}
       >
         <div className="user-link">
-          <div className="link-name"><Element>{_USER_FULL_NAME}</Element>{'full name'}</div>
-          <div className="link-username"><Element>{_USER_USERNAME}</Element>{user.username}</div>
+          <div className="link-name"><Element>{_USER_FULL_NAME}</Element>{_USER_FULL_NAME}</div>
+          <div className="link-username"><Element>{_USER_USERNAME}</Element>{user.fullname}</div>
         </div>
       </LenkepanelBase>
     </div>
