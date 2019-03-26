@@ -43,4 +43,4 @@ def updateRoom(id):
 def getAllRooms():
     rooms = roomService.getAllRooms()
     roomList = list(map(lambda x: x.to_json(), rooms))
-    return jsonify(roomList) if rooms else Response("{}", 200)
+    return jsonify(roomList) if rooms else Response("[]", 200)
