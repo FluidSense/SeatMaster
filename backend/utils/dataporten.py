@@ -5,6 +5,7 @@ from utils.enums import Rank
 
 
 def getDataportenUserInfo(token):
+    print("ooh user info")
     request = urllib.request.Request("https://auth.dataporten.no/openid/userinfo")
     request.add_header("Authorization", f"Bearer {token}")
     result = urllib.request.urlopen(request)
@@ -12,6 +13,7 @@ def getDataportenUserInfo(token):
 
 
 def getDataportenGroups(token):
+    print("oooh beibi")
     request = urllib.request.Request("https://groups-api.dataporten.no/groups/me/groups")
     request.add_header("Authorization", f"Bearer {token}")
     result = urllib.request.urlopen(request)
@@ -23,7 +25,7 @@ def checkIfAdmin(accessToken):
     groups = getDataportenGroups(accessToken)
     for group in groups:
         # TODO: Make call to actual admin BAS endpoint
-        if(group.get('id', None) == "fc:fs:fs:emne:ntnu.no:TDT4117:1"):
+        if(group.get('id', None) == "fc:org:ntnu.no:unit:631000"):
             return True
     return False
 
