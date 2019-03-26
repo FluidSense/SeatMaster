@@ -5,7 +5,6 @@ from utils.enums import Rank
 
 
 def getDataportenUserInfo(token):
-    print("ooh user info")
     request = urllib.request.Request("https://auth.dataporten.no/openid/userinfo")
     request.add_header("Authorization", f"Bearer {token}")
     result = urllib.request.urlopen(request)
@@ -13,7 +12,6 @@ def getDataportenUserInfo(token):
 
 
 def getDataportenGroups(token):
-    print("oooh beibi")
     request = urllib.request.Request("https://groups-api.dataporten.no/groups/me/groups")
     request.add_header("Authorization", f"Bearer {token}")
     result = urllib.request.urlopen(request)
