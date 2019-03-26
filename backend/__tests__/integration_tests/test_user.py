@@ -44,7 +44,7 @@ class TestRoom(TestCase):
         user = createUser()
         mock_decode = mock_jwt_decode()
         with patch.object(jwt, "decode", mock_decode), \
-            patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
+                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
             response = self.app.test_client().get(
                 "http://localhost:5000/user/",
                 headers={"Authorization": self.token})
@@ -102,7 +102,7 @@ class TestRoom(TestCase):
 
         with patch.object(jwt, "decode", mock_decode), \
                 patch("utils.dataporten.getDataportenUserInfo", mock_dataporten), \
-                    patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
+                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
             response = self.app.test_client().post(
                 "http://localhost:5000/user/",
                 headers=headers)
