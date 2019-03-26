@@ -46,7 +46,7 @@ def registerUser():
 def getAllUsers():
     users = userService.getAllUsers()
     userList = list(map(lambda x: x.to_json(), users))
-    return jsonify(userList) if users else Response("{}", 200)
+    return jsonify(userList) if users else Response("[]", 200)
 
 
 @user.route("/")
