@@ -1,14 +1,17 @@
+import NavFrontendSpinner from 'nav-frontend-spinner';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
-import { fetchApplicationDirectly } from '../AdminApplicationOverview/actions';
 import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
 import AssignSeat from '../AssignSeat';
 import { removeStudent } from '../AssignSeat/actions';
+import { APP_NOT_FOUND } from '../commonConstants';
+import Page404 from '../Page404';
 import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
+import { fetchApplicationDirectly } from './actions';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 
 export interface IAdminApplication extends IApplication {
@@ -17,8 +20,9 @@ export interface IAdminApplication extends IApplication {
 
 interface IStateToProps {
   applications: IApplication[];
-  fetchedApplication?: IApplication;
+  fetchedApplication: IApplication;
   rooms: IRoom[];
+  status: number;
 }
 
 interface IStateProps {
@@ -52,6 +56,12 @@ interface IState {
 
 type Props = IStateProps & ILinkProps & IDispatchProps & IStateToProps;
 
+const pageSpinner = (
+  <div className="main-content loading-page-spinner">
+    <NavFrontendSpinner />
+  </div>
+);
+
 // tslint:disable-next-line:variable-name
 class AdminApplication extends Component<Props, IState> {
   constructor(props: Props) {
@@ -67,7 +77,6 @@ class AdminApplication extends Component<Props, IState> {
     const {
       applications,
       fetchApplication,
-      fetchedApplication,
       fetchRooms,
       location,
     } = this.props;
@@ -93,23 +102,23 @@ class AdminApplication extends Component<Props, IState> {
   public componentDidUpdate = (prevProps: Props, prevState: IState) => {
     const { fetchedApplication } = this.props;
     const { fetched, rooms } = this.state;
-    // console.log(prevState.fetched !== fetched);
-    if (prevState.fetched !== fetched && fetchedApplication) {
+    if (prevState.fetched !== fetched
+      && fetchedApplication.status !== APP_NOT_FOUND) {
       this.setState({ application: fetchedApplication });
     }
-    if (prevState.rooms !== rooms) {
+    if (this.props.rooms !== rooms) {
       this.setState({ rooms: this.props.rooms });
     }
   }
 
   public render() {
-    const { removeStudentFromSeat } = this.props;
+    const { removeStudentFromSeat, status } = this.props;
     const { application, rooms } = this.state;
-    if (!(application && rooms)) return null;
+    if (status === 404) return <Page404 />;
+    if (!(application && rooms) || !rooms.length) return pageSpinner;
     const givenSeat = application.seat;
     const givenRoomId = givenSeat ? givenSeat.roomId : 0;
     const selectedRooms = rooms.filter(obj => obj.id === givenRoomId);
-
     return (
       <div className="main-content">
         <ApplicationOverview
@@ -130,8 +139,9 @@ class AdminApplication extends Component<Props, IState> {
 
 const mapStateToProps = (state: IStore) => ({
   applications: state.applications.applications,
-  fetchedApplication: state.applications.fetchedApplication,
+  fetchedApplication: state.adminReviewApplication.application,
   rooms: state.rooms.rooms,
+  status: state.adminReviewApplication.api.status,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

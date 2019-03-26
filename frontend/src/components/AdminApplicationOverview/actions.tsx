@@ -1,10 +1,9 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { getAllApplications, getApplicationFormById } from '../../API/calls';
+import { getAllApplications } from '../../API/calls';
 import { IApplication } from '../Application';
 import {
   FAILED_TO_RETRIEVE_ALL_APPLICATIONS,
-  FETCH_APPLICATION_DIRECTLY,
   GET_ALL_APPLICATIONS,
 } from './constants';
 
