@@ -25,7 +25,7 @@ def mock_authentication(mocker):
         "picture": "https://auth.dataporten.no/openid/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
     }
     mock_access_token = mocker.Mock(name="eval_access_token")
-    mock_access_token.return_value = accessToken, True
+    mock_access_token.return_value = accessToken, verify_at_hash
     mocker.patch("utils.dataporten.getDataportenUserInfo", mock_dataporten_getUserInfo)
     mocker.patch("jose.jwt.decode", mock_decode)
     mocker.patch("jose.jwt.get_unverified_header", lambda x: decodedToken)

@@ -6,7 +6,6 @@ from models.user import User
 from flask import jsonify
 from unittest import TestCase
 from jose import jwt
-import json
 from __tests__.testUtils.constants import token, accessToken, decodedToken
 from __tests__.testUtils.authentication import mock_authentication_context
 
