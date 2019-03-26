@@ -44,6 +44,7 @@ const _Container: React.FunctionComponent<Props> = (props) => {
       <ApplicationOverview
         application={application}
         title={application.user ? application.user.fullname : ''}
+        pathToEdit={`/admin/applications/${application.id}/edit`}
       />
       <ApplicationSeatDisplay
         seat={application.seat}
