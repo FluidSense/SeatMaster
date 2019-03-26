@@ -3,7 +3,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
-import { _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE, _CHECK_ALL_CHECKBOXES } from './strings';
+import { _CHECK_ALL_CHECKBOXES, _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE } from './strings';
 import UserLink from './UserLink';
 
 interface IProps {
