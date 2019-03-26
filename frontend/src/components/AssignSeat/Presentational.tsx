@@ -37,13 +37,12 @@ class Presentational extends React.Component<IProps, IState> {
     const { selectedRoom } = this.state;
     const occupyingUser = seatInfo ? seatInfo.user : undefined;
     const modalText = (
-    <p>
-      {_CHANGE_STUDENT_WARNING}
-      <br/>
-      <ul>
-        <li>{occupyingUser ? occupyingUser.username : ''}</li>
-      </ul>
-    </p>
+      <>
+        <p>{_CHANGE_STUDENT_WARNING}</p>
+        <ul>
+          <li>{occupyingUser ? occupyingUser.username : ''}</li>
+        </ul>
+      </>
     );
     return (
       <>
@@ -71,7 +70,7 @@ class Presentational extends React.Component<IProps, IState> {
           accept={accept}
           close={toggleModal}
         >
-        {modalText}
+          {modalText}
         </Modal>
       </>
     );

@@ -88,11 +88,10 @@ exports[`assign seat presentational renders nothing correctly 1`] = `
   >
     <p>
       A student already has a seat here. Do you want to change their allocation?
-      <br />
-      <ul>
-        <li />
-      </ul>
     </p>
+    <ul>
+      <li />
+    </ul>
   </CustomModal>
 </Fragment>
 `;
