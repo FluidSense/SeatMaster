@@ -16,13 +16,6 @@ export const SecureFields = (
   if (isAdmin && update) {
     return (
       <>
-        <Input
-          label="Name"
-          bredde="L"
-          name="name"
-          value={application.user.fullname}
-          disabled={true}
-        />
         <Select
           label="Master status"
           name="rank"
@@ -31,13 +24,6 @@ export const SecureFields = (
         >
           {options}
         </Select>
-        <Input
-          label="E-Mail"
-          bredde="L"
-          name="email"
-          value={application.user.email}
-          disabled={true}
-        />
       </>
     );
   }
