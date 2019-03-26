@@ -60,10 +60,13 @@ export class Presentational extends React.Component<IProps, IState> {
           onSubmit={this.onSubmitForm}
           id="new-application-form"
         >
+          <p style={{ fontStyle:'italic' }}>
+          Additional information about your courses at NTNU
+          will be gathered for the purpose of finding your master status.
+          </p>
           <ApplicationFormPersonal
             fullname={userInformation.fullname}
             email={userInformation.email}
-            status={userInformation.masterStatus}
           />
           <ApplicationFormPreferences
             updateApplicationFormData={this.updateApplicationFormData}
