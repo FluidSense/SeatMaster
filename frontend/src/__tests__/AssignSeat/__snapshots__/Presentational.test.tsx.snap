@@ -1,82 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`assign seat presentational renders correctly 1`] = `
-<form
-  onSubmit={[Function]}
->
-  <RoomPicker
-    rooms={
-      Array [
-        Object {
-          "id": 1,
-          "info": "CoolerMaster",
-          "name": "Coolio",
-          "seats": Object {
-            "count": 0,
-            "seats": Array [],
-          },
+<Presentational
+  accept={[Function]}
+  assignUserToSeat={[Function]}
+  checkSeat={[Function]}
+  modalOpen={false}
+  rooms={
+    Array [
+      Object {
+        "id": 1,
+        "info": "CoolerMaster",
+        "name": "Coolio",
+        "seats": Object {
+          "count": 0,
+          "seats": Array [],
         },
-        Object {
-          "id": 2,
-          "info": "NZXT",
-          "name": "420",
-          "seats": Object {
-            "count": 1,
-            "seats": Array [
-              Object {
-                "id": "bc2",
-                "info": "WARNING: Seat is actually a dildo if you are brave enough",
-                "roomId": 2,
+      },
+      Object {
+        "id": 2,
+        "info": "NZXT",
+        "name": "420",
+        "seats": Object {
+          "count": 2,
+          "seats": Array [
+            Object {
+              "id": "b2",
+              "info": "WARNING: Seat is actually a dildo if you are brave enough",
+              "roomId": 2,
+              "user": Object {
+                "admin": false,
+                "email": "email",
+                "fullname": "fullname1",
+                "id": 2,
+                "masterStatus": "goteem",
+                "username": "user",
               },
-            ],
-          },
+            },
+            Object {
+              "id": "b3",
+              "info": "some new room",
+              "roomId": 1,
+            },
+          ],
         },
-      ]
-    }
-    setSelected={[Function]}
-  />
-  <SeatPicker
-    setSelected={[Function]}
-  />
-  <KnappBase
-    autoDisableVedSpinner={true}
-    className={null}
-    disabled={true}
-    htmlType="submit"
-    id="submit-application"
-    inaktivKlasseVedDisabled={false}
-    mini={false}
-    spinner={false}
-    type="hoved"
-  >
-    Submit
-  </KnappBase>
-</form>
+      },
+    ]
+  }
+  toggleModal={[Function]}
+/>
 `;
 
 exports[`assign seat presentational renders nothing correctly 1`] = `
-<form
-  onSubmit={[Function]}
->
-  <RoomPicker
-    rooms={Array []}
-    setSelected={[Function]}
-  />
-  <SeatPicker
-    setSelected={[Function]}
-  />
-  <KnappBase
-    autoDisableVedSpinner={true}
-    className={null}
-    disabled={true}
-    htmlType="submit"
-    id="submit-application"
-    inaktivKlasseVedDisabled={false}
-    mini={false}
-    spinner={false}
-    type="hoved"
+<Fragment>
+  <Innholdstittel>
+    Assign seat
+  </Innholdstittel>
+  <form
+    onSubmit={[Function]}
   >
-    Submit
-  </KnappBase>
-</form>
+    <RoomPicker
+      rooms={Array []}
+      setSelected={[Function]}
+    />
+    <SeatPicker
+      setSelected={[Function]}
+    />
+    <KnappBase
+      autoDisableVedSpinner={true}
+      className={null}
+      disabled={true}
+      htmlType="submit"
+      id="submit-application"
+      inaktivKlasseVedDisabled={false}
+      mini={false}
+      spinner={false}
+      type="hoved"
+    >
+      Assign seat
+    </KnappBase>
+  </form>
+  <CustomModal
+    accept={[Function]}
+    close={[Function]}
+    modalOpen={false}
+    text="A student already has a seat here. Do you want to change their allocation?"
+    toggleModal={[Function]}
+  />
+</Fragment>
 `;

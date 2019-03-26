@@ -1,8 +1,13 @@
 import KnappBase from 'nav-frontend-knapper';
-import React, { ChangeEvent } from 'react';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { _CHANGE_STUDENT_WARNING } from '../AdminApplication/strings';
+import Modal from '../Modal';
 import { IRoom, ISeat } from '../ViewRooms';
 import RoomPicker from './RoomPicker';
 import SeatPicker from './SeatPicker';
+
+const _TITLE = 'Assign seat';
 
 interface IState {
   selectedRoom?: IRoom;
@@ -10,8 +15,12 @@ interface IState {
 }
 
 interface IProps {
-  rooms: IRoom[];
+  accept: () => void;
   assignUserToSeat: (seat: ISeat) => void;
+  checkSeat: (room: IRoom, seatId: ISeat) => void;
+  modalOpen: boolean;
+  rooms: IRoom[];
+  toggleModal: () => void;
 }
 
 class Presentational extends React.Component<IProps, IState> {
@@ -23,28 +32,36 @@ class Presentational extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { rooms } = this.props;
+    const { rooms, modalOpen, toggleModal, accept } = this.props;
     const { selectedRoom } = this.state;
     return (
-      <form
-        onSubmit={this.submitSeatSelection}
-      >
-        <RoomPicker rooms={rooms} setSelected={this.setRoom}/>
-        <SeatPicker
-          seats={selectedRoom ? selectedRoom.seats.seats : undefined}
-          setSelected={this.setSeat}
+      <>
+        <Innholdstittel>{_TITLE}</Innholdstittel>
+        <form onSubmit={this.submitSeatSelection}>
+          <RoomPicker rooms={rooms} setSelected={this.setRoom} />
+          <SeatPicker
+            seats={selectedRoom ? selectedRoom.seats.seats : undefined}
+            setSelected={this.setSeat}
+          />
+          <KnappBase
+            id="submit-application"
+            type="hoved"
+            htmlType="submit"
+            autoDisableVedSpinner={true}
+            spinner={false}
+            disabled={this.state.selectedSeat ? false : true}
+          >
+            {_TITLE}
+          </KnappBase>
+        </form>
+        <Modal
+          modalOpen={modalOpen}
+          toggleModal={toggleModal}
+          accept={accept}
+          close={toggleModal}
+          text={_CHANGE_STUDENT_WARNING}
         />
-        <KnappBase
-          id="submit-application"
-          type="hoved"
-          htmlType="submit"
-          autoDisableVedSpinner={true}
-          spinner={false}
-          disabled={this.state.selectedSeat ? false : true}
-        >
-          Submit
-        </KnappBase>
-      </form>
+      </>
     );
   }
 
@@ -56,12 +73,13 @@ class Presentational extends React.Component<IProps, IState> {
     this.setState({ selectedRoom });
   }
 
-  private setSeat = (e: React.FormEvent) => {
+  private setSeat = async (e: React.FormEvent) => {
     const { selectedRoom } = this.state;
     const eventTarget = e.target as HTMLFormElement;
     const selectedSeatID = eventTarget.value;
     if (!selectedRoom) return;
     const selectedSeat = selectedRoom.seats.seats.filter(obj => obj.id === selectedSeatID)[0];
+    await this.props.checkSeat(selectedRoom, selectedSeat);
     this.setState({ selectedSeat });
   }
 

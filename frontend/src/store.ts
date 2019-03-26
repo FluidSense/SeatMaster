@@ -11,9 +11,9 @@ import {
   applicationSeasonReducer,
   IApplicationSeasonState,
 } from './components/ApplicationSeason/reducer';
+import seatReducer, { ISeatState } from './components/AssignSeat/reducer';
 import history from './components/History';
 import { IRegisteredUserState, registeredUserReducer } from './components/RegisterUser/reducer';
-import seatsReducer, { ISeatState } from './components/Seats/reducer';
 import viewRoomReducer, { IRoomState } from './components/ViewRooms/reducer';
 import userManager from './utils/userManager';
 
@@ -25,16 +25,18 @@ export interface IStore {
   seats: ISeatState;
   userInformation: IRegisteredUserState;
   oidc: UserState;
+  assignSeat: ISeatState;
 }
 
 export const reducers = combineReducers({
   adminRoom: roomReducer,
   applicationSeason: applicationSeasonReducer,
   applications: ApplicationReducer,
+  assignSeat: seatReducer,
   oidc: oidcReducer,
   rooms: viewRoomReducer,
   router: connectRouter(history),
-  seats: seatsReducer,
+  seats: seatReducer,
   userInformation: registeredUserReducer,
 });
 

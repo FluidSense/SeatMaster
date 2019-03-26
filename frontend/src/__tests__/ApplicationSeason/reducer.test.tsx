@@ -16,6 +16,8 @@ test('reducers', () => {
       }, applications: {
         applications: [],
         registeredApplication: { status: 'NOT_FOUND' },
+      }, assignSeat: {
+        seat: undefined,
       }, oidc: {
         isLoadingUser: false,
         user: {
@@ -111,6 +113,8 @@ test('reducers', () => {
         status: 'SUBMITTED',
         user: { email: 'paaledwl@stud.ntnu.no', id: 1, username: 'paaledwl' },
       },
+    }, assignSeat: {
+      seat: undefined,
     }, oidc: {
       isLoadingUser: false,
 

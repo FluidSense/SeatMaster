@@ -9,6 +9,7 @@ import {
   elevatedPutJson,
   getJson,
   postJson,
+  putJson,
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
@@ -20,15 +21,18 @@ import {
   GET_USER_URL,
   POST_FORM_DATA_URL,
   POST_NEW_USER_URL,
+  REMOVE_STUDENT_FROM_SEAT_URL,
   ROOM_URL,
   SEASON_URL,
   SEAT_URL,
 } from './constants';
 import {
+  IPostAdminApplicationForm,
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
   IPutUserOnSeat,
+  IRemoveStudentFromSeat,
   IUser,
 } from './interfaces';
 
@@ -57,6 +61,16 @@ export const getAllApplications = ():
 export const postApplicationForm = (data: IPostApplicationForm):
   PromiseLike<IApplication> => {
   return elevatedPostJson(POST_FORM_DATA_URL, data);
+};
+
+export const putApplicationForm = (data: IPostApplicationForm):
+  PromiseLike<IApplication> => {
+  return putJson(POST_FORM_DATA_URL, data);
+};
+
+export const putAdminApplicationForm = (id: number, data: IPostAdminApplicationForm):
+  PromiseLike<IApplication> => {
+  return elevatedPutJson(`${POST_FORM_DATA_URL}${id}`, data);
 };
 
 export const getUserData = (): PromiseLike<IUser> => {
@@ -93,6 +107,10 @@ export const deleteRoom = (id: number): PromiseLike<IRoom> => {
 
 export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
   return elevatedPutJson(ASSIGN_SEAT_URL, data);
+};
+
+export const removeStudentFromSeat = (data: IRemoveStudentFromSeat): PromiseLike<ISeat> => {
+  return elevatedPutJson(REMOVE_STUDENT_FROM_SEAT_URL, data);
 };
 
 export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {

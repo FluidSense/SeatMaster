@@ -59,7 +59,7 @@ htmlcov/
 
 # Secrets
 .secrets.tsx
-config.js
+./frontend/src/config.js
 
 # Utilities
 .src/utils/*
