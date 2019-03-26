@@ -23,7 +23,10 @@ export const resetAppStatus = () => ({
 export const updateSingleApplication = (id: number, application: IPostAdminApplicationForm):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     dispatch(resetAppStatus());
-    if (!application) return;
+    if (!application) {
+      dispatch(successfullAppUpdate());
+      return;
+    }
     const result = await putAdminApplicationForm(id, application);
     if (result) dispatch(successfullAppUpdate());
     else dispatch(faultyAppUpdate());
