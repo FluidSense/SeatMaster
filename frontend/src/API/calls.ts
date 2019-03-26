@@ -13,8 +13,10 @@ import {
 } from './callDefinitions';
 import {
   ASSIGN_SEAT_URL,
+  DELETE_ALL_USERS_URL,
   DELETE_USER_URL,
   GET_ALL_APPLICATIONS_URL,
+  GET_ALL_USERS_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
   GET_SEAT_URL,
@@ -123,4 +125,16 @@ export const postSeat = (data: ISeat): PromiseLike<ISeat> => {
 
 export const deleteSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
   return elevatedDeleteJson(SEAT_URL, roomId, seatId);
+};
+
+export const getAllUsers = (): PromiseLike<[IUser]> => {
+  return elevatedGetJson(GET_ALL_USERS_URL);
+};
+
+export const deleteSingleUser = (id: number): PromiseLike<IUser> => {
+  return elevatedDeleteJson(DELETE_USER_URL, id);
+};
+
+export const deleteAllUsers = (): PromiseLike<[IUser]> => {
+  return elevatedDeleteJson(DELETE_ALL_USERS_URL);
 };

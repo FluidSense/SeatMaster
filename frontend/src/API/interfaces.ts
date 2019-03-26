@@ -24,6 +24,11 @@ export interface IPutUserOnSeat {
   seatId: string;
 }
 
+export interface IRemoveStudentFromSeat {
+  roomId: number;
+  seatId: string;
+}
+
 export interface IPostRoom {
   name: string;
   info: string;
