@@ -7,7 +7,7 @@ from flask import jsonify
 from unittest import TestCase
 from jose import jwt
 import json
-from __tests__.testUtils.constants import token, decodedToken
+from __tests__.testUtils.constants import token, accessToken, decodedToken
 from __tests__.testUtils.authentication import mock_authentication_context
 
 
@@ -39,6 +39,7 @@ class TestRoom(TestCase):
         self.ctx = self.app.app_context()
         self.ctx.push()
         self.token = f"Bearer {token}"
+        self.accessToken = f"Bearer {accessToken}"
 
     def test_get_self_success(self):
         user = createUser()
@@ -46,7 +47,9 @@ class TestRoom(TestCase):
         with patch.object(jwt, "decode", mock_decode):
             response = self.app.test_client().get(
                 "http://localhost:5000/user/",
-                headers={"Authorization": self.token})
+                headers={
+                    "Authorization": self.token,
+                    "AccessToken": self.accessToken})
             dbUser = user.to_json()
             dbUser["admin"] = False
             assert response.data == jsonify(dbUser).data
@@ -64,20 +67,16 @@ class TestRoom(TestCase):
             "email_verified": True,
             "picture": "https://auth.dataporten.no/openid/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
         }
-        data = {
-            "accessToken": "123"
-        }
         headers = {
             "Authorization": self.token,
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "AccessToken": self.accessToken
         }
-
         with patch.object(jwt, "decode", mock_decode), \
                 patch("utils.dataporten.getDataportenUserInfo", mock_dataporten):
             response = self.app.test_client().post(
                 "http://localhost:5000/user/",
-                headers=headers,
-                data=json.dumps(data))
+                headers=headers)
             assert response.status == "401 UNAUTHORIZED"
 
     def test_create_should_succeed(self):
@@ -94,7 +93,7 @@ class TestRoom(TestCase):
             "picture": "https://auth.dataporten.no/openid/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
         }
         headers = {
-            "AccessToken": "123",
+            "AccessToken": self.accessToken,
             "Authorization": self.token,
             "Content-type": "application/json"
         }
@@ -122,7 +121,7 @@ class TestRoom(TestCase):
         headers = {
             "Authorization": self.token,
             "Content-type": "application/json",
-            "AccessToken": "123"
+            "AccessToken": self.accessToken
         }
 
         response = self.app.test_client().delete(
@@ -142,7 +141,7 @@ class TestRoom(TestCase):
         headers = {
             "Authorization": self.token,
             "Content-type": "application/json",
-            "AccessToken": "123"
+            "AccessToken": self.accessToken
         }
 
         response = self.app.test_client().delete(
@@ -160,7 +159,7 @@ class TestRoom(TestCase):
         headers = {
             "Authorization": self.token,
             "Content-type": "application/json",
-            "AccessToken": "123"
+            "AccessToken": self.accessToken
         }
 
         response = self.app.test_client().delete(

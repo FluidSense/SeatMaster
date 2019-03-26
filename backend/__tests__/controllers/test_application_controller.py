@@ -85,7 +85,8 @@ def test_registerNewApplication(mocker, client):
     mimetype = 'application/json'
     headers = {
         'Content-Type': mimetype,
-        'Accept': mimetype
+        'Accept': mimetype,
+        "AccessToken": "Bearer eca448c7-b0f0-487d-98c5-946c3bb29868"
     }
     mocker.patch.object(applicationService, "registerApplication")
     applicationService.registerApplication = registerApplicationMock
