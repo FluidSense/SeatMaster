@@ -99,7 +99,7 @@ export class Presentational extends React.Component<IProps, IState> {
             onClick={this.changeModal}
           >
             Delete my user
-        </KnappBase>
+          </KnappBase>
         </div>
       </>
     );
