@@ -38,7 +38,21 @@ class EditForm extends React.Component<IProps, IEditState> {
     return (
       <form onSubmit={this.submitForm}>
       <SkjemaGruppe className="edit-application">
+        <Input
+          label="Name"
+          bredde="L"
+          name="name"
+          value={application.user.fullname}
+          disabled={true}
+        />
         {secureFields}
+        <Input
+          label="E-Mail"
+          bredde="L"
+          name="email"
+          value={application.user.email}
+          disabled={true}
+        />
         <Input
           label="Partner username"
           bredde="L"

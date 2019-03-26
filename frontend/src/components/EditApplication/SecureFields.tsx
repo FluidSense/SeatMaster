@@ -12,24 +12,10 @@ export const SecureFields = (
     return (
       <>
         <Input
-          label="Name"
-          bredde="L"
-          name="name"
-          defaultValue={application.user.fullname}
-          onChangeCapture={update}
-        />
-        <Input
           label="Master status"
           bredde="L"
           name="masterStatus"
           defaultValue={application.rank}
-          onChangeCapture={update}
-        />
-        <Input
-          label="E-Mail"
-          bredde="L"
-          name="email"
-          defaultValue={application.user.email}
           onChangeCapture={update}
         />
       </>
@@ -38,24 +24,10 @@ export const SecureFields = (
   return (
       <>
         <Input
-          label="Name"
-          bredde="L"
-          name="name"
-          value={application.user.fullname}
-          disabled={true}
-        />
-        <Input
           label="Master status"
           bredde="L"
           name="masterStatus"
           value={application.rank}
-          disabled={true}
-        />
-        <Input
-          label="E-Mail"
-          bredde="L"
-          name="email"
-          value={application.user.email}
           disabled={true}
         />
       </>
