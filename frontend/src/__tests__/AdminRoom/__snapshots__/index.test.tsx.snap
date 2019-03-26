@@ -220,7 +220,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
             </div>
           </Textarea>
           <div
-            id="state-buttons"
+            className="title-and-button"
           >
             <KnappBase
               autoDisableVedSpinner={false}
