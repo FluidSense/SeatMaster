@@ -4,7 +4,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { IUser } from '../../API/interfaces';
-import { _USER_FULL_NAME, _USER_USERNAME } from './strings';
+import { _CHECK_CHECKBOX, _USER_FULL_NAME, _USER_USERNAME } from './strings';
 
 interface IProps {
   user: IUser;
@@ -30,7 +30,7 @@ const UserLink: React.FunctionComponent<IProps> = (props) => {
         checked={checked}
         onChange={checkDelete}
         className="user-delete-checkbox"
-        label={'Delete'}
+        label={_CHECK_CHECKBOX}
       />
       <LenkepanelBase
         key={user.id}

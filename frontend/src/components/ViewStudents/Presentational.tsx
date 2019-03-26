@@ -3,7 +3,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
-import { _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE } from './strings';
+import { _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE, _CHECK_ALL_CHECKBOXES } from './strings';
 import UserLink from './UserLink';
 
 interface IProps {
@@ -52,7 +52,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       <KnappBase id="delete-students" type="fare" disabled={disableButton} onClick={onClick}>
         {_DELETE_STUDENTS}
       </KnappBase>
-      <Checkbox checked={checkedAll} onChange={addAllUsers} label={'Delete all students'} />
+      <Checkbox checked={checkedAll} onChange={addAllUsers} label={_CHECK_ALL_CHECKBOXES} />
     </div>
   );
 
