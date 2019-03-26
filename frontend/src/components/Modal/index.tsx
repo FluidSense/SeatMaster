@@ -4,12 +4,11 @@ import React, { Component } from 'react';
 import { _NO, _YES } from './strings';
 
 interface IProps {
-  soething?: any;
   modalOpen: boolean;
   toggleModal: () => void;
   accept: () => void;
   close: () => void;
-  text: string;
+  text?: string;
 }
 
 class CustomModal extends Component<IProps> {
