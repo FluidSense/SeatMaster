@@ -29,6 +29,9 @@ export const AdminReviewApplicationReducer = (
     case FETCH_APPLICATION_DIRECTLY: {
       return {
         ...state,
+        api: {
+          status: 200,
+        },
         application: action.payload,
       };
     }

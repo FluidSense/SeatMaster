@@ -5,6 +5,7 @@ import { IApplication } from '../Application';
 import {
   FETCH_APPLICATION_DIRECTLY,
   FETCH_APPLICATION_DIRECTLY_FAILED,
+  RESET_REVIEW_APPLICATION_STATUS_CODE,
 } from './constants';
 
 const retrievedApplication = (payload: IApplication) => ({
@@ -22,3 +23,5 @@ ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
   if (application) dispatch(retrievedApplication(application));
   else dispatch(retrievedApplicationFailed());
 };
+
+export const resetPageStatus = () => ({ type: RESET_REVIEW_APPLICATION_STATUS_CODE });

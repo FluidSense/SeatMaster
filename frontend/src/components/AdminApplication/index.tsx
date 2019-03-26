@@ -11,7 +11,7 @@ import { APP_NOT_FOUND } from '../commonConstants';
 import Page404 from '../Page404';
 import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import { fetchApplicationDirectly } from './actions';
+import { fetchApplicationDirectly, resetPageStatus } from './actions';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 
 export interface IAdminApplication extends IApplication {
@@ -46,6 +46,7 @@ interface IDispatchProps {
   removeStudentFromSeat: (roomId: number, seatId: string) => void;
   fetchApplication: (id: number) => void;
   fetchRooms: () => void;
+  resetStatus: () => void;
 }
 
 interface IState {
@@ -111,6 +112,8 @@ class AdminApplication extends Component<Props, IState> {
     }
   }
 
+  public componentWillUnmount = () => this.props.resetStatus();
+
   public render() {
     const { removeStudentFromSeat, status } = this.props;
     const { application, rooms } = this.state;
@@ -149,6 +152,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchRooms: () => dispatch(fetchAllRooms()),
   removeStudentFromSeat: (roomId: number, seatId: string) =>
     dispatch(removeStudent(roomId, seatId)),
+  resetStatus: () => dispatch(resetPageStatus()),
 });
 
 const Container = connect(
