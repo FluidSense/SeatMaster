@@ -17,7 +17,7 @@ class CustomModal extends Component<IProps> {
   }
 
   public render() {
-    const { modalOpen, toggleModal, close, accept, text } = this.props;
+    const { modalOpen, toggleModal, close, accept, text, children } = this.props;
     if (!modalOpen) return null;
     return (
       <>
@@ -28,6 +28,7 @@ class CustomModal extends Component<IProps> {
           contentLabel="Min modalrute"
         >
           {text}
+          {children}
           <div>
             <KnappBase id="modal-accept" type="flat" onClick={accept}>{_YES}</KnappBase>
             <KnappBase id="modal-decline" type="flat" onClick={close}>{_NO}</KnappBase>
