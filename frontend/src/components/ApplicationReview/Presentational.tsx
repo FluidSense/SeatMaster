@@ -23,7 +23,7 @@ const Presentational: React.FunctionComponent<IStateProps> = (props) => {
     );
   }
   return (
-    <ApplicationOverview application={application} />
+    <ApplicationOverview application={application} pathToEdit={'/edit'}/>
   );
 };
 
