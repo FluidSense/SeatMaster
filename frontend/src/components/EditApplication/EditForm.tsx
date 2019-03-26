@@ -2,9 +2,11 @@ import KnappBase from 'nav-frontend-knapper';
 import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { IApplication } from '../Application';
+import { SecureFields } from './SecureFields';
 
 interface IProps {
   application: IApplication;
+  isAdmin: boolean;
   finalize: (state: IEditState) => void;
 }
 
@@ -23,7 +25,7 @@ export interface IEditState {
 class EditForm extends React.Component<IProps, IEditState> {
 
   public render() {
-    const { application } = this.props;
+    const { application, isAdmin } = this.props;
     if (!(application && application.user)) return null;
     const partnerApplication = application.partnerApplication;
     const partner = partnerApplication ? partnerApplication.user : undefined;
