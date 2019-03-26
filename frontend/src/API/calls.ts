@@ -15,6 +15,7 @@ import {
   ASSIGN_SEAT_URL,
   DELETE_USER_URL,
   GET_ALL_APPLICATIONS_URL,
+  GET_APPLICATION_BY_ID_URL,
   GET_APPLICATION_BY_SELF_URL,
   GET_APPLICATION_BY_USERID_URL,
   GET_SEAT_URL,
@@ -51,6 +52,11 @@ export const getApplicationFormBySelf = ():
 export const getApplicationFormByUsername = (username: string):
   PromiseLike<IApplication> => {
   return elevatedGetJson(`${GET_APPLICATION_BY_USERID_URL}${username}`);
+};
+
+export const getApplicationFormById = (id: number):
+  PromiseLike<IApplication> => {
+  return elevatedGetJson(`${GET_APPLICATION_BY_ID_URL}${id}`);
 };
 
 export const getAllApplications = ():
