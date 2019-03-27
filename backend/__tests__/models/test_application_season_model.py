@@ -49,7 +49,7 @@ def test_cascading(db_session):
         status=ApplicationStatus.SUBMITTED,
         applicationSeason=season
     )
-    
+
     db_session.add(user)
     db_session.add(application)
     db_session.add(season)

@@ -26,7 +26,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_without_partner(self):
-        season = createBasicSeason(db.session)
+        createBasicSeason(db.session)
         testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()

@@ -1,6 +1,5 @@
 from shared import db
 from datetime import datetime
-from models.application import Application
 
 
 class ApplicationSeason(db.Model):

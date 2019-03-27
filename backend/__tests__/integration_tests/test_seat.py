@@ -4,13 +4,10 @@ from main import create_app
 from shared import db
 from models.room import Room
 from models.seat import Seat
-from models.user import User
-from models.application import Application
 from flask import jsonify, make_response
 import json
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
-from utils.enums import Rank, ApplicationStatus
 from __tests__.testUtils.models import createApplication
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
