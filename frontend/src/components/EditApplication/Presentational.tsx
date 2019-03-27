@@ -4,9 +4,9 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
+import { redirectUrl } from './constants';
 import './editApplication.css';
 import EditForm from './EditForm';
-import { redirectUrl } from './constants';
 
 interface IDispatchProps {
   updateApplication: (id: number, application: IPostAdminApplicationForm) => void;
