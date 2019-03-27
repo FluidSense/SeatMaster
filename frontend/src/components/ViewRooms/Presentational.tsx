@@ -1,11 +1,11 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import { FETCHING_ROOMS } from './constants';
 import { IStateProps } from './index';
 import RoomLink from './RoomLink';
 import { _CREATE_ROOM_BUTTON, _VIEW_ROOM_TITLE } from './strings';
-import { FETCHING_ROOMS } from './constants';
-import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
 
 interface IProps extends IStateProps {
   onClick: () => void;
