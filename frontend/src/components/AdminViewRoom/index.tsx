@@ -13,9 +13,9 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  assign: (user: IUser, seat: ISeat) => dispatch(assignUserToSeat(user, seat)),
   delete: (seat: ISeat) => dispatch(removeStudent(seat.roomId, seat.id)),
   fetchRooms: () => dispatch(fetchAllRooms()),
-  finalize: (user: IUser, seat: ISeat) => dispatch(assignUserToSeat(user, seat)),
   getAllApplications: () => dispatch(fetchAllApplications()),
 });
 

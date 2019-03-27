@@ -89,7 +89,7 @@ class Presentational extends React.Component<Props, IState> {
         key={index}
         seat={seat}
         users={users}
-        finalize={this.props.finalize}
+        assign={this.props.finalize}
       />
       );
     });

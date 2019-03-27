@@ -8,7 +8,7 @@ import { ISeat } from '../ViewRooms';
 interface IProps {
   seat: ISeat;
   users?: IUser[];
-  finalize: (user: IUser, seat: ISeat) => void;
+  assign: (user: IUser, seat: ISeat) => void;
   delete: (seat: ISeat) => void;
 }
 
@@ -68,7 +68,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
     e.preventDefault();
     const user = this.state.selectedUser;
     const seat = this.props.seat;
-    if (user && seat) this.props.finalize(user, seat);
+    if (user && seat) this.props.assign(user, seat);
   }
 
   private delete = (e: React.FormEvent) => {
