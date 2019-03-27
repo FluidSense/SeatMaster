@@ -6,6 +6,7 @@ from flask import jsonify, url_for
 from main import app
 import json
 from __tests__.testUtils.authentication import mock_authentication
+from __tests__.testUtils.constants import accessToken
 from utils.enums import Rank, ApplicationStatus
 
 
@@ -86,7 +87,7 @@ def test_registerNewApplication(mocker, client):
     headers = {
         'Content-Type': mimetype,
         'Accept': mimetype,
-        "AccessToken": "Bearer eca448c7-b0f0-487d-98c5-946c3bb29868"
+        "AccessToken": accessToken
     }
     mocker.patch.object(applicationService, "registerApplication")
     applicationService.registerApplication = registerApplicationMock
