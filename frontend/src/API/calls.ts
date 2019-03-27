@@ -46,6 +46,11 @@ export const postSeason = (data: IPostApplicationSeason):
   return elevatedPostJson(SEASON_URL, data);
 };
 
+export const putSeason = (data: IPostApplicationSeason, id: number):
+  PromiseLike<IApplicationSeason> => {
+  return elevatedPutJson(`${SEASON_URL}${id}`, data);
+};
+
 export const getApplicationFormBySelf = ():
   PromiseLike<IApplication> => {
   return getJson(`${GET_APPLICATION_BY_SELF_URL}`);

@@ -11,19 +11,22 @@ export interface IApplicationSeason {
 }
 
 export interface IApplicationSeasonState {
-  currentSeason: IApplicationSeason;
+  currentSeason?: IApplicationSeason;
   submitted?: boolean;
+  id: number;
 }
 
 const minDate = moment(1970);
 
 export const initialState = {
-  currentSeason: {
+  currentSeason: undefined,
+  id: 0,
+  /*currentSeason: {
     applicationPeriodEnd: minDate,
     applicationPeriodStart: minDate,
     end: minDate,
     start: minDate,
-  },
+  },*/
 };
 
 export const applicationSeasonReducer = (
@@ -47,6 +50,7 @@ export const applicationSeasonReducer = (
           end: moment(end),
           start: moment(start),
         },
+        id: payload.id,
       };
     case SUBMITTED_APPLICATION_SEASON:
       return {

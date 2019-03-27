@@ -1,6 +1,7 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { getSeason } from '../../API/calls';
+import isEmpty from '../../utils/objectIsEmpty';
 import { SET_APPLICATION_SEASON } from './constants';
 import { IApplicationSeason } from './reducer';
 
@@ -12,5 +13,5 @@ const setApplicationSeason = (payload: IApplicationSeason) => ({
 export const fetchApplicationSeasonData = ():
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const result = await getSeason();
-    if (result) dispatch(setApplicationSeason(result));
+    if (result && !isEmpty(result)) dispatch(setApplicationSeason(result));
   };
