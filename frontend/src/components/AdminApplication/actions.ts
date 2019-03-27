@@ -1,13 +1,13 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { getApplicationFormById } from '../../API/calls';
+import isEmpty from '../../utils/objectIsEmpty';
 import { IApplication } from '../Application';
 import {
   FETCH_APPLICATION_DIRECTLY,
   FETCH_APPLICATION_DIRECTLY_FAILED,
   RESET_REVIEW_APPLICATION_STATUS_CODE,
 } from './constants';
-import isEmpty from '../../utils/objectIsEmpty';
 
 const retrievedApplication = (payload: IApplication) => ({
   payload,
