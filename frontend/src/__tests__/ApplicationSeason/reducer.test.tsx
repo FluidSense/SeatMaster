@@ -92,6 +92,14 @@ test('reducers', () => {
       type: 'SET_APPLICATION_DATA',
     });
   expect(state).toEqual({
+    adminReviewApplication: {
+      api: {
+        status: 0,
+      },
+      application: {
+        status: 'NOT_FOUND',
+      },
+    },
     adminRoom: {},
     applicationSeason: {
       currentSeason: {
