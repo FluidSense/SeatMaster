@@ -14,7 +14,7 @@ import {
 
 export interface IApplicationState {
   applications: IApplication[];
-  registeredApplication: IApplication;
+  registeredApplication?: IApplication;
   api: {
     status: number,
   };
@@ -25,9 +25,7 @@ const initialState: IApplicationState = {
     status: 0,
   },
   applications: [],
-  registeredApplication: {
-    status: APP_NOT_FOUND,
-  },
+  registeredApplication: undefined,
 };
 
 export const ApplicationReducer = (
