@@ -10,9 +10,9 @@ from models.user import User
 
 def test_requires_id_token(mocker):
     mocker.patch.object(auth, "get_token_auth_header")
-    mocker.patch.object(auth, "eval_access_token")
+    mocker.patch.object(auth, "getAccessToken")
     auth.get_token_auth_header.return_value = token
-    auth.eval_access_token.return_value = accessToken, True
+    auth.getAccessToken.return_value = accessToken, True
     mocker.patch.object(jwt, "decode")
     mocker.patch.object(jwt, "get_unverified_header")
     jwt.decode.return_value = decodedToken
