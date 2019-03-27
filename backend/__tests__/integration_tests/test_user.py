@@ -7,7 +7,7 @@ from flask import jsonify
 from unittest import TestCase
 from jose import jwt
 import json
-from __tests__.testUtils.constants import token, decodedToken
+from __tests__.testUtils.constants import token, decodedToken, testGroups
 from __tests__.testUtils.authentication import mock_authentication_context
 
 
@@ -43,12 +43,13 @@ class TestRoom(TestCase):
     def test_get_self_success(self):
         user = createUser()
         mock_decode = mock_jwt_decode()
-        with patch.object(jwt, "decode", mock_decode):
+        with patch.object(jwt, "decode", mock_decode), \
+                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
             response = self.app.test_client().get(
                 "http://localhost:5000/user/",
                 headers={"Authorization": self.token})
             dbUser = user.to_json()
-            dbUser["admin"] = False
+            dbUser["admin"] = True
             assert response.data == jsonify(dbUser).data
 
     def test_create_should_fail(self):
@@ -100,17 +101,18 @@ class TestRoom(TestCase):
         }
 
         with patch.object(jwt, "decode", mock_decode), \
-                patch("utils.dataporten.getDataportenUserInfo", mock_dataporten):
+                patch("utils.dataporten.getDataportenUserInfo", mock_dataporten), \
+                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
             response = self.app.test_client().post(
                 "http://localhost:5000/user/",
                 headers=headers)
             user = db.session.query(User).first()
             dbUser = user.to_json()
-            dbUser["admin"] = False
+            dbUser["admin"] = True
             assert response.status == "201 CREATED"
             assert user.username == "elevG"
             assert user.email == "4s8j0rng@ELEV_GGGGGG.no"
-            assert response.data == jsonify(dbUser).data
+            assert json.loads(response.data) == json.loads(jsonify(dbUser).data)
 
     @mock_authentication_context
     def test_delete_all_students(self):
