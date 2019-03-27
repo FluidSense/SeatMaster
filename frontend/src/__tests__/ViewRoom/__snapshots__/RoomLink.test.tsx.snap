@@ -8,7 +8,7 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
   linkCreator={[Function]}
 >
   <div
-    className="room-link"
+    className="lenkepanel-rooms"
   >
     <div
       className="link-name"
