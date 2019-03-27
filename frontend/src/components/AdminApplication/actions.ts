@@ -7,6 +7,7 @@ import {
   FETCH_APPLICATION_DIRECTLY_FAILED,
   RESET_REVIEW_APPLICATION_STATUS_CODE,
 } from './constants';
+import isEmpty from '../../utils/objectIsEmpty';
 
 const retrievedApplication = (payload: IApplication) => ({
   payload,
@@ -20,7 +21,8 @@ const retrievedApplicationFailed = () => ({
 export const fetchApplicationDirectly = (id: number):
 ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
   const application = await getApplicationFormById(id);
-  if (application) dispatch(retrievedApplication(application));
+  if (isEmpty(application)) dispatch(retrievedApplicationFailed());
+  else if (application) dispatch(retrievedApplication(application));
   else dispatch(retrievedApplicationFailed());
 };
 
