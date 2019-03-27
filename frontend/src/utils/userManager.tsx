@@ -1,3 +1,4 @@
+import Oidc from 'oidc-client';
 import { createUserManager } from 'redux-oidc';
 import { DATAPORTEN_CLIENT_ID } from '../config';
 
@@ -16,6 +17,7 @@ const userManagerConfig = {
     `${window.location.hostname}${window.location.port
       ? `:${window.location.port}` : ''
     } / silent_renew.html`,
+  userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
 };
 
 const userManager = createUserManager(userManagerConfig);
