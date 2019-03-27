@@ -1,4 +1,3 @@
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -8,6 +7,7 @@ import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
 import AssignSeat from '../AssignSeat';
 import { removeStudent } from '../AssignSeat/actions';
 import { APP_NOT_FOUND } from '../commonConstants';
+import LoadingPageSpinner from '../LoadingPageSpinner';
 import Page404 from '../Page404';
 import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
@@ -19,7 +19,6 @@ export interface IAdminApplication extends IApplication {
 }
 
 interface IStateToProps {
-  applications: IApplication[];
   fetchedApplication: IApplication;
   rooms: IRoom[];
   status: number;
@@ -57,12 +56,6 @@ interface IState {
 
 type Props = IStateProps & ILinkProps & IDispatchProps & IStateToProps;
 
-const pageSpinner = (
-  <div className="main-content loading-page-spinner">
-    <NavFrontendSpinner />
-  </div>
-);
-
 // tslint:disable-next-line:variable-name
 class AdminApplication extends Component<Props, IState> {
   constructor(props: Props) {
@@ -76,7 +69,6 @@ class AdminApplication extends Component<Props, IState> {
 
   public componentDidMount = async () => {
     const {
-      applications,
       fetchApplication,
       fetchRooms,
       location,
@@ -84,16 +76,10 @@ class AdminApplication extends Component<Props, IState> {
     const locationApplication = location.application;
     const locationRooms = location.rooms;
     const urlId = this.props.match.params.id;
-    if (locationRooms) {
-      this.setState({ rooms: locationRooms });
-    } else {
-      await fetchRooms();
-    }
+    if (locationRooms) this.setState({ rooms: locationRooms });
+    else await fetchRooms();
     if (locationApplication) {
       this.setState({ application: locationApplication });
-    } else if (applications && applications.length) {
-      const applicationInList = applications.find(app => app.id === Number(urlId));
-      if (applicationInList) this.setState({ application: applicationInList });
     } else {
       await fetchApplication(Number(urlId));
       this.setState({ fetched: true });
@@ -107,9 +93,7 @@ class AdminApplication extends Component<Props, IState> {
       && fetchedApplication.status !== APP_NOT_FOUND) {
       this.setState({ application: fetchedApplication });
     }
-    if (this.props.rooms !== rooms) {
-      this.setState({ rooms: this.props.rooms });
-    }
+    if (this.props.rooms !== rooms) this.setState({ rooms: this.props.rooms });
   }
 
   public componentWillUnmount = () => this.props.resetStatus();
@@ -118,7 +102,7 @@ class AdminApplication extends Component<Props, IState> {
     const { removeStudentFromSeat, status } = this.props;
     const { application, rooms } = this.state;
     if (status === 404) return <Page404 />;
-    if (!(application && rooms) || !rooms.length) return pageSpinner;
+    if (!(application && rooms) || !rooms.length) return <LoadingPageSpinner />;
     const givenSeat = application.seat;
     const givenRoomId = givenSeat ? givenSeat.roomId : 0;
     const selectedRooms = rooms.filter(obj => obj.id === givenRoomId);
@@ -141,7 +125,6 @@ class AdminApplication extends Component<Props, IState> {
 }
 
 const mapStateToProps = (state: IStore) => ({
-  applications: state.applications.applications,
   fetchedApplication: state.adminReviewApplication.application,
   rooms: state.rooms.rooms,
   status: state.adminReviewApplication.api.status,
