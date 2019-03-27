@@ -10,7 +10,7 @@ const userManagerConfig = {
   loadUserInfo: true,
   redirect_uri: `${window.location.protocol}//` +
     `${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/callback`,
-  response_type: 'code',
+  response_type: 'id_token token',
   scope: 'email openid profile userid userid-feide groups',
   userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
 };
