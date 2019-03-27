@@ -8,31 +8,44 @@ import { IRoom, ISeat } from '../ViewRooms';
 import SeatPlacer from './SeatPlacer';
 import { _EDIT_ROOM_BUTTON } from './strings';
 
-interface IProps {
+interface IStateProps {
   location: {
     room?: IRoom;
   };
   match: {
-    id: number,
+    params: {
+      id: string,
+    },
   };
   applications?: IApplication[];
+}
+
+interface IDispatchProps {
+  finalize: (user: IUser, seat: ISeat) => void;
+  delete: (seat: ISeat) => void;
+  getAllApplications: () => void;
+  fetchRooms: () => void;
 }
 
 interface IState {
   redirect: boolean;
 }
 
-class Presentational extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+type Props = IStateProps & IDispatchProps;
+
+class Presentational extends React.Component<Props, IState> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       redirect: false,
     };
   }
+
   public render() {
     const { applications } = this.props;
     const { room } = this.props.location;
     const { redirect } = this.state;
+
     if (!room) return <Redirect to="/admin/rooms" />;
     const seats = this.seatsPlacers(room.seats.seats, applications);
     if (redirect) {
@@ -62,9 +75,23 @@ class Presentational extends React.Component<IProps, IState> {
   private setRedirect = () => {
     this.setState({ redirect: true });
   }
+
   private seatsPlacers = (seats: ISeat[], applications?: IApplication[]) => {
+    if (!(applications && applications.length)) {
+      this.props.getAllApplications();
+      return;
+    }
+    const users = applications.map(application => application.user);
     return seats.map((seat, index) => {
-      return <SeatPlacer key={index} seat={seat} applications={applications}/>;
+      return (
+      <SeatPlacer
+        delete={this.props.delete}
+        key={index}
+        seat={seat}
+        users={users}
+        finalize={this.props.finalize}
+      />
+      );
     });
   }
 }

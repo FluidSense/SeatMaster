@@ -2,66 +2,80 @@ import KnappBase from 'nav-frontend-knapper';
 import PanelBase, { Panel } from 'nav-frontend-paneler';
 import { Select } from 'nav-frontend-skjema';
 import React from 'react';
-import { IApplication } from '../Application';
+import { IUser } from '../../API/interfaces';
 import { ISeat } from '../ViewRooms';
 
 interface IProps {
   seat: ISeat;
-  applications?: IApplication[];
+  users?: IUser[];
+  finalize: (user: IUser, seat: ISeat) => void;
+  delete: (seat: ISeat) => void;
 }
 
 interface IState {
-  selectedApp?: IApplication;
+  selectedUser?: IUser;
 }
 
 class SeatPlacer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      selectedApp: undefined,
+      selectedUser: undefined,
     };
   }
   public render() {
-    const { seat, applications } = this.props;
-    const { selectedApp } = this.state;
+    const { seat, users } = this.props;
+    const { selectedUser } = this.state;
 
     if (seat.user) {
       return (
         <Panel border={true} style={{ display:'flex', width:'35%' }}>
           <PanelBase border={true}>{seat.id}</PanelBase>
           <PanelBase border={true}>{seat.user.username}</PanelBase>
-          <KnappBase type="fare" >X</KnappBase>
+          <KnappBase type="fare" onClick={this.delete}>X</KnappBase>
         </Panel>
       );
     }
-    if (!applications) return null;
-    const userOptions = this.applicationsToOption(applications);
+    if (!users) return null;
+    const userOptions = this.usersToOption(users);
     return (
       <Panel border={true} style={{ display:'flex', width:'35%' }}>
         <PanelBase border={true}>{seat.id}</PanelBase>
-        <Select label="" onChangeCapture={this.selectApp}>
+        <Select label="" onChangeCapture={this.selectUser}>
           <option value="">Select user</option>
           {userOptions}
         </Select>
-        <KnappBase type="hoved" disabled={selectedApp ? false : true}>
+        <KnappBase type="hoved" disabled={selectedUser ? false : true} onClick={this.assign}>
           Assign Seat
         </KnappBase>
       </Panel>
     );
   }
 
-  private applicationsToOption = (apps: IApplication[]) => apps.map((app, index) => {
-    return <option key={index} value={app.id}>{app.user.username}</option>;
+  private usersToOption = (users: IUser[]) => users.map((user, index) => {
+    return <option key={index} value={user.id}>{user.username}</option>;
   })
 
-  private selectApp = (e: React.FormEvent) => {
+  private selectUser = (e: React.FormEvent) => {
     const field = e.target as HTMLFormElement;
-    const applicationId = parseInt(field.value, 10);
-    const applications = this.props.applications ? this.props.applications : [];
-    const application = applications.find(app => app.id === applicationId);
-    this.setState({ selectedApp: application });
+    const userId = parseInt(field.value, 10);
+    const users = this.props.users ? this.props.users : [];
+    const user = users.find(usr => usr.id === userId);
+    this.setState({ selectedUser: user });
   }
 
+  private assign = (e: React.FormEvent) => {
+    e.preventDefault();
+    const user = this.state.selectedUser;
+    const seat = this.props.seat;
+    if (user && seat) this.props.finalize(user, seat);
+  }
+
+  private delete = (e: React.FormEvent) => {
+    e.preventDefault();
+    const seat = this.props.seat;
+    if (seat && seat.user) this.props.delete(seat);
+  }
 }
 
 export default SeatPlacer;
