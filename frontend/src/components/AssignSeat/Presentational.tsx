@@ -20,6 +20,7 @@ interface IProps {
   checkSeat: (room: IRoom, seatId: ISeat) => void;
   modalOpen: boolean;
   rooms: IRoom[];
+  seatInfo?: ISeat;
   toggleModal: () => void;
 }
 
@@ -32,8 +33,17 @@ class Presentational extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { rooms, modalOpen, toggleModal, accept } = this.props;
+    const { rooms, modalOpen, toggleModal, accept, seatInfo } = this.props;
     const { selectedRoom } = this.state;
+    const occupyingUser = seatInfo ? seatInfo.user : undefined;
+    const modalText = (
+      <>
+        <p>{_CHANGE_STUDENT_WARNING}</p>
+        <ul>
+          <li>{occupyingUser ? occupyingUser.username : ''}</li>
+        </ul>
+      </>
+    );
     return (
       <>
         <Innholdstittel>{_TITLE}</Innholdstittel>
@@ -59,8 +69,9 @@ class Presentational extends React.Component<IProps, IState> {
           toggleModal={toggleModal}
           accept={accept}
           close={toggleModal}
-          text={_CHANGE_STUDENT_WARNING}
-        />
+        >
+          {modalText}
+        </Modal>
       </>
     );
   }

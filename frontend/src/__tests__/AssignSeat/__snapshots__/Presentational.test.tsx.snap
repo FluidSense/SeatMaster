@@ -84,8 +84,14 @@ exports[`assign seat presentational renders nothing correctly 1`] = `
     accept={[Function]}
     close={[Function]}
     modalOpen={false}
-    text="A student already has a seat here. Do you want to change their allocation?"
     toggleModal={[Function]}
-  />
+  >
+    <p>
+      A student already has a seat here. Do you want to change their allocation?
+    </p>
+    <ul>
+      <li />
+    </ul>
+  </CustomModal>
 </Fragment>
 `;
