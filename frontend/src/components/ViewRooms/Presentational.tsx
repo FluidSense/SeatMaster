@@ -4,6 +4,8 @@ import React from 'react';
 import { IStateProps } from './index';
 import RoomLink from './RoomLink';
 import { _CREATE_ROOM_BUTTON, _VIEW_ROOM_TITLE } from './strings';
+import { FETCHING_ROOMS } from './constants';
+import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
 
 interface IProps extends IStateProps {
   onClick: () => void;
@@ -19,7 +21,8 @@ const createRoom = (onClick: () => void) => (
 );
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { rooms, onClick } = props;
+  const { rooms, onClick, fetching } = props;
+  if (fetching === FETCHING_ROOMS) return <TitleAndSpinner title={_VIEW_ROOM_TITLE}/>;
   if (!rooms || !rooms.length) return <div className="main-content">{createRoom(onClick)}</div>;
   const roomList = rooms.map(room => (
     <RoomLink key={room.id} room={room} />
