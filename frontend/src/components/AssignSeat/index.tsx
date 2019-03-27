@@ -49,6 +49,7 @@ class _Container extends React.Component<Props, IOwnState> {
         checkSeat={this.checkIfSeatOccupied}
         toggleModal={this.toggleModal}
         modalOpen={modalOpen}
+        seatInfo={this.props.seatInfo}
         accept={this.changeStudentSeats}
       />);
   }

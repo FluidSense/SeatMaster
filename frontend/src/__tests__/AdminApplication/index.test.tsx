@@ -7,16 +7,23 @@ import thunk from 'redux-thunk';
 import AdminApplication from '../../components/AdminApplication';
 import { IApplication } from '../../components/Application';
 import ApplicationOverview from '../../components/ApplicationReview/ApplicationOverview';
+import { APP_NOT_FOUND, APP_SUBMITTED } from '../../components/commonConstants';
 import { IRoom } from '../../components/ViewRooms';
 
 describe('admin application container', () => {
   const mockStore = configureMockStore([thunk]);
+  const match = { params: { id: '1' } };
+  const noApplication = { status: APP_NOT_FOUND };
   it('renders nothing correctly', () => {
-    const store = mockStore({});
+    const store = mockStore({
+      adminReviewApplication: { application: noApplication, api: { status: 0 } },
+      applications: [],
+      rooms: [],
+    });
     const location = {};
     const wrapper = mount(
       <Provider store={store}>
-        <AdminApplication modalOpen={false} location={location} />
+        <AdminApplication modalOpen={false} location={location} match={match} />
       </Provider>);
     const overview = wrapper.find(ApplicationOverview);
     expect(overview.length).toBe(0);
@@ -32,7 +39,7 @@ describe('admin application container', () => {
       },
     };
     const application: IApplication = {
-      status: 'NOT_FOUND',
+      status: APP_SUBMITTED,
     };
     const location = {
       application,
@@ -51,12 +58,19 @@ describe('admin application container', () => {
         username: 'user',
       },
     };
-    const store = mockStore({ assignSeat: { seat: seat1 } });
+    const store = mockStore({
+      adminReviewApplication: {
+        api: { status: 0 },
+        application: { status: APP_SUBMITTED },
+      },
+      applications: [application],
+      assignSeat: { seat: seat1 },
+      rooms: [room],
+    });
     const wrapper = mount(
       <Provider store={store}>
-        <AdminApplication modalOpen={false} location={location} />
+        <AdminApplication modalOpen={false} location={location} match={match}/>
       </Provider >);
-    const overview = wrapper.find(ApplicationOverview);
-    expect(overview.length).toBe(1);
+    expect(wrapper.isEmptyRender()).toBeFalsy();
   });
 });
