@@ -4,6 +4,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
+import { redirectUrl } from './constants';
 import './editApplication.css';
 import EditForm from './EditForm';
 
@@ -42,7 +43,7 @@ const Presentational: React.FunctionComponent<Props> = (props) => {
 
   if (status === 200) {
     resetStatus();
-    return <Redirect to="/admin/applications" />;
+    return <Redirect to={`${redirectUrl}${match.params.id}`}/>;
   }
 
   if (!(application && application.user)) return null;
