@@ -1,11 +1,16 @@
 import EtikettBase from 'nav-frontend-etiketter';
-import KnappBase, { Hovedknapp } from 'nav-frontend-knapper';
+import KnappBase from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { IApplicationSeason } from '../ApplicationSeason/reducer';
-import { _CREATE_NEW_SEASON, _NEW_APPLICATION_SEASON } from './strings';
+import {
+  _CREATE_NEW_SEASON,
+  _EXISTING_CURRENT_SEASON,
+  _NEW_APPLICATION_SEASON,
+  _UPDATE_CURRENT_SEASON,
+} from './strings';
 
 interface IProps {
   alertPeriodEndBeforeStart?: SkjemaelementFeil;
@@ -31,8 +36,16 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     id,
     updateApplicationSeason,
   } = props;
-  const updateSeasonButton = id > 0 ? <KnappBase onClick={updateApplicationSeason} type="hoved" id="update-season-btn">Update current season</KnappBase> : null;
-  const seasonEtikett = season ? <EtikettBase className="season-etikett" type="fokus">There already exists a season</EtikettBase> : null;
+  const updateSeasonButton = id > 0 ? (
+    <KnappBase onClick={updateApplicationSeason} type="hoved" id="update-season-btn">
+      {_UPDATE_CURRENT_SEASON}
+    </KnappBase>
+    ) : null;
+  const seasonEtikett = season ? (
+    <EtikettBase className="season-etikett" type="fokus">
+      {_EXISTING_CURRENT_SEASON}
+    </EtikettBase>
+    ) : null;
   return (
     <div id="new-application-season" className="main-content">
       <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>

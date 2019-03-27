@@ -1,5 +1,5 @@
 import moment, { Moment } from 'moment';
-import AlertStripe, { AlertStripeBaseProps } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';

@@ -16,17 +16,9 @@ export interface IApplicationSeasonState {
   id: number;
 }
 
-const minDate = moment(1970);
-
 export const initialState = {
   currentSeason: undefined,
   id: 0,
-  /*currentSeason: {
-    applicationPeriodEnd: minDate,
-    applicationPeriodStart: minDate,
-    end: minDate,
-    start: minDate,
-  },*/
 };
 
 export const applicationSeasonReducer = (
