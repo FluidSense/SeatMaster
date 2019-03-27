@@ -47,13 +47,15 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       deleteSeveralStudents;
 
   const studentTitle = (
-    <div className="title-and-button">
-      <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
-      <KnappBase id="delete-students" type="fare" disabled={disableButton} onClick={onClick}>
-        {_DELETE_STUDENTS}
-      </KnappBase>
+    <>
+      <div className="title-and-button">
+        <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
+        <KnappBase id="delete-students" type="fare" disabled={disableButton} onClick={onClick}>
+          {_DELETE_STUDENTS}
+        </KnappBase>
+      </div>
       <Checkbox checked={checkedAll} onChange={addAllUsers} label={_CHECK_ALL_CHECKBOXES} />
-    </div>
+    </>
   );
 
   const usersList = users.map((user) => {
