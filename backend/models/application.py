@@ -33,16 +33,16 @@ class Application(db.Model):
 
     applicationSeasonId = db.Column(
         "applicationSeasonId",
-        db.ForeignKey("application_season.id")
+        db.ForeignKey("application_season.application_season_id")
     )
 
     applicationSeason = db.relationship(
-        "application_season",
-        back_populates="application",
+        "ApplicationSeason",
+        back_populates="applications",
     )
 
     queuePlacement = db.Column(
-        "queuePlaceent",
+        "queuePlacement",
         db.Integer()
     )
 
@@ -104,7 +104,8 @@ class Application(db.Model):
         foreign_keys='[Seat.room_id, Seat.seat_id]',
         primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
-    def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments, rank=Rank.OTHER):
+    def __init__(self, status, needs, user, partnerUsername, preferredRoom,
+                 seatRollover, applicationSeason, comments, rank=Rank.OTHER):
         self.status = status
         self.user = user
         self.needs = needs
@@ -113,6 +114,7 @@ class Application(db.Model):
         self.seatRollover = seatRollover
         self.partnerUsername = partnerUsername
         self.rank = rank
+        self.applicationSeason = applicationSeason
 
     def to_json(self, self_referred=False):
         applicationDict = {

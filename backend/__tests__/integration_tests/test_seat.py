@@ -11,6 +11,7 @@ import json
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
 from utils.enums import Rank, ApplicationStatus
+from __tests__.testUtils.models import createApplication
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
 
@@ -94,20 +95,7 @@ class TestSeat(TestCase):
     @mock_authentication_context
     def test_assign_seat(self):
         room, seat = createSeatAndRoom()
-        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
-        db.session.add(user)
-        application = Application(
-            comments="lol",
-            needs="needs",
-            user=user,
-            partnerUsername="no",
-            preferredRoom="d1",
-            seatRollover=True,
-            rank=Rank.WRITING_MASTER,
-            status=ApplicationStatus.SUBMITTED,
-        )
-        db.session.add(application)
-        db.session.commit()
+        application = createApplication(db.session)
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
@@ -117,7 +105,7 @@ class TestSeat(TestCase):
         data = dict(
             seatId='D1',
             roomId=room.id,
-            userId=user.id,
+            userId=application.user.id,
         )
         response = self.app.test_client().put(
             "http://localhost:5000/seat/assignSeat",
@@ -132,20 +120,7 @@ class TestSeat(TestCase):
     @mock_authentication_context
     def test_remove_student_from_seat(self):
         room, seat = createSeatAndRoom()
-        user = User(username="hello", sub="sub", email="email", fullname="ASSbjørn")
-        db.session.add(user)
-        application = Application(
-            comments="lol",
-            needs="needs",
-            user=user,
-            partnerUsername="no",
-            preferredRoom="d1",
-            seatRollover=True,
-            rank=Rank.WRITING_MASTER,
-            status=ApplicationStatus.SUBMITTED,
-        )
-        db.session.add(application)
-        db.session.commit()
+        application = createApplication()
         seat.assignedApplication = application
         db.session.add(seat)
         db.session.commit()

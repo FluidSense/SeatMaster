@@ -1,5 +1,6 @@
 from shared import db
 from datetime import datetime
+from models.application import Application
 
 
 class ApplicationSeason(db.Model):
@@ -27,10 +28,13 @@ class ApplicationSeason(db.Model):
     applicationPeriodEnd = db.Column(
         "applicationperiodend",
         db.DateTime,
-        nullable=False)
+        nullable=False
+    )
 
-    applicationSeasons = db.relationship(
-        backref="application_season"
+    applications = db.relationship(
+        "Application",
+        back_populates="applicationSeason",
+        cascade="all, delete",
     )
 
     def __init__(self, start, end, applicationPeriodStart, applicationPeriodEnd):
