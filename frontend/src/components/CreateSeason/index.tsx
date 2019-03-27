@@ -1,5 +1,5 @@
 import moment, { Moment } from 'moment';
-import AlertStripe from 'nav-frontend-alertstriper';
+import AlertStripe, { AlertStripeBaseProps } from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -7,8 +7,10 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IPostApplicationSeason } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { fetchApplicationSeasonData } from '../ApplicationSeason/actions';
+import { IApplicationSeason } from '../ApplicationSeason/reducer';
 import DateInputField from '../DateInputField';
-import { postNewSeason } from './actions';
+import { postNewSeason, putNewSeason } from './actions';
 import './createSeason.css';
 import Presentational from './Presentational';
 import {
@@ -31,15 +33,20 @@ export interface IState {
 }
 
 export interface IStateProps {
+  currentSeason?: IApplicationSeason;
+  id: number;
   submitted?: boolean;
 }
 
 export interface IDispatchProps {
   submitNewSeason: (season: IPostApplicationSeason) =>
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
+  fetchSeason: () => void;
+  updateSeason: (body: any, id: number) => void;
 }
 
 type Props = IStateProps & IDispatchProps;
+type AlertStripeTypes = 'advarsel' | 'suksess' | 'info' | 'nav-ansatt' | 'stopp';
 
 // Need to be in this order to match the proper fields
 const inputTextArray = [
@@ -79,9 +86,21 @@ class _CreateSeason extends Component<Props, IState> {
     };
   }
 
+  public componentDidMount = async () => {
+    this.props.fetchSeason();
+  }
+
   public componentDidUpdate = (prevProps: Props) => {
     const { showAlert } = this.state;
-    const { submitted } = this.props;
+    const { submitted, currentSeason } = this.props;
+    if (currentSeason && prevProps !== this.props) {
+      this.setState({
+        periodEnd: currentSeason.applicationPeriodEnd,
+        periodStart: currentSeason.applicationPeriodStart,
+        roomEnd: currentSeason.end,
+        roomStart: currentSeason.start,
+      });
+    }
     if (!submitted && !prevProps.submitted === undefined) {
       this.setState({ showAlert: true });
     }
@@ -92,7 +111,8 @@ class _CreateSeason extends Component<Props, IState> {
 
   public render() {
     const { periodEnd, periodStart, roomEnd, roomStart, showAlert } = this.state;
-    const { submitted } = this.props;
+    const { submitted, currentSeason, id } = this.props;
+    if (submitted) return (<Redirect to="/admin/applications" />);
     const errorPeriodEndBeforeStart =
       periodEnd <= periodStart
         ? errorObjectSeasonEndTooEarly
@@ -108,10 +128,8 @@ class _CreateSeason extends Component<Props, IState> {
       || errorApplicationEndBeforeStart !== undefined;
 
     const alertFail = showAlert
-      ? this.createAlert(_ERROR_MESSAGE)
+      ? this.createAlert(_ERROR_MESSAGE, 'advarsel')
       : undefined;
-
-    if (submitted) return (<Redirect to="/admin" />);
     return (
       <Presentational
         buttonDisable={buttonDisable}
@@ -119,9 +137,24 @@ class _CreateSeason extends Component<Props, IState> {
         alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
         createFields={this.createFields}
         postApplicationSeason={this.submitApplicationSeason}
-        alertFail={alertFail}
+        updateApplicationSeason={this.updateApplicationSeason}
+        alert={alertFail}
+        season={currentSeason}
+        id={id}
       />
     );
+  }
+
+  private updateApplicationSeason = () => {
+    const { periodEnd, periodStart, roomEnd, roomStart } = this.state;
+    const { id } = this.props;
+    const body = {
+      newPeriodEnd: periodEnd.format(format),
+      newPeriodStart: periodStart.format(format),
+      newRoomEnd: roomEnd.format(format),
+      newRoomStart: roomStart.format(format),
+    };
+    this.props.updateSeason(body, id);
   }
 
   private submitApplicationSeason = () => {
@@ -147,8 +180,8 @@ class _CreateSeason extends Component<Props, IState> {
     );
   }
 
-  private createAlert = (text: string) =>
-    <AlertStripe type="advarsel" solid={true}> {text} </AlertStripe>
+  private createAlert = (text: string, type: AlertStripeTypes) =>
+    <AlertStripe type={type} solid={true}> {text} </AlertStripe>
 
   private createFields = (index: number, end: number) => {
     const { periodStart, periodEnd, roomStart, roomEnd } = this.state;
@@ -168,11 +201,15 @@ class _CreateSeason extends Component<Props, IState> {
 }
 
 const mapStateToProps = (state: IStore) => ({
+  currentSeason: state.applicationSeason.currentSeason,
+  id: state.applicationSeason.id,
   submitted: state.applicationSeason.submitted,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  fetchSeason: () => dispatch(fetchApplicationSeasonData()),
   submitNewSeason: (body: any) => dispatch(postNewSeason(body)),
+  updateSeason: (body: any, id: number) => dispatch(putNewSeason(body, id)),
 });
 
 const CreateSeason = connect(

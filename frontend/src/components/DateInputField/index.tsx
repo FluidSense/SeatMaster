@@ -32,7 +32,7 @@ class DateInputField extends Component<IProps, IState> {
     const { showModal } = this.state;
     const { label, value } = this.props;
     return (
-      <div className="date-picker-field">
+      <div className="date-picker-field" id={label}>
         <Input
           label={label}
           readOnly={true}
