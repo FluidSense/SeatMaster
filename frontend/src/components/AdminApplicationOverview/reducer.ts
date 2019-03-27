@@ -6,7 +6,11 @@ import {
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
-import { GET_ALL_APPLICATIONS } from './constants';
+import {
+  GET_ALL_APPLICATIONS,
+  REMOVE_APPLICATION_DATA,
+  SET_APPLICATION_DATA,
+} from './constants';
 
 export interface IApplicationState {
   applications: IApplication[];
@@ -37,13 +41,13 @@ export const ApplicationReducer = (
         ...state,
         applications,
       };
-    case 'SET_APPLICATION_DATA': {
+    case SET_APPLICATION_DATA: {
       return {
         ...state,
         registeredApplication: action.payload,
       };
     }
-    case 'REMOVE_APPLICATION_DATA': {
+    case REMOVE_APPLICATION_DATA: {
       return {
         ...state,
         registeredApplication: initialState.registeredApplication,
