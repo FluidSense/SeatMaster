@@ -41,6 +41,7 @@ class ApplicationSeason(db.Model):
             "end": str(self.end),
             "applicationPeriodStart": str(self.applicationPeriodStart),
             "applicationPeriodEnd": str(self.applicationPeriodEnd),
+            "id": str(self.id),
         }
 
     def __str__(self):
