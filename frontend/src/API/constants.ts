@@ -7,6 +7,7 @@ export const SEAT_URL = `${BASEPATH}seat/`;
 // Application
 export const POST_FORM_DATA_URL = `${BASEPATH}application/`;
 export const GET_APPLICATION_BY_SELF_URL = `${BASEPATH}application/`;
+export const GET_APPLICATION_BY_ID_URL = `${BASEPATH}application/`;
 export const GET_ALL_APPLICATIONS_URL = `${BASEPATH}application/all`;
 export const GET_APPLICATION_BY_USERID_URL = `${BASEPATH}application/byUser/`;
 
