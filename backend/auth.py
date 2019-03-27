@@ -17,13 +17,12 @@ def get_token_auth_header(header):
     """Obtains the token from a given header
     """
 
-    headerString = ""
     try:
         headerString = request.headers.get(header, None)
     except HTTPError:
         raise HTTPError("Cannot parse header")
 
-    if headerString is None:
+    if not headerString:
         raise TypeError("Header is missing")
 
     parts = headerString.split()
@@ -35,7 +34,7 @@ def get_token_auth_header(header):
     return token
 
 
-def eval_access_token():
+def getAccessToken():
     try:
         access_token = get_token_auth_header("AccessToken")
         return access_token, True
@@ -50,8 +49,12 @@ def requiresIdToken(verify=True):
         """
 
         def wrapper(*args, **kwargs):
-            token = get_token_auth_header("Authorization")
-            access_token, verify_at_hash = eval_access_token()
+            try:
+                token = get_token_auth_header("Authorization")
+            except (HTTPError, TypeError):
+                return Response("{'error':'ID token not valid'}", 401)
+
+            access_token, verify_at_hash = getAccessToken()
             jsonurl = urlopen(VERIFICATION_DOMAIN)
             jwks = json.loads(jsonurl.read())
             unverified_header = jwt.get_unverified_header(token)
