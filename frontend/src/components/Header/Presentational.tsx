@@ -22,7 +22,7 @@ export const Presentational: React.FunctionComponent<IProps> = (props) => {
     <div className="student-header">
       {`You're logged in as ${userInformation.fullname}`}
       <KnappBase
-        type="hoved"
+        type="flat"
         htmlType="button"
         id="logoutButton"
         onClick={onClickAction}

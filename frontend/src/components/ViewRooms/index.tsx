@@ -5,7 +5,6 @@ import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
-import './viewRooms.css';
 
 export interface IRoom {
   id: number;
