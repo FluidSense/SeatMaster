@@ -10,6 +10,7 @@ import Presentational from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
   applications: state.applications.applications,
+  rooms: state.rooms.rooms,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

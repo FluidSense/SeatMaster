@@ -9,19 +9,17 @@ import SeatPlacer from './SeatPlacer';
 import { _EDIT_ROOM_BUTTON } from './strings';
 
 interface IStateProps {
-  location: {
-    room?: IRoom;
-  };
   match: {
     params: {
       id: string,
     },
   };
   applications?: IApplication[];
+  rooms: IRoom[];
 }
 
 interface IDispatchProps {
-  finalize: (user: IUser, seat: ISeat) => void;
+  assign: (user: IUser, seat: ISeat) => void;
   delete: (seat: ISeat) => void;
   getAllApplications: () => void;
   fetchRooms: () => void;
@@ -45,11 +43,18 @@ class Presentational extends React.Component<Props, IState> {
     };
   }
 
-  public render() {
-    const { applications } = this.props;
-    const { room } = this.props.location;
-    const { redirect } = this.state;
+  public componentDidMount() {
+    if (!this.props.rooms.length && !this.state.fetchedRooms) {
+      this.setState({ fetchedRooms: true });
+      this.props.fetchRooms();
+    }
+  }
 
+  public render() {
+    const { applications, rooms } = this.props;
+    const roomId = parseInt(this.props.match.params.id, 10);
+    const { redirect } = this.state;
+    const room = rooms.find(iterroom => iterroom.id === roomId);
     if (!room) return <Redirect to="/admin/rooms" />;
     const seats = this.seatsPlacers(room.seats.seats, applications);
     if (redirect) {
@@ -86,7 +91,6 @@ class Presentational extends React.Component<Props, IState> {
       this.props.getAllApplications();
       return;
     }
-    console.log('applications',applications);
     const apps = applications ? applications : [];
     const users = apps.map(application => application.user);
     return seats.map((seat, index) => {
@@ -96,7 +100,7 @@ class Presentational extends React.Component<Props, IState> {
         key={index}
         seat={seat}
         users={users}
-        assign={this.props.finalize}
+        assign={this.props.assign}
       />
       );
     });
