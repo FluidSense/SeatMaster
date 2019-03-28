@@ -30,6 +30,7 @@ exports[`ViewRoom Renders nothing correctly 1`] = `
       rooms={Array []}
     >
       <Presentational
+        filterRooms={[Function]}
         onClick={[Function]}
         rooms={Array []}
       >
@@ -73,6 +74,41 @@ exports[`ViewRoom Renders nothing correctly 1`] = `
               </button>
             </KnappBase>
           </div>
+          <SearchBar
+            filterFunction={[Function]}
+          >
+            <Input
+              bredde="fullbredde"
+              className="search-bar"
+              disabled={false}
+              label=""
+              onChange={[Function]}
+              placeholder="Search ..."
+            >
+              <div
+                className="skjemaelement search-bar"
+              >
+                <label
+                  className="skjemaelement__label"
+                  htmlFor="80357192-1168-16559-4824-071230327330838"
+                />
+                <input
+                  className="skjemaelement__input input--fullbredde"
+                  disabled={false}
+                  id="80357192-1168-16559-4824-071230327330838"
+                  onChange={[Function]}
+                  placeholder="Search ..."
+                  type="text"
+                />
+                <SkjemaelementFeilmelding>
+                  <div
+                    aria-live="assertive"
+                    role="alert"
+                  />
+                </SkjemaelementFeilmelding>
+              </div>
+            </Input>
+          </SearchBar>
         </div>
       </Presentational>
     </_Container>

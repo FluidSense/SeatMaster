@@ -10,6 +10,7 @@ exports[`AdminApplicationOverview Renders 1 room correctly 1`] = `
   >
     <Presentational
       applications={Array []}
+      filterFunction={[Function]}
       rooms={Array []}
     >
       <div
@@ -26,6 +27,41 @@ exports[`AdminApplicationOverview Renders 1 room correctly 1`] = `
             </h1>
           </TypografiBase>
         </Sidetittel>
+        <SearchBar
+          filterFunction={[Function]}
+        >
+          <Input
+            bredde="fullbredde"
+            className="search-bar"
+            disabled={false}
+            label=""
+            onChange={[Function]}
+            placeholder="Search ..."
+          >
+            <div
+              className="skjemaelement search-bar"
+            >
+              <label
+                className="skjemaelement__label"
+                htmlFor="0552920924-25808-24667-17642-85671533200886"
+              />
+              <input
+                className="skjemaelement__input input--fullbredde"
+                disabled={false}
+                id="0552920924-25808-24667-17642-85671533200886"
+                onChange={[Function]}
+                placeholder="Search ..."
+                type="text"
+              />
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+            </div>
+          </Input>
+        </SearchBar>
       </div>
     </Presentational>
   </_Container>
@@ -42,6 +78,7 @@ exports[`AdminApplicationOverview Renders nothing correctly 1`] = `
   >
     <Presentational
       applications={Array []}
+      filterFunction={[Function]}
       rooms={Array []}
     >
       <div
@@ -58,6 +95,41 @@ exports[`AdminApplicationOverview Renders nothing correctly 1`] = `
             </h1>
           </TypografiBase>
         </Sidetittel>
+        <SearchBar
+          filterFunction={[Function]}
+        >
+          <Input
+            bredde="fullbredde"
+            className="search-bar"
+            disabled={false}
+            label=""
+            onChange={[Function]}
+            placeholder="Search ..."
+          >
+            <div
+              className="skjemaelement search-bar"
+            >
+              <label
+                className="skjemaelement__label"
+                htmlFor="109676459-22902-30287-6349-5269550115762"
+              />
+              <input
+                className="skjemaelement__input input--fullbredde"
+                disabled={false}
+                id="109676459-22902-30287-6349-5269550115762"
+                onChange={[Function]}
+                placeholder="Search ..."
+                type="text"
+              />
+              <SkjemaelementFeilmelding>
+                <div
+                  aria-live="assertive"
+                  role="alert"
+                />
+              </SkjemaelementFeilmelding>
+            </div>
+          </Input>
+        </SearchBar>
       </div>
     </Presentational>
   </_Container>
