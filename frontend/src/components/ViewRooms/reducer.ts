@@ -58,7 +58,7 @@ const roomsWithUpdatedSeat = (rooms: IRoom[], newSeat: ISeat) => {
 
 const roomsWithRemovedFromOldSeat = (rooms: IRoom[], user: IUser) => {
   const allSeats = rooms.flatMap(iterroom => iterroom.seats.seats);
-  const oldSeat = allSeats.find(iterseat => {
+  const oldSeat = allSeats.find((iterseat) => {
     return iterseat.user && user ? iterseat.user.id === user.id : false;
   });
   if (oldSeat) {
