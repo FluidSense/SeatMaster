@@ -2,7 +2,10 @@
 import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { SUBMITTED_APPLICATION_SEASON, SUBMITTED_APPLICATION_SEASON_FAILED } from '../../components/ApplicationSeason/constants';
+import {
+  SUBMITTED_APPLICATION_SEASON,
+  SUBMITTED_APPLICATION_SEASON_FAILED,
+} from '../../components/ApplicationSeason/constants';
 import * as actions from '../../components/CreateSeason/actions';
 
 const middlewares = [thunk];
