@@ -9,3 +9,5 @@ export const _ALERT_CREATED_MESSAGE = 'Could not create room, something went wro
 export const _ALERT_UPDATED_MESSAGE = 'Could not update room, something went wrong';
 export const _ALERT_DELETED_MESSAGE = 'Could not delete room, something went wrong';
 export const _DOWNLOAD_ROOM_AS_CSV = 'Download room as CSV';
+export const _USERS_OCCUPYING_ROOM = 'These users have seats in the room';
+export const _USERS_OCCUPYING_ROOM_CONFIRMATION = 'Are you sure you want to delete the room?';

@@ -5,7 +5,11 @@ import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { lowerIncludes } from '../../utils/searchBarFilter';
 import { searchBarEvent } from '../SearchBar';
-import { deleteAllStudents, deleteSingleStudent, fetchAllStudents } from './actions';
+import {
+  deleteAllStudents,
+  deleteSingleStudent,
+  fetchAllStudents,
+} from './actions';
 import Presentational from './Presentational';
 import './viewStudents.css';
 
@@ -21,8 +25,8 @@ interface IDispatchProps {
 }
 
 interface IState {
-  filteredStudents: IUser[];
-  students: IUser[];
+  filteredUsers: IUser[];
+  userList: IUser[];
   usersToBeDeleted: number[];
 }
 
@@ -33,8 +37,8 @@ class _Container extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      filteredStudents: props.students,
-      students: props.students,
+      filteredUsers: props.students,
+      userList: props.students,
       usersToBeDeleted: [],
     };
   }
@@ -43,19 +47,19 @@ class _Container extends Component<Props, IState> {
   public componentDidUpdate = (prevProps: Props) => {
     const { students } = this.props;
     if (prevProps.students !== students) {
-      this.setState({ students, filteredStudents: students });
+      this.setState({ userList: students });
     }
   }
 
   public render() {
-    const { usersToBeDeleted, filteredStudents, students } = this.state;
+    const { usersToBeDeleted, filteredUsers, userList } = this.state;
     const { deleteStudents, fetching } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
-        users={students}
-        filteredStudents={filteredStudents}
+        filteredStudents={filteredUsers}
         filterStudents={this.filterStudents}
+        users={userList}
         disableButton={disableButton}
         userToBeDeleted={this.addUserToBeDeleted}
         usersToBeDeleted={usersToBeDeleted}
@@ -67,27 +71,27 @@ class _Container extends Component<Props, IState> {
   }
 
   private filterStudents = (event: searchBarEvent) => {
-    const { students } = this.state;
+    const { userList } = this.state;
     const { value } = event.target;
-    const filteredStudents = students.filter((student) => {
-      if (student) {
-        if (lowerIncludes(student.username, value)
-        || lowerIncludes(student.email, value)
-        || lowerIncludes(student.fullname, value)
-        ) return student;
+    const filteredUsers = userList.filter((user) => {
+      if (user) {
+        if (lowerIncludes(user.username, value)
+        || lowerIncludes(user.email, value)
+        || lowerIncludes(user.fullname, value)
+        ) return user;
       }
     });
-    this.setState({ filteredStudents });
+    this.setState({ filteredUsers });
   }
 
   private checkAllOrNone = (all: boolean) => {
-    const { students } = this.state;
+    const { userList } = this.state;
     if (all) {
       this.setState({ usersToBeDeleted: [] });
     } else {
       const allUserIds = this.props.students.map(student => student.id);
       this.setState({
-        filteredStudents: students,
+        filteredUsers: userList,
         usersToBeDeleted: allUserIds,
       });
     }
