@@ -20,22 +20,54 @@ interface IDispatchProps {
   getRooms: () => ThunkAction<void, {}, {}, AnyAction>;
 }
 
+interface IState {
+  applications: IApplication[];
+  filteredApplications: IApplication[];
+}
+
 type Props = IStateProps & IDispatchProps;
 
 // tslint:disable-next-line:class-name
-class _Container extends React.Component<Props> {
+class _Container extends React.Component<Props, IState> {
+  constructor(props: Props) {
+    super(props);
+    this.state =  {
+      applications: this.props.applications,
+      filteredApplications: this.props.applications,
+    };
+  }
   public componentDidMount() {
     this.props.getAllApplications();
     this.props.getRooms();
   }
 
+  public componentDidUpdate = (prevProps: Props) => {
+    const { applications } = this.props;
+    if (prevProps.applications !== applications) {
+      this.setState({ applications, filteredApplications: applications });
+    }
+  }
+
   public render() {
+    const { filteredApplications } = this.state;
     return (
       <Presentational
-        applications={this.props.applications}
+        applications={filteredApplications}
+        filterFunction={this.filterApplications}
         rooms={this.props.rooms}
         fetching={this.props.fetching}
       />);
+  }
+
+  private filterApplications = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { applications } = this.state;
+    const filteredApplications = applications.filter((application) => {
+      const { user } = application;
+      if (user) {
+        if (user.username.startsWith(event.target.value)) return application;
+      }
+    });
+    this.setState({ filteredApplications });
   }
 }
 
