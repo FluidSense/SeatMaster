@@ -55,7 +55,7 @@ class Presentational extends React.Component<Props, IState> {
     const roomId = parseInt(this.props.match.params.id, 10);
     const { redirect } = this.state;
     const room = rooms.find(iterroom => iterroom.id === roomId);
-    if (!room) return <Redirect to="/admin/rooms" />;
+    if (!room) return null; // Insert spinner here 
     const seats = this.seatsPlacers(room.seats.seats, applications);
     if (redirect) {
       return (
