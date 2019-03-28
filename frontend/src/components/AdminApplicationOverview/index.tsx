@@ -7,7 +7,6 @@ import { IApplication } from '../Application';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import { fetchAllApplications } from './actions';
-import './adminApplicationOverview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
