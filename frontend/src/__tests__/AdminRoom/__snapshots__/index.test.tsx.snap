@@ -78,6 +78,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
         buttonDisabled={true}
         deleteRoom={[Function]}
         fetchRoom={[Function]}
+        modalOpen={false}
         onClick={[Function]}
         room={
           Object {
@@ -94,6 +95,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
         setName={[Function]}
         setNotes={[Function]}
         showAlert={false}
+        toggleModal={[Function]}
       >
         <div
           className="main-content"
@@ -244,6 +246,12 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
                 Create room
               </button>
             </KnappBase>
+            <CustomModal
+              accept={[Function]}
+              close={[Function]}
+              modalOpen={false}
+              toggleModal={[Function]}
+            />
           </div>
         </div>
       </Presentational>
