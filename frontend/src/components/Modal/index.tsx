@@ -21,21 +21,19 @@ class CustomModal extends Component<IProps> {
     const { modalOpen, toggleModal, close, accept, text, children } = this.props;
     if (!modalOpen) return null;
     return (
-      <>
-        <Modal
-          isOpen={modalOpen}
-          onRequestClose={toggleModal}
-          closeButton={false}
-          contentLabel="Min modalrute"
-        >
-          {text}
-          {children}
+      <Modal
+        isOpen={modalOpen}
+        onRequestClose={toggleModal}
+        closeButton={false}
+        contentLabel="Min modalrute"
+      >
+        {text}
+        {children}
         <div className="modalKnapper">
           <KnappBase id="modal-accept" type="flat" onClick={accept}>{_YES}</KnappBase>
           <KnappBase id="modal-decline" type="flat" onClick={close}>{_NO}</KnappBase>
         </div>
-        </Modal>
-      </>
+      </Modal>
     );
   }
 }
