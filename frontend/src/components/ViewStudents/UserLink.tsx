@@ -1,4 +1,5 @@
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
+import { Panel } from 'nav-frontend-paneler';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
@@ -12,18 +13,9 @@ interface IProps {
   checked: boolean;
 }
 
-const ROUTE_TO = 'user';
-
 const UserLink: React.FunctionComponent<IProps> = (props) => {
   const { user, addUser, checked } = props;
   const checkDelete = () => addUser(user.id);
-  const link = (panelProps: any) => (
-    <NavLink
-      to={{ pathname: panelProps.href, user: { ...user } }}
-      className="lenkepanel lenkepanel--border"
-    >
-      {panelProps.children}
-    </NavLink>);
   return (
     <div className={'user-component'}>
       <Checkbox
@@ -32,16 +24,12 @@ const UserLink: React.FunctionComponent<IProps> = (props) => {
         className="user-delete-checkbox"
         label={_CHECK_CHECKBOX}
       />
-      <LenkepanelBase
-        key={user.id}
-        linkCreator={link}
-        href={ROUTE_TO}
-      >
-        <div className="user-link">
-          <div className="link-name"><Element>{_USER_FULL_NAME}</Element>{user.fullname}</div>
-          <div className="link-username"><Element>{_USER_USERNAME}</Element>{user.username}</div>
+      <Panel>
+        <div className="user-panel">
+          <div className="user-name"><Element>{_USER_FULL_NAME}</Element>{user.fullname}</div>
+          <div className="user-username"><Element>{_USER_USERNAME}</Element>{user.username}</div>
         </div>
-      </LenkepanelBase>
+      </Panel>
     </div>
   );
 };
