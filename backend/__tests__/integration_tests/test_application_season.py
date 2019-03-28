@@ -68,7 +68,8 @@ class TestApplicationSeason(TestCase):
             applicationPeriodEnd=str(acceptend),
             applicationPeriodStart=str(acceptstart),
             end=str(endtime),
-            start=str(starttime)).data == response.data
+            start=str(starttime),
+            id="1").data == response.data
 
     def tearDown(self):
         self.postgres.stop()
