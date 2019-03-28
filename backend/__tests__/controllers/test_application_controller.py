@@ -8,8 +8,7 @@ import json
 from __tests__.testUtils.authentication import mock_authentication
 from __tests__.testUtils.models import createApplication, createBasicSeason
 from __tests__.testUtils.constants import accessToken
-from utils.enums import Rank, ApplicationStatus
-
+from utils.enums import ApplicationStatus
 
 
 def test_getApplication_with_no_application(mocker):
