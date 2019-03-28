@@ -29,6 +29,8 @@ interface IDispatchProps {
 
 interface IState {
   redirect: boolean;
+  fetchedRooms: boolean;
+  fetchedApplications: boolean;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -37,6 +39,8 @@ class Presentational extends React.Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      fetchedApplications: false,
+      fetchedRooms: false,
       redirect: false,
     };
   }
@@ -77,11 +81,14 @@ class Presentational extends React.Component<Props, IState> {
   }
 
   private seatsPlacers = (seats: ISeat[], applications?: IApplication[]) => {
-    if (!(applications && applications.length)) {
+    if (!(applications && applications.length) && !this.state.fetchedApplications) {
+      this.setState({ fetchedApplications: true });
       this.props.getAllApplications();
       return;
     }
-    const users = applications.map(application => application.user);
+    console.log('applications',applications);
+    const apps = applications ? applications : [];
+    const users = apps.map(application => application.user);
     return seats.map((seat, index) => {
       return (
       <SeatPlacer
