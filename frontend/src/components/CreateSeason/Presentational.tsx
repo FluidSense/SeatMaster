@@ -37,7 +37,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     updateApplicationSeason,
   } = props;
   const updateSeasonButton = id > 0 ? (
-    <KnappBase onClick={updateApplicationSeason} type="hoved" id="update-season-btn">
+    <KnappBase
+      onClick={updateApplicationSeason}
+      disabled={buttonDisable}
+      type="hoved"
+      id="update-season-btn"
+    >
       {_UPDATE_CURRENT_SEASON}
     </KnappBase>
     ) : null;
