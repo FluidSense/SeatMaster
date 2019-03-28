@@ -1,8 +1,8 @@
 import { Sidetittel } from 'nav-frontend-typografi';
-import React, { ChangeEvent, FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { IApplication } from '../Application';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
-import SearchBar from '../SearchBar';
+import SearchBar, { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import ApplicationLink from './ApplicationLink';
 import { FETCHING_APPLICATION_DATA } from './constants';
@@ -12,15 +12,13 @@ interface IProps {
   applications: IApplication[];
   rooms: IRoom[];
   fetching: string;
-  filterFunction: (event: ChangeEvent<HTMLInputElement>) => void;
+  filterFunction: (event: searchBarEvent) => void;
 }
 const title = <Sidetittel>{_APPLICATIONS_TITLE}</Sidetittel>;
-const emptyPage = (filterFunction: (event: ChangeEvent<HTMLInputElement>) => void) => (
+const emptyPage = (filterFunction: (event: searchBarEvent) => void) => (
   <div className="main-content">
-    <div className="title-and-button">
-      {title}
-      <SearchBar filterFunction={filterFunction}/>
-    </div>
+    {title}
+    <SearchBar filterFunction={filterFunction}/>
 </div>);
 const emptyPageWithLoader = (<TitleAndSpinner title={_APPLICATIONS_TITLE}/>);
 
@@ -33,12 +31,10 @@ const Presentational: FunctionComponent<IProps> = (props) => {
     ));
   return (
     <div className="main-content">
-      <div className="title-and-button">
-        <Sidetittel>
-          {_APPLICATIONS_TITLE}
-        </Sidetittel>
-        <SearchBar filterFunction={filterFunction}/>
-      </div>
+      <Sidetittel>
+        {_APPLICATIONS_TITLE}
+      </Sidetittel>
+      <SearchBar filterFunction={filterFunction}/>
       {applicationList}
     </div>
   );

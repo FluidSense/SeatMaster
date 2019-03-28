@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { searchBarEvent } from '../SearchBar';
 import { deleteAllStudents, deleteSingleStudent, fetchAllStudents } from './actions';
 import Presentational from './Presentational';
 import './viewStudents.css';
@@ -64,7 +65,7 @@ class _Container extends Component<Props, IState> {
       />);
   }
 
-  private filterStudents = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private filterStudents = (event: searchBarEvent) => {
     const { students } = this.state;
     const filteredStudents = students.filter((student) => {
       if (student) {

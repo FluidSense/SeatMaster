@@ -1,10 +1,10 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { IUser } from '../../API/interfaces';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
-import SearchBar from '../SearchBar';
+import SearchBar, { searchBarEvent } from '../SearchBar';
 import { FETCHING_STUDENTS } from './constants';
 import { _CHECK_ALL_CHECKBOXES, _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE } from './strings';
 import UserLink from './UserLink';
@@ -14,23 +14,13 @@ interface IProps {
   deleteStudents: () => void;
   disableButton: boolean;
   fetching: string;
-  filterStudents: (event: ChangeEvent<HTMLInputElement>) => void;
+  filterStudents: (event: searchBarEvent) => void;
   userToBeDeleted: (id: number) => void;
   users: IUser[];
   filteredStudents: IUser[];
   usersToBeDeleted: number[];
   checkAll: (all: boolean) => void;
 }
-
-const emptyStudentTitle = (filterFunction: (event: ChangeEvent<HTMLInputElement>) => void) => (
-  <div className="main-content">
-    <div className="title-and-button">
-      <div className="title-and-search-bar">
-        <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
-        <SearchBar filterFunction={filterFunction}/>
-      </div>
-    </div>
-  </div>);
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   let checkbox = null;
@@ -71,14 +61,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   const studentTitle = (
     <>
       <div className="title-and-button">
-        <div className="title-and-search-bar">
-          <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
-          <SearchBar filterFunction={filterStudents} disabled={checkedAll}/>
-        </div>
+        <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
         <KnappBase id="delete-students" type="fare" disabled={disableButton} onClick={onClick}>
           {_DELETE_STUDENTS}
         </KnappBase>
       </div>
+      <SearchBar filterFunction={filterStudents} disabled={checkedAll}/>
       {checkbox}
     </>
   );
