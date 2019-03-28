@@ -1,6 +1,12 @@
 import { AnyAction } from 'redux';
 import { IUser } from '../../API/interfaces';
-import { FETCHED_STUDENTS, FETCHING_STUDENTS, SUCCESSFULLY_FETCHED_STUDENTS } from './constants';
+import {
+  FETCHED_STUDENTS,
+  FETCHING_STUDENTS,
+  SET_ALL_STUDENTS,
+  SUCCESSFULLY_FETCHED_STUDENTS,
+  REMOVE_SINGLE_STUDENT,
+} from './constants';
 
 export interface IUserState {
   fetching: string;
@@ -23,6 +29,17 @@ const studentReducer = (
         ...state,
         fetching: FETCHED_STUDENTS,
         users: Object.values(payload),
+      };
+    case SET_ALL_STUDENTS:
+      return {
+        ...state,
+        users: payload,
+      };
+    case REMOVE_SINGLE_STUDENT:
+      const filteredUsers = state.users.filter(user => user.id !== payload);
+      return {
+        ...state,
+        users: filteredUsers,
       };
     default:
       return state;

@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
-import { deleteAllStudents, deleteSingleStudent, fetchAllStudents } from './actions';
+import {
+  deleteAllStudents,
+  deleteSingleStudent,
+  fetchAllStudents,
+} from './actions';
 import Presentational from './Presentational';
 import './viewStudents.css';
 
@@ -19,6 +23,7 @@ interface IDispatchProps {
 }
 
 interface IState {
+  userList: IUser[];
   usersToBeDeleted: number[];
 }
 
@@ -29,18 +34,25 @@ class _Container extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      userList: [],
       usersToBeDeleted: [],
     };
   }
   public componentDidMount = () => this.props.fetchStudents();
 
+  public componentDidUpdate = (prevProps: Props) => {
+    if (prevProps.students !== this.props.students) {
+      this.setState({ userList: this.props.students });
+    }
+  }
+
   public render() {
-    const { usersToBeDeleted } = this.state;
-    const { students, deleteStudents, fetching } = this.props;
+    const { usersToBeDeleted, userList } = this.state;
+    const { deleteStudents, fetching } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
-        users={students}
+        users={userList}
         disableButton={disableButton}
         userToBeDeleted={this.addUserToBeDeleted}
         usersToBeDeleted={usersToBeDeleted}
