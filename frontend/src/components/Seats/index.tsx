@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { IStore } from '../../store';
 import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
 
