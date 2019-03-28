@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { searchBarEvent } from '../SearchBar';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
 
@@ -38,21 +39,54 @@ export interface IRouterProps {
   };
 }
 
+interface IState {
+  rooms: IRoom[];
+  filteredRooms: IRoom[];
+}
+
 type Props = IStateProps & IDispatchProps & IRouterProps;
 
 // tslint:disable-next-line:class-name
-class _Container extends Component<Props> {
+class _Container extends Component<Props, IState> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      filteredRooms: props.rooms,
+      rooms: props.rooms,
+    };
+  }
   public componentDidMount = () => this.props.fetchRooms();
 
+  public componentDidUpdate = (prevProps: Props) => {
+    const { rooms } = this.props;
+    if (prevProps.rooms !== rooms) {
+      this.setState({ rooms, filteredRooms: rooms });
+    }
+  }
+
   public render() {
-    const { rooms, history, fetching } = this.props;
+    const { history, fetching } = this.props;
+    const { filteredRooms } = this.state;
     const onClick = () => history.push('/admin/rooms/create-room');
     return (
       <Presentational
-        rooms={rooms}
+        rooms={filteredRooms}
         onClick={onClick}
         fetching={fetching}
+        filterRooms={this.filterRooms}
       />);
+  }
+
+  private filterRooms = (event: searchBarEvent) => {
+    const { rooms } = this.state;
+    const { value } = event.target;
+    const filteredRooms = rooms.filter((room) => {
+      if (room.name.toLocaleLowerCase().includes(value)
+        || room.info.toLocaleLowerCase().includes(value)) {
+        return room;
+      }
+    });
+    this.setState({ filteredRooms });
   }
 }
 
