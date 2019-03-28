@@ -7,6 +7,8 @@ import {
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
 import {
+  FETCHED_APPLICATION_DATA,
+  FETCHING_APPLICATION_DATA,
   GET_ALL_APPLICATIONS,
   REMOVE_APPLICATION_DATA,
   SET_APPLICATION_DATA,
@@ -14,6 +16,7 @@ import {
 
 export interface IApplicationState {
   applications: IApplication[];
+  fetchingApplications: string;
   registeredApplication: IApplication;
   api: {
     status: number,
@@ -25,8 +28,9 @@ const initialState: IApplicationState = {
     status: 0,
   },
   applications: [],
+  fetchingApplications: FETCHING_APPLICATION_DATA,
   registeredApplication: {
-    status: APP_NOT_FOUND,
+    status: FETCHING_APPLICATION_DATA,
   },
 };
 
@@ -40,6 +44,7 @@ export const ApplicationReducer = (
       return {
         ...state,
         applications,
+        fetchingApplications: FETCHED_APPLICATION_DATA,
       };
     case SET_APPLICATION_DATA: {
       return {
@@ -50,7 +55,7 @@ export const ApplicationReducer = (
     case REMOVE_APPLICATION_DATA: {
       return {
         ...state,
-        registeredApplication: initialState.registeredApplication,
+        registeredApplication: { status: APP_NOT_FOUND },
       };
     }
     case SUCCESSFULL_APPLICATION_UPDATE: {

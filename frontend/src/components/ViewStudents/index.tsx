@@ -9,6 +9,7 @@ import './viewStudents.css';
 
 export interface IStateProps {
   students: IUser[];
+  fetching: string;
 }
 
 interface IDispatchProps {
@@ -35,7 +36,7 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { usersToBeDeleted } = this.state;
-    const { students, deleteStudents } = this.props;
+    const { students, deleteStudents, fetching } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
@@ -46,6 +47,7 @@ class _Container extends Component<Props, IState> {
         checkAll={this.checkAllOrNone}
         deleteStudent={this.deleteSingleStudent}
         deleteStudents={deleteStudents}
+        fetching={fetching}
       />);
   }
 
@@ -75,6 +77,7 @@ class _Container extends Component<Props, IState> {
 }
 
 const mapStateToProps = (state: IStore) => ({
+  fetching: state.students.fetching,
   students: state.students.users,
 });
 

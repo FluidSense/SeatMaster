@@ -1,6 +1,8 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import { FETCHING_ROOMS } from './constants';
 import { IStateProps } from './index';
 import RoomLink from './RoomLink';
 import { _CREATE_ROOM_BUTTON, _VIEW_ROOM_TITLE } from './strings';
@@ -19,7 +21,8 @@ const createRoom = (onClick: () => void) => (
 );
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { rooms, onClick } = props;
+  const { rooms, onClick, fetching } = props;
+  if (fetching === FETCHING_ROOMS) return <TitleAndSpinner title={_VIEW_ROOM_TITLE}/>;
   if (!rooms || !rooms.length) return <div className="main-content">{createRoom(onClick)}</div>;
   const roomList = rooms.map(room => (
     <RoomLink key={room.id} room={room} />
