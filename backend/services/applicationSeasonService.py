@@ -45,7 +45,7 @@ def registerNewSeason(newPeriodEnd, newPeriodStart, newRoomEnd, newRoomStart):
         return "", 400
 
 
-def updateSeason (id, newPeriodEnd, newPeriodStart, newRoomEnd, newRoomStart):
+def updateSeason(id, newPeriodEnd, newPeriodStart, newRoomEnd, newRoomStart):
     try:
         season = getSeasonById(id)
         newPeriodEnd = datetime.strptime(newPeriodEnd, dateFormat)
