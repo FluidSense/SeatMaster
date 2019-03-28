@@ -11,6 +11,34 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+.title-and-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  .knapp {
+    margin: 0 !important;
+  }
+}
+
+.lenkepanel-rooms{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 30% 50% 20%;
+}
+
+.lenkepanel-applications {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(5, 20%);
+}
+
+.modalContent .knapp {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 1rem;
+}
+
 #root {
   min-height: inherit;
   height: inherit;
@@ -27,6 +55,10 @@ body {
 
 .main-content {
   grid-column: 3;
+}
+
+.loading-page-spinner {
+  margin: auto;
 }
 
 .typo-sidetittel {
@@ -64,3 +96,6 @@ body {
 @import "~nav-frontend-lukknapp-style";
 @import "~nav-frontend-alertstriper-style";
 @import "~nav-frontend-lenkepanel-style";
+@import "~nav-frontend-veilederpanel-style";
+@import "~nav-frontend-ekspanderbartpanel-style";
+@import "~nav-frontend-spinner-style";

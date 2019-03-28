@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import EtikettBase from 'nav-frontend-etiketter';
 import React from 'react';
-import { ETIKETT_INFO } from '../commonConstants';
+import { ETIKETT_FOCUS } from '../commonConstants';
 import { IApplicationSeason, IApplicationSeasonState } from './reducer';
 import {
   _SEASON_CLOSED,
@@ -23,7 +23,7 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
   const endText = currentDate < applicationPeriodEnd ? _SEASON_END : _SEASON_CLOSED;
 
   const start = (
-    <EtikettBase type={ETIKETT_INFO}>
+    <EtikettBase type={ETIKETT_FOCUS}>
       {`${startText} - ${applicationPeriodStart.format('D/M/YYYY')}`}
     </EtikettBase>);
   const startEtikett = currentDate <= applicationPeriodEnd ? start : false;
@@ -31,7 +31,7 @@ const Presentational: React.FunctionComponent<IApplicationSeasonProps> = (props)
   return (
     <div id="season-info">
       {startEtikett}
-      <EtikettBase type={ETIKETT_INFO}>
+      <EtikettBase type={ETIKETT_FOCUS}>
         {`${endText} - ${applicationPeriodEnd.format('D/M/YYYY')}`}
       </EtikettBase>
     </div>

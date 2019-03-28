@@ -21,7 +21,11 @@ def getUser(id):
 def registerUser():
     if request.is_json:
         ctx = _request_ctx_stack.top
-        accessToken = get_token_auth_header("AccessToken")
+        try:
+            accessToken = get_token_auth_header("AccessToken")
+        except (HTTPError, TypeError):
+            return Response("{'error':'Access token not valid'}", 401)
+
         try:
             userInfo = dataporten.getDataportenUserInfo(accessToken)
         except HTTPError:
@@ -41,6 +45,14 @@ def registerUser():
     return abort(400)
 
 
+@user.route("/all")
+@requiresAdmin
+def getAllUsers():
+    users = userService.getAllUsers()
+    userList = list(map(lambda x: x.to_json(), users))
+    return jsonify(userList) if users else Response("[]", 200)
+
+
 @user.route("/")
 @requiresUser
 def getSelf():
@@ -49,7 +61,11 @@ def getSelf():
     if not user:
         return Response("{}", 401)
 
-    accessToken = get_token_auth_header("AccessToken")
+    try:
+        accessToken = get_token_auth_header("AccessToken")
+    except (HTTPError, TypeError):
+        return Response("{'error':'Access token not valid'}", 401)
+
     userIsAdmin = False
     try:
         userIsAdmin = dataporten.checkIfAdmin(accessToken)

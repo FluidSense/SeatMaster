@@ -7,10 +7,10 @@ const userManagerConfig = {
   automaticSilentRenew: false,
   client_id: DATAPORTEN_CLIENT_ID,
   filterProtocolClaims: true,
-  loadUserInfo: true,
+  loadUserInfo: false,
   redirect_uri: `${window.location.protocol}//` +
     `${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/callback`,
-  response_type: 'code',
+  response_type: 'id_token token',
   scope: 'email openid profile userid userid-feide groups longterm',
   silent_redirect_uri: `${window.location.protocol}//` +
     `${window.location.hostname}${window.location.port
