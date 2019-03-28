@@ -50,7 +50,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <div id="new-application-season" className="main-content">
       <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>
       {seasonEtikett}
-      {alert}
+      <div id="admin-season-alert">{alert}</div>
       <div id="appSeason">
         <SkjemaGruppe className="app-class" feil={alertPeriodEndBeforeStart}>
           {createFields(0, 2)}

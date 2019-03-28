@@ -1,9 +1,12 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { IPostApplicationSeason } from '../../API/interfaces';
-import { UPDATE_APPLICATION_SEASON } from '../ApplicationSeason/constants';
+import {
+  RESET_SUBMIT,
+  SUBMITTED_APPLICATION_SEASON,
+  UPDATE_APPLICATION_SEASON,
+} from '../ApplicationSeason/constants';
 import { postSeason, putSeason } from './../../API/calls';
-import { SUBMITTED_APPLICATION_SEASON } from './strings';
 
 const newSeasonCreated = (payload: boolean) => ({
   payload,
@@ -28,3 +31,5 @@ export const putNewSeason = (body: IPostApplicationSeason, id: number):
     if (result) dispatch(updateSeason(true));
     else dispatch(updateSeason(false));
   };
+
+export const resetSubmit = () => ({ type: RESET_SUBMIT });

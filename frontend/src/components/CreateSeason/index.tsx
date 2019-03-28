@@ -10,7 +10,7 @@ import { IStore } from '../../store';
 import { fetchApplicationSeasonData } from '../ApplicationSeason/actions';
 import { IApplicationSeason } from '../ApplicationSeason/reducer';
 import DateInputField from '../DateInputField';
-import { postNewSeason, putNewSeason } from './actions';
+import { postNewSeason, putNewSeason, resetSubmit } from './actions';
 import './createSeason.css';
 import Presentational from './Presentational';
 import {
@@ -43,6 +43,7 @@ export interface IDispatchProps {
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
   fetchSeason: () => void;
   updateSeason: (body: any, id: number) => void;
+  reset: () => void;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -90,9 +91,13 @@ class _CreateSeason extends Component<Props, IState> {
     this.props.fetchSeason();
   }
 
+  public componentWillUnmount = () => {
+    this.props.reset();
+  }
+
   public componentDidUpdate = (prevProps: Props) => {
     const { showAlert } = this.state;
-    const { submitted, currentSeason } = this.props;
+    const { submitted, currentSeason, reset } = this.props;
     if (currentSeason && prevProps !== this.props) {
       this.setState({
         periodEnd: currentSeason.applicationPeriodEnd,
@@ -101,11 +106,14 @@ class _CreateSeason extends Component<Props, IState> {
         roomStart: currentSeason.start,
       });
     }
-    if (!submitted && !prevProps.submitted === undefined) {
+    if (submitted === false && prevProps.submitted === undefined) {
       this.setState({ showAlert: true });
     }
     if (showAlert) {
-      setTimeout(() => this.setState({ showAlert: false }), 5000);
+      setTimeout(() => {
+        this.setState({ showAlert: false });
+        reset();
+      },         5000);
     }
   }
 
@@ -208,6 +216,7 @@ const mapStateToProps = (state: IStore) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchSeason: () => dispatch(fetchApplicationSeasonData()),
+  reset: () => dispatch(resetSubmit()),
   submitNewSeason: (body: any) => dispatch(postNewSeason(body)),
   updateSeason: (body: any, id: number) => dispatch(putNewSeason(body, id)),
 });
