@@ -67,22 +67,16 @@ class Application(db.Model):
         db.Boolean()
     )
 
-    room_id = db.Column(db.Integer)
-
-    seat_id = db.Column(db.String)
-
-    __table_args__ = (
-        db.ForeignKeyConstraint(
-            [room_id, seat_id],
-            [Seat.room_id, Seat.seat_id]),
-        {}
+    seat_id = db.Column(
+        db.Integer,
+        db.ForeignKey('seats.seat_id')
     )
 
     seat = db.relationship(
         Seat,
         uselist=False,
-        foreign_keys='[Seat.room_id, Seat.seat_id]',
-        primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
+        back_populates="application"
+    )
 
     def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments, rank=Rank.OTHER):
         self.status = status

@@ -22,7 +22,7 @@ class Room(db.Model):
     seats = db.relationship(
         'Seat',
         back_populates="room",
-        foreign_keys=[Seat.room_id, Seat.seat_id],
+        foreign_keys=[Seat.room_id, Seat.id],
         cascade="all, delete"
     )
 

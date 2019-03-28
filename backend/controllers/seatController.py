@@ -23,10 +23,10 @@ def deleteSeat(roomId, id):
 def createSeat():
     if request.is_json:
         form = request.get_json()
-        id = form.get("id")
+        seat_name = form.get("id")
         roomId = form.get("roomId")
         info = form.get("info")
-        responseText, successCode = seatService.createSeat(id, roomId, info)
+        responseText, successCode = seatService.createSeat(seat_name, roomId, info)
         return make_response(jsonify(responseText), successCode)
     return abort(400)
 
