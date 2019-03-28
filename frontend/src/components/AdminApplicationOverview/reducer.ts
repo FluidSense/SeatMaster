@@ -54,7 +54,7 @@ export const ApplicationReducer = (
       const applications = action.payload;
       return {
         ...state,
-        applications,
+        applications: Object.values(applications),
         fetchingApplications: FETCHED_APPLICATION_DATA,
       };
     case SET_APPLICATION_DATA: {
