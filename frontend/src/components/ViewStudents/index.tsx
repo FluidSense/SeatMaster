@@ -19,6 +19,8 @@ interface IDispatchProps {
 }
 
 interface IState {
+  filteredStudents: IUser[];
+  students: IUser[];
   usersToBeDeleted: number[];
 }
 
@@ -29,18 +31,29 @@ class _Container extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      filteredStudents: props.students,
+      students: props.students,
       usersToBeDeleted: [],
     };
   }
   public componentDidMount = () => this.props.fetchStudents();
 
+  public componentDidUpdate = (prevProps: Props) => {
+    const { students } = this.props;
+    if (prevProps.students !== students) {
+      this.setState({ students, filteredStudents: students });
+    }
+  }
+
   public render() {
-    const { usersToBeDeleted } = this.state;
-    const { students, deleteStudents, fetching } = this.props;
+    const { usersToBeDeleted, filteredStudents, students } = this.state;
+    const { deleteStudents, fetching } = this.props;
     const disableButton = usersToBeDeleted.length > 0 ? false : true;
     return (
       <Presentational
         users={students}
+        filteredStudents={filteredStudents}
+        filterStudents={this.filterStudents}
         disableButton={disableButton}
         userToBeDeleted={this.addUserToBeDeleted}
         usersToBeDeleted={usersToBeDeleted}
@@ -51,12 +64,26 @@ class _Container extends Component<Props, IState> {
       />);
   }
 
+  private filterStudents = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { students } = this.state;
+    const filteredStudents = students.filter((student) => {
+      if (student) {
+        if (student.username.startsWith(event.target.value)) return student;
+      }
+    });
+    this.setState({ filteredStudents });
+  }
+
   private checkAllOrNone = (all: boolean) => {
+    const { students } = this.state;
     if (all) {
       this.setState({ usersToBeDeleted: [] });
     } else {
       const allUserIds = this.props.students.map(student => student.id);
-      this.setState({ usersToBeDeleted: allUserIds });
+      this.setState({
+        filteredStudents: students,
+        usersToBeDeleted: allUserIds,
+      });
     }
   }
 
