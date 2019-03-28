@@ -3,9 +3,9 @@ import { IUser } from '../../API/interfaces';
 import {
   FETCHED_STUDENTS,
   FETCHING_STUDENTS,
+  REMOVE_SINGLE_STUDENT,
   SET_ALL_STUDENTS,
   SUCCESSFULLY_FETCHED_STUDENTS,
-  REMOVE_SINGLE_STUDENT,
 } from './constants';
 
 export interface IUserState {
