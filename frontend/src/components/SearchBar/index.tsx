@@ -2,10 +2,12 @@ import { Input } from 'nav-frontend-skjema';
 import React, { ChangeEvent, FunctionComponent } from 'react';
 
 interface IProps {
-  filterFunction: (event: ChangeEvent<HTMLInputElement>) => void;
+  filterFunction: (event: searchBarEvent) => void;
   placeHolder?: string;
   disabled?: boolean;
 }
+
+export type searchBarEvent = ChangeEvent<HTMLInputElement>;
 
 const SearchBar: FunctionComponent<IProps> = (props) => {
   const { filterFunction } = props;
