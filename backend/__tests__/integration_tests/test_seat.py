@@ -126,7 +126,7 @@ class TestSeat(TestCase):
 
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data
-        assert seat.assignedApplication == application
+        assert seat.application == application
         assert application.seat == seat
 
     @mock_authentication_context
@@ -146,7 +146,7 @@ class TestSeat(TestCase):
         )
         db.session.add(application)
         db.session.commit()
-        seat.assignedApplication = application
+        seat.application = application
         db.session.add(seat)
         db.session.commit()
 
@@ -167,7 +167,7 @@ class TestSeat(TestCase):
 
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data
-        assert seat.assignedApplication is None
+        assert seat.application is None
         assert application.seat is None
 
     def tearDown(self):

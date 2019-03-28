@@ -86,7 +86,7 @@ def test_application_connect_to_seat(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="")
     db_session.add(seat)
@@ -105,8 +105,9 @@ def test_application_connect_to_seat(db_session):
     db_session.add(application)
     db_session.commit()
     application.room_id = seat.room_id
-    application.seat_id = seat.seat_id
-    assert application.seat == seat
+    application.seat_id = seat.id
+    assert application.seat is seat
+    assert seat.application is application
 
 
 def test_cascading_user(db_session):
@@ -120,7 +121,7 @@ def test_cascading_user(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
-        )
+    )
 
     db_session.add(user)
     db_session.add(application)
@@ -144,7 +145,7 @@ def test_cascading_partnerApplication(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
-        )
+    )
     user2 = User(username="Øggøst", sub="sub2", email="email2", fullname="Sålvong")
     application2 = Application(
         needs="needs",
@@ -181,19 +182,24 @@ def test_cascading_seat(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
-        )
+    )
     room = Room(name="room", info="info")
-    seat = Seat(id="d1", room=room, info="info")
-    application.room_id = seat.room_id
-    application.seat_id = seat.seat_id
+    seat = Seat(name="d1", room=room, info="info")
     db_session.add(user)
     db_session.add(application)
     db_session.add(room)
     db_session.add(seat)
     db_session.commit()
-    db_session.expire_all()
+    application.room_id = seat.room_id
+    application.seat_id = seat.id
+    assert application.seat is seat
+
     db_session.delete(application)
     db_session.commit()
+    db_session.expire_all()
+
     dbseat = db_session.query(Seat).first()
+    print(user.application)
     assert dbseat == seat
+    assert dbseat.application is None
     assert user.application is None

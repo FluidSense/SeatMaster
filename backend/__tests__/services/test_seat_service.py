@@ -23,12 +23,14 @@ def test_create_seat_success(mocker):
     db.session.add.assert_called()
     db.session.commit.assert_called()
 
+# TODO rewrite to real id
+
 
 def test_delete_seat_success(mocker):
     room, seat = setUp(mocker)
     mocker.patch.object(seatService, 'getSeatById')
     seatService.getSeatById.return_value = seat
-    responseText, statusCode = seatService.deleteSeat(room.id, seat.seat_id)
+    responseText, statusCode = seatService.deleteSeat(room.id, seat.seat_name)
     assert "" == responseText
     assert 200 == statusCode
     db.session.delete.assert_called_with(seat)
@@ -40,10 +42,12 @@ def mockQuery(mocker, returnValue=None):
     session = type('filt', (object,), {'__init__': lambda x: None, 'query': lambda x:  query})
     return session
 
+# TODO rewrite to real id
+
 
 def test_get_seat_by_id(mocker):
     room, seat = setUp(mocker)
     mocker.patch.object(db, "session")
     db.session = mockQuery(mocker, returnValue=seat)
-    response = seatService.getSeatById(room.id, seat.seat_id)
+    response = seatService.getSeatById(room.id, seat.seat_name)
     assert response == seat

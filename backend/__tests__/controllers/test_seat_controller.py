@@ -36,9 +36,9 @@ def test_getSeat_with_seat(mocker):
         assert jsonify(seat.to_json()).data == response.data
 
 
-def createSeatMock(id, room, info):
+def createSeatMock(name, room, info):
     roomMock = Room("name", "info")
-    return Seat(id, roomMock, info).to_json(), 201
+    return Seat(name, roomMock, info).to_json(), 201
 
 
 def test_createSeat_success(mocker, client):
@@ -63,7 +63,8 @@ def test_createSeat_success(mocker, client):
         assert "201 CREATED" == response.status
         assert make_response(
             jsonify(
-                id="D1",
+                id=None,  # TODO Double check that this is correct when endpoint is up and running.
+                seat_name="D1",
                 roomId=None,
                 info='nice ship dude',
                 user=None

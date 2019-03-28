@@ -4,8 +4,8 @@ from models.room import Room
 
 def createRoomWithSeats(db_session):
     room = Room(name="Alke", info="stuff")
-    seat1 = Seat(id="D1", room=room, info="its a seat")
-    seat2 = Seat(id="D2", room=room, info="its a seat")
+    seat1 = Seat(name="D1", room=room, info="its a seat")
+    seat2 = Seat(name="D2", room=room, info="its a seat")
     db_session.add(room)
     db_session.add(seat1)
     db_session.add(seat2)
@@ -22,7 +22,7 @@ def test_cascading(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="",
     )

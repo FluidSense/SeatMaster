@@ -4,11 +4,10 @@ from models.user import User
 from models.application import Application
 from pytest import raises
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm.exc import FlushError
 from utils.enums import Rank, ApplicationStatus
 
 
-def test_add_room_without_room(db_session):
+def test_add_seat_without_room(db_session):
     testuser1 = Seat("D1", None, "info")
     with raises(IntegrityError):
         db_session.add(testuser1)
@@ -19,7 +18,7 @@ def test_add_seat_with_room(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="",
     )
@@ -36,30 +35,30 @@ def test_seat_serialization(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="",)
     db_session.add(seat)
     db_session.commit()
-    expectedJson = dict(id=seat.seat_id, info=seat.info, roomId=seat.room_id, user=None)
+    expectedJson = dict(id=seat.id, seat_name=seat.seat_name, info=seat.info, roomId=seat.room_id, user=None)
     seat = db_session.query(Seat).first()
     assert seat.to_json() == expectedJson
 
 
-def test_users_connect_each_other(db_session):
+def test_two_seats_same_id(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="")
     db_session.add(seat)
     db_session.commit()
     seat2 = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="hello im another object xP")
-    with raises(FlushError):
+    with raises(IntegrityError):
         db_session.add(seat2)
         db_session.commit()
 
@@ -68,7 +67,7 @@ def test_application_connect_to_seat(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="")
     db_session.add(seat)
@@ -86,7 +85,7 @@ def test_application_connect_to_seat(db_session):
     )
     db_session.add(application)
     db_session.commit()
-    seat.assignedApplication = application
+    seat.application = application
     db_session.add(seat)
     db_session.commit()
     assert application.seat == seat
@@ -96,7 +95,7 @@ def test_application_multiple_connect_to_seat(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="")
     db_session.add(seat)
@@ -127,23 +126,23 @@ def test_application_multiple_connect_to_seat(db_session):
     db_session.add(application1)
     db_session.add(application2)
     db_session.commit()
-    seat.assignedApplication = application1
+    seat.application = application1
     db_session.add(seat)
     db_session.commit()
-    seat.assignedApplication = application2
+    seat.application = application2
     db_session.add(seat)
     db_session.commit()
     assert not application1.seat == seat
     assert application2.seat == seat
-    assert seat.assignedApplication == application2
+    assert seat.application == application2
 
 
 def test_cascading(db_session):
     room = Room(name="Alko", info="info")
     db_session.add(room)
     db_session.commit()
-    seat = Seat(id="D1", room=room, info="info")
-    seat2 = Seat(id="D2", room=room, info="info")
+    seat = Seat(name="D1", room=room, info="info")
+    seat2 = Seat(name="D2", room=room, info="info")
     user = User(username="name", sub="sub", email="email", fullname="Dudeman")
     application = Application(
         needs="needs",
@@ -159,7 +158,7 @@ def test_cascading(db_session):
     db_session.add(seat2)
     db_session.add(user)
     db_session.add(application)
-    application.seat_id = seat.seat_id
+    application.seat_id = seat.id
     application.room_id = seat.room_id
     db_session.commit()
     db_session.expire_all()
