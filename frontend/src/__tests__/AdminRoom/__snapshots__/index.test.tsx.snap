@@ -250,7 +250,6 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
               accept={[Function]}
               close={[Function]}
               modalOpen={false}
-              text="These users have seats in the room"
               toggleModal={[Function]}
             />
           </div>
