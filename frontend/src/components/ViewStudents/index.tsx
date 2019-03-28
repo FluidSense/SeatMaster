@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { lowerIncludes } from '../../utils/searchBarFilter';
 import { searchBarEvent } from '../SearchBar';
 import { deleteAllStudents, deleteSingleStudent, fetchAllStudents } from './actions';
 import Presentational from './Presentational';
@@ -67,9 +68,13 @@ class _Container extends Component<Props, IState> {
 
   private filterStudents = (event: searchBarEvent) => {
     const { students } = this.state;
+    const { value } = event.target;
     const filteredStudents = students.filter((student) => {
       if (student) {
-        if (student.username.startsWith(event.target.value)) return student;
+        if (lowerIncludes(student.username, value)
+        || lowerIncludes(student.email, value)
+        || lowerIncludes(student.fullname, value)
+        ) return student;
       }
     });
     this.setState({ filteredStudents });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { lowerIncludes } from '../../utils/searchBarFilter';
 import { searchBarEvent } from '../SearchBar';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
@@ -81,8 +82,7 @@ class _Container extends Component<Props, IState> {
     const { rooms } = this.state;
     const { value } = event.target;
     const filteredRooms = rooms.filter((room) => {
-      if (room.name.toLocaleLowerCase().includes(value)
-        || room.info.toLocaleLowerCase().includes(value)) {
+      if (lowerIncludes(room.name, value) || lowerIncludes(room.info, value)) {
         return room;
       }
     });

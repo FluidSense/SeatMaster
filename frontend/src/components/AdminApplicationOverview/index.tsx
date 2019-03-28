@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
+import { lowerIncludes } from '../../utils/searchBarFilter';
 import { IApplication } from '../Application';
 import { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
@@ -62,10 +63,14 @@ class _Container extends React.Component<Props, IState> {
 
   private filterApplications = (event: searchBarEvent) => {
     const { applications } = this.state;
+    const { value } = event.target;
     const filteredApplications = applications.filter((application) => {
       const { user } = application;
       if (user) {
-        if (user.username.startsWith(event.target.value)) return application;
+        if (lowerIncludes(user.username, value)
+        || lowerIncludes(user.email, value)
+        || lowerIncludes(user.fullname, value)
+        ) return application;
       }
     });
     this.setState({ filteredApplications });
