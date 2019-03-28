@@ -4,7 +4,6 @@ import { Normaltekst, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
 import { User } from 'oidc-client';
 import * as React from 'react';
 import { _PROFILE_DELETE_WARNING, _PROFILE_INFORMATION_TEXT } from './constants';
-import './profile.css';
 
 interface IDispatchProps {
   deleteAndRemoveUser: () => void;
