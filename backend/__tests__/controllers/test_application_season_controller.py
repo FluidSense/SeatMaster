@@ -26,6 +26,7 @@ def test_getCurrentSeason_with_a_season(mocker):
         'end': str(aSeason.end),
         'applicationPeriodStart': str(aSeason.applicationPeriodStart),
         'applicationPeriodEnd': str(aSeason.applicationPeriodEnd),
+        'id': 'None',
     }
     with app.app_context():
         response = applicationSeasonController.getCurrentSeason()
@@ -80,4 +81,5 @@ def test_createSeason(mocker, client):
             applicationPeriodEnd=str(acceptend),
             applicationPeriodStart=str(acceptstart),
             start=str(starttime),
-            end=str(endtime)).data == response.data
+            end=str(endtime),
+            id="None").data == response.data
