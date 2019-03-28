@@ -4,6 +4,7 @@ import {
   RESET_SUBMIT,
   SET_APPLICATION_SEASON,
   SUBMITTED_APPLICATION_SEASON,
+  SUBMITTED_APPLICATION_SEASON_FAILED,
   UPDATE_APPLICATION_SEASON,
 } from './constants';
 
@@ -32,26 +33,32 @@ export const applicationSeasonReducer = (
   const { type, payload } = action;
   switch (type) {
     case SET_APPLICATION_SEASON:
-      const {
-        applicationPeriodEnd,
-        applicationPeriodStart,
-        start,
-        end,
-      } = payload;
       return {
         ...state,
         currentSeason: {
-          applicationPeriodEnd: moment(applicationPeriodEnd),
-          applicationPeriodStart: moment(applicationPeriodStart),
-          end: moment(end),
-          start: moment(start),
+          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
+          applicationPeriodStart: moment(payload.applicationPeriodStart),
+          end: moment(payload.end),
+          start: moment(payload.start),
         },
         id: payload.id,
       };
     case SUBMITTED_APPLICATION_SEASON:
       return {
         ...state,
-        submitted: payload,
+        currentSeason: {
+          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
+          applicationPeriodStart: moment(payload.applicationPeriodStart),
+          end: moment(payload.end),
+          start: moment(payload.start),
+        },
+        id: payload.id,
+        submitted: true,
+      };
+    case SUBMITTED_APPLICATION_SEASON_FAILED:
+      return {
+        ...state,
+        submitted: false,
       };
     case UPDATE_APPLICATION_SEASON:
       return {
