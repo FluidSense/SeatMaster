@@ -9,7 +9,8 @@ import {
   SUCCESSFULL_SEAT_ASSIGNMENT,
 } from './constants';
 
-const successfullyAssignedSeat = () => ({
+const successfullyAssignedSeat = (payload: ISeat) => ({
+  payload,
   type: SUCCESSFULL_SEAT_ASSIGNMENT,
 });
 
@@ -18,7 +19,10 @@ const successfullyFetchedSeat = (payload: ISeat) => ({
   type: FETCH_SEAT,
 });
 
-const successfullyRemovedStudent = () => ({ type: REMOVE_STUDENT_SUCCESS });
+const successfullyRemovedStudent = (payload: ISeat) => ({
+  payload,
+  type: REMOVE_STUDENT_SUCCESS,
+});
 
 export const assignUserToSeat = (user: IUser, seat: ISeat):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
@@ -27,7 +31,7 @@ export const assignUserToSeat = (user: IUser, seat: ISeat):
       seatId: seat.id,
       userId: user.id,
     });
-    if (response) dispatch(successfullyAssignedSeat());
+    if (response) dispatch(successfullyAssignedSeat(response));
   };
 
 export const checkSeatIsOccupied = (roomId: number, seatId: string):
@@ -40,5 +44,5 @@ export const removeStudent = (roomId: number, seatId: string):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const data = { roomId, seatId };
     const response = await removeStudentFromSeat(data);
-    if (response) dispatch(successfullyRemovedStudent());
+    if (response) dispatch(successfullyRemovedStudent(response));
   };
