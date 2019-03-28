@@ -10,7 +10,7 @@ import Presentational from './Presentational';
 import { IApplicationSeason } from './reducer';
 
 interface IStateProps {
-  applicationSeason: IApplicationSeason;
+  applicationSeason?: IApplicationSeason;
 }
 
 interface IDispatchProps {
