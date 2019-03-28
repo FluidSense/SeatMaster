@@ -70,6 +70,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       : null;
   const titleText = roomExists ? _TITLE_UPDATE_NEW_ROOM : _TITLE_CREATE_NEW_ROOM;
   const buttonText = roomExists ? _BUTTON_UPDATE_ROOM : _BUTTON_CREATE_ROOM;
+  const users = seats.filter((seat) => { if (seat.user) return seat.user; });
+  const roomOccupied = users.length > 0 ? _USERS_OCCUPYING_ROOM : undefined;
   const deleteButton =
     roomExists
       ? (
@@ -125,7 +127,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           toggleModal={toggleModal}
           accept={deleteRoom}
           close={toggleModal}
-          text={_USERS_OCCUPYING_ROOM}
+          text={roomOccupied}
         >
           <ul>{usersInRoom(room)}</ul>
           <b>{_USERS_OCCUPYING_ROOM_CONFIRMATION}</b>
