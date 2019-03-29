@@ -24,6 +24,12 @@ class SeatPlacer extends React.Component<IProps, IState> {
       selectedUser: undefined,
     };
   }
+
+  public componentDidUpdate(prevProps: IProps) {
+    if (prevProps.seat.user && !this.props.seat.user) {
+      this.setState({ selectedUser: undefined });
+    }
+  }
   public render() {
     const { seat, users } = this.props;
     const { selectedUser } = this.state;
