@@ -10,6 +10,7 @@ exports[`application form confirmation modal renders correctly 1`] = `
   shouldCloseOnOverlayClick={true}
 >
   <div
+    className="modalContent"
     style={
       Object {
         "padding": "2rem 2.5rem",

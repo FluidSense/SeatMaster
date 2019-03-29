@@ -7,12 +7,12 @@ import { IApplication } from '../Application';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import { fetchAllApplications } from './actions';
-import './adminApplicationOverview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
   applications: IApplication[];
   rooms: IRoom[];
+  fetching: string;
 }
 
 interface IDispatchProps {
@@ -34,12 +34,14 @@ class _Container extends React.Component<Props> {
       <Presentational
         applications={this.props.applications}
         rooms={this.props.rooms}
+        fetching={this.props.fetching}
       />);
   }
 }
 
 const mapStateToProps = (state: IStore) => ({
   applications: state.applications.applications,
+  fetching: state.applications.fetchingApplications,
   rooms: state.rooms.rooms,
 });
 

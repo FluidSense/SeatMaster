@@ -21,6 +21,7 @@ interface IState {
   redirect: boolean;
   room: IRoom;
   showAlert: boolean;
+  modalOpen: boolean;
 }
 
 interface IProps {
@@ -51,6 +52,7 @@ class _Container extends Component<Props, IState> {
     super(props);
     this.state = {
       buttonDisabled: true,
+      modalOpen: false,
       redirect: false,
       room: {
         id: -1,
@@ -94,7 +96,7 @@ class _Container extends Component<Props, IState> {
   }
 
   public render() {
-    const { buttonDisabled, room, showAlert } = this.state;
+    const { buttonDisabled, room, showAlert, modalOpen } = this.state;
     const { submitted, reset, error, fetchRoomInfo } = this.props;
     const roomExists = room.id !== -1;
     const onClick = roomExists ? this.update : this.create;
@@ -115,6 +117,8 @@ class _Container extends Component<Props, IState> {
         setName={this.setName}
         setNotes={this.setNotes}
         showAlert={showAlert}
+        toggleModal={this.toggleModal}
+        modalOpen={modalOpen}
       />
     );
   }
@@ -144,6 +148,10 @@ class _Container extends Component<Props, IState> {
     const { createRoom } = this.props;
     const body = { info: roomNotes, name: roomName };
     createRoom(body);
+  }
+
+  private toggleModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
   }
 
   private delete = () => {

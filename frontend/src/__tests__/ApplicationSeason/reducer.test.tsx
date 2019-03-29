@@ -174,6 +174,7 @@ test('reducers', () => {
     },
     seats: { seat: undefined },
     students: {
+      fetching: 'FETCHING_STUDENTS',
       users: [],
     },
     userInformation: {

@@ -5,7 +5,6 @@ import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
-import './viewRooms.css';
 
 export interface IRoom {
   id: number;
@@ -25,6 +24,7 @@ export interface ISeat {
 }
 
 export interface IStateProps {
+  fetching: string;
   rooms: IRoom[];
 }
 
@@ -45,13 +45,19 @@ class _Container extends Component<Props> {
   public componentDidMount = () => this.props.fetchRooms();
 
   public render() {
-    const { rooms, history } = this.props;
+    const { rooms, history, fetching } = this.props;
     const onClick = () => history.push('/admin/rooms/create-room');
-    return (<Presentational rooms={rooms} onClick={onClick} />);
+    return (
+      <Presentational
+        rooms={rooms}
+        onClick={onClick}
+        fetching={fetching}
+      />);
   }
 }
 
 const mapStateToProps = (state: IStore) => ({
+  fetching: state.rooms.fetching,
   rooms: state.rooms.rooms,
 });
 

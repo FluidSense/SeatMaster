@@ -1,4 +1,4 @@
-from __tests__.testUtils.constants import decodedToken, token, testGroups
+from __tests__.testUtils.constants import decodedToken, token, accessToken, testGroups
 from models.user import User
 from unittest.mock import Mock, patch
 from functools import wraps
@@ -24,12 +24,15 @@ def mock_authentication(mocker):
         "email_verified": True,
         "picture": "https://auth.dataporten.no/openid/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
     }
+    mock_access_token = mocker.Mock(name="getAccessToken")
+    mock_access_token.return_value = accessToken, True
     mocker.patch("utils.dataporten.getDataportenUserInfo", mock_dataporten_getUserInfo)
     mocker.patch("jose.jwt.decode", mock_decode)
     mocker.patch("jose.jwt.get_unverified_header", lambda x: decodedToken)
     mocker.patch("utils.dataporten.getDataportenGroups", lambda x: testGroups)
     mocker.patch("utils.dataporten.checkIfAdmin", lambda x: True)
     mocker.patch("auth.get_token_auth_header", lambda x: token)
+    mocker.patch("auth.getAccessToken", mock_access_token)
     mocker.patch("services.userService.getUserFromSub", lambda x: user)
 
 

@@ -1,7 +1,7 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
-import { ISeat } from './index';
+import { ISeat } from '../ViewRooms';
 import Seat from './Seat';
 import './seats.css';
 import { _SEATS_EXPAND } from './strings';
@@ -18,7 +18,13 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { seats, createSeat, deleteSeat, updateSeat } = props;
 
   const seatElements = seats.map(seat => (
-    <Seat id={seat.id} key={seat.id} deleteSelf={deleteSeat} updateSelf={updateSeat} />
+    <Seat
+      user={seat.user}
+      id={seat.id}
+      key={seat.id}
+      deleteSelf={deleteSeat}
+      updateSelf={updateSeat}
+    />
   ));
 
   return (

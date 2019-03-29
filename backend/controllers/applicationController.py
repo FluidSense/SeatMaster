@@ -4,6 +4,8 @@ from services import applicationService
 from auth import requiresUser, requiresAdmin, get_token_auth_header
 from utils.enums import Rank, ApplicationStatus
 from utils import dataporten
+from urllib.error import HTTPError
+
 application = Blueprint("application", __name__, url_prefix="/application")
 
 
@@ -45,7 +47,11 @@ def registerApplication():
     if request.is_json:
         ctx = _request_ctx_stack.top
         user = ctx.user
-        accessToken = get_token_auth_header("accessToken")
+        try:
+            accessToken = get_token_auth_header("AccessToken")
+        except (HTTPError, TypeError):
+            return Response("{'error':'Access token not valid'}", 401)
+
         form = request.get_json()
         needs = form.get("needs")
         comments = form.get("comments")

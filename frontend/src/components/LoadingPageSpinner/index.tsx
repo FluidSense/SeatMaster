@@ -1,10 +1,16 @@
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import React from 'react';
 
-const LoadingPageSpinner: React.FunctionComponent = () => {
+export interface ISpinnerProps {
+  negativ?: boolean;
+  stroke?: boolean;
+  transparent?: boolean;
+}
+
+const LoadingPageSpinner: React.FunctionComponent<ISpinnerProps> = (props) => {
   return(
     <div className="main-content loading-page-spinner">
-      <NavFrontendSpinner />
+      <NavFrontendSpinner {...props} />
     </div>
   );
 };

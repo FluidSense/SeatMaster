@@ -7,25 +7,43 @@ import {
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
 import {
+  FETCHED_APPLICATION_DATA,
+  FETCHING_APPLICATION_DATA,
   GET_ALL_APPLICATIONS,
   REMOVE_APPLICATION_DATA,
   SET_APPLICATION_DATA,
 } from './constants';
+import { IUser } from '../../API/interfaces';
 
 export interface IApplicationState {
   applications: IApplication[];
+  fetchingApplications: string;
   registeredApplication?: IApplication;
   api: {
     status: number,
   };
 }
 
+export const initUser: IUser = {
+  admin: false,
+  email: '',
+  fullname: '',
+  id: 0,
+  username: '',
+};
+
 const initialState: IApplicationState = {
   api: {
     status: 0,
   },
   applications: [],
-  registeredApplication: undefined,
+  fetchingApplications: FETCHING_APPLICATION_DATA,
+  registeredApplication: {
+    id: 0,
+    rank: 'OTHER',
+    status: FETCHING_APPLICATION_DATA,
+    user: initUser,
+  },
 };
 
 export const ApplicationReducer = (
@@ -38,6 +56,7 @@ export const ApplicationReducer = (
       return {
         ...state,
         applications,
+        fetchingApplications: FETCHED_APPLICATION_DATA,
       };
     case SET_APPLICATION_DATA: {
       return {
@@ -48,7 +67,7 @@ export const ApplicationReducer = (
     case REMOVE_APPLICATION_DATA: {
       return {
         ...state,
-        registeredApplication: initialState.registeredApplication,
+        registeredApplication: { status: APP_NOT_FOUND },
       };
     }
     case SUCCESSFULL_APPLICATION_UPDATE: {
