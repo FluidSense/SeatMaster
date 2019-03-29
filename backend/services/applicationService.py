@@ -80,6 +80,21 @@ def updateApplicationById(id, form):
         return "", 400
 
 
+def approveApplicationsByIds(ids):
+    try:
+        applications = []
+        for id in ids:
+            application = getApplicationById(id)
+            application.status = ApplicationStatus.APPROVED
+            db.session.add(application)
+            applications.append(application)
+        db.session.commit()
+        return applications, 200
+    except (SQLAlchemyError, AttributeError) as err:
+        print(err)
+        return "", 400
+
+
 # makes relation between two applications if their userids match
 def connectApplication(application):
     partnerApplication = getApplicationByUsername(application.partnerUsername)
