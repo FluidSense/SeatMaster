@@ -51,7 +51,6 @@ def updateSeason(id):
 
 
 @applicationSeason.route("/all")
-@requiresAdmin
 def getAllSeasons():
     seasons = applicationSeasonService.getAllSeasons()
     seasons = list(map(lambda x: x.to_json(), seasons))
