@@ -43,7 +43,7 @@ class TestSeat(TestCase):
             'Authorization': self.token
         }
         response = self.app.test_client().get(
-            f"http://localhost:5000/seat/{room.id}/{seat.seat_id}",
+            f"http://localhost:5000/seat/{seat.id}",
             headers=headers)
         assert response.data == jsonify(seat.to_json()).data
         assert db.session.query(Seat).first() == seat
@@ -56,7 +56,7 @@ class TestSeat(TestCase):
         }
         room, seat = createSeatAndRoom()
         response = self.app.test_client().delete(
-            f"http://localhost:5000/seat/{room.id}/{seat.seat_id}",
+            f"http://localhost:5000/seat/{seat.id}",
             headers=headers)
         assert response.status == "200 OK"
         assert db.session.query(Seat).first() is None
@@ -71,10 +71,9 @@ class TestSeat(TestCase):
             'AccessToken': self.accessToken,
         }
         data = dict(
-            id='D2',
+            name='D2',
             roomId=room.id,
-            info='nice ship dude',
-            user=None
+            info='nice ship dude'
         )
         response = self.app.test_client().post(
             "http://localhost:5000/seat/",
@@ -84,12 +83,13 @@ class TestSeat(TestCase):
         assert "201 CREATED" == response.status
         assert make_response(
             jsonify(
-                id="D2",
+                id=2,
+                seat_name="D2",
                 roomId=room.id,
                 info='nice ship dude',
                 user=None
             )).data == response.data
-        assert db.session.query(Seat).all()[1].to_json() == data
+        assert db.session.query(Seat).all()[1].to_json()["info"] == data["info"]
 
     @mock_authentication_context
     def test_assign_seat(self):
@@ -115,8 +115,7 @@ class TestSeat(TestCase):
             'AccessToken': self.accessToken,
         }
         data = dict(
-            seatId='D1',
-            roomId=room.id,
+            seatId=1,
             userId=user.id,
         )
         response = self.app.test_client().put(
@@ -157,8 +156,7 @@ class TestSeat(TestCase):
             'AccessToken': self.accessToken
         }
         data = dict(
-            seatId='D1',
-            roomId=room.id,
+            seatId=1,
         )
         response = self.app.test_client().put(
             "http://localhost:5000/seat/removeStudent",
