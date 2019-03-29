@@ -5,6 +5,7 @@ import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
 import SearchBar, { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import ApplicationLink from './ApplicationLink';
+import ApproveSeated from './ApproveSeated';
 import { FETCHING_APPLICATION_DATA } from './constants';
 import { _APPLICATIONS_TITLE } from './strings';
 
@@ -12,6 +13,7 @@ interface IProps {
   applications: IApplication[];
   rooms: IRoom[];
   fetching: string;
+  approve: (ids: number[]) => void;
   filterFunction: (event: searchBarEvent) => void;
 }
 const title = <Sidetittel>{_APPLICATIONS_TITLE}</Sidetittel>;
@@ -23,7 +25,7 @@ const emptyPage = (filterFunction: (event: searchBarEvent) => void) => (
 const emptyPageWithLoader = (<TitleAndSpinner title={_APPLICATIONS_TITLE}/>);
 
 const Presentational: FunctionComponent<IProps> = (props) => {
-  const { applications, rooms, fetching, filterFunction } = props;
+  const { applications, rooms, fetching, filterFunction, approve } = props;
   if (fetching === FETCHING_APPLICATION_DATA) return emptyPageWithLoader;
   if (!applications || !applications.length) return emptyPage(filterFunction);
   const applicationList = applications.map(application => (
@@ -34,6 +36,7 @@ const Presentational: FunctionComponent<IProps> = (props) => {
       <Sidetittel>
         {_APPLICATIONS_TITLE}
       </Sidetittel>
+      <ApproveSeated approve={approve} applications={applications}/>
       <SearchBar filterFunction={filterFunction}/>
       {applicationList}
     </div>
