@@ -13,6 +13,11 @@ def getCurrentOrNext():
     return min(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today(), default=None)
 
 
+def getAllSeasons():
+    seasons = db.session.query(ApplicationSeason).all()
+    return seasons
+
+
 def getSeasonById(id):
     season = db.session.query(ApplicationSeason).get(id)
     return season

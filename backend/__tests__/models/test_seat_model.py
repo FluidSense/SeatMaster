@@ -6,6 +6,7 @@ from pytest import raises
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from utils.enums import Rank, ApplicationStatus
+from __tests__.testUtils.models import createApplication
 
 
 def test_add_room_without_room(db_session):
@@ -74,16 +75,7 @@ def test_application_connect_to_seat(db_session):
     db_session.add(seat)
     user = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
     db_session.add(user)
-    application = Application(
-        needs="",
-        comments="",
-        user=user,
-        partnerUsername="",
-        preferredRoom="d1",
-        seatRollover=True,
-        status=ApplicationStatus.SUBMITTED,
-        rank=Rank.WRITING_MASTER,
-    )
+    application = createApplication()
     db_session.add(application)
     db_session.commit()
     seat.assignedApplication = application
@@ -100,20 +92,8 @@ def test_application_multiple_connect_to_seat(db_session):
         room=room,
         info="")
     db_session.add(seat)
-    user1 = User(username="yooyo", sub="sub", email="email", fullname="schnep schmep")
     user2 = User(username="yooyo2", sub="sub2", email="email2", fullname="schnep schmep2")
-    db_session.add(user1)
-    db_session.add(user2)
-    application1 = Application(
-        needs="",
-        comments="",
-        user=user1,
-        partnerUsername="",
-        preferredRoom="d1",
-        seatRollover=True,
-        status=ApplicationStatus.SUBMITTED,
-        rank=Rank.WRITING_MASTER,
-    )
+    application1 = createApplication(db_session)
     application2 = Application(
         needs="",
         comments="",
@@ -123,8 +103,8 @@ def test_application_multiple_connect_to_seat(db_session):
         seatRollover=True,
         status=ApplicationStatus.SUBMITTED,
         rank=Rank.WRITING_MASTER,
+        applicationSeason=application1.applicationSeason
     )
-    db_session.add(application1)
     db_session.add(application2)
     db_session.commit()
     seat.assignedApplication = application1
@@ -145,16 +125,7 @@ def test_cascading(db_session):
     seat = Seat(id="D1", room=room, info="info")
     seat2 = Seat(id="D2", room=room, info="info")
     user = User(username="name", sub="sub", email="email", fullname="Dudeman")
-    application = Application(
-        needs="needs",
-        user=user,
-        partnerUsername="hello",
-        comments="comments",
-        preferredRoom="D1",
-        seatRollover=True,
-        status=ApplicationStatus.SUBMITTED,
-        rank=Rank.WRITING_MASTER,
-    )
+    application = createApplication()
     db_session.add(seat)
     db_session.add(seat2)
     db_session.add(user)

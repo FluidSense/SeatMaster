@@ -48,3 +48,10 @@ def updateSeason(id):
         )
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+
+@applicationSeason.route("/all")
+def getAllSeasons():
+    seasons = applicationSeasonService.getAllSeasons()
+    seasons = list(map(lambda x: x.to_json(), seasons))
+    return jsonify(seasons) if seasons else Response("[]", 200)

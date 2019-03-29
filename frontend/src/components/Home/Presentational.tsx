@@ -18,7 +18,7 @@ interface IDispatchProps {
 
 interface IUserStates {
   oidc: UserState;
-  application: IApplication;
+  application?: IApplication;
   rooms: IRoom[];
 }
 
@@ -29,8 +29,10 @@ const _TITLE = 'My Status';
 export class Presentational extends React.Component<Props, {}> {
   public render() {
     const { application } = this.props;
-    if (application.status === FETCHING_APPLICATION_DATA) return <LoadingPageSpinner />;
-    if (application.status === APP_APPROVED) {
+    if (application && application.status === FETCHING_APPLICATION_DATA) {
+      return <LoadingPageSpinner />;
+    }
+    if (application && application.status === APP_APPROVED) {
       return (
         <div className="main-content">
           <Sidetittel>{_TITLE}</Sidetittel>
