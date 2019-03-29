@@ -29,14 +29,6 @@ export const ApplicationFormPersonal: React.FunctionComponent<IStateProps> = (pr
           value={props.email}
           disabled={true}
         />
-        <Input
-          className="input-masterStatus"
-          label="Master status (If incorrect, inform in comments field)"
-          bredde="L"
-          name="status"
-          value={props.status}
-          disabled={true}
-        />
       </SkjemaGruppe>
     </>
   );

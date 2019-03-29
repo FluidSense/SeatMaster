@@ -1,5 +1,5 @@
 import moment, { Moment } from 'moment';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Input } from 'nav-frontend-skjema';
 import React, { Component } from 'react';
@@ -39,9 +39,9 @@ class DateInputField extends Component<IProps, IState> {
           value={value.format(DATE_FORMAT_INPUT_FIELD)}
           bredde="XL"
         />
-        <Hovedknapp onClick={this.toggleModal} className="choose-date-button">
+        <Knapp onClick={this.toggleModal} className="choose-date-button">
           {_CHOOSE_DATE}
-        </Hovedknapp>
+        </Knapp>
         <Modal
           isOpen={showModal}
           onRequestClose={this.toggleModal}

@@ -1,6 +1,7 @@
 import KnappBase from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { boolToString } from '../../utils/typeFormatter';
 import { IApplication } from '../Application/index';
 import InfoPanel from './InfoPanel';
@@ -23,6 +24,7 @@ import {
 interface IProps {
   application: IApplication;
   title?: string;
+  pathToEdit?: string;
 }
 
 export interface IInformationObject {
@@ -50,7 +52,7 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   const userInfoObject: IUserInfoObject = {
     [_NAME]: application.user.fullname,
     [_EMAIL]: application.user.email,
-    [_MASTER_STATUS]: application.status,
+    [_MASTER_STATUS]: application.rank,
   };
   if (application.partnerApplication && application.partnerApplication.user) {
     partnerObject = application.partnerApplication.user !== undefined
@@ -66,13 +68,18 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   return (
     <div id="application-review">
       <Sidetittel>{title ? title : _REVIEW_APPLICATION}</Sidetittel>
+      <p style={{ fontStyle: 'italic' }} >
+      If any of the information is wrong, add a comment or edit the information.
+      </p>
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
         <InfoPanel title={_NEEDS} text={application.needs} />
         <InfoPanel title={_COMMENTS} text={application.comments} />
       </div>
-      <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
+      <Link to={props.pathToEdit ? props.pathToEdit : ''}>
+        <KnappBase id="edit-application" type="hoved">{_EDIT_APPLICATION}</KnappBase>
+      </Link>
     </div>
   );
 };

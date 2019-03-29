@@ -11,6 +11,7 @@ exports[`Application review presentational Renders correctly 1`] = `
       "seatRollover": true,
       "status": "APP_NOT_FOUND",
       "user": Object {
+        "admin": false,
         "email": "Test@testersen.com",
         "fullname": "Teser Testersen",
         "id": 2,
@@ -19,5 +20,6 @@ exports[`Application review presentational Renders correctly 1`] = `
       },
     }
   }
+  pathToEdit="/edit"
 />
 `;

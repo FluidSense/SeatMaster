@@ -20,7 +20,7 @@ export const ConfirmationModal: React.FunctionComponent<IProps> = (props) => {
       closeButton={true}
       contentLabel="Form submitted"
     >
-      <div style={{ padding: '2rem 2.5rem' }}>
+      <div style={{ padding: '2rem 2.5rem' }} className="modalContent">
         {_ALERT_USER_SUBMISSION}
         <br />
         <Link to="/">

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ApplicationSeasonContainer renders correctly 1`] = `
+exports[`ApplicationSeasonContainer matches snapshot 1`] = `
 <Connect(_Container)>
   <_Container
     applicationSeason={
@@ -28,11 +28,11 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
         id="season-info"
       >
         <EtikettBase
-          type="info"
+          type="fokus"
           typo="normaltekst"
         >
           <div
-            className="etikett etikett--info"
+            className="etikett etikett--fokus"
           >
             <TypografiBase
               tag="span"
@@ -47,11 +47,11 @@ exports[`ApplicationSeasonContainer renders correctly 1`] = `
           </div>
         </EtikettBase>
         <EtikettBase
-          type="info"
+          type="fokus"
           typo="normaltekst"
         >
           <div
-            className="etikett etikett--info"
+            className="etikett etikett--fokus"
           >
             <TypografiBase
               tag="span"

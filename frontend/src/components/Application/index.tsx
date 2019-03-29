@@ -6,12 +6,13 @@ import Presentational from './Presentational';
 
 export interface IPartnerApplication {
   comments?: string;
-  id?: number;
+  id: number;
   needs?: string;
   preferredRoom?: string;
   seatRollover?: boolean;
   status: string;
-  user?: IUser;
+  rank: string;
+  user: IUser;
 }
 
 export interface IApplication extends IPartnerApplication {

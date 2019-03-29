@@ -47,3 +47,8 @@ def deleteUser(id):
 def deleteAllUsers():
     rows = db.session.query(User).delete()
     return rows, 200
+
+
+def getAllUsers():
+    users = db.session.query(User).all()
+    return users

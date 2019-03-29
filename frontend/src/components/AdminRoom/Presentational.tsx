@@ -4,6 +4,9 @@ import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
+import Modal from '../Modal';
+import Seats from '../Seats';
+import { IRoom } from '../ViewRooms';
 import CSVButton from './CSVButton';
 import {
   _ALERT_CREATED_MESSAGE,
@@ -15,11 +18,12 @@ import {
   _INPUT_LABEL_NOTES,
   _TITLE_CREATE_NEW_ROOM,
   _TITLE_UPDATE_NEW_ROOM,
+  _USERS_OCCUPYING_ROOM,
+  _USERS_OCCUPYING_ROOM_CONFIRMATION,
 } from './strings';
 
 interface IProps {
-  roomName: string;
-  roomNotes: string;
+  room: IRoom;
   setNotes: (roomNotes: ChangeEvent<HTMLInputElement>) => void;
   setName: (roomName: ChangeEvent<HTMLInputElement>) => void;
   buttonDisabled: boolean;
@@ -28,14 +32,21 @@ interface IProps {
   showAlert: boolean;
   alertMessage?: string;
   roomExists: boolean;
-  room: any;
   fetchRoom: (roomId: number) => void;
+  modalOpen: boolean;
+  toggleModal: () => void;
 }
+
+const usersInRoom = (room: IRoom) => {
+  return room.seats.seats.map((seat) => {
+    const user = seat.user;
+    if (user) return <li>{user.fullname}</li>;
+  });
+};
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const {
-    roomName,
-    roomNotes,
+    room,
     roomExists,
     setNotes,
     setName,
@@ -44,10 +55,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     deleteRoom,
     showAlert,
     alertMessage,
-    room,
     fetchRoom,
+    modalOpen,
+    toggleModal,
   } = props;
-
+  const { name: roomName, info: roomNotes } = room;
+  const seats = room.seats.seats;
   const displayAlert =
     showAlert
       ? (
@@ -57,13 +70,21 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       : null;
   const titleText = roomExists ? _TITLE_UPDATE_NEW_ROOM : _TITLE_CREATE_NEW_ROOM;
   const buttonText = roomExists ? _BUTTON_UPDATE_ROOM : _BUTTON_CREATE_ROOM;
+  const users = seats.filter((seat) => { if (seat.user) return seat.user; });
+  const roomOccupied = users.length > 0 ? _USERS_OCCUPYING_ROOM : undefined;
   const deleteButton =
     roomExists
       ? (
-        <KnappBase id={'delete-room-button'} type="fare" onClick={deleteRoom}>
+        <KnappBase id={'delete-room-button'} type="fare" onClick={toggleModal}>
           {_BUTTON_DELETE_ROOM}
         </KnappBase>)
       : null;
+
+  const seatsElement =
+    roomExists
+      ? (<Seats seats={seats} roomId={room.id} />)
+      : null;
+
   // TextArea returns the wrong type, so its type has to be forced
   const assertEventType = (event: SyntheticEvent<EventTarget, Event>) => {
     const changeEvent = event as ChangeEvent<HTMLInputElement>;
@@ -90,7 +111,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         value={roomNotes}
         label={_INPUT_LABEL_NOTES}
       />
-      <div id="state-buttons">
+      {seatsElement}
+      <div className="title-and-button">
         <KnappBase
           id={'create-room-button'}
           type="hoved"
@@ -100,6 +122,16 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           {buttonText}
         </KnappBase>
         {deleteButton}
+        <Modal
+          modalOpen={modalOpen}
+          toggleModal={toggleModal}
+          accept={deleteRoom}
+          close={toggleModal}
+          text={roomOccupied}
+        >
+          <ul>{usersInRoom(room)}</ul>
+          <b>{_USERS_OCCUPYING_ROOM_CONFIRMATION}</b>
+        </Modal>
       </div>
     </div>
   );

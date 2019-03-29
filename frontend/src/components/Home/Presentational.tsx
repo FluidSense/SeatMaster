@@ -1,12 +1,14 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { UserState } from 'redux-oidc';
+import { FETCHING_APPLICATION_DATA } from '../AdminApplicationOverview/constants';
 import { IApplication } from '../Application';
 import ApplicationAccepted from '../ApplicationAccepted';
 import ApplicationReview from '../ApplicationReview';
 import ApplicationSeason from '../ApplicationSeason/index';
 import ApplicationStatus from '../ApplicationStatus/index';
 import { APP_APPROVED } from '../commonConstants';
+import LoadingPageSpinner from '../LoadingPageSpinner';
 import { IRoom } from '../ViewRooms';
 
 interface IDispatchProps {
@@ -16,7 +18,7 @@ interface IDispatchProps {
 
 interface IUserStates {
   oidc: UserState;
-  application: IApplication;
+  application?: IApplication;
   rooms: IRoom[];
 }
 
@@ -27,7 +29,10 @@ const _TITLE = 'My Status';
 export class Presentational extends React.Component<Props, {}> {
   public render() {
     const { application } = this.props;
-    if (application.status === APP_APPROVED) {
+    if (application && application.status === FETCHING_APPLICATION_DATA) {
+      return <LoadingPageSpinner />;
+    }
+    if (application && application.status === APP_APPROVED) {
       return (
         <div className="main-content">
           <Sidetittel>{_TITLE}</Sidetittel>

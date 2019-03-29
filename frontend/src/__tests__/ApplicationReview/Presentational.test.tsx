@@ -13,6 +13,7 @@ const applicationInfoMock: IApplication = {
   seatRollover: true,
   status: 'APP_NOT_FOUND',
   user: {
+    admin: false,
     email: 'Test@testersen.com',
     fullname: 'Teser Testersen',
     id: 2,
@@ -22,6 +23,7 @@ const applicationInfoMock: IApplication = {
 };
 
 const userInfoMock: IRegisteredUserState = {
+  admin: false,
   loading: false,
   registered: true,
 };

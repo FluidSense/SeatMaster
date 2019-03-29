@@ -17,12 +17,11 @@ import { ROUTE_TO } from './constants';
 import Presentational from './Presentational';
 
 interface IState {
-  roomName: string;
-  roomNotes: string;
-  room?: IRoom;
   buttonDisabled: boolean;
-  showAlert: boolean;
   redirect: boolean;
+  room: IRoom;
+  showAlert: boolean;
+  modalOpen: boolean;
 }
 
 interface IProps {
@@ -53,16 +52,23 @@ class _Container extends Component<Props, IState> {
     super(props);
     this.state = {
       buttonDisabled: true,
+      modalOpen: false,
       redirect: false,
-      room: undefined,
-      roomName: '',
-      roomNotes: '',
+      room: {
+        id: -1,
+        info: '',
+        name: '',
+        seats: {
+          count: 0,
+          seats: [],
+        },
+      },
       showAlert: false,
     };
   }
 
   public componentDidUpdate = (prevProps: Props, prevState: IState) => {
-    const { roomName, roomNotes, showAlert } = this.state;
+    const { room, showAlert } = this.state;
     const { submitted, reset } = this.props;
     // Display alertstripe
     if (submitted === false && prevProps.submitted === undefined) {
@@ -71,8 +77,8 @@ class _Container extends Component<Props, IState> {
     }
     if (showAlert) setTimeout(() => this.setState({ showAlert: false }), 5000);
     // Disable or enable create room button
-    if (prevState.roomName !== roomName || prevState.roomNotes !== roomNotes) {
-      if (roomName.trim() !== '' && roomNotes.trim() !== '') {
+    if (prevState.room.name !== room.name || prevState.room.info !== room.info) {
+      if (room.name.trim() !== '' && room.name.trim() !== '') {
         this.setState({ buttonDisabled: false });
       } else {
         this.setState({ buttonDisabled: true });
@@ -82,51 +88,70 @@ class _Container extends Component<Props, IState> {
 
   public componentDidMount = () => {
     const { room } = this.props.location;
-    if (room) this.setState({ room, roomName: room.name, roomNotes: room.info });
+    if (room) {
+      this.setState({
+        room,
+      });
+    }
   }
 
   public render() {
-    const { buttonDisabled, roomName, roomNotes, room, showAlert } = this.state;
+    const { buttonDisabled, room, showAlert, modalOpen } = this.state;
     const { submitted, reset, error, fetchRoomInfo } = this.props;
-    const onClick = room ? this.updateRoom : this.createRoom;
-    const roomExists = room ? true : false;
-    const roomId = room ? room.id : -1;
+    const roomExists = room.id !== -1;
+    const onClick = roomExists ? this.update : this.create;
+
     if (submitted) {
       reset();
       return <Redirect to={ROUTE_TO} />;
     }
     return (
       <Presentational
-        roomName={roomName}
-        roomNotes={roomNotes}
-        buttonDisabled={buttonDisabled}
-        setNotes={this.setNotes}
-        setName={this.setName}
-        onClick={onClick}
-        deleteRoom={this.delete}
-        showAlert={showAlert}
         alertMessage={error}
-        roomExists={roomExists}
-        room={room}
+        buttonDisabled={buttonDisabled}
+        deleteRoom={this.delete}
         fetchRoom={fetchRoomInfo}
+        onClick={onClick}
+        room={room}
+        roomExists={roomExists}
+        setName={this.setName}
+        setNotes={this.setNotes}
+        showAlert={showAlert}
+        toggleModal={this.toggleModal}
+        modalOpen={modalOpen}
       />
     );
   }
 
   private setNotes = (notesEvent: ChangeEvent<HTMLInputElement>) => {
     const roomNotes = notesEvent.target.value;
-    this.setState({ roomNotes });
-  }
-  private setName = (nameEvent: ChangeEvent<HTMLInputElement>) => {
-    const roomName = nameEvent.target.value;
-    this.setState({ roomName });
+    this.setState(prevState => ({
+      room: {
+        ...prevState.room,
+        info: roomNotes,
+      },
+    }));
   }
 
-  private createRoom = () => {
-    const { roomName, roomNotes } = this.state;
+  private setName = (nameEvent: ChangeEvent<HTMLInputElement>) => {
+    const roomName = nameEvent.target.value;
+    this.setState(prevState => ({
+      room: {
+        ...prevState.room,
+        name: roomName,
+      },
+    }));
+  }
+
+  private create = () => {
+    const { info: roomNotes, name: roomName } = this.state.room;
     const { createRoom } = this.props;
     const body = { info: roomNotes, name: roomName };
     createRoom(body);
+  }
+
+  private toggleModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
   }
 
   private delete = () => {
@@ -136,8 +161,9 @@ class _Container extends Component<Props, IState> {
     deleteRoom(room.id);
   }
 
-  private updateRoom = () => {
-    const { roomName, roomNotes, room } = this.state;
+  private update = () => {
+    const { room } = this.state;
+    const { info: roomNotes, name: roomName } = room;
     const { updateRoom } = this.props;
     if (!room) return null;
     const body = { info: roomNotes, name: roomName };
@@ -148,7 +174,7 @@ class _Container extends Component<Props, IState> {
 const mapStateToProps = (state: IStore) => ({
   error: state.adminRoom.error,
   room: state.adminRoom.room,
-  submitted: state.adminRoom.submitted,
+  submitted: state.adminRoom.success,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

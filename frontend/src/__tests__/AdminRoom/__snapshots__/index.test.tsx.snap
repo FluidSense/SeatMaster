@@ -1,15 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Admin room functions Renders correctly when room as prop 1`] = `
-<Provider
-  store={
+<ContextProvider
+  value={
     Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "storeState": Object {
+        "adminRoom": Object {
+          "error": undefined,
+          "submitted": undefined,
+        },
+        "rooms": Object {
+          "rooms": Array [],
+        },
+      },
     }
   }
 >
@@ -27,227 +38,8 @@ exports[`Admin room functions Renders correctly when room as prop 1`] = `
         },
       }
     }
-  >
-    <_Container
-      createRoom={[Function]}
-      deleteRoom={[Function]}
-      fetchRoomInfo={[Function]}
-      location={
-        Object {
-          "room": Object {
-            "id": 64,
-            "info": "wasd",
-            "name": "qwerty",
-            "seats": Object {
-              "count": 0,
-              "seats": Array [],
-            },
-          },
-        }
-      }
-      reset={[Function]}
-      updateRoom={[Function]}
-    >
-      <Presentational
-        buttonDisabled={false}
-        deleteRoom={[Function]}
-        fetchRoom={[Function]}
-        onClick={[Function]}
-        room={
-          Object {
-            "id": 64,
-            "info": "wasd",
-            "name": "qwerty",
-            "seats": Object {
-              "count": 0,
-              "seats": Array [],
-            },
-          }
-        }
-        roomExists={true}
-        roomName="qwerty"
-        roomNotes="wasd"
-        setName={[Function]}
-        setNotes={[Function]}
-        showAlert={false}
-      >
-        <div
-          className="main-content"
-        >
-          <div
-            className="title-and-button"
-          >
-            <Sidetittel>
-              <TypografiBase
-                type="sidetittel"
-              >
-                <h1
-                  className="typo-sidetittel"
-                >
-                  Update room
-                </h1>
-              </TypografiBase>
-            </Sidetittel>
-            <CSVButton
-              fetchRoomInfo={[Function]}
-              room={
-                Object {
-                  "id": 64,
-                  "info": "wasd",
-                  "name": "qwerty",
-                  "seats": Object {
-                    "count": 0,
-                    "seats": Array [],
-                  },
-                }
-              }
-            />
-          </div>
-          <Input
-            bredde="XL"
-            id="input-room-name"
-            label="Name"
-            onChange={[Function]}
-            value="qwerty"
-          >
-            <div
-              className="skjemaelement"
-            >
-              <label
-                className="skjemaelement__label"
-                htmlFor="input-room-name"
-              >
-                Name
-              </label>
-              <input
-                className="skjemaelement__input input--xl"
-                id="input-room-name"
-                onChange={[Function]}
-                type="text"
-                value="qwerty"
-              />
-              <SkjemaelementFeilmelding>
-                <div
-                  aria-live="assertive"
-                  role="alert"
-                />
-              </SkjemaelementFeilmelding>
-            </div>
-          </Input>
-          <Textarea
-            id="input-room-notes"
-            label="Notes"
-            maxLength={2000}
-            onChange={[Function]}
-            tellerTekst={[Function]}
-            textareaClass=""
-            value="wasd"
-          >
-            <div
-              className="skjemaelement textarea__container"
-            >
-              <label
-                className="skjemaelement__label"
-                htmlFor="input-room-notes"
-              >
-                Notes
-              </label>
-              <div
-                className="textarea--medMeta__wrapper"
-              >
-                <EventThrottler
-                  callback={[Function]}
-                  delay={100}
-                  event="resize"
-                >
-                  <textarea
-                    className="skjemaelement__input textarea--medMeta"
-                    id="input-room-notes"
-                    onChange={[Function]}
-                    style={
-                      Object {
-                        "height": "30px",
-                      }
-                    }
-                    type="text"
-                    value="wasd"
-                  />
-                </EventThrottler>
-                <p
-                  className="textarea--medMeta__teller"
-                >
-                  <span>
-                    Du har 
-                    1996
-                     tegn igjen
-                  </span>
-                </p>
-              </div>
-              <SkjemaelementFeilmelding>
-                <div
-                  aria-live="assertive"
-                  role="alert"
-                />
-              </SkjemaelementFeilmelding>
-              <div
-                aria-hidden="true"
-                className="textareamirror"
-              />
-            </div>
-          </Textarea>
-          <div
-            id="state-buttons"
-          >
-            <KnappBase
-              autoDisableVedSpinner={false}
-              className={null}
-              disabled={false}
-              htmlType="submit"
-              id="create-room-button"
-              inaktivKlasseVedDisabled={false}
-              mini={false}
-              onClick={[Function]}
-              spinner={false}
-              type="hoved"
-            >
-              <button
-                className="knapp knapp--hoved"
-                disabled={false}
-                id="create-room-button"
-                onClick={[Function]}
-                type="submit"
-              >
-                Update room
-              </button>
-            </KnappBase>
-            <KnappBase
-              autoDisableVedSpinner={false}
-              className={null}
-              disabled={false}
-              htmlType="submit"
-              id="delete-room-button"
-              inaktivKlasseVedDisabled={false}
-              mini={false}
-              onClick={[Function]}
-              spinner={false}
-              type="fare"
-            >
-              <button
-                className="knapp knapp--fare"
-                disabled={false}
-                id="delete-room-button"
-                onClick={[Function]}
-                type="submit"
-              >
-                Delete room
-              </button>
-            </KnappBase>
-          </div>
-        </div>
-      </Presentational>
-    </_Container>
-  </Connect(_Container)>
-</Provider>
+  />
+</ContextProvider>
 `;
 
 exports[`Admin room functions renders correctly without rooms 1`] = `
@@ -286,13 +78,24 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
         buttonDisabled={true}
         deleteRoom={[Function]}
         fetchRoom={[Function]}
+        modalOpen={false}
         onClick={[Function]}
+        room={
+          Object {
+            "id": -1,
+            "info": "",
+            "name": "",
+            "seats": Object {
+              "count": 0,
+              "seats": Array [],
+            },
+          }
+        }
         roomExists={false}
-        roomName=""
-        roomNotes=""
         setName={[Function]}
         setNotes={[Function]}
         showAlert={false}
+        toggleModal={[Function]}
       >
         <div
           className="main-content"
@@ -313,6 +116,17 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
             </Sidetittel>
             <CSVButton
               fetchRoomInfo={[Function]}
+              room={
+                Object {
+                  "id": -1,
+                  "info": "",
+                  "name": "",
+                  "seats": Object {
+                    "count": 0,
+                    "seats": Array [],
+                  },
+                }
+              }
             />
           </div>
           <Input
@@ -408,7 +222,7 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
             </div>
           </Textarea>
           <div
-            id="state-buttons"
+            className="title-and-button"
           >
             <KnappBase
               autoDisableVedSpinner={false}
@@ -432,6 +246,12 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
                 Create room
               </button>
             </KnappBase>
+            <CustomModal
+              accept={[Function]}
+              close={[Function]}
+              modalOpen={false}
+              toggleModal={[Function]}
+            />
           </div>
         </div>
       </Presentational>
