@@ -46,9 +46,9 @@ def assignSeat(seatId, userId):
         return "", 400
 
 
-def removeStudentFromSeat(roomId, seatId):
+def removeStudentFromSeat(seatId):
     try:
-        seat = getSeatById(roomId, seatId)
+        seat = getSeatById(seatId)
         seat.application = None
         db.session.add(seat)
         db.session.commit()
