@@ -24,17 +24,18 @@ import {
 } from './strings';
 
 export interface IState {
-  periodStart: Moment;
-  periodEnd: Moment;
-  roomStart: Moment;
-  roomEnd: Moment;
+  season: IApplicationSeason;
   showAlert: boolean;
-  [key: string]: Moment | boolean;
+}
+
+interface ILocationProps {
+  location: {
+    season?: IApplicationSeason;
+  };
 }
 
 export interface IStateProps {
   currentSeason?: IApplicationSeason;
-  id: number;
   submitted?: boolean;
 }
 
@@ -46,8 +47,8 @@ export interface IDispatchProps {
   reset: () => void;
 }
 
-type Props = IStateProps & IDispatchProps;
 type AlertStripeTypes = 'advarsel' | 'suksess' | 'info' | 'nav-ansatt' | 'stopp';
+type Props = IStateProps & IDispatchProps & ILocationProps;
 
 // Need to be in this order to match the proper fields
 const inputTextArray = [
@@ -79,16 +80,19 @@ class _CreateSeason extends Component<Props, IState> {
     const currentTime = setTime(moment());
     const nextMonth = setTime(moment().add(1, 'month'));
     this.state = {
-      periodEnd: nextMonth,
-      periodStart: currentTime,
-      roomEnd: nextMonth,
-      roomStart: currentTime,
+      season: {
+        applicationPeriodEnd: nextMonth,
+        applicationPeriodStart: currentTime,
+        end: nextMonth,
+        id: 0,
+        start: currentTime,
+      },
       showAlert: false,
     };
   }
 
   public componentDidMount = async () => {
-    this.props.fetchSeason();
+    // this.props.fetchSeason();
   }
 
   public componentWillUnmount = () => {
@@ -99,12 +103,7 @@ class _CreateSeason extends Component<Props, IState> {
     const { showAlert } = this.state;
     const { submitted, currentSeason, reset } = this.props;
     if (currentSeason && prevProps !== this.props) {
-      this.setState({
-        periodEnd: currentSeason.applicationPeriodEnd,
-        periodStart: currentSeason.applicationPeriodStart,
-        roomEnd: currentSeason.end,
-        roomStart: currentSeason.start,
-      });
+      this.setState({ season: currentSeason });
     }
     if (submitted === false && prevProps.submitted === undefined) {
       this.setState({ showAlert: true });
@@ -118,16 +117,17 @@ class _CreateSeason extends Component<Props, IState> {
   }
 
   public render() {
-    const { periodEnd, periodStart, roomEnd, roomStart, showAlert } = this.state;
-    const { submitted, currentSeason, id } = this.props;
+    const { submitted } = this.props;
     if (submitted) return (<Redirect to="/admin/applications" />);
+    const { season, showAlert } = this.state;
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
     const errorPeriodEndBeforeStart =
-      periodEnd <= periodStart
+      applicationPeriodEnd <= applicationPeriodStart
         ? errorObjectSeasonEndTooEarly
         : undefined;
 
     const errorApplicationEndBeforeStart =
-      roomEnd <= roomStart
+      end <= start
         ? errorObjectRoomEndTooEarly
         : undefined;
 
@@ -138,52 +138,53 @@ class _CreateSeason extends Component<Props, IState> {
     const alertFail = showAlert
       ? this.createAlert(_ERROR_MESSAGE, 'advarsel')
       : undefined;
+
+    const submitSeason = season.id ? this.updateApplicationSeason : this.submitApplicationSeason;
     return (
       <Presentational
         buttonDisable={buttonDisable}
         alertApplicationEndBeforeStart={errorApplicationEndBeforeStart}
         alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
         createFields={this.createFields}
-        postApplicationSeason={this.submitApplicationSeason}
-        updateApplicationSeason={this.updateApplicationSeason}
+        submitSeason={submitSeason}
         alert={alertFail}
-        season={currentSeason}
-        id={id}
+        season={season}
       />
     );
   }
 
   private updateApplicationSeason = () => {
-    const { periodEnd, periodStart, roomEnd, roomStart } = this.state;
-    const { id } = this.props;
+    const { season } = this.state;
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
     const body = {
-      newPeriodEnd: periodEnd.format(format),
-      newPeriodStart: periodStart.format(format),
-      newRoomEnd: roomEnd.format(format),
-      newRoomStart: roomStart.format(format),
+      newPeriodEnd: applicationPeriodEnd.format(format),
+      newPeriodStart: applicationPeriodStart.format(format),
+      newRoomEnd: end.format(format),
+      newRoomStart: start.format(format),
     };
-    this.props.updateSeason(body, id);
+    this.props.updateSeason(body, season.id);
   }
 
   private submitApplicationSeason = () => {
-    const { periodEnd, periodStart, roomEnd, roomStart } = this.state;
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = this.state.season;
     const body = {
-      newPeriodEnd: periodEnd.format(format),
-      newPeriodStart: periodStart.format(format),
-      newRoomEnd: roomEnd.format(format),
-      newRoomStart: roomStart.format(format),
+      newPeriodEnd: applicationPeriodEnd.format(format),
+      newPeriodStart: applicationPeriodStart.format(format),
+      newRoomEnd: end.format(format),
+      newRoomStart: start.format(format),
     };
     this.props.submitNewSeason(body);
   }
 
   private createDateInputField = (label: string, key: string, value: Moment) => {
+    const doNothing = () => null;
     return (
       <DateInputField
         key={label}
         label={label}
         value={value}
         objectKey={key}
-        setDate={this.setDate}
+        setDate={doNothing}
       />
     );
   }
@@ -191,11 +192,15 @@ class _CreateSeason extends Component<Props, IState> {
   private createAlert = (text: string, type: AlertStripeTypes) =>
     <AlertStripe type={type} solid={true}> {text} </AlertStripe>
 
-  private createFields = (index: number, end: number) => {
-    const { periodStart, periodEnd, roomStart, roomEnd } = this.state;
-    const stateEntries = Object.entries({ periodStart, periodEnd, roomStart, roomEnd });
+  private createFields = (index: number, indexEnd: number) => {
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = this.state.season;
+    const stateEntries = Object.entries({
+      applicationPeriodEnd,
+      applicationPeriodStart,
+      end,
+      start });
     const fields = [];
-    for (let i = index; i < end; i += 1) {
+    for (let i = index; i < indexEnd; i += 1) {
       fields.push(this.createDateInputField(
         inputTextArray[i],
         stateEntries[i][0],
@@ -204,13 +209,10 @@ class _CreateSeason extends Component<Props, IState> {
     }
     return fields;
   }
-
-  private setDate = (key: string, time: Moment) => this.setState({ [key]: time });
 }
 
 const mapStateToProps = (state: IStore) => ({
   currentSeason: state.applicationSeason.currentSeason,
-  id: state.applicationSeason.id,
   submitted: state.applicationSeason.submitted,
 });
 

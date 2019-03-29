@@ -11,6 +11,7 @@ import {
 export interface IApplicationSeason {
   applicationPeriodEnd: Moment;
   applicationPeriodStart: Moment;
+  id: number;
   start: Moment;
   end: Moment;
 }
@@ -18,12 +19,10 @@ export interface IApplicationSeason {
 export interface IApplicationSeasonState {
   currentSeason?: IApplicationSeason;
   submitted?: boolean;
-  id: number;
 }
 
 export const initialState = {
   currentSeason: undefined,
-  id: 0,
 };
 
 export const applicationSeasonReducer = (
@@ -39,9 +38,9 @@ export const applicationSeasonReducer = (
           applicationPeriodEnd: moment(payload.applicationPeriodEnd),
           applicationPeriodStart: moment(payload.applicationPeriodStart),
           end: moment(payload.end),
+          id: payload.id,
           start: moment(payload.start),
         },
-        id: payload.id,
       };
     case SUBMITTED_APPLICATION_SEASON:
       return {
@@ -50,9 +49,9 @@ export const applicationSeasonReducer = (
           applicationPeriodEnd: moment(payload.applicationPeriodEnd),
           applicationPeriodStart: moment(payload.applicationPeriodStart),
           end: moment(payload.end),
+          id: payload.id,
           start: moment(payload.start),
         },
-        id: payload.id,
         submitted: true,
       };
     case SUBMITTED_APPLICATION_SEASON_FAILED:

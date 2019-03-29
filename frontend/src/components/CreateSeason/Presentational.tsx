@@ -17,11 +17,9 @@ interface IProps {
   alertApplicationEndBeforeStart?: SkjemaelementFeil;
   createFields: (index: number, end: number) => JSX.Element[];
   buttonDisable: boolean;
-  postApplicationSeason: () => void;
   alert?: JSX.Element;
-  season?: IApplicationSeason;
-  id: number;
-  updateApplicationSeason: () => void;
+  season: IApplicationSeason;
+  submitSeason: () => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
@@ -30,31 +28,35 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     alertPeriodEndBeforeStart,
     createFields,
     buttonDisable,
-    postApplicationSeason,
+    submitSeason,
     alert,
     season,
-    id,
-    updateApplicationSeason,
   } = props;
-  const updateSeasonButton = id > 0 ? (
+
+  const createButton = (text: string) => (
     <KnappBase
-      onClick={updateApplicationSeason}
+      onClick={submitSeason}
       disabled={buttonDisable}
       type="hoved"
-      id="update-season-btn"
+      id="new-season-btn"
     >
-      {_UPDATE_CURRENT_SEASON}
+      {text}
     </KnappBase>
-    ) : null;
-  const seasonEtikett = season ? (
+  );
+
+  const button = season.id > 0
+    ? createButton(_UPDATE_CURRENT_SEASON)
+    : createButton(_CREATE_NEW_SEASON);
+
+  /*const seasonEtikett = season ? (
     <EtikettBase className="season-etikett" type="fokus">
       {_EXISTING_CURRENT_SEASON}
     </EtikettBase>
-    ) : null;
+    ) : null;*/
   return (
     <div id="new-application-season" className="main-content">
       <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>
-      {seasonEtikett}
+      {/*seasonEtikett*/}
       <div id="admin-season-alert">{alert}</div>
       <div id="appSeason">
         <SkjemaGruppe className="app-class" feil={alertPeriodEndBeforeStart}>
@@ -66,15 +68,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           {createFields(2, 4)}
         </SkjemaGruppe>
       </div>
-      <KnappBase
-        type="hoved"
-        disabled={buttonDisable}
-        onClick={postApplicationSeason}
-        id={'new-season-btn'}
-      >
-        {_CREATE_NEW_SEASON}
-      </KnappBase>
-      {updateSeasonButton}
+      {button}
     </div>
   );
 };
