@@ -33,6 +33,18 @@ def deleteSeat(id):
         return "", 400
 
 
+def renameSeat(id, newName):
+    try:
+        seat = getSeatById(id)
+        seat.seat_name = newName
+        db.session.add(seat)
+        db.session.commit()
+        return seat.to_json(), 200
+    except SQLAlchemyError as err:
+        print(err, flush=True)
+        return "", 400
+
+
 def assignSeat(seatId, userId):
     try:
         seat = getSeatById(seatId)

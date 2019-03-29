@@ -168,6 +168,32 @@ class TestSeat(TestCase):
         assert seat.application is None
         assert application.seat is None
 
+    @mock_authentication_context
+    def test_rename_seat(self):
+        room, seat = createSeatAndRoom()
+        oldName = seat.seat_name
+        newName = "New Name"
+        seatId = seat.id
+
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype,
+            'AccessToken': self.accessToken,
+        }
+        data = dict(
+            newName=newName,
+        )
+        response = self.app.test_client().put(
+            "http://localhost:5000/seat/" + str(seatId),
+            headers=headers,
+            data=json.dumps(data))
+        assert "200 OK" == response.status
+        assert jsonify(seat.to_json()).data == response.data
+        print(response.data, flush=True)
+        assert seat.seat_name == newName
+        assert seat.seat_name != oldName
+
     def tearDown(self):
         self.postgres.stop()
         self.ctx.pop()

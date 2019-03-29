@@ -31,6 +31,19 @@ def createSeat():
     return abort(400)
 
 
+@seat.route("/<id>", methods=["PUT"])
+@requiresAdmin
+def renameSeat(id):
+    if request.is_json:
+        form = request.get_json()
+        print('alskjdlaksjdlkjs', flush=True)
+        print(form, flush=True)
+        newName = form.get("newName")
+        responseText, statusCode = seatService.renameSeat(id, newName)
+        return make_response(jsonify(responseText), statusCode)
+    return abort(400)
+
+
 @seat.route("/assignSeat", methods=["PUT"])
 @requiresAdmin
 def assignSeat():

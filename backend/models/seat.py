@@ -19,7 +19,7 @@ class Seat(db.Model):
 
     seat_name = db.Column(
         "seat_name",
-        db.String(2),
+        db.String(10),
         unique=False)
 
     room = db.relationship(
