@@ -14,8 +14,9 @@ test('reducers', () => {
           start: moment('2019-03-13T10:28:33.505Z'),
         },
       }, applications: {
+        api: undefined,
         applications: [],
-        registeredApplication: { status: 'NOT_FOUND' },
+        registeredApplication: undefined,
       }, assignSeat: {
         seat: undefined,
       }, oidc: {
@@ -66,7 +67,10 @@ test('reducers', () => {
           search: '',
           state: 'any',
         },
+      }, seats: {
+        seat: undefined,
       }, userInformation: {
+        admin: false,
         email: 'paaledwl@stud.ntnu.no',
         id: 1,
         loading: false,
@@ -96,9 +100,7 @@ test('reducers', () => {
       api: {
         status: 0,
       },
-      application: {
-        status: 'NOT_FOUND',
-      },
+      application: undefined,
     },
     adminRoom: {},
     applicationSeason: {
@@ -170,12 +172,13 @@ test('reducers', () => {
         state: 'any',
       },
     },
-    seats: { success: undefined },
+    seats: { seat: undefined },
     students: {
       fetching: 'FETCHING_STUDENTS',
       users: [],
     },
     userInformation: {
+      admin: false,
       email: 'paaledwl@stud.ntnu.no',
       id: 1,
       loading: false,

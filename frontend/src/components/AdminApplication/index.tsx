@@ -19,7 +19,7 @@ export interface IAdminApplication extends IApplication {
 }
 
 interface IStateToProps {
-  fetchedApplication: IApplication;
+  fetchedApplication?: IApplication;
   rooms: IRoom[];
   status: number;
 }
@@ -90,6 +90,7 @@ class AdminApplication extends Component<Props, IState> {
     const { fetchedApplication } = this.props;
     const { fetched, rooms } = this.state;
     if (prevState.fetched !== fetched
+      && fetchedApplication
       && fetchedApplication.status !== APP_NOT_FOUND) {
       this.setState({ application: fetchedApplication });
     }
