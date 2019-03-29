@@ -1,7 +1,8 @@
 import { Sidetittel } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { IApplication } from '../Application';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import SearchBar, { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import ApplicationLink from './ApplicationLink';
 import ApproveSeated from './ApproveSeated';
@@ -13,25 +14,30 @@ interface IProps {
   rooms: IRoom[];
   fetching: string;
   approve: (ids: number[]) => void;
+  filterFunction: (event: searchBarEvent) => void;
 }
-
 const title = <Sidetittel>{_APPLICATIONS_TITLE}</Sidetittel>;
-const emptyPage = <div className="main-content">{title}</div>;
+const emptyPage = (filterFunction: (event: searchBarEvent) => void) => (
+  <div className="main-content">
+    {title}
+    <SearchBar filterFunction={filterFunction}/>
+</div>);
 const emptyPageWithLoader = (<TitleAndSpinner title={_APPLICATIONS_TITLE}/>);
 
-const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { applications, rooms, fetching, approve } = props;
+const Presentational: FunctionComponent<IProps> = (props) => {
+  const { applications, rooms, fetching, filterFunction, approve } = props;
   if (fetching === FETCHING_APPLICATION_DATA) return emptyPageWithLoader;
-  if (!applications || !applications.length) return emptyPage;
+  if (!applications || !applications.length) return emptyPage(filterFunction);
   const applicationList = applications.map(application => (
     <ApplicationLink key={application.id} application={application} rooms={rooms} />
-  ));
+    ));
   return (
     <div className="main-content">
       <Sidetittel>
         {_APPLICATIONS_TITLE}
       </Sidetittel>
       <ApproveSeated approve={approve} applications={applications}/>
+      <SearchBar filterFunction={filterFunction}/>
       {applicationList}
     </div>
   );

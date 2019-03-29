@@ -62,13 +62,15 @@ const roomsWithRemovedFromOldSeat = (rooms: IRoom[], user: IUser) => {
     return iterseat.user && user ? iterseat.user.id === user.id : false;
   });
   if (oldSeat) {
-    oldSeat.user = undefined;
+    const mutableSeat = { ...oldSeat };
+    mutableSeat.user = undefined;
     const oldRoom = rooms.find(iterroom => iterroom.id === oldSeat.roomId);
     if (oldRoom) {
-      oldRoom.seats.seats = oldRoom.seats.seats.map((iterseat) => {
-        return iterseat.id === oldSeat.id ? oldSeat : iterseat;
+      const mutable = { ...oldRoom };
+      mutable.seats.seats = mutable.seats.seats.map((iterseat) => {
+        return iterseat.id === mutableSeat.id ? mutableSeat : iterseat;
       });
-      const updatedRooms = rooms.map(iterroom => iterroom.id === oldRoom.id ? oldRoom : iterroom);
+      const updatedRooms = rooms.map(iterroom => iterroom.id === mutable.id ? mutable : iterroom);
       return updatedRooms;
     }
     return rooms;
