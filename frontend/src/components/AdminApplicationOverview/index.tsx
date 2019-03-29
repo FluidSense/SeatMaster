@@ -6,7 +6,7 @@ import { IStore } from '../../store';
 import { IApplication } from '../Application';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import { fetchAllApplications } from './actions';
+import { approveAllApplications, fetchAllApplications } from './actions';
 import Presentational from './Presentational';
 
 interface IStateProps {
@@ -18,6 +18,7 @@ interface IStateProps {
 interface IDispatchProps {
   getAllApplications: () => ThunkAction<void, {}, {}, AnyAction>;
   getRooms: () => ThunkAction<void, {}, {}, AnyAction>;
+  approve: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -35,6 +36,7 @@ class _Container extends React.Component<Props> {
         applications={this.props.applications}
         rooms={this.props.rooms}
         fetching={this.props.fetching}
+        approve={this.props.approve}
       />);
   }
 }
@@ -46,6 +48,7 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  approve: (ids: number[]) => dispatch(approveAllApplications(ids)),
   getAllApplications: () => dispatch(fetchAllApplications()),
   getRooms: () => dispatch(fetchAllRooms()),
 });

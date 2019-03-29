@@ -7,6 +7,7 @@ import {
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
 import {
+  APPROVE_ALL_APPLICATIONS,
   FETCHED_APPLICATION_DATA,
   FETCHING_APPLICATION_DATA,
   GET_ALL_APPLICATIONS,
@@ -94,6 +95,15 @@ export const ApplicationReducer = (
           ...state.api,
           status: 0,
         },
+      };
+    }
+    case APPROVE_ALL_APPLICATIONS: {
+      const updatedApps = action.payload;
+      return {
+        ...state,
+        applications: state.applications.map((app: IApplication) => {
+          return updatedApps.find((newApp: IApplication) => app.id === newApp.id) || app;
+        }),
       };
     }
     default:
