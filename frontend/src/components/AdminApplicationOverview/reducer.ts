@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import { IUser } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import { APP_NOT_FOUND } from '../commonConstants';
 import {
@@ -13,7 +14,6 @@ import {
   REMOVE_APPLICATION_DATA,
   SET_APPLICATION_DATA,
 } from './constants';
-import { IUser } from '../../API/interfaces';
 
 export interface IApplicationState {
   applications: IApplication[];
