@@ -1,28 +1,70 @@
 import KnappBase, { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { IApplication } from '../Application';
+import Modal from '../Modal';
+import { _APPROVE_STUDENTS_WARNING } from './constants';
 
 interface IProps {
   applications: IApplication[];
   approve: (numbers: number[]) => void;
 }
 
-const ApproveSeated: React.FunctionComponent<IProps> = (props) => {
-  const { applications, approve } = props;
+interface IState {
+  modalOpen: boolean;
+}
 
-  const approveAllStudents = () => {
-    const approved = applications.filter(app => app.seat ? true : false);
+export class ApproveSeated extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      modalOpen: false,
+    };
+  }
+
+  public approveAllStudents = () => {
+    const approved = this.props.applications.filter(app => app.seat ? true : false);
     const ids = approved.map(app => app.id);
-    approve(ids);
-  };
+    this.props.approve(ids);
+  }
 
-  return (
-    <div>
-      <KnappBase type="hoved" onClick={approveAllStudents}>
-        Approve Applications
-      </KnappBase>
-    </div>
-  );
-};
+  public render() {
+    const approvingStudents = this.props.applications.map((app, i) =>
+    <li key={i}>{app.user.username}</li>);
+    const modalText = (
+      <>
+        <p>{_APPROVE_STUDENTS_WARNING}</p>
+        <ul>
+          <li>{approvingStudents}</li>
+        </ul>
+      </>
+    );
+
+    return (
+      <div>
+        <KnappBase
+          type="hoved"
+          htmlType="submit"
+          onClick={this.toggleModal}
+        >
+          Approve Applications
+        </KnappBase>
+        <Modal
+          modalOpen={this.state.modalOpen}
+          toggleModal={this.toggleModal}
+          accept={this.approveAllStudents}
+          close={this.toggleModal}
+        >
+          {modalText}
+        </Modal>
+
+      </div>
+    );
+  }
+
+  private toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({ modalOpen: !modalOpen });
+  }
+}
 
 export default ApproveSeated;
