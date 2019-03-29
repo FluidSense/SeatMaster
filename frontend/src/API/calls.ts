@@ -78,7 +78,7 @@ export const putApplicationForm = (data: IPostApplicationForm):
 };
 
 export const postAdminApplicationApproveList = (ids: number[]):
-  PromiseLike<IApplication> => {
+  PromiseLike<IApplication[]> => {
   return elevatedPutJson(POST_APPLICATION_APPROVE_LIST, ids);
 };
 
