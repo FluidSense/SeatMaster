@@ -17,6 +17,7 @@ const ApplicationSeatDisplay: React.FunctionComponent<IProps> = (props) => {
   const onClick = () => removeFromSeat(room.id, seat.id);
   return (
     <div className="application-room">
+    <Innholdstittel>{_CURRENT_SEAT}</Innholdstittel>
       <Input
         label={'Room'}
         disabled={true}

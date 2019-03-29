@@ -13,3 +13,4 @@ export const _REMOVE_STUDENT_FROM_SEAT = 'Remove student from seat';
 export const _REMOVE_FROM_SEAT = 'Remove from seat';
 export const _APPROVE_APP = 'Approve application';
 export const _REVOKE_APP = 'Revoke approval';
+export const _CURRENT_SEAT = 'Current seat';

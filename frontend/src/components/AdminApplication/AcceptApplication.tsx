@@ -20,7 +20,7 @@ const AcceptApplication: React.FunctionComponent<IProps> = (props) => {
       props.updateApplication(application.id, updated);
     };
     return (
-      <KnappBase type="hoved">
+      <KnappBase id="revoke-approve-btn" type="hoved" onClick={approve}>
         {_APPROVE_APP}
       </KnappBase>
     );
@@ -33,7 +33,7 @@ const AcceptApplication: React.FunctionComponent<IProps> = (props) => {
       props.updateApplication(application.id, updated);
     };
     return (
-      <KnappBase type="fare">
+      <KnappBase id="revoke-approve-btn" type="fare" onClick={revoke}>
         {_REVOKE_APP}
       </KnappBase>
     );
