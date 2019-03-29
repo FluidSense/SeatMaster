@@ -111,7 +111,7 @@ def approveApplicationsByIdList():
 
 
 def filterOnStatus(applicationJson):
-    if not applicationJson["status"] is ApplicationStatus.APPROVED:
+    if not applicationJson["status"] == ApplicationStatus.APPROVED.name:
         del applicationJson["seat"]
         return applicationJson
     return applicationJson
