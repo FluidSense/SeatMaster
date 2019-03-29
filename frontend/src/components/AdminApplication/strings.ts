@@ -11,3 +11,5 @@ export const _CHANGE_STUDENT_WARNING = 'A student already has a seat here. '
   + 'Do you want to change their allocation?';
 export const _REMOVE_STUDENT_FROM_SEAT = 'Remove student from seat';
 export const _REMOVE_FROM_SEAT = 'Remove from seat';
+export const _APPROVE_APP = 'Approve application';
+export const _REVOKE_APP = 'Revoke approval';
