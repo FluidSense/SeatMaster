@@ -1,6 +1,5 @@
 import { AnyAction } from 'redux';
 import { IApplication } from '../Application';
-import { APP_NOT_FOUND } from '../commonConstants';
 import {
   FETCH_APPLICATION_DIRECTLY,
   FETCH_APPLICATION_DIRECTLY_FAILED,
@@ -8,7 +7,7 @@ import {
 } from './constants';
 
 export interface IAdminReviewApplicationState {
-  application: IApplication;
+  application?: IApplication;
   api: {
     status: number,
   };
@@ -18,7 +17,7 @@ const initialState: IAdminReviewApplicationState = {
   api: {
     status: 0,
   },
-  application: { status: APP_NOT_FOUND },
+  application: undefined,
 };
 
 export const AdminReviewApplicationReducer = (
