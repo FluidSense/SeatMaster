@@ -7,7 +7,7 @@ interface IProps {
   approve: (numbers: number[]) => void;
 }
 
-const Approval: React.FunctionComponent<IProps> = (props) => {
+const ApproveSeated: React.FunctionComponent<IProps> = (props) => {
   const { applications, approve } = props;
 
   const approveAllStudents = () => {
@@ -18,9 +18,11 @@ const Approval: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <div>
-      <KnappBase type="flat" onClick={approveAllStudents}/>
+      <KnappBase type="hoved" onClick={approveAllStudents}>
+        Approve Applications
+      </KnappBase>
     </div>
   );
 };
 
-export default Approval;
+export default ApproveSeated;
