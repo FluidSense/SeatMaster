@@ -2,13 +2,13 @@ import React from 'react';
 import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
 import AssignSeat from '../AssignSeat';
-import { IRoom, ISeat } from '../ViewRooms';
+import { IRoom } from '../ViewRooms';
+import AcceptApplication from './AcceptApplication';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
-import { IAdminApplication } from './index';
 
 interface IProps {
   rooms: IRoom[];
-  application: IAdminApplication;
+  application: IApplication;
   removeStudentFromSeat: (roomId: number, seatId: string) => void;
 }
 
@@ -24,6 +24,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       <ApplicationOverview
         application={application}
         title={application.user ? application.user.fullname : ''}
+        pathToEdit={`/admin/applications/${application.id}/edit`}
       />
       <ApplicationSeatDisplay
         seat={application.seat}
@@ -31,6 +32,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         removeFromSeat={removeStudentFromSeat}
       />
       <AssignSeat rooms={rooms} application={application} />
+      <AcceptApplication application={application}/>
     </div>
   );
 };

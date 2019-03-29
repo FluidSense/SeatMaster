@@ -13,6 +13,7 @@ import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import { fetchApplicationDirectly, resetPageStatus } from './actions';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
+import Presentational from './Presentational';
 
 export interface IAdminApplication extends IApplication {
   seat?: ISeat;
@@ -31,7 +32,7 @@ interface IStateProps {
 
 interface ILinkProps {
   location: {
-    application?: IAdminApplication;
+    application?: IApplication;
     rooms?: IRoom[];
   };
   match: {
@@ -104,23 +105,12 @@ class AdminApplication extends Component<Props, IState> {
     const { application, rooms } = this.state;
     if (status === 404) return <Page404 />;
     if (!(application && rooms) || !rooms.length) return <LoadingPageSpinner />;
-    const givenSeat = application.seat;
-    const givenRoomId = givenSeat ? givenSeat.roomId : 0;
-    const selectedRooms = rooms.filter(obj => obj.id === givenRoomId);
     return (
-      <div className="main-content">
-        <ApplicationOverview
-          application={application}
-          title={application.user ? application.user.fullname : ''}
-          pathToEdit={`/admin/applications/${application.id}/edit`}
-        />
-        <ApplicationSeatDisplay
-          seat={application.seat}
-          room={selectedRooms[0]}
-          removeFromSeat={removeStudentFromSeat}
-        />
-        <AssignSeat rooms={rooms} application={application} />
-      </div>
+       <Presentational
+        application={application}
+        rooms={rooms}
+        removeStudentFromSeat={removeStudentFromSeat}
+       />
     );
   }
 }
