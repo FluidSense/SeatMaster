@@ -30,12 +30,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         pathToEdit={`/admin/applications/${application.id}/edit`}
       />
       <div className="edit-lower-row">
-      <AssignSeat rooms={rooms} application={application} />
-      <ApplicationSeatDisplay
-        seat={application.seat}
-        room={selectedRooms[0]}
-        removeFromSeat={removeStudentFromSeat}
-      />
+        <AssignSeat rooms={rooms} application={application} />
+        <ApplicationSeatDisplay
+          seat={application.seat}
+          room={selectedRooms[0]}
+          removeFromSeat={removeStudentFromSeat}
+        />
       </div>
       <div className="center-div">
         <AcceptApplication application={application} updateApplication={updateApplication}/>
