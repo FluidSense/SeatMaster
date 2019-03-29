@@ -15,7 +15,6 @@ interface IStateProps {
 class _Container extends React.Component<IStateProps> {
   public render = () => {
     const { application, userInfo } = this.props;
-    if (!application) return null;
     return (
       <Presentational application={application} userInfo={userInfo} />
     );

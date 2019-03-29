@@ -1,7 +1,6 @@
 import { AnyAction } from 'redux';
 import { IUser } from '../../API/interfaces';
 import { IApplication } from '../Application';
-import { APP_NOT_FOUND } from '../commonConstants';
 import {
   RESET_APPLICATION_STATUS,
   SUCCESSFULL_APPLICATION_UPDATE,
@@ -67,7 +66,7 @@ export const ApplicationReducer = (
     case REMOVE_APPLICATION_DATA: {
       return {
         ...state,
-        registeredApplication: { status: APP_NOT_FOUND },
+        registeredApplication: undefined,
       };
     }
     case SUCCESSFULL_APPLICATION_UPDATE: {
