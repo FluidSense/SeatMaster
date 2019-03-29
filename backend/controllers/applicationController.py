@@ -99,7 +99,7 @@ def updateApplicationByApplicationId(id):
 
 
 @application.route("/approveList", methods=["POST"])
-# TODO: Add admin required after testing success
+@requiresAdmin
 def approveApplicationsByIdList():
     if request.is_json:
         form = request.get_json()
