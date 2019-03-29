@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 879dd56cf0a9
+Revision ID: 91d6388a4976
 Revises: 
-Create Date: 2019-03-25 15:29:14.584280
+Create Date: 2019-03-29 09:02:33.336956
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '879dd56cf0a9'
+revision = '91d6388a4976'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,12 +43,13 @@ def upgrade():
     sa.UniqueConstraint('username')
     )
     op.create_table('seats',
+    sa.Column('seat_id', sa.Integer(), nullable=False),
     sa.Column('room_id', sa.Integer(), nullable=False),
-    sa.Column('seat_id', sa.String(length=2), nullable=False),
+    sa.Column('seat_name', sa.String(length=2), nullable=True),
     sa.Column('info', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.room_id'], ),
-    sa.PrimaryKeyConstraint('room_id', 'seat_id'),
-    sa.UniqueConstraint('room_id', 'seat_id')
+    sa.PrimaryKeyConstraint('seat_id'),
+    sa.UniqueConstraint('room_id', 'seat_name')
     )
     op.create_table('application',
     sa.Column('application_id', sa.Integer(), nullable=False),
@@ -61,10 +62,9 @@ def upgrade():
     sa.Column('partnerApplicationId', sa.Integer(), nullable=True),
     sa.Column('preferredRoom', sa.String(length=50), nullable=True),
     sa.Column('seatRollover', sa.Boolean(), nullable=True),
-    sa.Column('room_id', sa.Integer(), nullable=True),
-    sa.Column('seat_id', sa.String(), nullable=True),
+    sa.Column('seat_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['partnerApplicationId'], ['application.application_id'], ),
-    sa.ForeignKeyConstraint(['room_id', 'seat_id'], ['seats.room_id', 'seats.seat_id'], ),
+    sa.ForeignKeyConstraint(['seat_id'], ['seats.seat_id'], ),
     sa.ForeignKeyConstraint(['userid'], ['users.userid'], ),
     sa.PrimaryKeyConstraint('application_id')
     )
