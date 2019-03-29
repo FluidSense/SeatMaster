@@ -8,7 +8,7 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
-from __tests__.testUtils.models import createBasicSeason
+from __tests__.testUtils.models import createBasicSeason, createApplication
 from controllers.applicationController import filterOnStatus
 from utils.enums import ApplicationStatus
 
@@ -247,6 +247,68 @@ class TestApplication(TestCase):
         allApplications = self.app.test_client().get('http://localhost:5000/application/all', headers=headers)
         assert allApplications.status == "200 OK"
         assert allApplications.data == jsonify([testApplication1.to_json(), testApplication2.to_json()]).data
+
+    @mock_authentication_context
+    def test_approve_application_list(self):
+        season = createBasicSeason(db.session)
+        headers = {
+            'Authorization': self.token,
+            'AccessToken': self.accessToken,
+            'Content-type': 'application/json'
+        }
+        testuser1 = User(username="Frank", sub="sub", email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="uuid", email="email", fullname="Schmemail")
+        testuser3 = User(username="Tele", sub="ubuid", email="email", fullname="bruh")
+        db.session.add(testuser1)
+        db.session.add(testuser2)
+        db.session.add(testuser3)
+        db.session.commit()
+        testApplication1 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser1,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=season,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication2 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser2,
+            partnerUsername="Monster",
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=season,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication3 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than Cola",
+            user=testuser3,
+            partnerUsername="",
+            preferredRoom="d2",
+            seatRollover=False,
+            applicationSeason=season,
+            comments="Not Cola, but Fanta Free")
+        db.session.add(testApplication1)
+        db.session.add(testApplication2)
+        db.session.add(testApplication3)
+        db.session.commit()
+        # Dump to create new objects which are not changed by the post 
+        app1 = json.dumps(testApplication1.to_json())
+        app2 = json.dumps(testApplication2.to_json())
+        jsondata = json.dumps(dict(ids=[1,2]))
+        approvedApplications = self.app.test_client().post('http://localhost:5000/application/approveList', 
+            headers=headers,
+            data=jsondata,
+        )
+        app1 = json.loads(app1)
+        app2 = json.loads(app2)
+        app1["status"] = "APPROVED"
+        app2["status"] = "APPROVED"
+        assert approvedApplications.status == "200 OK"
+        assert json.loads(approvedApplications.data) == json.loads(jsonify([app1,app2]).data)
+
 
     def tearDown(self):
         self.postgres.stop()
