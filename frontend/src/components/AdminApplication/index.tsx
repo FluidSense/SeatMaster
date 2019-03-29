@@ -14,6 +14,8 @@ import { fetchAllRooms } from '../ViewRooms/actions';
 import { fetchApplicationDirectly, resetPageStatus } from './actions';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 import Presentational from './Presentational';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
+import { updateSingleApplication } from '../EditApplication/actions';
 
 export interface IAdminApplication extends IApplication {
   seat?: ISeat;
@@ -47,6 +49,7 @@ interface IDispatchProps {
   fetchApplication: (id: number) => void;
   fetchRooms: () => void;
   resetStatus: () => void;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
 interface IState {
@@ -101,7 +104,7 @@ class AdminApplication extends Component<Props, IState> {
   public componentWillUnmount = () => this.props.resetStatus();
 
   public render() {
-    const { removeStudentFromSeat, status } = this.props;
+    const { removeStudentFromSeat, status, updateApplication } = this.props;
     const { application, rooms } = this.state;
     if (status === 404) return <Page404 />;
     if (!(application && rooms) || !rooms.length) return <LoadingPageSpinner />;
@@ -110,6 +113,7 @@ class AdminApplication extends Component<Props, IState> {
         application={application}
         rooms={rooms}
         removeStudentFromSeat={removeStudentFromSeat}
+        updateApplication={updateApplication}
        />
     );
   }
@@ -127,6 +131,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   removeStudentFromSeat: (roomId: number, seatId: string) =>
     dispatch(removeStudent(roomId, seatId)),
   resetStatus: () => dispatch(resetPageStatus()),
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => {
+    return dispatch(updateSingleApplication(id, app));
+  },
 });
 
 const Container = connect(
