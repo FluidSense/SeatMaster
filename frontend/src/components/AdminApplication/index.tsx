@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IApplication } from '../Application';
-import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
-import AssignSeat from '../AssignSeat';
 import { removeStudent } from '../AssignSeat/actions';
 import { APP_NOT_FOUND } from '../commonConstants';
+import { updateSingleApplication } from '../EditApplication/actions';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import Page404 from '../Page404';
 import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import { fetchApplicationDirectly, resetPageStatus } from './actions';
-import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 import Presentational from './Presentational';
-import { IPostAdminApplicationForm } from '../../API/interfaces';
-import { updateSingleApplication } from '../EditApplication/actions';
 
 export interface IAdminApplication extends IApplication {
   seat?: ISeat;
