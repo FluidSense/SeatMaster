@@ -3,7 +3,6 @@ import { IApplication } from '../Application';
 import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
 import AssignSeat from '../AssignSeat';
 import { IRoom } from '../ViewRooms';
-import AcceptApplication from './AcceptApplication';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 
 interface IProps {
@@ -32,7 +31,6 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         removeFromSeat={removeStudentFromSeat}
       />
       <AssignSeat rooms={rooms} application={application} />
-      <AcceptApplication application={application}/>
     </div>
   );
 };
