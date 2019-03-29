@@ -8,7 +8,7 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
-from __tests__.testUtils.models import createBasicSeason, createApplication
+from __tests__.testUtils.models import createBasicSeason
 from controllers.applicationController import filterOnStatus
 from utils.enums import ApplicationStatus
 
@@ -294,11 +294,12 @@ class TestApplication(TestCase):
         db.session.add(testApplication2)
         db.session.add(testApplication3)
         db.session.commit()
-        # Dump to create new objects which are not changed by the post 
+        # Dump to create new objects which are not changed by the post
         app1 = json.dumps(testApplication1.to_json())
         app2 = json.dumps(testApplication2.to_json())
-        jsondata = json.dumps(dict(ids=[1,2]))
-        approvedApplications = self.app.test_client().post('http://localhost:5000/application/approveList', 
+        jsondata = json.dumps(dict(ids=[1, 2]))
+        approvedApplications = self.app.test_client().post(
+            'http://localhost:5000/application/approveList',
             headers=headers,
             data=jsondata,
         )
@@ -307,8 +308,7 @@ class TestApplication(TestCase):
         app1["status"] = "APPROVED"
         app2["status"] = "APPROVED"
         assert approvedApplications.status == "200 OK"
-        assert json.loads(approvedApplications.data) == json.loads(jsonify([app1,app2]).data)
-
+        assert json.loads(approvedApplications.data) == json.loads(jsonify([app1, app2]).data)
 
     def tearDown(self):
         self.postgres.stop()
