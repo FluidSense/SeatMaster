@@ -8,6 +8,7 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
+from __tests__.testUtils.models import createBasicSeason
 from controllers.applicationController import filterOnStatus
 from utils.enums import ApplicationStatus
 
@@ -25,6 +26,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_without_partner(self):
+        createBasicSeason(db.session)
         testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()
@@ -64,6 +66,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_without_existing_partner(self):
+        createBasicSeason(db.session)
         testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         db.session.add(testuser)
         db.session.commit()
@@ -106,6 +109,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_new_application_with_existing_partner(self):
+        season = createBasicSeason(db.session)
         testuser1 = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
         testuser2 = User(username="Monster", sub="sub", email="emails", fullname="Schmemails")
         testApplication = Application(
@@ -115,8 +119,10 @@ class TestApplication(TestCase):
             partnerUsername="Frank",
             preferredRoom="d1",
             seatRollover=True,
+            applicationSeason=season,
             comments="Not Pepsi, but Pepsi Max")
         db.session.add(testuser1)
+        db.session.commit()
         db.session.add(testuser2)
         db.session.add(testApplication)
         db.session.commit()
@@ -145,7 +151,10 @@ class TestApplication(TestCase):
             comments="Bruh wtf",
             id=2,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser1.username, "email": testuser1.email, "fullname": testuser1.fullname},
+            user={"id": testuser1.id,
+                  "username": testuser1.username,
+                  "email": testuser1.email,
+                  "fullname": testuser1.fullname},
             preferredRoom="d1",
             rank="WRITING_MASTER",
             seatRollover=True,
@@ -156,7 +165,7 @@ class TestApplication(TestCase):
                 "status": "SUBMITTED",
                 "rank": "OTHER",
                 "user": {
-                    "id": 2,
+                    "id": testuser2.id,
                     "username": testuser2.username,
                     "email": testuser2.email,
                     "fullname": testuser2.fullname
@@ -171,7 +180,10 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 2, "username": testuser2.username, "email": testuser2.email, "fullname": testuser2.fullname},
+            user={"id": testuser2.id,
+                  "username": testuser2.username,
+                  "email": testuser2.email,
+                  "fullname": testuser2.fullname},
             preferredRoom="d1",
             seatRollover=True,
             seat=None,
@@ -186,14 +198,14 @@ class TestApplication(TestCase):
                 "rank": "WRITING_MASTER",
                 "seat": None,
                 "user": {
-                    "id": 1,
+                    "id": testuser1.id,
                     "username": testuser1.username,
                     "email": testuser1.email,
                     "fullname": testuser1.fullname
                 },
             },
         )
-        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/2', headers=headers)
+        getApplication = self.app.test_client().get('http://localhost:5000/application/byUser/1', headers=headers)
         assert user1expectedResponse.status == user1Response.status
         assert json.loads(user1expectedResponse.data) == json.loads(user1Response.data)
         assert getApplication.status == "200 OK"
@@ -201,6 +213,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_get_all_applications(self):
+        season = createBasicSeason(db.session)
         headers = {
             'Authorization': self.token,
             'AccessToken': self.accessToken
@@ -217,6 +230,7 @@ class TestApplication(TestCase):
             partnerUsername="Frank",
             preferredRoom="d1",
             seatRollover=True,
+            applicationSeason=season,
             comments="Not Pepsi, but Pepsi Max")
         testApplication2 = Application(
             ApplicationStatus.SUBMITTED,
@@ -225,6 +239,7 @@ class TestApplication(TestCase):
             partnerUsername="Monster",
             preferredRoom="d1",
             seatRollover=True,
+            applicationSeason=season,
             comments="Not Pepsi, but Pepsi Max")
         db.session.add(testApplication1)
         db.session.add(testApplication2)

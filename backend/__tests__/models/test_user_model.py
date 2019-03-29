@@ -1,6 +1,6 @@
 from models.user import User
 from models.application import Application
-from utils.enums import ApplicationStatus, Rank
+from __tests__.testUtils.models import createApplication
 
 
 def test_a_transaction(db_session):
@@ -18,17 +18,10 @@ def test_db_drop(db_session):
 
 
 def test_cascading(db_session):
-    user = User("hello", sub="sub", email="email", fullname="McHelloesen")
-    application = Application(status=ApplicationStatus.SUBMITTED,
-                              needs="needs",
-                              user=user,
-                              partnerUsername="partner",
-                              comments="comments",
-                              preferredRoom="pref",
-                              seatRollover=True,
-                              rank=Rank.WRITING_MASTER)
-    db_session.add(user)
-    db_session.add(application)
+    application = createApplication(db_session)
+    assert not db_session.query(Application).first() is None
+    assert not db_session.query(User).first() is None
+    db_session.delete(application.user)
     db_session.commit()
-    db_session.delete(user)
     assert db_session.query(Application).first() is None
+    assert db_session.query(User).first() is None

@@ -27,7 +27,14 @@ class ApplicationSeason(db.Model):
     applicationPeriodEnd = db.Column(
         "applicationperiodend",
         db.DateTime,
-        nullable=False)
+        nullable=False
+    )
+
+    applications = db.relationship(
+        "Application",
+        back_populates="applicationSeason",
+        cascade="all, delete",
+    )
 
     def __init__(self, start, end, applicationPeriodStart, applicationPeriodEnd):
         self.start = start
