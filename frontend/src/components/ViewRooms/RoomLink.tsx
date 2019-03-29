@@ -24,7 +24,7 @@ const RoomLink: React.FunctionComponent<IProps> = (props) => {
     <LenkepanelBase
       key={room.id}
       linkCreator={link}
-      href={ROUTE_TO}
+      href={`${ROUTE_TO}${room.id}`}
     >
       <div className="lenkepanel-rooms">
         <div className="link-name"><Element>{_LINK_NAME_TITLE}</Element>{room.name}</div>

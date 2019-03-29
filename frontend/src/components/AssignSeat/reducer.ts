@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { ISeat } from '../ViewRooms';
-import { FETCH_SEAT, REMOVE_STUDENT_SUCCESS } from './constants';
+import { FETCH_SEAT } from './constants';
 
 export interface ISeatState {
   seat?: ISeat;
@@ -16,8 +16,6 @@ const reducer = (
 ): ISeatState => {
   const { type, payload } = action;
   switch (type) {
-    case REMOVE_STUDENT_SUCCESS:
-      return state;
     case FETCH_SEAT:
       return { ...state, seat: payload };
     default:

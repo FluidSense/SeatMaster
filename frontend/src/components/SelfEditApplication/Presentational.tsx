@@ -13,7 +13,7 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  application: IApplication;
+  application?: IApplication;
   status: number;
 }
 
@@ -21,7 +21,7 @@ type Props = IDispatchProps & IStateProps;
 
 const Presentational: React.FunctionComponent<Props> = (props) => {
   const { application, status, resetStatus, updateSelfApplication } = props;
-
+  if (!application) return null;
   const finalize = (input: IPostApplicationForm) => {
     if (application.id) updateSelfApplication(application.id, input);
   };
