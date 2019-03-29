@@ -1,9 +1,7 @@
-import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Panel } from 'nav-frontend-paneler';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { IUser } from '../../API/interfaces';
 import { _CHECK_CHECKBOX, _USER_FULL_NAME, _USER_USERNAME } from './strings';
 
@@ -24,10 +22,14 @@ const UserLink: React.FunctionComponent<IProps> = (props) => {
         className="user-delete-checkbox"
         label={_CHECK_CHECKBOX}
       />
-      <Panel>
-        <div className="user-panel">
-          <div className="user-name"><Element>{_USER_FULL_NAME}</Element>{user.fullname}</div>
-          <div className="user-username"><Element>{_USER_USERNAME}</Element>{user.username}</div>
+      <Panel border={true} id="panel-users" >
+        <div className="users-panel">
+          <div className="user-name">
+          <Element>{_USER_FULL_NAME}</Element>{user.fullname}
+          </div>
+          <div className="user-username">
+            <Element>{_USER_USERNAME}</Element>{user.username}
+          </div>
         </div>
       </Panel>
     </div>
