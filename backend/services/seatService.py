@@ -5,15 +5,15 @@ from sqlalchemy.exc import SQLAlchemyError
 from services import applicationService
 
 
-def getSeatById(roomId, seatId):
-    seat = db.session.query(Seat).get((roomId, seatId))
+def getSeatById(id):
+    seat = db.session.query(Seat).get(id)
     return seat
 
 
-def createSeat(id, roomId, info):
+def createSeat(name, roomId, info):
     room = roomService.getRoomById(roomId)
     try:
-        seat = Seat(id, room, info)
+        seat = Seat(name, room, info)
         db.session.add(seat)
         db.session.commit()
         return seat.to_json(), 201
@@ -22,9 +22,9 @@ def createSeat(id, roomId, info):
         return "", 400
 
 
-def deleteSeat(roomId, seatId):
+def deleteSeat(id):
     try:
-        seat = getSeatById(roomId, seatId)
+        seat = getSeatById(id)
         db.session.delete(seat)
         db.session.commit()
         return "", 200
@@ -33,9 +33,9 @@ def deleteSeat(roomId, seatId):
         return "", 400
 
 
-def assignSeat(roomId, seatId, userId):
+def assignSeat(seatId, userId):
     try:
-        seat = getSeatById(roomId, seatId)
+        seat = getSeatById(seatId)
         application = applicationService.getApplicationByUserId(userId)
         seat.application = application
         db.session.add(application)

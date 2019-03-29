@@ -5,16 +5,16 @@ from auth import requiresAdmin
 seat = Blueprint("seat", __name__, url_prefix="/seat")
 
 
-@seat.route("/<roomId>/<id>")
-def getSeat(roomId, id):
-    seat = seatService.getSeatById(roomId, id)
+@seat.route("/<id>")
+def getSeat(id):
+    seat = seatService.getSeatById(id)
     return jsonify(seat.to_json()) if seat else Response("{}", 200)
 
 
-@seat.route("/<roomId>/<id>", methods=["DELETE"])
+@seat.route("/<id>", methods=["DELETE"])
 @requiresAdmin
-def deleteSeat(roomId, id):
-    responseText, statusCode = seatService.deleteSeat(roomId, id)
+def deleteSeat(id):
+    responseText, statusCode = seatService.deleteSeat(id)
     return Response(responseText, statusCode)
 
 
@@ -23,7 +23,7 @@ def deleteSeat(roomId, id):
 def createSeat():
     if request.is_json:
         form = request.get_json()
-        seat_name = form.get("id")
+        seat_name = form.get("name")
         roomId = form.get("roomId")
         info = form.get("info")
         responseText, successCode = seatService.createSeat(seat_name, roomId, info)
@@ -36,10 +36,9 @@ def createSeat():
 def assignSeat():
     if request.is_json:
         form = request.get_json()
-        roomId = form.get("roomId")
         seatId = form.get("seatId")
         userId = form.get("userId")
-        responseText, statusCode = seatService.assignSeat(roomId, seatId, userId)
+        responseText, statusCode = seatService.assignSeat(seatId, userId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
@@ -49,8 +48,7 @@ def assignSeat():
 def removeStudentFromSeat():
     if request.is_json:
         form = request.get_json()
-        roomId = form.get("roomId")
         seatId = form.get("seatId")
-        responseText, statusCode = seatService.removeStudentFromSeat(roomId, seatId)
+        responseText, statusCode = seatService.removeStudentFromSeat(seatId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
