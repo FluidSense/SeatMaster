@@ -4,6 +4,7 @@ import { Select } from 'nav-frontend-skjema';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
 import { ISeat } from '../ViewRooms';
+import { _ASSIGN_SEAT } from './strings';
 
 interface IProps {
   seat: ISeat;
@@ -46,7 +47,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
           {userOptions}
         </Select>
         <KnappBase type="hoved" disabled={selectedUser ? false : true} onClick={this.assign}>
-          Assign Seat
+          {_ASSIGN_SEAT}
         </KnappBase>
       </Panel>
     );
