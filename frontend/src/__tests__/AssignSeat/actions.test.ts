@@ -41,6 +41,7 @@ describe('actions', () => {
     });
 
     const expectedAction = {
+      payload: [],
       type: SUCCESSFULL_SEAT_ASSIGNMENT,
     };
 

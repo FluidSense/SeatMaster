@@ -9,7 +9,7 @@ exports[`InfoPanel renders correctly 1`] = `
     This is a title
   </Element>
   <PanelBase
-    border={false}
+    border={true}
   >
     This is a text
   </PanelBase>

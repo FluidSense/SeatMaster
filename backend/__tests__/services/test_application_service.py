@@ -2,38 +2,31 @@ from services import applicationService
 from models.user import User
 from models.application import Application
 from shared import db
+from __tests__.testUtils.models import createApplication
 
 
 def setUp(mocker):
-    user1 = User(username="Yoda", sub="sub", email="email", fullname="Yoyo")
-    user2 = User(username="Obi Wan", sub="sub", email="email", fullname="Obidobie")
-    app1 = Application(
-        status="good",
-        comments="whatever",
-        needs="needs",
-        user=user1,
-        partnerUsername="Obi Wan",
-        preferredRoom="d1",
-        seatRollover=True,
-    )
+    app1 = createApplication()
+    user2 = User(username=app1.partnerUsername, sub="sub", email="email", fullname="Obidobie")
     app2 = Application(
         status="good",
         comments="whatever",
         needs="needs",
         user=user2,
-        partnerUsername="Yoda",
+        partnerUsername=app1.user.username,
         preferredRoom="d1",
         seatRollover=True,
+        applicationSeason=app1.applicationSeason
     )
     mocker.patch.object(db.session, 'add')
     db.session.add.return_value = ""
     mocker.patch.object(db.session, 'commit')
     db.session.commit.return_value = ""
-    return user1, user2, app1, app2
+    return app1, app2
 
 
 def test_application_connection_succeed(mocker):
-    user1, user2, app1, app2 = setUp(mocker)
+    app1, app2 = setUp(mocker)
     mocker.patch.object(applicationService, 'getApplicationByUsername')
     applicationService.getApplicationByUsername.return_value = app2
     applicationService.connectApplication(app1)
@@ -43,7 +36,7 @@ def test_application_connection_succeed(mocker):
 
 
 def test_application_connection_does_not_connect(mocker):
-    user1, user2, app1, app2 = setUp(mocker)
+    app1, app2 = setUp(mocker)
     app2.partnerUsername = "Jar Jar Binks"
     mocker.patch.object(applicationService, 'getApplicationByUsername')
     applicationService.getApplicationByUsername.return_value = app2
