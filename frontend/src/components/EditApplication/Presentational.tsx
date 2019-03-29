@@ -15,11 +15,7 @@ interface IDispatchProps {
 
 interface IStateProps {
   applications: IApplication[];
-  match?: {
-    params: {
-      id: string;
-    },
-  };
+  matchId: string;
   status: number;
 }
 
@@ -32,10 +28,9 @@ export const editAlert = (
 );
 
 const Presentational: React.FunctionComponent<Props> = (props) => {
-  const { applications, match, status, resetStatus } = props;
+  const { applications, matchId, status, resetStatus } = props;
 
-  if (!match) return null;
-  const application = applications.filter(app => app.id === parseInt(match.params.id, 10))[0];
+  const application = applications.filter(app => app.id === parseInt(matchId, 10))[0];
 
   const finalize = (input: IPostAdminApplicationForm) => {
     if (application.id) props.updateApplication(application.id, input);
@@ -43,7 +38,7 @@ const Presentational: React.FunctionComponent<Props> = (props) => {
 
   if (status === 200) {
     resetStatus();
-    return <Redirect to={`${redirectUrl}${match.params.id}`}/>;
+    return <Redirect to={`${redirectUrl}${matchId}`}/>;
   }
 
   if (!(application && application.user)) return null;
