@@ -110,6 +110,18 @@ def approveApplicationsByIdList():
     return abort(400)
 
 
+@application.route("/waitingList", methods=["POST"])
+@requiresAdmin
+def waitingListByIdList():
+    if request.is_json:
+        form = request.get_json()
+        ids = form.get("ids")
+        response, statusCode = applicationService.setWaitingListByIds(ids=ids)
+        applicationList = list(map(lambda x: x.to_json(), response))
+        return make_response(jsonify(applicationList), statusCode)
+    return abort(400)
+
+
 def filterOnStatus(applicationJson):
     if not applicationJson["status"] == ApplicationStatus.APPROVED.name:
         del applicationJson["seat"]
