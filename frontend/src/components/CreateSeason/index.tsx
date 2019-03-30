@@ -64,9 +64,6 @@ const inputTextArray = [
   _ROOM_END,
 ];
 
-const errorObjectSeasonEndTooEarly = { feilmelding: _SEASON_END_TOO_EARLY };
-const errorObjectRoomEndTooEarly = { feilmelding: _ROOM_END_TOO_EARLY };
-
 export const setTime = (day: Moment) => {
   const newDay = moment(day);
   newDay.set({
@@ -139,34 +136,13 @@ class _CreateSeason extends Component<Props, IState> {
     const { submitted } = this.props;
     if (submitted) return (<Redirect to="/admin/applications" />);
     const { season, showAlert, fetched } = this.state;
-    const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
-    const errorPeriodEndBeforeStart =
-      applicationPeriodEnd <= applicationPeriodStart
-        ? errorObjectSeasonEndTooEarly
-        : undefined;
-
-    const errorApplicationEndBeforeStart =
-      end <= start
-        ? errorObjectRoomEndTooEarly
-        : undefined;
-
-    const buttonDisable =
-      errorPeriodEndBeforeStart !== undefined
-      || errorApplicationEndBeforeStart !== undefined;
-
-    const alertFail = showAlert
-      ? this.createAlert(_ERROR_MESSAGE, 'advarsel')
-      : undefined;
 
     const submitSeason = season.id ? this.updateApplicationSeason : this.submitApplicationSeason;
     return (
       <Presentational
-        buttonDisable={buttonDisable}
-        alertApplicationEndBeforeStart={errorApplicationEndBeforeStart}
-        alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
         createFields={this.createFields}
         submitSeason={submitSeason}
-        alert={alertFail}
+        showAlert={showAlert}
         season={season}
         fetched={fetched}
       />
@@ -197,28 +173,32 @@ class _CreateSeason extends Component<Props, IState> {
   }
 
   private createDateInputField = (label: string, key: string, value: Moment) => {
-    const doNothing = () => null;
     return (
       <DateInputField
         key={label}
         label={label}
         value={value}
         objectKey={key}
-        setDate={doNothing}
+        setDate={this.setDate}
       />
     );
   }
 
-  private createAlert = (text: string, type: AlertStripeTypes) =>
-    <AlertStripe type={type} solid={true}> {text} </AlertStripe>
+  private setDate = (key: string, time: Moment) => {
+    const { season } = this.state;
+    const updatedSeason = { ...season, [key]: time };
+    this.setState({ season: updatedSeason });
+  }
 
   private createFields = (index: number, indexEnd: number) => {
     const { applicationPeriodEnd, applicationPeriodStart, end, start } = this.state.season;
     const stateEntries = Object.entries({
-      applicationPeriodEnd,
       applicationPeriodStart,
-      end,
-      start });
+      // It is needed to have it in this order for the proper error messages
+      // tslint:disable-next-line:object-literal-sort-keys
+      applicationPeriodEnd,
+      start,
+      end });
     const fields = [];
     for (let i = index; i < indexEnd; i += 1) {
       fields.push(this.createDateInputField(
