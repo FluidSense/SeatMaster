@@ -56,16 +56,20 @@ export class Presentational extends React.Component<Props, {}> {
     switch (status) {
       case APP_APPROVED:
         return (
-        <ApplicationAccepted
-          application={application}
-          fetchRoomInfo={this.props.fetchRoomInfo}
-          rooms={this.props.rooms}
-        />);
+          <ApplicationAccepted
+            application={application}
+            fetchRoomInfo={this.props.fetchRoomInfo}
+            rooms={this.props.rooms}
+          />
+        );
       case APP_WAITING:
         return (
-          <p>
-            {_WAITING_LIST_MESSAGE}
-          </p>
+          <>
+            <p>
+              {_WAITING_LIST_MESSAGE}
+            </p>
+            <ApplicationReview application={application} />;
+          </>
         );
       default:
         return <ApplicationReview application={application} />;
