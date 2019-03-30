@@ -35,7 +35,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     season,
     fetched,
   } = props;
-  const title = fetched ? _UPDATE_APPLICATION_SEASON : _NEW_APPLICATION_SEASON;
+  const title = fetched && season.id ? _UPDATE_APPLICATION_SEASON : _NEW_APPLICATION_SEASON;
   if (!fetched) return <TitleAndSpinner title={title} />;
 
   const createButton = (text: string) => (
