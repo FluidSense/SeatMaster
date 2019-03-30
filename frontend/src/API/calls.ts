@@ -41,6 +41,9 @@ import {
 
 export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_URL);
 
+export const getSeasonFromId = (id: number): PromiseLike<IApplicationSeason> =>
+  getJson(`${SEASON_URL}${id}`);
+
 export const postSeason = (data: IPostApplicationSeason):
   PromiseLike<IApplicationSeason> => {
   return elevatedPostJson(SEASON_URL, data);
