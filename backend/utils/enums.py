@@ -13,3 +13,4 @@ class ApplicationStatus(Enum):
     SUBMITTED = 1
     APPROVED = 2
     DECLINED = 3
+    WAITING_LIST = 4

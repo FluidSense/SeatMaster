@@ -6,7 +6,6 @@ import { IStore } from '../../store';
 import { fetchAllApplications } from '../AdminApplicationOverview/actions';
 import { IApplication } from '../Application';
 import { removeStudent } from '../AssignSeat/actions';
-import { APP_NOT_FOUND } from '../commonConstants';
 import { updateSingleApplication } from '../EditApplication/actions';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import Page404 from '../Page404';
