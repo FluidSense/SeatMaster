@@ -128,10 +128,10 @@ export const ApplicationReducer = (
       const newSeat: ISeat = action.payload;
       const user = newSeat.user;
       if (user) {
+        const mutableSeat = { ...newSeat, user: undefined };
         const application = state.applications.find(app => app.user.id === user.id);
         if (application) {
-          newSeat.user = undefined;
-          const updatedApplication = { ...application, seat: newSeat };
+          const updatedApplication = { ...application, seat: mutableSeat };
           return {
             ...state,
             applications: state.applications.map((app: IApplication) => {
