@@ -47,7 +47,7 @@ class _Container extends Component<Props, IState> {
   public componentDidUpdate = (prevProps: Props) => {
     const { students } = this.props;
     if (prevProps.students !== students) {
-      this.setState({ userList: students });
+      this.setState({ userList: students, filteredUsers: students });
     }
   }
 
