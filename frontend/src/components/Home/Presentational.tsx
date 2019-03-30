@@ -7,7 +7,7 @@ import ApplicationAccepted from '../ApplicationAccepted';
 import ApplicationReview from '../ApplicationReview';
 import ApplicationSeason from '../ApplicationSeason/index';
 import ApplicationStatus from '../ApplicationStatus/index';
-import { APP_APPROVED } from '../commonConstants';
+import { APP_APPROVED, APP_WAITING } from '../commonConstants';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import { IRoom } from '../ViewRooms';
 
@@ -32,26 +32,15 @@ export class Presentational extends React.Component<Props, {}> {
     if (application && application.status === FETCHING_APPLICATION_DATA) {
       return <LoadingPageSpinner />;
     }
-    if (application && application.status === APP_APPROVED) {
-      return (
-        <div className="main-content">
-          <Sidetittel>{_TITLE}</Sidetittel>
-          <ApplicationSeason />
-          <ApplicationStatus />
-          <ApplicationAccepted
-            application={application}
-            fetchRoomInfo={this.props.fetchRoomInfo}
-            rooms={this.props.rooms}
-          />
-        </div>
-      );
-    }
+    const statusContent = application
+      ? this.statusSpecificContent(application.status, application)
+      : <ApplicationReview application={application}/>;
     return (
       <div className="main-content">
         <Sidetittel>{_TITLE}</Sidetittel>
         <ApplicationSeason />
         <ApplicationStatus />
-        <ApplicationReview application={application} />
+        {statusContent}
       </div>
     );
   }
@@ -60,6 +49,20 @@ export class Presentational extends React.Component<Props, {}> {
     const { fetchApplicationInformation, oidc } = this.props;
     if (oidc.user && !oidc.user.expired) {
       fetchApplicationInformation();
+    }
+  }
+  private statusSpecificContent = (status: string, application: IApplication) => {
+    switch (status) {
+      case APP_APPROVED:
+        return (
+        <ApplicationAccepted
+          application={application}
+          fetchRoomInfo={this.props.fetchRoomInfo}
+          rooms={this.props.rooms}
+        />);
+      default:
+        return <ApplicationReview application={application} />;
+
     }
   }
 }
