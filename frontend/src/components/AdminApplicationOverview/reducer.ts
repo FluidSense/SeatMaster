@@ -2,6 +2,7 @@ import { AnyAction } from 'redux';
 import { IUser } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import {
+  NO_CHANGE_IN_APPLICATION_AFTER_UPDATE,
   RESET_APPLICATION_STATUS,
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
@@ -73,12 +74,18 @@ export const ApplicationReducer = (
       };
     }
     case SUCCESSFULL_APPLICATION_UPDATE: {
+      const application = action.payload;
+      const registered = state.registeredApplication;
       return {
         ...state,
         api: {
           ...state.api,
           status: 200,
         },
+        applications: state.applications.map(app => app.id === application.id ? application : app),
+        registeredApplication: registered && registered.id === application.id
+          ? application
+          : registered,
       };
     }
     case UNSUCCESSFULL_APPLICATION_UPDATE: {
@@ -87,6 +94,15 @@ export const ApplicationReducer = (
         api: {
           ...state.api,
           status: 400,
+        },
+      };
+    }
+    case NO_CHANGE_IN_APPLICATION_AFTER_UPDATE: {
+      return {
+        ...state,
+        api: {
+          ...state.api,
+          status: 200,
         },
       };
     }
