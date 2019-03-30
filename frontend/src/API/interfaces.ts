@@ -34,6 +34,12 @@ export interface IPostRoom {
   info: string;
 }
 
+export interface IPostSeat {
+  name: string;
+  info: string;
+  roomId: number;
+}
+
 export interface IRemoveStudentFromSeat {
   roomId: number;
   seatId: string;

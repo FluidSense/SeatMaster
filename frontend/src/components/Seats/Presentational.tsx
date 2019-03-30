@@ -7,18 +7,24 @@ import './seats.css';
 import { _SEATS_EXPAND } from './strings';
 
 interface IProps {
-  deleteSeat: (id: string) => void;
+  deleteSeat: (id: number) => void;
   seats: ISeat[];
   createSeat: () => void;
   roomId: number;
-  updateSeat: (oldId: string, newId: string) => void;
+  updateSeat: (seatId: number, newName: string) => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { seats, createSeat, deleteSeat, updateSeat } = props;
-
+  console.log(seats)
   const seatElements = seats.map(seat => (
-    <Seat id={seat.id} key={seat.id} deleteSelf={deleteSeat} updateSelf={updateSeat} />
+    <Seat
+      id={seat.id}
+      name={seat.name}
+      key={seat.id}
+      deleteSelf={deleteSeat}
+      updateSelf={updateSeat}
+    />
   ));
 
   return (

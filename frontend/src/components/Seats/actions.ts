@@ -1,6 +1,7 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { deleteSeat, postSeat } from '../../API/calls';
+import { deleteSeat, postSeat, updateSeatName } from '../../API/calls';
+import { IPostSeat } from '../../API/interfaces';
 import { ISeat } from '../ViewRooms';
 import { CREATE_SEAT, DELETE_SEAT, UPDATE_SEAT } from './constants';
 
@@ -20,26 +21,23 @@ const seatDeleted = (success: boolean) => ({
   type: DELETE_SEAT,
 });
 
-export const createSeatAction = (seat: ISeat):
+export const createSeatAction = (seat: IPostSeat):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const result = await postSeat(seat);
     if (result) dispatch(seatCreated(true, result));
     else dispatch(seatCreated(false));
   };
 
-export const deleteSeatAction = (roomId: number, seatId: string):
+export const deleteSeatAction = (seatId: number):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const result = await deleteSeat(roomId, seatId);
+    const result = await deleteSeat(seatId);
     if (result) dispatch(seatDeleted(true));
     else dispatch(seatDeleted(false));
   };
 
-export const updateSeatAction = (roomId: number, oldSeatId: string, newSeat: ISeat):
+export const updateSeatAction = (seatId: number, newName: string):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const deleteResults = await deleteSeat(roomId, oldSeatId);
-    if (deleteResults) {
-      const createResult = await postSeat(newSeat);
-      if (createResult) dispatch(seatUpdated(true));
-    }
-    dispatch(seatUpdated(false));
+    const results = await updateSeatName(seatId, newName);
+    if (results) dispatch(seatUpdated(true));
+    else dispatch(seatUpdated(false));
   };

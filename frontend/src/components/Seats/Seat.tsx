@@ -6,9 +6,10 @@ import React, { Component } from 'react';
 import { _CHANGE_ID } from './strings';
 
 interface IProps {
-  id: string;
-  deleteSelf: (id: string) => void;
-  updateSelf: (oldId: string, newId: string) => void;
+  id: number;
+  name: string;
+  deleteSelf: (id: number) => void;
+  updateSelf: (id: number, newName: string) => void;
 }
 
 interface IState {
@@ -24,12 +25,17 @@ class Seat extends Component<IProps, IState> {
   }
 
   public render() {
-    const { id } = this.props;
+    const { name } = this.props;
 
     return (
       <>
         <Panel border={true}>
-          <Input label={'Seat ID'} bredde="S" placeholder={id} onChange={this.handleInputChange} />
+          <Input
+            label={'Seat ID'}
+            bredde="S"
+            placeholder={name}
+            onChange={this.handleInputChange}
+          />
           <Knapp onClick={this.changeId}>{_CHANGE_ID}</Knapp>
           <Lukknapp bla={true} onClick={this.deleteSeat} />
         </Panel>
