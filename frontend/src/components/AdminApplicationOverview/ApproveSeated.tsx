@@ -29,7 +29,8 @@ export class ApproveSeated extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const approvingStudents = this.props.applications.map((app, i) =>
+    const approved = this.props.applications.filter(app => app.seat ? true : false);
+    const approvingStudents = approved.map((app, i) =>
     <li key={i}>{app.user.username}</li>);
     const modalText = (
       <>
