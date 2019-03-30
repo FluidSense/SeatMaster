@@ -32,7 +32,7 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
 
   public render() {
     const waiters = this.props.applications.filter((app: IApplication) => {
-      return app.seat && app.status !== APP_APPROVED ? true : false;
+      return app.status !== APP_APPROVED ? true : false;
     });
     const waiterStudents = waiters.map((app, i) =>
     <li key={i}>{app.user.username}</li>);

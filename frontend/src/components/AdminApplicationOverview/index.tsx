@@ -8,7 +8,7 @@ import { IApplication } from '../Application';
 import { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import { approveAllApplications, fetchAllApplications } from './actions';
+import { approveAllApplications, fetchAllApplications, waitingListAllApplications } from './actions';
 import Presentational from './Presentational';
 
 interface IStateProps {
@@ -92,6 +92,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   approve: (ids: number[]) => dispatch(approveAllApplications(ids)),
   getAllApplications: () => dispatch(fetchAllApplications()),
   getRooms: () => dispatch(fetchAllRooms()),
+  putWaiting: (ids: number[]) => dispatch(waitingListAllApplications(ids)),
 });
 
 const Container = connect(
