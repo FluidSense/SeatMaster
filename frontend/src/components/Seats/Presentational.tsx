@@ -16,7 +16,6 @@ interface IProps {
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { seats, createSeat, deleteSeat, updateSeat } = props;
-  console.log(seats)
   const seatElements = seats.map(seat => (
     <Seat
       id={seat.id}

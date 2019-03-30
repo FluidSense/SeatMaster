@@ -4,6 +4,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { IPostSeat } from '../../API/interfaces';
 import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
+import { IStore } from '../../store';
 
 export interface ISeat {
   id: number;
@@ -28,7 +29,11 @@ interface IDispatchProps {
   updateSeat: (seatId: number, newName: string) => void;
 }
 
-type Props = IDispatchProps & IProps;
+interface IStateProps {
+  latestSeatId: number;
+}
+
+type Props = IDispatchProps & IStateProps & IProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends Component<Props, IState> {
@@ -60,7 +65,7 @@ class _Container extends Component<Props, IState> {
 
   private create = () => {
     const { seats, roomId } = this.state;
-    const { createSeat } = this.props;
+    const { createSeat, latestSeatId } = this.props;
     let nextName = 'A1';
     if (seats.length > 0) {
       // Splits id in letters and numbers
@@ -77,7 +82,7 @@ class _Container extends Component<Props, IState> {
     };
 
     const seatForState: ISeat = {
-      id: -1,
+      id: latestSeatId + 1,
       info: '',
       name: nextName,
       // tslint:disable-next-line:object-shorthand-properties-first
@@ -116,6 +121,10 @@ class _Container extends Component<Props, IState> {
   }
 }
 
+const mapStateToProps = (state: IStore) => ({
+  latestSeatId: state.latestSeatId.latestId,
+});
+
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
   createSeat: (data: IPostSeat) => dispatch(createSeatAction(data)),
   deleteSeat: (seatId: number) => dispatch(deleteSeatAction(seatId)),
@@ -123,7 +132,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any)
 });
 
 const Container = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(_Container);
 
