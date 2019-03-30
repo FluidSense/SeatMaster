@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { fetchAllApplications } from '../AdminApplicationOverview/actions';
 import { IApplication } from '../Application';
-import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
-import AssignSeat from '../AssignSeat';
 import { removeStudent } from '../AssignSeat/actions';
 import { APP_NOT_FOUND } from '../commonConstants';
+import { updateSingleApplication } from '../EditApplication/actions';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import Page404 from '../Page404';
 import { IRoom, ISeat } from '../ViewRooms';
@@ -32,6 +32,7 @@ interface IDispatchProps {
   fetchApplications: () => void;
   fetchRooms: () => void;
   resetStatus: () => void;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
 interface IState {
@@ -63,16 +64,18 @@ class AdminApplication extends Component<Props, IState> {
   }
 
   public render() {
-    const { removeStudentFromSeat, applications, rooms } = this.props;
+    const { removeStudentFromSeat, applications, rooms, updateApplication } = this.props;
     const { id } = this.props.match.params;
     const application = applications.find(app => app.id === Number(id));
     if (!(applications.length && rooms) || !rooms.length) return <LoadingPageSpinner />;
     if (!application) return <Page404 />;
+
     return (
        <Presentational
         application={application}
         rooms={rooms}
         removeStudentFromSeat={removeStudentFromSeat}
+        updateApplication={updateApplication}
        />
     );
   }
@@ -89,6 +92,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   removeStudentFromSeat: (roomId: number, seatId: string) =>
     dispatch(removeStudent(roomId, seatId)),
   resetStatus: () => dispatch(resetPageStatus()),
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => {
+    return dispatch(updateSingleApplication(id, app));
+  },
 });
 
 const Container = connect(
