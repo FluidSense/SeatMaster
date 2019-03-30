@@ -1,4 +1,4 @@
-import KnappBase, { Knapp } from 'nav-frontend-knapper';
+import KnappBase from 'nav-frontend-knapper';
 import React from 'react';
 import { IApplication } from '../Application';
 import Modal from '../Modal';
@@ -25,6 +25,7 @@ export class ApproveSeated extends React.Component<IProps, IState> {
     const approved = this.props.applications.filter(app => app.seat ? true : false);
     const ids = approved.map(app => app.id);
     this.props.approve(ids);
+    this.toggleModal();
   }
 
   public render() {
@@ -56,7 +57,6 @@ export class ApproveSeated extends React.Component<IProps, IState> {
         >
           {modalText}
         </Modal>
-
       </div>
     );
   }
