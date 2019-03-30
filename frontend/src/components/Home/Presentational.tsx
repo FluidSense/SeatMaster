@@ -10,6 +10,7 @@ import ApplicationStatus from '../ApplicationStatus/index';
 import { APP_APPROVED, APP_WAITING } from '../commonConstants';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import { IRoom } from '../ViewRooms';
+import { _WAITING_LIST_MESSAGE } from './strings';
 
 interface IDispatchProps {
   fetchApplicationInformation: () => void;
@@ -60,6 +61,12 @@ export class Presentational extends React.Component<Props, {}> {
           fetchRoomInfo={this.props.fetchRoomInfo}
           rooms={this.props.rooms}
         />);
+      case APP_WAITING:
+        return (
+          <p>
+            {_WAITING_LIST_MESSAGE}
+          </p>
+        );
       default:
         return <ApplicationReview application={application} />;
 
