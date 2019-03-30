@@ -8,7 +8,11 @@ import { IApplication } from '../Application';
 import { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import { approveAllApplications, fetchAllApplications, waitingListAllApplications } from './actions';
+import {
+  approveAllApplications,
+  fetchAllApplications,
+  waitingListAllApplications,
+} from './actions';
 import Presentational from './Presentational';
 
 interface IStateProps {
