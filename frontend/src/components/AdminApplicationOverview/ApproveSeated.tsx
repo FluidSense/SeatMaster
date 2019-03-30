@@ -1,6 +1,7 @@
 import KnappBase from 'nav-frontend-knapper';
 import React from 'react';
 import { IApplication } from '../Application';
+import { APP_APPROVED } from '../commonConstants';
 import Modal from '../Modal';
 import { _APPROVE_STUDENTS_WARNING } from './constants';
 
@@ -29,14 +30,16 @@ export class ApproveSeated extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const approved = this.props.applications.filter(app => app.seat ? true : false);
+    const approved = this.props.applications.filter((app: IApplication) => {
+      return app.seat && app.status !== APP_APPROVED ? true : false;
+    });
     const approvingStudents = approved.map((app, i) =>
     <li key={i}>{app.user.username}</li>);
     const modalText = (
       <>
         <p>{_APPROVE_STUDENTS_WARNING}</p>
         <ul>
-          <li>{approvingStudents}</li>
+          {approvingStudents}
         </ul>
       </>
     );
