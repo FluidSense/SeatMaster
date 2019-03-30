@@ -2,10 +2,13 @@ import { AnyAction } from 'redux';
 import { IUser } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import {
+  NO_CHANGE_IN_APPLICATION_AFTER_UPDATE,
   RESET_APPLICATION_STATUS,
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
+import { ISeat } from '../ViewRooms';
+import { REMOVE_STUDENT_SUCCESS, SUCCESSFULL_SEAT_ASSIGNMENT } from './../AssignSeat/constants';
 import {
   APPROVE_ALL_APPLICATIONS,
   FETCHED_APPLICATION_DATA,
@@ -71,12 +74,18 @@ export const ApplicationReducer = (
       };
     }
     case SUCCESSFULL_APPLICATION_UPDATE: {
+      const application = action.payload;
+      const registered = state.registeredApplication;
       return {
         ...state,
         api: {
           ...state.api,
           status: 200,
         },
+        applications: state.applications.map(app => app.id === application.id ? application : app),
+        registeredApplication: registered && registered.id === application.id
+          ? application
+          : registered,
       };
     }
     case UNSUCCESSFULL_APPLICATION_UPDATE: {
@@ -85,6 +94,15 @@ export const ApplicationReducer = (
         api: {
           ...state.api,
           status: 400,
+        },
+      };
+    }
+    case NO_CHANGE_IN_APPLICATION_AFTER_UPDATE: {
+      return {
+        ...state,
+        api: {
+          ...state.api,
+          status: 200,
         },
       };
     }
@@ -105,6 +123,41 @@ export const ApplicationReducer = (
           return updatedApps.find((newApp: IApplication) => app.id === newApp.id) || app;
         }),
       };
+    }
+    case SUCCESSFULL_SEAT_ASSIGNMENT: {
+      const newSeat: ISeat = action.payload;
+      const user = newSeat.user;
+      if (user) {
+        const application = state.applications.find(app => app.user.id === user.id);
+        if (application) {
+          newSeat.user = undefined;
+          const updatedApplication = { ...application, seat: newSeat };
+          return {
+            ...state,
+            applications: state.applications.map((app: IApplication) => {
+              return app.id === updatedApplication.id ? updatedApplication : app;
+            }),
+          };
+        }
+        return { ...state };
+      }
+      return { ...state };
+    }
+    case REMOVE_STUDENT_SUCCESS: {
+      const seat: ISeat = action.payload;
+      const application = state.applications.find((app: IApplication) => {
+        return app.seat ? app.seat.id === seat.id : false;
+      });
+      if (application) {
+        const updatedApplication = { ...application, seat: undefined };
+        return {
+          ...state,
+          applications: state.applications.map((app: IApplication) => {
+            return app.id === updatedApplication.id ? updatedApplication : app;
+          }),
+        };
+      }
+      return { ...state };
     }
     default:
       return { ...state };
