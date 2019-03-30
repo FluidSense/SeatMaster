@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import AdminApplication from '../AdminApplication';
 import AdminApplicationOverview from '../AdminApplicationOverview';
 import AdminRoom from '../AdminRoom';
+import AdminViewRoom from '../AdminViewRoom';
 import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
 import EditApplication from '../EditApplication';
@@ -38,7 +39,8 @@ export const RoutesAdmin = () => {
           <Route path="/admin/seasons/update-season/:id" component={CreateSeason} />
           <Route exact={true} path="/admin/rooms" component={ViewRooms} />
           <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
-          <Route path="/admin/rooms/update-room" component={AdminRoom} />
+          <Route exact={true} path="/admin/rooms/:id" component={AdminViewRoom} />
+          <Route path="/admin/rooms/:id/update-room" component={AdminRoom} />
           <Route exact={true} path="/admin/students/" component={ViewStudents} />
 
           <Redirect from="/registerUser" to="/" />

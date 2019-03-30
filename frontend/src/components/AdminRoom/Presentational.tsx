@@ -4,6 +4,7 @@ import { Input, Textarea } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React, { ChangeEvent, SyntheticEvent } from 'react';
 import { ETIKETT_WARNING } from '../commonConstants';
+import Modal from '../Modal';
 import Seats from '../Seats';
 import { IRoom } from '../ViewRooms';
 import CSVButton from './CSVButton';
@@ -17,6 +18,8 @@ import {
   _INPUT_LABEL_NOTES,
   _TITLE_CREATE_NEW_ROOM,
   _TITLE_UPDATE_NEW_ROOM,
+  _USERS_OCCUPYING_ROOM,
+  _USERS_OCCUPYING_ROOM_CONFIRMATION,
 } from './strings';
 
 interface IProps {
@@ -30,7 +33,16 @@ interface IProps {
   alertMessage?: string;
   roomExists: boolean;
   fetchRoom: (roomId: number) => void;
+  modalOpen: boolean;
+  toggleModal: () => void;
 }
+
+const usersInRoom = (room: IRoom) => {
+  return room.seats.seats.map((seat) => {
+    const user = seat.user;
+    if (user) return <li>{user.fullname}</li>;
+  });
+};
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const {
@@ -44,6 +56,8 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     showAlert,
     alertMessage,
     fetchRoom,
+    modalOpen,
+    toggleModal,
   } = props;
   const { name: roomName, info: roomNotes } = room;
   const seats = room.seats.seats;
@@ -56,10 +70,12 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       : null;
   const titleText = roomExists ? _TITLE_UPDATE_NEW_ROOM : _TITLE_CREATE_NEW_ROOM;
   const buttonText = roomExists ? _BUTTON_UPDATE_ROOM : _BUTTON_CREATE_ROOM;
+  const users = seats.filter((seat) => { if (seat.user) return seat.user; });
+  const roomOccupied = users.length > 0 ? _USERS_OCCUPYING_ROOM : undefined;
   const deleteButton =
     roomExists
       ? (
-        <KnappBase id={'delete-room-button'} type="fare" onClick={deleteRoom}>
+        <KnappBase id={'delete-room-button'} type="fare" onClick={toggleModal}>
           {_BUTTON_DELETE_ROOM}
         </KnappBase>)
       : null;
@@ -106,6 +122,16 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           {buttonText}
         </KnappBase>
         {deleteButton}
+        <Modal
+          modalOpen={modalOpen}
+          toggleModal={toggleModal}
+          accept={deleteRoom}
+          close={toggleModal}
+          text={roomOccupied}
+        >
+          <ul>{usersInRoom(room)}</ul>
+          <b>{_USERS_OCCUPYING_ROOM_CONFIRMATION}</b>
+        </Modal>
       </div>
     </div>
   );

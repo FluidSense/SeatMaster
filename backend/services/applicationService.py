@@ -3,6 +3,7 @@ from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
 from utils.enums import ApplicationStatus
+from services.applicationSeasonService import getCurrentOrNext
 
 
 def getAllApplications():
@@ -27,6 +28,7 @@ def getApplicationByUsername(username):
 
 def registerApplication(comments, needs, user, partnerUsername, seatRollover, preferredRoom, rank):
     try:
+        season = getCurrentOrNext()
         application = Application(
             status=ApplicationStatus.SUBMITTED,
             needs=needs,
@@ -36,6 +38,7 @@ def registerApplication(comments, needs, user, partnerUsername, seatRollover, pr
             seatRollover=seatRollover,
             preferredRoom=preferredRoom,
             rank=rank,
+            applicationSeason=season,
         )
         db.session.add(application)
         db.session.commit()
@@ -73,6 +76,21 @@ def updateApplicationById(id, form):
             connectApplication(application)
         return application.to_json(), 200
     except SQLAlchemyError as err:
+        print(err)
+        return "", 400
+
+
+def approveApplicationsByIds(ids):
+    try:
+        applications = []
+        for id in ids:
+            application = getApplicationById(id)
+            application.status = ApplicationStatus.APPROVED
+            db.session.add(application)
+            applications.append(application)
+        db.session.commit()
+        return applications, 200
+    except (SQLAlchemyError, AttributeError) as err:
         print(err)
         return "", 400
 

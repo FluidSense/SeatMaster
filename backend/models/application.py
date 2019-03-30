@@ -31,6 +31,26 @@ class Application(db.Model):
         "comments",
         db.String(100))
 
+    applicationSeasonId = db.Column(
+        "applicationSeasonId",
+        db.ForeignKey("application_season.application_season_id")
+    )
+
+    applicationSeason = db.relationship(
+        "ApplicationSeason",
+        back_populates="applications",
+    )
+
+    queuePlacement = db.Column(
+        "queuePlacement",
+        db.Integer()
+    )
+
+    db.UniqueConstraint(
+        'applicationSeasonId',
+        'queuePlacement',
+        name='uix_1')
+
     userid = db.Column(
         db.Integer,
         db.ForeignKey("users.userid")
@@ -84,7 +104,8 @@ class Application(db.Model):
         foreign_keys='[Seat.room_id, Seat.seat_id]',
         primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
 
-    def __init__(self, status, needs, user, partnerUsername, preferredRoom, seatRollover, comments, rank=Rank.OTHER):
+    def __init__(self, status, needs, user, partnerUsername, preferredRoom,
+                 seatRollover, applicationSeason, comments, rank=Rank.OTHER):
         self.status = status
         self.user = user
         self.needs = needs
@@ -93,6 +114,7 @@ class Application(db.Model):
         self.seatRollover = seatRollover
         self.partnerUsername = partnerUsername
         self.rank = rank
+        self.applicationSeason = applicationSeason
 
     def to_json(self, self_referred=False):
         applicationDict = {

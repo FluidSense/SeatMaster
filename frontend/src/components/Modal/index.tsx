@@ -27,7 +27,7 @@ class CustomModal extends Component<IProps> {
         closeButton={false}
         contentLabel="Min modalrute"
       >
-        {text}
+        {text}<br/>
         {children}
         <div className="modalKnapper">
           <KnappBase id="modal-accept" type="flat" onClick={accept}>{_YES}</KnappBase>

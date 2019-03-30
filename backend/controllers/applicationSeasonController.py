@@ -11,6 +11,12 @@ def getCurrentSeason():
     return jsonify(currApplication.to_json()) if currApplication else Response("{}", 200)
 
 
+@applicationSeason.route("/<id>")
+def getSeasonById(id):
+    season = applicationSeasonService.getSeasonById(id)
+    return jsonify(season.to_json()) if season else Response("{}", 200)
+
+
 @applicationSeason.route("/", methods=["POST"])
 @requiresAdmin
 def createNewSeason():
@@ -48,3 +54,10 @@ def updateSeason(id):
         )
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+
+@applicationSeason.route("/all")
+def getAllSeasons():
+    seasons = applicationSeasonService.getAllSeasons()
+    seasons = list(map(lambda x: x.to_json(), seasons))
+    return jsonify(seasons) if seasons else Response("[]", 200)

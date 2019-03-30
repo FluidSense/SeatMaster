@@ -1,12 +1,13 @@
 import { AnyAction } from 'redux';
+import { IUser } from '../../API/interfaces';
 import { IApplication } from '../Application';
-import { APP_NOT_FOUND } from '../commonConstants';
 import {
   RESET_APPLICATION_STATUS,
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
 import {
+  APPROVE_ALL_APPLICATIONS,
   FETCHED_APPLICATION_DATA,
   FETCHING_APPLICATION_DATA,
   GET_ALL_APPLICATIONS,
@@ -17,11 +18,19 @@ import {
 export interface IApplicationState {
   applications: IApplication[];
   fetchingApplications: string;
-  registeredApplication: IApplication;
+  registeredApplication?: IApplication;
   api: {
     status: number,
   };
 }
+
+export const initUser: IUser = {
+  admin: false,
+  email: '',
+  fullname: '',
+  id: 0,
+  username: '',
+};
 
 const initialState: IApplicationState = {
   api: {
@@ -30,7 +39,10 @@ const initialState: IApplicationState = {
   applications: [],
   fetchingApplications: FETCHING_APPLICATION_DATA,
   registeredApplication: {
+    id: 0,
+    rank: 'OTHER',
     status: FETCHING_APPLICATION_DATA,
+    user: initUser,
   },
 };
 
@@ -43,7 +55,7 @@ export const ApplicationReducer = (
       const applications = action.payload;
       return {
         ...state,
-        applications,
+        applications: Object.values(applications),
         fetchingApplications: FETCHED_APPLICATION_DATA,
       };
     case SET_APPLICATION_DATA: {
@@ -55,7 +67,7 @@ export const ApplicationReducer = (
     case REMOVE_APPLICATION_DATA: {
       return {
         ...state,
-        registeredApplication: { status: APP_NOT_FOUND },
+        registeredApplication: undefined,
       };
     }
     case SUCCESSFULL_APPLICATION_UPDATE: {
@@ -83,6 +95,15 @@ export const ApplicationReducer = (
           ...state.api,
           status: 0,
         },
+      };
+    }
+    case APPROVE_ALL_APPLICATIONS: {
+      const updatedApps = action.payload;
+      return {
+        ...state,
+        applications: state.applications.map((app: IApplication) => {
+          return updatedApps.find((newApp: IApplication) => app.id === newApp.id) || app;
+        }),
       };
     }
     default:
