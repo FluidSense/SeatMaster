@@ -4,7 +4,7 @@ import React from 'react';
 import { ISeat } from '.';
 import Seat from './Seat';
 import './seats.css';
-import { _SEATS_EXPAND } from './strings';
+import { _INVALID_NAME, _SEATS_EXPAND } from './strings';
 
 interface IProps {
   deleteSeat: (id: number) => void;
@@ -19,7 +19,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   const seatElements = seats.map(seat => (
     <Seat
       id={seat.id}
-      name={seat.name}
+      name={seat.name || _INVALID_NAME}
       user={seat.user}
       key={seat.id}
       deleteSelf={deleteSeat}
