@@ -40,7 +40,7 @@ def test_seat_serialization(db_session):
         info="",)
     db_session.add(seat)
     db_session.commit()
-    expectedJson = dict(id=seat.id, seat_name=seat.seat_name, info=seat.info, roomId=seat.room_id, user=None)
+    expectedJson = dict(id=seat.id, name=seat.seat_name, info=seat.info, roomId=seat.room_id, user=None)
     seat = db_session.query(Seat).first()
     assert seat.to_json() == expectedJson
 
@@ -58,9 +58,9 @@ def test_two_seats_same_id(db_session):
         name="D1",
         room=room,
         info="hello im another object xP")
-    with raises(IntegrityError):
-        db_session.add(seat2)
-        db_session.commit()
+    db_session.add(seat2)
+    db_session.commit()
+    assert seat.id != seat2.id
 
 
 def test_application_connect_to_seat(db_session):

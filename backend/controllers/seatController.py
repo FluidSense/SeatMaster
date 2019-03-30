@@ -35,9 +35,7 @@ def createSeat():
 @requiresAdmin
 def renameSeat(id):
     if request.is_json:
-        form = request.get_json()
-        print(form, flush=True)
-        newName = form
+        newName = request.get_json()
         responseText, statusCode = seatService.renameSeat(id, newName)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)

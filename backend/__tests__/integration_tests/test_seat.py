@@ -84,7 +84,7 @@ class TestSeat(TestCase):
         assert make_response(
             jsonify(
                 id=2,
-                seat_name="D2",
+                name="D2",
                 roomId=room.id,
                 info='nice ship dude',
                 user=None
@@ -181,16 +181,13 @@ class TestSeat(TestCase):
             'Accept': mimetype,
             'AccessToken': self.accessToken,
         }
-        data = dict(
-            newName=newName,
-        )
         response = self.app.test_client().put(
             "http://localhost:5000/seat/" + str(seatId),
             headers=headers,
-            data=json.dumps(data))
+            data=json.dumps(newName))
+        print(response.data, flush=True)
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data
-        print(response.data, flush=True)
         assert seat.seat_name == newName
         assert seat.seat_name != oldName
 
