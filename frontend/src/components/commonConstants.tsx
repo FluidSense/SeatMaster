@@ -20,3 +20,4 @@ export const APP_NOT_FOUND = 'NOT_FOUND';
 export const APP_SUBMITTED = 'SUBMITTED';
 export const APP_DENIED = 'DENIED';
 export const APP_APPROVED = 'APPROVED';
+export const APP_WAITING = 'WAITING_LIST';
