@@ -7,7 +7,7 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IPostApplicationSeason } from '../../API/interfaces';
 import { IStore } from '../../store';
-import { fetchApplicationSeasonData } from '../ApplicationSeason/actions';
+import { fetchSeasonById } from '../ApplicationSeason/actions';
 import { IApplicationSeason } from '../ApplicationSeason/reducer';
 import DateInputField from '../DateInputField';
 import { postNewSeason, putNewSeason, resetSubmit } from './actions';
@@ -26,11 +26,17 @@ import {
 export interface IState {
   season: IApplicationSeason;
   showAlert: boolean;
+  fetched: boolean;
 }
 
-interface ILocationProps {
+interface ILinkProps {
   location: {
     season?: IApplicationSeason;
+  };
+  match: {
+    params: {
+      id: string;
+    };
   };
 }
 
@@ -42,13 +48,13 @@ export interface IStateProps {
 export interface IDispatchProps {
   submitNewSeason: (season: IPostApplicationSeason) =>
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
-  fetchSeason: () => void;
+  fetchSeason: (id: number) => void;
   updateSeason: (body: any, id: number) => void;
   reset: () => void;
 }
 
 type AlertStripeTypes = 'advarsel' | 'suksess' | 'info' | 'nav-ansatt' | 'stopp';
-type Props = IStateProps & IDispatchProps & ILocationProps;
+type Props = IStateProps & IDispatchProps & ILinkProps;
 
 // Need to be in this order to match the proper fields
 const inputTextArray = [
@@ -80,6 +86,7 @@ class _CreateSeason extends Component<Props, IState> {
     const currentTime = setTime(moment());
     const nextMonth = setTime(moment().add(1, 'month'));
     this.state = {
+      fetched: false,
       season: {
         applicationPeriodEnd: nextMonth,
         applicationPeriodStart: currentTime,
@@ -92,7 +99,19 @@ class _CreateSeason extends Component<Props, IState> {
   }
 
   public componentDidMount = async () => {
-    // this.props.fetchSeason();
+    const {
+      fetchSeason,
+      location,
+      match,
+    } = this.props;
+    const locationSeason = location.season;
+    const urlId = match.params.id;
+    if (locationSeason) {
+      this.setState({ season: locationSeason, fetched: true });
+    } else {
+      await fetchSeason(Number(urlId));
+      this.setState({ fetched: true });
+    }
   }
 
   public componentWillUnmount = () => {
@@ -119,7 +138,7 @@ class _CreateSeason extends Component<Props, IState> {
   public render() {
     const { submitted } = this.props;
     if (submitted) return (<Redirect to="/admin/applications" />);
-    const { season, showAlert } = this.state;
+    const { season, showAlert, fetched } = this.state;
     const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
     const errorPeriodEndBeforeStart =
       applicationPeriodEnd <= applicationPeriodStart
@@ -149,6 +168,7 @@ class _CreateSeason extends Component<Props, IState> {
         submitSeason={submitSeason}
         alert={alertFail}
         season={season}
+        fetched={fetched}
       />
     );
   }
@@ -217,7 +237,7 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchSeason: () => dispatch(fetchApplicationSeasonData()),
+  fetchSeason: (id: number) => dispatch(fetchSeasonById(id)),
   reset: () => dispatch(resetSubmit()),
   submitNewSeason: (body: any) => dispatch(postNewSeason(body)),
   updateSeason: (body: any, id: number) => dispatch(putNewSeason(body, id)),
