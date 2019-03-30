@@ -8,3 +8,6 @@ export const FETCHED_APPLICATION_DATA = 'FETCHED_APPLICATION_DATA';
 export const APPROVE_ALL_APPLICATIONS = 'APPROVE_ALL_APPLICATIONS';
 export const SUCCESSFULLY_APPROVED_ALL_STUDENTS = 'SUCCESSFULLY_APPROVED_ALL_STUDENTS';
 export const _APPROVE_STUDENTS_WARNING = 'This will approve the current users:';
+export const WAITING_LIST_ALL_APPLICAITONS = 'WAITING_LIST_ALL_APPLICAITONS';
+// tslint:disable-next-line:max-line-length
+export const _WAITING_LIST_WARNING = 'This will put the following applications on the waiting list:';

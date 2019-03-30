@@ -3,6 +3,8 @@ import React from 'react';
 import { IApplication } from '../Application';
 import { APP_APPROVED } from '../commonConstants';
 import Modal from '../Modal';
+import { _WAITING_LIST_WARNING } from './constants';
+import { _PUT_ON_WAITING_LIST } from './strings';
 
 interface IProps {
   applications: IApplication[];
@@ -22,6 +24,9 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
   }
 
   public waitingListAllStudents = () => {
+    const waiters = this.props.applications.filter(app => app.seat ? false : true);
+    const ids = waiters.map(app => app.id);
+    this.props.putWaiting(ids);
     this.toggleModal();
   }
 
@@ -31,6 +36,14 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
     });
     const waiterStudents = waiters.map((app, i) =>
     <li key={i}>{app.user.username}</li>);
+    const modalText = (
+      <>
+        <p>{_PUT_ON_WAITING_LIST}</p>
+        <ul>
+          {waiterStudents}
+        </ul>
+      </>
+    );
 
     return(
       <div>
@@ -39,7 +52,7 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
           htmlType="submit"
           onClick={this.toggleModal}
         >
-          Her ska det runkas
+          {_PUT_ON_WAITING_LIST}
         </KnappBase>
         <Modal
           modalOpen={this.state.modalOpen}
@@ -47,7 +60,7 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
           accept={this.waitingListAllStudents}
           close={this.toggleModal}
         >
-          {waiterStudents}
+          {modalText}
         </Modal>
       </div>
     );

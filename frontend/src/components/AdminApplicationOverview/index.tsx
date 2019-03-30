@@ -22,6 +22,7 @@ interface IDispatchProps {
   getRooms: () => ThunkAction<void, {}, {}, AnyAction>;
   approve: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
   close: () => void;
+  putWaiting: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
 }
 
 interface IState {
@@ -61,6 +62,7 @@ class _Container extends React.Component<Props, IState> {
         rooms={this.props.rooms}
         fetching={this.props.fetching}
         approve={this.props.approve}
+        putWaiting={this.props.putWaiting}
       />);
   }
 

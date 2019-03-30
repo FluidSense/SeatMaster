@@ -16,6 +16,7 @@ import {
   GET_ALL_APPLICATIONS,
   REMOVE_APPLICATION_DATA,
   SET_APPLICATION_DATA,
+  WAITING_LIST_ALL_APPLICAITONS,
 } from './constants';
 
 export interface IApplicationState {
@@ -121,6 +122,15 @@ export const ApplicationReducer = (
         ...state,
         applications: state.applications.map((app: IApplication) => {
           return updatedApps.find((newApp: IApplication) => app.id === newApp.id) || app;
+        }),
+      };
+    }
+    case WAITING_LIST_ALL_APPLICAITONS: {
+      const updatedApps = action.payload;
+      return {
+        ...state,
+        applications: state.applications.map((app: IApplication) => {
+          return updatedApps.find((newApp: IApplication) => app.id === newApp.id) || app;
         }),
       };
     }
