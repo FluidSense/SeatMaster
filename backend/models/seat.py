@@ -3,9 +3,6 @@ from shared import db
 
 class Seat(db.Model):
     __tablename__ = "seats"
-    __table_args__ = (
-        db.UniqueConstraint("room_id", "seat_name"),
-    )
 
     id = db.Column(
         "seat_id",
