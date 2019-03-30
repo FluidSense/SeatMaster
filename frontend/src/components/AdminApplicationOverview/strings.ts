@@ -4,3 +4,4 @@ export const _LINK_MASTER_STATUS = 'Master Status';
 export const _APPLICATIONS_TITLE = 'Applications';
 export const _LINK_SEAT_STATUS = 'Seat';
 export const _LINK_ROOM_STATUS = 'Room';
+export const _APPROVE_APPLICATIONS = 'Approve Applications';

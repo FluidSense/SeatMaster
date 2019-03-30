@@ -1,40 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { fetchAllApplications } from '../AdminApplicationOverview/actions';
 import { IApplication } from '../Application';
-import ApplicationOverview from '../ApplicationReview/ApplicationOverview';
-import AssignSeat from '../AssignSeat';
 import { removeStudent } from '../AssignSeat/actions';
 import { APP_NOT_FOUND } from '../commonConstants';
+import { updateSingleApplication } from '../EditApplication/actions';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import Page404 from '../Page404';
 import { IRoom, ISeat } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import { fetchApplicationDirectly, resetPageStatus } from './actions';
-import ApplicationSeatDisplay from './ApplicationSeatDisplay';
+import { resetPageStatus } from './actions';
 import Presentational from './Presentational';
 
-export interface IAdminApplication extends IApplication {
-  seat?: ISeat;
-}
-
-interface IStateToProps {
-  fetchedApplication?: IApplication;
-  rooms: IRoom[];
-  status: number;
-}
-
 interface IStateProps {
+  rooms: IRoom[];
   seatInfo?: ISeat;
   modalOpen: boolean;
-}
-
-interface ILinkProps {
-  location: {
-    application?: IApplication;
-    rooms?: IRoom[];
-  };
+  applications: IApplication[];
   match: {
     params: {
       id: string;
@@ -44,89 +29,71 @@ interface ILinkProps {
 
 interface IDispatchProps {
   removeStudentFromSeat: (roomId: number, seatId: string) => void;
-  fetchApplication: (id: number) => void;
+  fetchApplications: () => void;
   fetchRooms: () => void;
   resetStatus: () => void;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
 interface IState {
-  application?: IApplication;
-  fetched: boolean;
-  rooms: IRoom[];
+  fetchedApplications: boolean;
+  fetchedRooms: boolean;
 }
 
-type Props = IStateProps & ILinkProps & IDispatchProps & IStateToProps;
+type Props = IStateProps & IDispatchProps;
 
 // tslint:disable-next-line:variable-name
 class AdminApplication extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      application: undefined,
-      fetched: false,
-      rooms: [],
+      fetchedApplications: false,
+      fetchedRooms: false,
     };
   }
 
-  public componentDidMount = async () => {
-    const {
-      fetchApplication,
-      fetchRooms,
-      location,
-    } = this.props;
-    const locationApplication = location.application;
-    const locationRooms = location.rooms;
-    const urlId = this.props.match.params.id;
-    if (locationRooms) this.setState({ rooms: locationRooms });
-    else await fetchRooms();
-    if (locationApplication) {
-      this.setState({ application: locationApplication });
-    } else {
-      await fetchApplication(Number(urlId));
-      this.setState({ fetched: true });
+  public componentDidMount() {
+    if (!this.props.applications.length && !this.state.fetchedApplications) {
+      this.setState({ fetchedApplications: true });
+      this.props.fetchApplications();
+    }
+    if (!this.props.rooms.length && !this.state.fetchedRooms) {
+      this.setState({ fetchedRooms: true });
+      this.props.fetchRooms();
     }
   }
-
-  public componentDidUpdate = (prevProps: Props, prevState: IState) => {
-    const { fetchedApplication } = this.props;
-    const { fetched, rooms } = this.state;
-    if (prevState.fetched !== fetched
-      && fetchedApplication
-      && fetchedApplication.status !== APP_NOT_FOUND) {
-      this.setState({ application: fetchedApplication });
-    }
-    if (this.props.rooms !== rooms) this.setState({ rooms: this.props.rooms });
-  }
-
-  public componentWillUnmount = () => this.props.resetStatus();
 
   public render() {
-    const { removeStudentFromSeat, status } = this.props;
-    const { application, rooms } = this.state;
-    if (status === 404) return <Page404 />;
-    if (!(application && rooms) || !rooms.length) return <LoadingPageSpinner />;
+    const { removeStudentFromSeat, applications, rooms, updateApplication } = this.props;
+    const { id } = this.props.match.params;
+    const application = applications.find(app => app.id === Number(id));
+    if (!(applications.length && rooms)) return <LoadingPageSpinner />;
+    if (!application) return <Page404 />;
     return (
        <Presentational
         application={application}
         rooms={rooms}
         removeStudentFromSeat={removeStudentFromSeat}
+        updateApplication={updateApplication}
        />
     );
   }
 }
 
 const mapStateToProps = (state: IStore) => ({
-  fetchedApplication: state.adminReviewApplication.application,
+  applications: state.applications.applications,
   rooms: state.rooms.rooms,
-  status: state.adminReviewApplication.api.status,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchApplication: (id: number) => dispatch(fetchApplicationDirectly(id)),
+  fetchApplications: () => dispatch(fetchAllApplications()),
   fetchRooms: () => dispatch(fetchAllRooms()),
   removeStudentFromSeat: (roomId: number, seatId: string) =>
     dispatch(removeStudent(roomId, seatId)),
   resetStatus: () => dispatch(resetPageStatus()),
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => {
+    return dispatch(updateSingleApplication(id, app));
+  },
 });
 
 const Container = connect(

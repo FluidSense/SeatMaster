@@ -2,9 +2,11 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import AdminApplication from '../../components/AdminApplication';
+import { initUser } from '../../components/AdminApplicationOverview/reducer';
 import { IApplication } from '../../components/Application';
 import ApplicationOverview from '../../components/ApplicationReview/ApplicationOverview';
 import { APP_NOT_FOUND, APP_SUBMITTED } from '../../components/commonConstants';
@@ -17,13 +19,18 @@ describe('admin application container', () => {
   it('renders nothing correctly', () => {
     const store = mockStore({
       adminReviewApplication: { application: noApplication, api: { status: 0 } },
-      applications: [],
-      rooms: [],
+      applications: {
+        applications: [],
+      },
+      rooms: {
+        rooms: [],
+      },
     });
-    const location = {};
     const wrapper = mount(
       <Provider store={store}>
-        <AdminApplication modalOpen={false} location={location} match={match} />
+        <Router>
+          <AdminApplication modalOpen={false} match={match} />
+        </Router>
       </Provider>);
     const overview = wrapper.find(ApplicationOverview);
     expect(overview.length).toBe(0);
@@ -39,11 +46,10 @@ describe('admin application container', () => {
       },
     };
     const application: IApplication = {
+      id: 0,
+      rank: 'OTHER',
       status: APP_SUBMITTED,
-    };
-    const location = {
-      application,
-      rooms: [room],
+      user: initUser,
     };
     const seat1 = {
       id: 'b2',
@@ -63,13 +69,19 @@ describe('admin application container', () => {
         api: { status: 0 },
         application: { status: APP_SUBMITTED },
       },
-      applications: [application],
+      applications: {
+        applications: [application],
+      },
       assignSeat: { seat: seat1 },
-      rooms: [room],
+      rooms: {
+        rooms: [room],
+      },
     });
     const wrapper = mount(
       <Provider store={store}>
-        <AdminApplication modalOpen={false} location={location} match={match}/>
+       <Router>
+         <AdminApplication modalOpen={false} match={match}/>
+       </Router>
       </Provider >);
     expect(wrapper.isEmptyRender()).toBeFalsy();
   });

@@ -46,6 +46,7 @@ class Presentational extends React.Component<IProps, IState> {
     );
     return (
       <>
+      <div className="assign-seat">
         <Innholdstittel>{_TITLE}</Innholdstittel>
         <form onSubmit={this.submitSeatSelection}>
           <RoomPicker rooms={rooms} setSelected={this.setRoom} />
@@ -64,6 +65,7 @@ class Presentational extends React.Component<IProps, IState> {
             {_TITLE}
           </KnappBase>
         </form>
+      </div>
         <Modal
           modalOpen={modalOpen}
           toggleModal={toggleModal}
