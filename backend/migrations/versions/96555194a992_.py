@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 91d6388a4976
+Revision ID: 96555194a992
 Revises: 
-Create Date: 2019-03-29 09:02:33.336956
+Create Date: 2019-03-30 18:40:15.747430
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '91d6388a4976'
+revision = '96555194a992'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -45,11 +45,10 @@ def upgrade():
     op.create_table('seats',
     sa.Column('seat_id', sa.Integer(), nullable=False),
     sa.Column('room_id', sa.Integer(), nullable=False),
-    sa.Column('seat_name', sa.String(length=2), nullable=True),
+    sa.Column('seat_name', sa.String(length=10), nullable=True),
     sa.Column('info', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.room_id'], ),
-    sa.PrimaryKeyConstraint('seat_id'),
-    sa.UniqueConstraint('room_id', 'seat_name')
+    sa.PrimaryKeyConstraint('seat_id')
     )
     op.create_table('application',
     sa.Column('application_id', sa.Integer(), nullable=False),
@@ -57,12 +56,15 @@ def upgrade():
     sa.Column('status', sa.Enum('SUBMITTED', 'APPROVED', 'DECLINED', name='applicationstatus'), nullable=False),
     sa.Column('rank', sa.Enum('WRITING_MASTER', 'PROJECT_ASSIGNMENT', 'MASTER_STUDENT', 'BACHELOR_STUDENT', 'OTHER', name='rank'), nullable=True),
     sa.Column('comments', sa.String(length=100), nullable=True),
+    sa.Column('applicationSeasonId', sa.Integer(), nullable=True),
+    sa.Column('queuePlacement', sa.Integer(), nullable=True),
     sa.Column('userid', sa.Integer(), nullable=True),
     sa.Column('applies_with', sa.String(length=50), nullable=True),
     sa.Column('partnerApplicationId', sa.Integer(), nullable=True),
     sa.Column('preferredRoom', sa.String(length=50), nullable=True),
     sa.Column('seatRollover', sa.Boolean(), nullable=True),
     sa.Column('seat_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['applicationSeasonId'], ['application_season.application_season_id'], ),
     sa.ForeignKeyConstraint(['partnerApplicationId'], ['application.application_id'], ),
     sa.ForeignKeyConstraint(['seat_id'], ['seats.seat_id'], ),
     sa.ForeignKeyConstraint(['userid'], ['users.userid'], ),
