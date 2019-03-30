@@ -34,13 +34,12 @@ const Presentational: FunctionComponent<IProps> = (props) => {
     ));
   return (
     <div className="main-content">
-      <Sidetittel>
-        {_APPLICATIONS_TITLE}
-      </Sidetittel>
-      <ApproveSeated
-        applications={applications}
-        approve={approve}
-      />
+      <div className="title-and-button">
+        <Sidetittel>
+          {_APPLICATIONS_TITLE}
+        </Sidetittel>
+        <ApproveSeated approve={approve} applications={applications}/>
+      </div>
       <SearchBar filterFunction={filterFunction}/>
       {applicationList}
     </div>

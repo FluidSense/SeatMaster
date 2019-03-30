@@ -67,9 +67,8 @@ class AdminApplication extends Component<Props, IState> {
     const { removeStudentFromSeat, applications, rooms, updateApplication } = this.props;
     const { id } = this.props.match.params;
     const application = applications.find(app => app.id === Number(id));
-    if (!(applications.length && rooms) || !rooms.length) return <LoadingPageSpinner />;
+    if (!(applications.length && rooms)) return <LoadingPageSpinner />;
     if (!application) return <Page404 />;
-
     return (
        <Presentational
         application={application}
