@@ -38,7 +38,6 @@ import {
   IPostRoom,
   IPostSeat,
   IPutUserOnSeat,
-  IRemoveStudentFromSeat,
   IUser,
 } from './interfaces';
 

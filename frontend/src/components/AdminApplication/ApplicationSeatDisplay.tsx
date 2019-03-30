@@ -9,13 +9,13 @@ import { _CURRENT_SEAT, _REMOVE_FROM_SEAT } from './strings';
 interface IProps {
   room?: IRoom;
   seat?: ISeat;
-  removeFromSeat: (roomId: number, seatId: number) => void;
+  removeFromSeat: (seatId: number) => void;
 }
 
 const ApplicationSeatDisplay: React.FunctionComponent<IProps> = (props) => {
   const { room, seat, removeFromSeat } = props;
   if (!(room && seat)) return null;
-  const onClick = () => removeFromSeat(room.id, seat.id);
+  const onClick = () => removeFromSeat(seat.id);
   return (
     <div className="application-room">
       <Innholdstittel>{_CURRENT_SEAT}</Innholdstittel>

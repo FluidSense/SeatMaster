@@ -29,7 +29,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  removeStudentFromSeat: (roomId: number, seatId: string) => void;
+  removeStudentFromSeat: (seatId: number) => void;
   fetchApplications: () => void;
   fetchRooms: () => void;
   resetStatus: () => void;

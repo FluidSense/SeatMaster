@@ -47,7 +47,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
     const userOptions = this.usersToOption(users);
     return (
       <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-        <PanelBase border={true}>{seat.id}</PanelBase>
+        <PanelBase border={true}>{seat.name}</PanelBase>
         <Select label="" onChangeCapture={this.selectUser}>
           <option value="">Select user</option>
           {userOptions}
