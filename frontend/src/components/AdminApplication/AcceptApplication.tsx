@@ -20,7 +20,12 @@ const AcceptApplication: React.FunctionComponent<IProps> = (props) => {
       props.updateApplication(application.id, updated);
     };
     return (
-      <KnappBase id="revoke-approve-btn" type="hoved" onClick={approve}>
+      <KnappBase
+        id="revoke-approve-btn"
+        type="hoved"
+        onClick={approve}
+        disabled={application.seat ? false : true}
+      >
         {_APPROVE_APP}
       </KnappBase>
     );
