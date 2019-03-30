@@ -3,7 +3,7 @@ import PanelBase, { Panel } from 'nav-frontend-paneler';
 import { Select } from 'nav-frontend-skjema';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import { _ASSIGN_SEAT } from './strings';
 
 interface IProps {
@@ -36,7 +36,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
 
     if (seat.user) {
       return (
-        <Panel border={true} style={{ display:'flex', width:'35%' }}>
+        <Panel border={true} style={{ display: 'flex', width: '35%' }}>
           <PanelBase border={true}>{seat.id}</PanelBase>
           <PanelBase border={true}>{seat.user.username}</PanelBase>
           <KnappBase type="fare" onClick={this.delete}>X</KnappBase>
@@ -46,7 +46,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
     if (!users) return null;
     const userOptions = this.usersToOption(users);
     return (
-      <Panel border={true} style={{ display:'flex', width:'35%' }}>
+      <Panel border={true} style={{ display: 'flex', width: '35%' }}>
         <PanelBase border={true}>{seat.id}</PanelBase>
         <Select label="" onChangeCapture={this.selectUser}>
           <option value="">Select user</option>

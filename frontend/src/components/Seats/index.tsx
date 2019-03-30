@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { IPostSeat } from '../../API/interfaces';
+import { IPostSeat, IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
@@ -11,6 +11,7 @@ export interface ISeat {
   info: string;
   name: string;
   roomId: number;
+  user?: IUser;
 }
 
 interface IState {

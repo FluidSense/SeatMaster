@@ -1,8 +1,8 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { ISeat } from '.';
 import { deleteSeat, postSeat, updateSeatName } from '../../API/calls';
 import { IPostSeat } from '../../API/interfaces';
-import { ISeat } from '../ViewRooms';
 import { CREATE_SEAT, DELETE_SEAT, UPDATE_SEAT } from './constants';
 
 const seatCreated = (success: boolean, seat?: ISeat) => ({

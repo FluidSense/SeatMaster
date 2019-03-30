@@ -1,7 +1,7 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '.';
 import Seat from './Seat';
 import './seats.css';
 import { _SEATS_EXPAND } from './strings';

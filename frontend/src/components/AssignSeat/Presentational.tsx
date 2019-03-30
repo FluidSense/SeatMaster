@@ -3,7 +3,8 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { _CHANGE_STUDENT_WARNING } from '../AdminApplication/strings';
 import Modal from '../Modal';
-import { IRoom, ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import RoomPicker from './RoomPicker';
 import SeatPicker from './SeatPicker';
 
@@ -46,26 +47,26 @@ class Presentational extends React.Component<IProps, IState> {
     );
     return (
       <>
-      <div className="assign-seat">
-        <Innholdstittel>{_TITLE}</Innholdstittel>
-        <form onSubmit={this.submitSeatSelection}>
-          <RoomPicker rooms={rooms} setSelected={this.setRoom} />
-          <SeatPicker
-            seats={selectedRoom ? selectedRoom.seats.seats : undefined}
-            setSelected={this.setSeat}
-          />
-          <KnappBase
-            id="submit-application"
-            type="hoved"
-            htmlType="submit"
-            autoDisableVedSpinner={true}
-            spinner={false}
-            disabled={this.state.selectedSeat ? false : true}
-          >
-            {_TITLE}
-          </KnappBase>
-        </form>
-      </div>
+        <div className="assign-seat">
+          <Innholdstittel>{_TITLE}</Innholdstittel>
+          <form onSubmit={this.submitSeatSelection}>
+            <RoomPicker rooms={rooms} setSelected={this.setRoom} />
+            <SeatPicker
+              seats={selectedRoom ? selectedRoom.seats.seats : undefined}
+              setSelected={this.setSeat}
+            />
+            <KnappBase
+              id="submit-application"
+              type="hoved"
+              htmlType="submit"
+              autoDisableVedSpinner={true}
+              spinner={false}
+              disabled={this.state.selectedSeat ? false : true}
+            >
+              {_TITLE}
+            </KnappBase>
+          </form>
+        </div>
         <Modal
           modalOpen={modalOpen}
           toggleModal={toggleModal}

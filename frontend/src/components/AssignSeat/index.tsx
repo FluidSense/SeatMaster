@@ -5,14 +5,15 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IApplication } from '../Application';
-import { IRoom, ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import { assignUserToSeat, checkSeatIsOccupied, removeStudent } from './actions';
 import Presentational from './Presentational';
 
 interface IDispatchProps {
   assignSeat: (user: IUser, seat: ISeat) =>
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
-  fetchSeatInfo: (roomId: number, seatId: string) => void;
+  fetchSeatInfo: (seatId: number) => void;
   removeStudentFromSeat: (roomId: number, seatId: string) => void;
 }
 
@@ -72,7 +73,7 @@ class _Container extends React.Component<Props, IOwnState> {
 
   private checkIfSeatOccupied = async (room: IRoom, seat: ISeat) => {
     const { fetchSeatInfo } = this.props;
-    await fetchSeatInfo(room.id, seat.id);
+    await fetchSeatInfo(seat.id);
   }
 
   private changeStudentSeats = async () => {
@@ -103,10 +104,10 @@ const mapStateToProps = (state: IStore) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   assignSeat: (user: IUser, seat: ISeat) =>
     dispatch(assignUserToSeat(user, seat)),
-  fetchSeatInfo: (roomId: number, seatId: string) =>
-    dispatch(checkSeatIsOccupied(roomId, seatId)),
-  removeStudentFromSeat: (roomId: number, seatId: string) =>
-    dispatch(removeStudent(roomId, seatId)),
+  fetchSeatInfo: (seatId: number) =>
+    dispatch(checkSeatIsOccupied(seatId)),
+  removeStudentFromSeat: (seatId: number) =>
+    dispatch(removeStudent(seatId)),
 });
 
 const Container = connect(

@@ -7,7 +7,7 @@ import {
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import { REMOVE_STUDENT_SUCCESS, SUCCESSFULL_SEAT_ASSIGNMENT } from './../AssignSeat/constants';
 import {
   APPROVE_ALL_APPLICATIONS,

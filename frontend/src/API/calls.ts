@@ -1,6 +1,7 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
-import { IRoom, ISeat } from '../components/ViewRooms';
+import { ISeat } from '../components/Seats';
+import { IRoom } from '../components/ViewRooms';
 import {
   deleteJson,
   elevatedDeleteJson,
@@ -124,12 +125,12 @@ export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
   return elevatedPutJson(ASSIGN_SEAT_URL, data);
 };
 
-export const removeStudentFromSeat = (data: IRemoveStudentFromSeat): PromiseLike<ISeat> => {
-  return elevatedPutJson(REMOVE_STUDENT_FROM_SEAT_URL, data);
+export const removeStudentFromSeat = (seatId: number): PromiseLike<ISeat> => {
+  return elevatedPutJson(REMOVE_STUDENT_FROM_SEAT_URL, seatId);
 };
 
-export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
-  return elevatedGetJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
+export const getSeat = (seatId: number): PromiseLike<ISeat> => {
+  return elevatedGetJson(`${GET_SEAT_URL}${seatId}`);
 };
 
 export const postSeat = (data: IPostSeat): PromiseLike<ISeat> => {

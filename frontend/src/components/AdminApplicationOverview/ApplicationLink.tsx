@@ -4,7 +4,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { IApplication } from '../Application';
 import { APP_APPROVED, APP_DENIED, APP_NOT_FOUND, APP_SUBMITTED } from '../commonConstants';
-import { IRoom, ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import { ROUTE_TO } from './constants';
 import {
   _LINK_APP_STATUS,

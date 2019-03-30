@@ -2,13 +2,14 @@ import KnappBase from 'nav-frontend-knapper';
 import { Input } from 'nav-frontend-skjema';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { IRoom, ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import { _CURRENT_SEAT, _REMOVE_FROM_SEAT } from './strings';
 
 interface IProps {
   room?: IRoom;
   seat?: ISeat;
-  removeFromSeat: (roomId: number, seatId: string) => void;
+  removeFromSeat: (roomId: number, seatId: number) => void;
 }
 
 const ApplicationSeatDisplay: React.FunctionComponent<IProps> = (props) => {
@@ -17,7 +18,7 @@ const ApplicationSeatDisplay: React.FunctionComponent<IProps> = (props) => {
   const onClick = () => removeFromSeat(room.id, seat.id);
   return (
     <div className="application-room">
-    <Innholdstittel>{_CURRENT_SEAT}</Innholdstittel>
+      <Innholdstittel>{_CURRENT_SEAT}</Innholdstittel>
       <Input
         label={'Room'}
         disabled={true}
