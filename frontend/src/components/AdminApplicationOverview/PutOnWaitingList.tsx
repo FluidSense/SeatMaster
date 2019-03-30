@@ -1,7 +1,7 @@
 import KnappBase from 'nav-frontend-knapper';
 import React from 'react';
 import { IApplication } from '../Application';
-import { APP_APPROVED } from '../commonConstants';
+import { APP_APPROVED, APP_WAITING } from '../commonConstants';
 import Modal from '../Modal';
 import './adminApplicationOverview.css';
 import { _WAITING_LIST_WARNING } from './constants';
@@ -33,13 +33,13 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
 
   public render() {
     const waiters = this.props.applications.filter((app: IApplication) => {
-      return app.status !== APP_APPROVED ? true : false;
+      return app.status !== APP_WAITING && app.status !== APP_APPROVED ? true : false;
     });
     const waiterStudents = waiters.map((app, i) =>
     <li key={i}>{app.user.username}</li>);
     const modalText = (
       <>
-        <p>{_PUT_ON_WAITING_LIST}</p>
+        <p>{_WAITING_LIST_WARNING}</p>
         <ul>
           {waiterStudents}
         </ul>
