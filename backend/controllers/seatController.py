@@ -36,9 +36,8 @@ def createSeat():
 def renameSeat(id):
     if request.is_json:
         form = request.get_json()
-        print('alskjdlaksjdlkjs', flush=True)
         print(form, flush=True)
-        newName = form.get("newName")
+        newName = form
         responseText, statusCode = seatService.renameSeat(id, newName)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)

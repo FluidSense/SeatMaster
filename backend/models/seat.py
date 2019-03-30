@@ -43,7 +43,7 @@ class Seat(db.Model):
     def to_json(self, refer_user=True):
         seatDict = {
             "id": self.id,
-            "seat_name": self.seat_name,
+            "name": self.seat_name,
             "info": self.info,
             "roomId": self.room.id,
         }
