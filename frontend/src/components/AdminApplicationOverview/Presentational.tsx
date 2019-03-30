@@ -8,6 +8,7 @@ import { IRoom } from '../ViewRooms';
 import ApplicationLink from './ApplicationLink';
 import ApproveSeated from './ApproveSeated';
 import { FETCHING_APPLICATION_DATA } from './constants';
+import PutOnWaitingList from './PutOnWaitingList';
 import { _APPLICATIONS_TITLE } from './strings';
 
 interface IProps {
@@ -16,6 +17,7 @@ interface IProps {
   fetching: string;
   approve: (ids: number[]) => void;
   filterFunction: (event: searchBarEvent) => void;
+  putWaiting: (ids: number[]) => void;
 }
 const title = <Sidetittel>{_APPLICATIONS_TITLE}</Sidetittel>;
 const emptyPage = (filterFunction: (event: searchBarEvent) => void) => (
@@ -26,7 +28,7 @@ const emptyPage = (filterFunction: (event: searchBarEvent) => void) => (
 const emptyPageWithLoader = (<TitleAndSpinner title={_APPLICATIONS_TITLE}/>);
 
 const Presentational: FunctionComponent<IProps> = (props) => {
-  const { applications, rooms, fetching, filterFunction, approve } = props;
+  const { applications, rooms, fetching, filterFunction, approve, putWaiting } = props;
   if (fetching === FETCHING_APPLICATION_DATA) return emptyPageWithLoader;
   if (!applications || !applications.length) return emptyPage(filterFunction);
   const applicationList = applications.map(application => (
@@ -38,6 +40,7 @@ const Presentational: FunctionComponent<IProps> = (props) => {
         <Sidetittel>
           {_APPLICATIONS_TITLE}
         </Sidetittel>
+        <PutOnWaitingList putWaiting={putWaiting} applications={applications}/>
         <ApproveSeated approve={approve} applications={applications}/>
       </div>
       <SearchBar filterFunction={filterFunction}/>
