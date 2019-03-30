@@ -1,7 +1,7 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
-import { ISeat } from './index';
+import { ISeat } from '../ViewRooms';
 import Seat from './Seat';
 import './seats.css';
 import { _SEATS_EXPAND } from './strings';
@@ -20,6 +20,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <Seat
       id={seat.id}
       name={seat.name}
+      user={seat.user}
       key={seat.id}
       deleteSelf={deleteSeat}
       updateSelf={updateSeat}

@@ -16,6 +16,7 @@ def createRoomWithSeats(db_session):
 def test_rooms_are_connected_to_seats(db_session):
     room, seat1, seat2 = createRoomWithSeats(db_session)
     assert room.seats == [seat1, seat2]
+    assert seat1.room == room
 
 
 def test_cascading(db_session):

@@ -8,22 +8,22 @@ import { editAlert } from '../EditApplication/Presentational';
 import { _TITLE_EDIT_APPLICATION } from './strings';
 
 interface IDispatchProps {
-  updateSelfApplication: (id: number, application: IPostApplicationForm) => void;
+  updateApplication: (application: IPostApplicationForm) => void;
   resetStatus: () => void;
 }
 
 interface IStateProps {
-  application: IApplication;
+  application?: IApplication;
   status: number;
 }
 
 type Props = IDispatchProps & IStateProps;
 
 const Presentational: React.FunctionComponent<Props> = (props) => {
-  const { application, status, resetStatus, updateSelfApplication } = props;
-
+  const { application, status, resetStatus, updateApplication } = props;
+  if (!application) return null;
   const finalize = (input: IPostApplicationForm) => {
-    if (application.id) updateSelfApplication(application.id, input);
+    if (application.id) updateApplication(input);
   };
 
   if (status === 200) {

@@ -2,10 +2,13 @@ from models.application import Application
 from models.user import User
 from models.room import Room
 from models.seat import Seat
+from models.applicationSeason import ApplicationSeason
 from utils.enums import Rank, ApplicationStatus
+from __tests__.testUtils.models import createBasicSeason
 
 
 def test_add_application_without_partner(db_session):
+    season = createBasicSeason(db_session)
     testuser1 = User(username="Powerking", sub="sub", email="email", fullname="Asbjørn ELEVG baby")
     db_session.add(testuser1)
     db_session.commit()
@@ -18,6 +21,7 @@ def test_add_application_without_partner(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     db_session.add(application)
     db_session.commit()
@@ -28,6 +32,7 @@ def test_add_application_without_partner(db_session):
 
 
 def test_proper_user_serialization(db_session):
+    season = createBasicSeason(db_session)
     testuser1 = User(username="Powerking", sub="sub", email="email", fullname="Asbjørn ELEVG baby")
     db_session.add(testuser1)
     application = Application(
@@ -39,6 +44,7 @@ def test_proper_user_serialization(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     db_session.add(application)
     db_session.commit()
@@ -47,6 +53,7 @@ def test_proper_user_serialization(db_session):
 
 
 def test_users_connect_each_other(db_session):
+    season = createBasicSeason(db_session)
     testuser1 = User(username="Powerking", sub="sub", email="email", fullname="Asbjørn ELEVG baby")
     testuser2 = User(username="Powerkings", sub="subs", email="emails", fullname="Asbjørns ELEVGs babys")
     db_session.add(testuser1)
@@ -60,6 +67,7 @@ def test_users_connect_each_other(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     application1 = Application(
         needs="",
@@ -70,6 +78,7 @@ def test_users_connect_each_other(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     application1.partnerApplication = application2
     application2.partnerApplication = application1
@@ -83,6 +92,7 @@ def test_users_connect_each_other(db_session):
 
 
 def test_application_connect_to_seat(db_session):
+    season = createBasicSeason(db_session)
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
@@ -101,6 +111,7 @@ def test_application_connect_to_seat(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     db_session.add(application)
     db_session.commit()
@@ -110,7 +121,31 @@ def test_application_connect_to_seat(db_session):
     assert seat.application is application
 
 
+def test_application_connect_to_season(db_session):
+    season = createBasicSeason(db_session)
+    user = User(username="yoyoyo", sub="sub", email="email", fullname="schnep scmep")
+    db_session.add(user)
+    application = Application(
+        needs="",
+        comments="",
+        user=user,
+        partnerUsername="",
+        preferredRoom="d1",
+        seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
+    )
+    db_session.add(season)
+    db_session.add(application)
+    db_session.commit()
+    dbseason = db_session.query(ApplicationSeason).first()
+    assert application.applicationSeason == season
+    assert dbseason.applications == [application]
+
+
 def test_cascading_user(db_session):
+    season = createBasicSeason(db_session)
     user = User(username="yoo", sub="sub", email="email", fullname="Dudeman")
     application = Application(
         needs="needs",
@@ -121,6 +156,7 @@ def test_cascading_user(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
 
     db_session.add(user)
@@ -135,6 +171,7 @@ def test_cascading_user(db_session):
 
 
 def test_cascading_partnerApplication(db_session):
+    season = createBasicSeason(db_session)
     user1 = User(username="August", sub="sub", email="email", fullname="Solvæng")
     application1 = Application(
         needs="needs",
@@ -145,6 +182,7 @@ def test_cascading_partnerApplication(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     user2 = User(username="Øggøst", sub="sub2", email="email2", fullname="Sålvong")
     application2 = Application(
@@ -155,7 +193,9 @@ def test_cascading_partnerApplication(db_session):
         preferredRoom="pref",
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
-        status=ApplicationStatus.SUBMITTED,)
+        status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
+    )
     db_session.add(user1)
     db_session.add(user2)
     db_session.add(application1)
@@ -172,6 +212,7 @@ def test_cascading_partnerApplication(db_session):
 
 
 def test_cascading_seat(db_session):
+    season = createBasicSeason(db_session)
     user = User(username="yoo", sub="sub", email="email", fullname="Man Man McMan")
     application = Application(
         needs="needs",
@@ -182,6 +223,7 @@ def test_cascading_seat(db_session):
         seatRollover=True,
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
     )
     room = Room(name="room", info="info")
     seat = Seat(name="d1", room=room, info="info")

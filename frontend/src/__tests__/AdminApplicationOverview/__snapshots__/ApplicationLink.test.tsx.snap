@@ -8,7 +8,7 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
   linkCreator={[Function]}
 >
   <div
-    className="application-link"
+    className="lenkepanel-applications"
   >
     <div
       className="link-name"
@@ -31,20 +31,20 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
       <Element>
         Application Status
       </Element>
-      Waiting list
+      SUBMITTED
     </div>
     <div
       className="link-room"
     >
       <Element>
-        Allocated room
+        Room
       </Element>
     </div>
     <div
       className="link-seat"
     >
       <Element>
-        Allocated seat
+        Seat
       </Element>
     </div>
   </div>

@@ -9,6 +9,7 @@ export interface IPostApplicationForm {
 
 export interface IPostAdminApplicationForm extends IPostApplicationForm {
   masterStatus?: string;
+  status?: string;
 }
 
 export interface IPostApplicationSeason {

@@ -1,6 +1,7 @@
 import KnappBase from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import React, { Component } from 'react';
+import './modal.css';
 import { _NO, _YES } from './strings';
 
 interface IProps {
@@ -20,21 +21,19 @@ class CustomModal extends Component<IProps> {
     const { modalOpen, toggleModal, close, accept, text, children } = this.props;
     if (!modalOpen) return null;
     return (
-      <>
-        <Modal
-          isOpen={modalOpen}
-          onRequestClose={toggleModal}
-          closeButton={false}
-          contentLabel="Min modalrute"
-        >
-          {text}
-          {children}
-          <div>
-            <KnappBase id="modal-accept" type="flat" onClick={accept}>{_YES}</KnappBase>
-            <KnappBase id="modal-decline" type="flat" onClick={close}>{_NO}</KnappBase>
-          </div>
-        </Modal>
-      </>
+      <Modal
+        isOpen={modalOpen}
+        onRequestClose={toggleModal}
+        closeButton={false}
+        contentLabel="Min modalrute"
+      >
+        {text}<br/>
+        {children}
+        <div className="modalKnapper">
+          <KnappBase id="modal-accept" type="flat" onClick={accept}>{_YES}</KnappBase>
+          <KnappBase id="modal-decline" type="flat" onClick={close}>{_NO}</KnappBase>
+        </div>
+      </Modal>
     );
   }
 }

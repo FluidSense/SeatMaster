@@ -12,7 +12,7 @@ const InfoPanel: React.FunctionComponent<IProps> = (props) => {
   return (
     <div className={'info-panel'} id={`info-panel-${title.replace(' ', '')}`}>
       <Element>{title}</Element>
-      <PanelBase>{text == null ? '' : text}</PanelBase>
+      <PanelBase border={true}>{text == null ? '' : text}</PanelBase>
     </div>
   );
 };

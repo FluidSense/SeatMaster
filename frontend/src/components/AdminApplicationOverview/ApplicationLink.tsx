@@ -19,14 +19,6 @@ interface IProps {
   rooms: IRoom[];
 }
 
-const applicationStatus = (status: string) => {
-  switch (status) {
-    case APP_SUBMITTED: return 'Waiting list';
-    case APP_APPROVED: return 'Has seat';
-    case APP_DENIED: return 'Has no seat';
-  }
-};
-
 const getRoomNameFromId = (rooms: IRoom[], seat: ISeat) => {
   const room = rooms.find(x => (x.id === seat.roomId));
   if (room) return room.name;
@@ -37,7 +29,7 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
   const { application, rooms } = props;
   const user = application.user;
   if (!user || !application) return null;
-  const status = applicationStatus(application.status);
+  const status = application.status;
   const { seat } = application;
   const roomName = seat ? getRoomNameFromId(rooms, seat) : '';
   const seatId = seat ? seat.id : '';
@@ -54,7 +46,7 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
       linkCreator={link}
       href={`${ROUTE_TO}${application.id}`}
     >
-      <div className="application-link">
+      <div className="lenkepanel-applications">
         <div className="link-name"><Element>{_LINK_NAME_TITLE}</Element>{user.username}</div>
         <div className="link-master">
           <Element>{_LINK_MASTER_STATUS}</Element>

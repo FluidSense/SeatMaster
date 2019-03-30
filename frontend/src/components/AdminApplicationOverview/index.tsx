@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IStore } from '../../store';
+import { lowerIncludes } from '../../utils/searchBarFilter';
 import { IApplication } from '../Application';
+import { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
-import { fetchAllApplications } from './actions';
-import './adminApplicationOverview.css';
+import { approveAllApplications, fetchAllApplications } from './actions';
 import Presentational from './Presentational';
 
 interface IStateProps {
@@ -19,24 +20,63 @@ interface IStateProps {
 interface IDispatchProps {
   getAllApplications: () => ThunkAction<void, {}, {}, AnyAction>;
   getRooms: () => ThunkAction<void, {}, {}, AnyAction>;
+  approve: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
+  close: () => void;
+}
+
+interface IState {
+  applications: IApplication[];
+  filteredApplications: IApplication[];
 }
 
 type Props = IStateProps & IDispatchProps;
 
 // tslint:disable-next-line:class-name
-class _Container extends React.Component<Props> {
+class _Container extends React.Component<Props, IState> {
+  constructor(props: Props) {
+    super(props);
+    this.state =  {
+      applications: this.props.applications,
+      filteredApplications: this.props.applications,
+    };
+  }
   public componentDidMount() {
     this.props.getAllApplications();
     this.props.getRooms();
   }
 
+  public componentDidUpdate = (prevProps: Props) => {
+    const { applications } = this.props;
+    if (prevProps.applications !== applications) {
+      this.setState({ applications, filteredApplications: applications });
+    }
+  }
+
   public render() {
+    const { filteredApplications } = this.state;
     return (
       <Presentational
-        applications={this.props.applications}
+        applications={filteredApplications}
+        filterFunction={this.filterApplications}
         rooms={this.props.rooms}
         fetching={this.props.fetching}
+        approve={this.props.approve}
       />);
+  }
+
+  private filterApplications = (event: searchBarEvent) => {
+    const { applications } = this.state;
+    const { value } = event.target;
+    const filteredApplications = applications.filter((application) => {
+      const { user } = application;
+      if (user) {
+        if (lowerIncludes(user.username, value)
+        || lowerIncludes(user.email, value)
+        || lowerIncludes(user.fullname, value)
+        ) return application;
+      }
+    });
+    this.setState({ filteredApplications });
   }
 }
 
@@ -47,6 +87,7 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  approve: (ids: number[]) => dispatch(approveAllApplications(ids)),
   getAllApplications: () => dispatch(fetchAllApplications()),
   getRooms: () => dispatch(fetchAllRooms()),
 });

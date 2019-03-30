@@ -7,7 +7,7 @@ import './applicationReview.css';
 import Presentational from './Presentational';
 
 interface IStateProps {
-  application: IApplication;
+  application?: IApplication;
   userInfo: IRegisteredUserState;
 }
 

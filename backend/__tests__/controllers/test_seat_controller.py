@@ -63,7 +63,7 @@ def test_createSeat_success(mocker, client):
         assert "201 CREATED" == response.status
         assert make_response(
             jsonify(
-                id=None,  # TODO Double check that this is correct when endpoint is up and running.
+                id=None,
                 name="D1",
                 roomId=None,
                 info='nice ship dude',
