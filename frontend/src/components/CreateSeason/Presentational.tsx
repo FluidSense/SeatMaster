@@ -37,7 +37,19 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   } = props;
   const title = fetched && season.id ? _UPDATE_APPLICATION_SEASON : _NEW_APPLICATION_SEASON;
   const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
+  let errorPeriodEndBeforeStart;
+  let errorApplicationEndBeforeStart;
   if (!fetched) return <TitleAndSpinner title={title} />;
+
+  if (applicationPeriodEnd <= applicationPeriodStart) {
+    errorPeriodEndBeforeStart = errorObjectSeasonEndTooEarly;
+  }
+  if (end <= start) {
+    errorApplicationEndBeforeStart = errorObjectRoomEndTooEarly;
+  }
+
+  const buttonDisable =
+    (errorPeriodEndBeforeStart || errorApplicationEndBeforeStart) !== undefined;
 
   const createButton = (text: string) => (
     <KnappBase
@@ -49,19 +61,6 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
       {text}
     </KnappBase>
   );
-  const errorPeriodEndBeforeStart =
-    applicationPeriodEnd <= applicationPeriodStart
-      ? errorObjectSeasonEndTooEarly
-      : undefined;
-
-  const errorApplicationEndBeforeStart =
-    end <= start
-      ? errorObjectRoomEndTooEarly
-      : undefined;
-
-  const buttonDisable =
-    errorPeriodEndBeforeStart !== undefined
-    || errorApplicationEndBeforeStart !== undefined;
 
   const alertFail = showAlert
     ? <AlertStripe type={'advarsel'} solid={true}> {_ERROR_MESSAGE} </AlertStripe>
