@@ -3,6 +3,7 @@ import React from 'react';
 import { IApplication } from '../Application';
 import { APP_APPROVED } from '../commonConstants';
 import Modal from '../Modal';
+import './adminApplicationOverview.css';
 import { _WAITING_LIST_WARNING } from './constants';
 import { _PUT_ON_WAITING_LIST } from './strings';
 
@@ -48,9 +49,10 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
     return(
       <div>
         <KnappBase
-          type="hoved"
+          type="flat"
           htmlType="submit"
           onClick={this.toggleModal}
+          id="waiting-list-button"
         >
           {_PUT_ON_WAITING_LIST}
         </KnappBase>
