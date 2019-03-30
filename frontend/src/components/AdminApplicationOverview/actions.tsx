@@ -1,12 +1,16 @@
 import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { getAllApplications, postAdminApplicationApproveList } from '../../API/calls';
+import {
+  getAllApplications,
+  postAdminApplicationApproveList,
+  postAdminApplicationWaitingList,
+} from '../../API/calls';
 import { IApplication } from '../Application';
 import {
   APPROVE_ALL_APPLICATIONS,
   FAILED_TO_RETRIEVE_ALL_APPLICATIONS,
   GET_ALL_APPLICATIONS,
-  SUCCESSFULLY_APPROVED_ALL_STUDENTS,
+  WAITING_LIST_ALL_APPLICAITONS,
 } from './constants';
 
 const retrievedApplications = (payload: IApplication[]) => ({
@@ -19,6 +23,11 @@ const approvedAllApplications = (payload: IApplication[]) => ({
   type: APPROVE_ALL_APPLICATIONS,
 });
 
+const waitAllApplications = (payload: IApplication[]) => ({
+  payload,
+  type: WAITING_LIST_ALL_APPLICAITONS,
+});
+
 const failedToRetrieveApplications = () => ({ type: FAILED_TO_RETRIEVE_ALL_APPLICATIONS });
 
 export const approveAllApplications = (ids: number[]):
@@ -26,6 +35,14 @@ export const approveAllApplications = (ids: number[]):
     const result = await postAdminApplicationApproveList(ids);
     if (result) {
       dispatch(approvedAllApplications(result));
+    }
+  };
+
+export const waitingListAllApplications = (ids: number[]):
+  ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+    const result = await postAdminApplicationWaitingList(ids);
+    if (result) {
+      dispatch(waitAllApplications(result));
     }
   };
 
