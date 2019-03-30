@@ -104,7 +104,7 @@ class AdminApplication extends Component<Props, IState> {
     const { removeStudentFromSeat, status } = this.props;
     const { application, rooms } = this.state;
     if (status === 404) return <Page404 />;
-    if (!(application && rooms) || !rooms.length) return <LoadingPageSpinner />;
+    if (!(application && rooms)) return <LoadingPageSpinner />;
     return (
        <Presentational
         application={application}
