@@ -2,6 +2,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import React, { FunctionComponent } from 'react';
 import { IApplication } from '../Application';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import Modal from '../Modal';
 import SearchBar, { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import ApplicationLink from './ApplicationLink';
