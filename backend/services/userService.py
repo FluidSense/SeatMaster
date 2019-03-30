@@ -44,7 +44,6 @@ def deleteUser(id):
         print(err, flush=True)
         return "", 400
     except AssertionError as err:
-        print('her er jeg', flush=True)
         print(err, flush=True)
         return "", 400
 

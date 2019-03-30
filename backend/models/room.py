@@ -1,5 +1,4 @@
 from shared import db
-from models.seat import Seat
 
 
 class Room(db.Model):
@@ -22,7 +21,6 @@ class Room(db.Model):
     seats = db.relationship(
         'Seat',
         back_populates="room",
-        foreign_keys=[Seat.room_id, Seat.id],
         cascade="all, delete"
     )
 

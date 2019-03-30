@@ -9,7 +9,7 @@ import Presentational from './Presentational';
 export interface ISeat {
   id: number;
   info: string;
-  name: string;
+  name?: string;
   roomId: number;
   user?: IUser;
 }
@@ -69,8 +69,11 @@ class _Container extends Component<Props, IState> {
     const { createSeat, latestSeatId } = this.props;
     let nextName = 'A1';
     if (seats.length > 0) {
+      const lastSeatName = seats[seats.length - 1].name || 'A1';
       // Splits id in letters and numbers
-      const idParts = seats[seats.length - 1].name.split(/([0-9]+)/);
+      const idParts = lastSeatName.split(/([0-9]+)/);
+      // If there is no number parts we make one!
+      idParts[1] = idParts[1] || '1';
       // Creates new id by incrementing the number on the last id
       nextName = `${idParts[0]}${parseInt(idParts[1], 10) + 1}`;
     }
