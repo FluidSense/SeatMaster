@@ -1,6 +1,7 @@
 import moment, { Moment } from 'moment';
 import { AnyAction } from 'redux';
 import {
+  FETCHED_APPLICATION_SEASON,
   RESET_SUBMIT,
   SET_APPLICATION_SEASON,
   SUBMITTED_APPLICATION_SEASON,
@@ -58,6 +59,17 @@ export const applicationSeasonReducer = (
       return {
         ...state,
         submitted: false,
+      };
+    case FETCHED_APPLICATION_SEASON:
+      return {
+        ...state,
+        currentSeason: {
+          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
+          applicationPeriodStart: moment(payload.applicationPeriodStart),
+          end: moment(payload.end),
+          id: payload.id,
+          start: moment(payload.start),
+        },
       };
     case UPDATE_APPLICATION_SEASON:
       return {
