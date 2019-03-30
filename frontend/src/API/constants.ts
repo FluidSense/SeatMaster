@@ -11,6 +11,7 @@ export const GET_APPLICATION_BY_ID_URL = `${BASEPATH}application/`;
 export const GET_ALL_APPLICATIONS_URL = `${BASEPATH}application/all`;
 export const GET_APPLICATION_BY_USERID_URL = `${BASEPATH}application/byUser/`;
 export const POST_APPLICATION_APPROVE_LIST = `${BASEPATH}application/approveList`;
+export const POST_WAITING_LIST = `${BASEPATH}application/waitingList`;
 
 // User
 export const GET_USER_URL = `${BASEPATH}user/`;
