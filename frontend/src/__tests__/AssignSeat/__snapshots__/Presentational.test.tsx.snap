@@ -53,33 +53,37 @@ exports[`assign seat presentational renders correctly 1`] = `
 
 exports[`assign seat presentational renders nothing correctly 1`] = `
 <Fragment>
-  <Innholdstittel>
-    Assign seat
-  </Innholdstittel>
-  <form
-    onSubmit={[Function]}
+  <div
+    className="assign-seat"
   >
-    <RoomPicker
-      rooms={Array []}
-      setSelected={[Function]}
-    />
-    <SeatPicker
-      setSelected={[Function]}
-    />
-    <KnappBase
-      autoDisableVedSpinner={true}
-      className={null}
-      disabled={true}
-      htmlType="submit"
-      id="submit-application"
-      inaktivKlasseVedDisabled={false}
-      mini={false}
-      spinner={false}
-      type="hoved"
-    >
+    <Innholdstittel>
       Assign seat
-    </KnappBase>
-  </form>
+    </Innholdstittel>
+    <form
+      onSubmit={[Function]}
+    >
+      <RoomPicker
+        rooms={Array []}
+        setSelected={[Function]}
+      />
+      <SeatPicker
+        setSelected={[Function]}
+      />
+      <KnappBase
+        autoDisableVedSpinner={true}
+        className={null}
+        disabled={true}
+        htmlType="submit"
+        id="submit-application"
+        inaktivKlasseVedDisabled={false}
+        mini={false}
+        spinner={false}
+        type="hoved"
+      >
+        Assign seat
+      </KnappBase>
+    </form>
+  </div>
   <CustomModal
     accept={[Function]}
     close={[Function]}
