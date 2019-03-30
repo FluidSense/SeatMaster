@@ -31,7 +31,7 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
       <Element>
         Application Status
       </Element>
-      Waiting list
+      SUBMITTED
     </div>
     <div
       className="link-room"
