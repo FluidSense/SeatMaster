@@ -2,6 +2,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import React, { FunctionComponent } from 'react';
 import { IApplication } from '../Application';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import Modal from '../Modal';
 import SearchBar, { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import ApplicationLink from './ApplicationLink';
@@ -36,7 +37,10 @@ const Presentational: FunctionComponent<IProps> = (props) => {
       <Sidetittel>
         {_APPLICATIONS_TITLE}
       </Sidetittel>
-      <ApproveSeated approve={approve} applications={applications}/>
+      <ApproveSeated
+        applications={applications}
+        approve={approve}
+      />
       <SearchBar filterFunction={filterFunction}/>
       {applicationList}
     </div>

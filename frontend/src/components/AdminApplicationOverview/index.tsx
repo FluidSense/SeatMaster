@@ -21,6 +21,7 @@ interface IDispatchProps {
   getAllApplications: () => ThunkAction<void, {}, {}, AnyAction>;
   getRooms: () => ThunkAction<void, {}, {}, AnyAction>;
   approve: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
+  close: () => void;
 }
 
 interface IState {
