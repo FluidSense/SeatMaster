@@ -16,14 +16,16 @@ const SetWaitingList: React.FunctionComponent<IProps> = (props) => {
   const { seat, updateApplication, application } = props;
 
   const update = () => {
-    const app = application.status === APP_SUBMITTED
-    ? { status: APP_WAITING }
-    : { status: APP_SUBMITTED };
+    const app =
+      application.status === APP_SUBMITTED
+        ? { status: APP_WAITING }
+        : { status: APP_SUBMITTED };
     updateApplication(application.id, app);
   };
-  const conditionalClass = `${seat && application.status !== APP_WAITING
-    ? ''
-    : 'waiting-list-button'} revoke-approve-btn`;
+  const conditionalClass =
+    `${seat && application.status !== APP_WAITING
+      ? ''
+      : 'waiting-list-button'} revoke-approve-btn`;
   return (
     <KnappBase
       type="hoved"
