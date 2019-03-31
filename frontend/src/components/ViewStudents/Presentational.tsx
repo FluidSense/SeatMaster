@@ -6,6 +6,7 @@ import { IUser } from '../../API/interfaces';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
 import SearchBar, { searchBarEvent } from '../SearchBar';
 import { FETCHING_STUDENTS } from './constants';
+import DeleteButton from './DeleteButton';
 import { _CHECK_ALL_CHECKBOXES, _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE } from './strings';
 import UserLink from './UserLink';
 
@@ -62,6 +63,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <>
       <div className="title-and-button">
         <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
+        <DeleteButton  users={users}/>
         <KnappBase id="delete-students" type="fare" disabled={disableButton} onClick={onClick}>
           {_DELETE_STUDENTS}
         </KnappBase>
