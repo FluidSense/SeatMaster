@@ -21,7 +21,7 @@ const AcceptApplication: React.FunctionComponent<IProps> = (props) => {
     };
     return (
       <KnappBase
-        id="revoke-approve-btn"
+        className="revoke-approve-btn"
         type="hoved"
         onClick={approve}
         disabled={application.seat ? false : true}
@@ -38,12 +38,16 @@ const AcceptApplication: React.FunctionComponent<IProps> = (props) => {
       props.updateApplication(application.id, updated);
     };
     return (
-      <KnappBase id="revoke-approve-btn" type="fare" onClick={revoke}>
+      <KnappBase className="revoke-approve-btn" type="fare" onClick={revoke}>
         {_REVOKE_APP}
       </KnappBase>
     );
   }
-  return null;
+  return (
+  <KnappBase className="revoke-approve-btn" type="hoved" disabled={true}>
+    {_APPROVE_APP}
+  </KnappBase>
+  );
 };
 
 export default AcceptApplication;
