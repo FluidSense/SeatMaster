@@ -68,7 +68,7 @@ export class Presentational extends React.Component<Props, {}> {
             <p>
               {_WAITING_LIST_MESSAGE}
             </p>
-            <ApplicationReview application={application} />;
+            <ApplicationReview application={application} />
           </>
         );
       default:
