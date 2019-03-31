@@ -95,7 +95,7 @@ class EditForm extends React.Component<IProps, IEditState> {
           htmlType="submit"
         >
           Save
-      </KnappBase>
+        </KnappBase>
       </form>
     );
   }
