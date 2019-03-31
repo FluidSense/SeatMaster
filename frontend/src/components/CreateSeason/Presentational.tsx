@@ -1,46 +1,90 @@
-import KnappBase, { Hovedknapp } from 'nav-frontend-knapper';
+import AlertStripe from 'nav-frontend-alertstriper';
+import KnappBase from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { _CREATE_NEW_SEASON, _NEW_APPLICATION_SEASON } from './strings';
+import { IApplicationSeason } from '../ApplicationSeason/reducer';
+import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import {
+  _CREATE_NEW_SEASON,
+  _ERROR_MESSAGE,
+  _EXISTING_CURRENT_SEASON,
+  _NEW_APPLICATION_SEASON,
+  _ROOM_END_TOO_EARLY,
+  _SEASON_END_TOO_EARLY,
+  _UPDATE_APPLICATION_SEASON,
+  _UPDATE_CURRENT_SEASON,
+} from './strings';
 
 interface IProps {
-  alertPeriodEndBeforeStart?: SkjemaelementFeil;
-  alertApplicationEndBeforeStart?: SkjemaelementFeil;
   createFields: (index: number, end: number) => JSX.Element[];
-  buttonDisable: boolean;
-  postApplicationSeason: () => void;
-  alertFail?: JSX.Element;
+  showAlert: boolean;
+  season: IApplicationSeason;
+  submitSeason: () => void;
+  fetched: boolean;
 }
+
+const errorObjectSeasonEndTooEarly = { feilmelding: _SEASON_END_TOO_EARLY };
+const errorObjectRoomEndTooEarly = { feilmelding: _ROOM_END_TOO_EARLY };
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const {
-    alertApplicationEndBeforeStart,
-    alertPeriodEndBeforeStart,
     createFields,
-    buttonDisable,
-    postApplicationSeason,
-    alertFail,
+    submitSeason,
+    showAlert,
+    season,
+    fetched,
   } = props;
+  const title = fetched && season.id ? _UPDATE_APPLICATION_SEASON : _NEW_APPLICATION_SEASON;
+  const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
+  let errorPeriodEndBeforeStart;
+  let errorApplicationEndBeforeStart;
+  if (!fetched) return <TitleAndSpinner title={title} />;
+
+  if (applicationPeriodEnd <= applicationPeriodStart) {
+    errorPeriodEndBeforeStart = errorObjectSeasonEndTooEarly;
+  }
+  if (end <= start) {
+    errorApplicationEndBeforeStart = errorObjectRoomEndTooEarly;
+  }
+
+  const buttonDisable =
+    (errorPeriodEndBeforeStart || errorApplicationEndBeforeStart) !== undefined;
+
+  const createButton = (text: string) => (
+    <KnappBase
+      onClick={submitSeason}
+      disabled={buttonDisable}
+      type="hoved"
+      id="new-season-btn"
+    >
+      {text}
+    </KnappBase>
+  );
+
+  const alertFail = showAlert
+    ? <AlertStripe type={'advarsel'} solid={true}> {_ERROR_MESSAGE} </AlertStripe>
+    : undefined;
+
+  const button = season.id > 0
+    ? createButton(_UPDATE_CURRENT_SEASON)
+    : createButton(_CREATE_NEW_SEASON);
+
   return (
     <div id="new-application-season" className="main-content">
-      <Sidetittel>{_NEW_APPLICATION_SEASON}</Sidetittel>
+      <Sidetittel>{title}</Sidetittel>
+      <div id="admin-season-alert">{alertFail}</div>
       <div id="appSeason">
-        <SkjemaGruppe feil={alertPeriodEndBeforeStart}>{createFields(0, 2)}</SkjemaGruppe>
+        <SkjemaGruppe className="app-class" feil={errorPeriodEndBeforeStart}>
+          {createFields(0, 2)}
+        </SkjemaGruppe>
       </div>
       <div id="roomSeason">
-        <SkjemaGruppe feil={alertApplicationEndBeforeStart}>{createFields(2, 4)}</SkjemaGruppe>
+        <SkjemaGruppe className="room-class" feil={errorApplicationEndBeforeStart}>
+          {createFields(2, 4)}
+        </SkjemaGruppe>
       </div>
-      <KnappBase
-        type="hoved"
-        disabled={buttonDisable}
-        onClick={postApplicationSeason}
-        id={'new-season-btn'}
-      >
-        {_CREATE_NEW_SEASON}
-      </KnappBase>
-      {alertFail}
+      {button}
     </div>
   );
 };
