@@ -3,7 +3,7 @@ import React from 'react';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
 import { APP_SUBMITTED, APP_WAITING } from '../commonConstants';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import { _NO_WAIT, _WAIT_APP } from './strings';
 
 interface IProps {
