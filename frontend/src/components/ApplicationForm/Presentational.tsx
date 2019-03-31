@@ -18,7 +18,7 @@ interface IProps {
 }
 
 interface IState {
-  room?: IRoom;
+  room: string;
   partner: boolean;
   partnerUsername: string;
   needs: boolean;
@@ -42,7 +42,7 @@ export class Presentational extends React.Component<IProps, IState> {
       needsText: '',
       partner: false,
       partnerUsername: '',
-      room: undefined,
+      room: '',
     };
   }
 
@@ -107,7 +107,7 @@ export class Presentational extends React.Component<IProps, IState> {
       comments: this.state.infoText,
       needs: this.state.needs ? this.state.needsText : '',
       partnerUsername: this.state.partnerUsername,
-      preferredRoom: this.state.room ? this.state.room.name : '',
+      preferredRoom: this.state.room,
       seatRollover: this.state.keepSeat,
     })
       .then(
