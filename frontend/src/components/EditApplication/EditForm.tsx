@@ -29,7 +29,7 @@ class EditForm extends React.Component<IProps, IEditState> {
     if (!(application && application.user)) return null;
     const partnerApplication = application.partnerApplication;
     const partner = partnerApplication ? partnerApplication.user : undefined;
-    const partnerName = partner ? partner.fullname : '';
+    const partnerName = partner ? partner.username : '';
     const secureFields = SecureFields(
       isAdmin,
       application,
