@@ -5,16 +5,16 @@ from auth import requiresAdmin
 seat = Blueprint("seat", __name__, url_prefix="/seat")
 
 
-@seat.route("/<roomId>/<id>")
-def getSeat(roomId, id):
-    seat = seatService.getSeatById(roomId, id)
+@seat.route("/<id>")
+def getSeat(id):
+    seat = seatService.getSeatById(id)
     return jsonify(seat.to_json()) if seat else Response("{}", 200)
 
 
-@seat.route("/<roomId>/<id>", methods=["DELETE"])
+@seat.route("/<id>", methods=["DELETE"])
 @requiresAdmin
-def deleteSeat(roomId, id):
-    responseText, statusCode = seatService.deleteSeat(roomId, id)
+def deleteSeat(id):
+    responseText, statusCode = seatService.deleteSeat(id)
     return Response(responseText, statusCode)
 
 
@@ -23,11 +23,21 @@ def deleteSeat(roomId, id):
 def createSeat():
     if request.is_json:
         form = request.get_json()
-        id = form.get("id")
+        seat_name = form.get("name")
         roomId = form.get("roomId")
         info = form.get("info")
-        responseText, successCode = seatService.createSeat(id, roomId, info)
+        responseText, successCode = seatService.createSeat(seat_name, roomId, info)
         return make_response(jsonify(responseText), successCode)
+    return abort(400)
+
+
+@seat.route("/<id>", methods=["PUT"])
+@requiresAdmin
+def renameSeat(id):
+    if request.is_json:
+        newName = request.get_json()
+        responseText, statusCode = seatService.renameSeat(id, newName)
+        return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
 
@@ -36,10 +46,9 @@ def createSeat():
 def assignSeat():
     if request.is_json:
         form = request.get_json()
-        roomId = form.get("roomId")
         seatId = form.get("seatId")
         userId = form.get("userId")
-        responseText, statusCode = seatService.assignSeat(roomId, seatId, userId)
+        responseText, statusCode = seatService.assignSeat(seatId, userId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
@@ -48,9 +57,7 @@ def assignSeat():
 @requiresAdmin
 def removeStudentFromSeat():
     if request.is_json:
-        form = request.get_json()
-        roomId = form.get("roomId")
-        seatId = form.get("seatId")
-        responseText, statusCode = seatService.removeStudentFromSeat(roomId, seatId)
+        seatId = request.get_json()
+        responseText, statusCode = seatService.removeStudentFromSeat(seatId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)

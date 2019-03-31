@@ -1,8 +1,9 @@
 import { AnyAction } from 'redux';
 import { IUser } from '../../API/interfaces';
 import { REMOVE_STUDENT_SUCCESS, SUCCESSFULL_SEAT_ASSIGNMENT } from '../AssignSeat/constants';
+import { ISeat } from '../Seats';
 import { FETCH_ROOMS, FETCHED_ROOMS, FETCHING_ROOMS } from './constants';
-import { IRoom, ISeat } from './index';
+import { IRoom } from './index';
 
 export interface IRoomState {
   fetching: string;

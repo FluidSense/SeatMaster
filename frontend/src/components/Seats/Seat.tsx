@@ -8,9 +8,10 @@ import Modal from '../Modal';
 import { _CHANGE_ID, _DELETE_SEAT_CONFIRMATION, _SEAT_NOT_OCCUPIED } from './strings';
 
 interface IProps {
-  id: string;
-  deleteSelf: (id: string) => void;
-  updateSelf: (oldId: string, newId: string) => void;
+  id: number;
+  name: string;
+  deleteSelf: (id: number) => void;
+  updateSelf: (id: number, newName: string) => void;
   user?: IUser;
 }
 
@@ -29,13 +30,18 @@ class Seat extends Component<IProps, IState> {
   }
 
   public render() {
-    const { id, user } = this.props;
+    const { name, user } = this.props;
     const { modalOpen } = this.state;
     const seatOccupied = user ? `${user.fullname} is occupying the seat.` : _SEAT_NOT_OCCUPIED;
     return (
       <>
         <Panel border={true}>
-          <Input label={'Seat ID'} bredde="S" placeholder={id} onChange={this.handleInputChange} />
+          <Input
+            label={'Seat ID'}
+            bredde="S"
+            placeholder={name}
+            onChange={this.handleInputChange}
+          />
           <Knapp onClick={this.changeId}>{_CHANGE_ID}</Knapp>
           <Lukknapp bla={true} onClick={this.toggleModal} />
         </Panel>

@@ -11,7 +11,7 @@ import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 interface IProps {
   rooms: IRoom[];
   application: IApplication;
-  removeStudentFromSeat: (roomId: number, seatId: string) => void;
+  removeStudentFromSeat: (seatId: number) => void;
   updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
@@ -38,7 +38,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         />
       </div>
       <div className="center-div">
-        <AcceptApplication application={application} updateApplication={updateApplication}/>
+        <AcceptApplication application={application} updateApplication={updateApplication} />
       </div>
     </div>
   );

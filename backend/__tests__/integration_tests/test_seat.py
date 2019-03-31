@@ -41,7 +41,7 @@ class TestSeat(TestCase):
             'Authorization': self.token
         }
         response = self.app.test_client().get(
-            f"http://localhost:5000/seat/{room.id}/{seat.seat_id}",
+            f"http://localhost:5000/seat/{seat.id}",
             headers=headers)
         assert response.data == jsonify(seat.to_json()).data
         assert db.session.query(Seat).first() == seat
@@ -54,7 +54,7 @@ class TestSeat(TestCase):
         }
         room, seat = createSeatAndRoom()
         response = self.app.test_client().delete(
-            f"http://localhost:5000/seat/{room.id}/{seat.seat_id}",
+            f"http://localhost:5000/seat/{seat.id}",
             headers=headers)
         assert response.status == "200 OK"
         assert db.session.query(Seat).first() is None
@@ -69,10 +69,9 @@ class TestSeat(TestCase):
             'AccessToken': self.accessToken,
         }
         data = dict(
-            id='D2',
+            name='D2',
             roomId=room.id,
-            info='nice ship dude',
-            user=None
+            info='nice ship dude'
         )
         response = self.app.test_client().post(
             "http://localhost:5000/seat/",
@@ -82,12 +81,13 @@ class TestSeat(TestCase):
         assert "201 CREATED" == response.status
         assert make_response(
             jsonify(
-                id="D2",
+                id=2,
+                name="D2",
                 roomId=room.id,
                 info='nice ship dude',
                 user=None
             )).data == response.data
-        assert db.session.query(Seat).all()[1].to_json() == data
+        assert db.session.query(Seat).all()[1].to_json()["info"] == data["info"]
 
     @mock_authentication_context
     def test_assign_seat(self):
@@ -100,7 +100,7 @@ class TestSeat(TestCase):
             'AccessToken': self.accessToken,
         }
         data = dict(
-            seatId='D1',
+            seatId=1,
             roomId=room.id,
             userId=application.user.id,
         )
@@ -111,14 +111,14 @@ class TestSeat(TestCase):
 
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data
-        assert seat.assignedApplication == application
+        assert seat.application == application
         assert application.seat == seat
 
     @mock_authentication_context
     def test_remove_student_from_seat(self):
         room, seat = createSeatAndRoom()
         application = createApplication()
-        seat.assignedApplication = application
+        seat.application = application
         db.session.add(seat)
         db.session.commit()
 
@@ -128,19 +128,39 @@ class TestSeat(TestCase):
             'Accept': mimetype,
             'AccessToken': self.accessToken
         }
-        data = dict(
-            seatId='D1',
-            roomId=room.id,
-        )
+        seatId = 1
         response = self.app.test_client().put(
             "http://localhost:5000/seat/removeStudent",
             headers=headers,
-            data=json.dumps(data))
+            data=json.dumps(seatId))
 
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data
-        assert seat.assignedApplication is None
+        assert seat.application is None
         assert application.seat is None
+
+    @mock_authentication_context
+    def test_rename_seat(self):
+        room, seat = createSeatAndRoom()
+        oldName = seat.seat_name
+        newName = "New Name"
+        seatId = seat.id
+
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype,
+            'AccessToken': self.accessToken,
+        }
+        response = self.app.test_client().put(
+            "http://localhost:5000/seat/" + str(seatId),
+            headers=headers,
+            data=json.dumps(newName))
+        print(response.data, flush=True)
+        assert "200 OK" == response.status
+        assert jsonify(seat.to_json()).data == response.data
+        assert seat.seat_name == newName
+        assert seat.seat_name != oldName
 
     def tearDown(self):
         self.postgres.stop()

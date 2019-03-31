@@ -2,7 +2,7 @@ import { AnyAction, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { getSeat, putUserOnSeat, removeStudentFromSeat } from '../../API/calls';
 import { IUser } from '../../API/interfaces';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import {
   FETCH_SEAT,
   REMOVE_STUDENT_SUCCESS,
@@ -27,22 +27,20 @@ const successfullyRemovedStudent = (payload: ISeat) => ({
 export const assignUserToSeat = (user: IUser, seat: ISeat):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
     const response = await putUserOnSeat({
-      roomId: seat.roomId,
       seatId: seat.id,
       userId: user.id,
     });
     if (response) dispatch(successfullyAssignedSeat(response));
   };
 
-export const checkSeatIsOccupied = (roomId: number, seatId: string):
+export const checkSeatIsOccupied = (seatId: number):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const response = await getSeat(roomId, seatId);
+    const response = await getSeat(seatId);
     if (response) dispatch(successfullyFetchedSeat(response));
   };
 
-export const removeStudent = (roomId: number, seatId: string):
+export const removeStudent = (seatId: number):
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
-    const data = { roomId, seatId };
-    const response = await removeStudentFromSeat(data);
+    const response = await removeStudentFromSeat(seatId);
     if (response) dispatch(successfullyRemovedStudent(response));
   };
