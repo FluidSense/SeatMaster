@@ -1,6 +1,6 @@
 import { Select } from 'nav-frontend-skjema';
 import React from 'react';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 
 interface IProps {
   seats?: ISeat[];
@@ -13,7 +13,7 @@ const SeatPicker: React.FunctionComponent<IProps> = (props) => {
 
   if (seats) {
     const options = seats.map((seat: ISeat) => {
-      return <option key={seat.id} label={seat.id}>{seat.id}</option>;
+      return <option key={seat.id} label={seat.name}>{seat.id}</option>;
     });
     options.unshift(defaultOption);
     return (
@@ -23,9 +23,9 @@ const SeatPicker: React.FunctionComponent<IProps> = (props) => {
     );
   }
   return (
-      <Select label={'Sete'} bredde="m" disabled={true}>
-        {defaultOption}
-      </Select>
+    <Select label={'Sete'} bredde="m" disabled={true}>
+      {defaultOption}
+    </Select>
   );
 
 };

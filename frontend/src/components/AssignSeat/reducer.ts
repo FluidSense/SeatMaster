@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import { FETCH_SEAT } from './constants';
 
 export interface ISeatState {

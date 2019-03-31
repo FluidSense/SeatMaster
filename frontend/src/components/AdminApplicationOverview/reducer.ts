@@ -7,7 +7,7 @@ import {
   SUCCESSFULL_APPLICATION_UPDATE,
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import { REMOVE_STUDENT_SUCCESS, SUCCESSFULL_SEAT_ASSIGNMENT } from './../AssignSeat/constants';
 import {
   APPROVE_ALL_APPLICATIONS,
@@ -16,6 +16,7 @@ import {
   GET_ALL_APPLICATIONS,
   REMOVE_APPLICATION_DATA,
   SET_APPLICATION_DATA,
+  WAITING_LIST_ALL_APPLICAITONS,
 } from './constants';
 
 export interface IApplicationState {
@@ -124,14 +125,23 @@ export const ApplicationReducer = (
         }),
       };
     }
+    case WAITING_LIST_ALL_APPLICAITONS: {
+      const updatedApps = action.payload;
+      return {
+        ...state,
+        applications: state.applications.map((app: IApplication) => {
+          return updatedApps.find((newApp: IApplication) => app.id === newApp.id) || app;
+        }),
+      };
+    }
     case SUCCESSFULL_SEAT_ASSIGNMENT: {
       const newSeat: ISeat = action.payload;
       const user = newSeat.user;
       if (user) {
+        const mutableSeat = { ...newSeat, user: undefined };
         const application = state.applications.find(app => app.user.id === user.id);
         if (application) {
-          newSeat.user = undefined;
-          const updatedApplication = { ...application, seat: newSeat };
+          const updatedApplication = { ...application, seat: mutableSeat };
           return {
             ...state,
             applications: state.applications.map((app: IApplication) => {
