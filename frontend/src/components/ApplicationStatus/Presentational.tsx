@@ -5,10 +5,17 @@ import {
   APP_DENIED,
   APP_NOT_FOUND,
   APP_SUBMITTED,
+  APP_WAITING,
   ETIKETT_SUCCESS,
   ETIKETT_WARNING,
 } from '../commonConstants';
-import { _APP_APPROVED, _APP_DENIED, _APP_NOT_FOUND, _APP_SUBMITTED } from './strings';
+import {
+  _APP_APPROVED,
+  _APP_DENIED,
+  _APP_NOT_FOUND,
+  _APP_SUBMITTED,
+  _APP_WAITING,
+} from './strings';
 
 interface IApplicationStatusProps {
   applicationStatus: string;
@@ -30,6 +37,9 @@ const selectEtikettText = (applicationStatus: string) => {
     case APP_DENIED:
       etikettText = _APP_DENIED;
       break;
+    case APP_WAITING:
+      etikettText = _APP_WAITING;
+      break;
   }
   return etikettText;
 };
@@ -48,6 +58,9 @@ const selectEtikettType = (applicationStatus: string) => {
       etikettType = ETIKETT_SUCCESS;
       break;
     case APP_DENIED:
+      etikettType = ETIKETT_WARNING;
+      break;
+    case APP_WAITING:
       etikettType = ETIKETT_WARNING;
       break;
   }
