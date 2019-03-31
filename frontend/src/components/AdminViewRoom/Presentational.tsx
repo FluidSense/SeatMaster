@@ -4,7 +4,8 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { IUser } from '../../API/interfaces';
 import { IApplication } from '../Application';
-import { IRoom, ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import SeatPlacer from './SeatPlacer';
 import { _EDIT_ROOM_BUTTON } from './strings';
 
@@ -59,9 +60,9 @@ class Presentational extends React.Component<Props, IState> {
     const seats = this.seatsPlacers(room.seats.seats, applications);
     if (redirect) {
       return (
-      <Redirect
-        to={{ room, pathname: `/admin/rooms/${room.id}/update-room` }}
-      />);
+        <Redirect
+          to={{ room, pathname: `/admin/rooms/${room.id}/update-room` }}
+        />);
     }
 
     return (
@@ -69,13 +70,13 @@ class Presentational extends React.Component<Props, IState> {
         <div className="title-and-button">
           <Sidetittel>{room.name}</Sidetittel>
           <KnappBase type="hoved" onClick={this.setRedirect}>
-              {_EDIT_ROOM_BUTTON}
+            {_EDIT_ROOM_BUTTON}
           </KnappBase>
         </div>
         <h2>Info</h2>
         <p>{room.info}</p>
         <div>
-        {seats}
+          {seats}
         </div>
       </div>
     );
@@ -95,13 +96,13 @@ class Presentational extends React.Component<Props, IState> {
     const users = apps.map(application => application.user);
     return seats.map((seat, index) => {
       return (
-      <SeatPlacer
-        delete={this.props.delete}
-        key={index}
-        seat={seat}
-        users={users}
-        assign={this.props.assign}
-      />
+        <SeatPlacer
+          delete={this.props.delete}
+          key={index}
+          seat={seat}
+          users={users}
+          assign={this.props.assign}
+        />
       );
     });
   }

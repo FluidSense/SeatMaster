@@ -5,15 +5,15 @@ from sqlalchemy.exc import SQLAlchemyError
 from services import applicationService
 
 
-def getSeatById(roomId, seatId):
-    seat = db.session.query(Seat).get((roomId, seatId))
+def getSeatById(id):
+    seat = db.session.query(Seat).get(id)
     return seat
 
 
-def createSeat(id, roomId, info):
+def createSeat(name, roomId, info):
     room = roomService.getRoomById(roomId)
     try:
-        seat = Seat(id, room, info)
+        seat = Seat(name, room, info)
         db.session.add(seat)
         db.session.commit()
         return seat.to_json(), 201
@@ -22,22 +22,34 @@ def createSeat(id, roomId, info):
         return "", 400
 
 
-def deleteSeat(roomId, seatId):
+def deleteSeat(id):
     try:
-        seat = getSeatById(roomId, seatId)
+        seat = getSeatById(id)
         db.session.delete(seat)
         db.session.commit()
         return "", 200
     except SQLAlchemyError as err:
-        print(err)
+        print(err, flush=True)
         return "", 400
 
 
-def assignSeat(roomId, seatId, userId):
+def renameSeat(id, newName):
     try:
-        seat = getSeatById(roomId, seatId)
+        seat = getSeatById(id)
+        seat.seat_name = newName
+        db.session.add(seat)
+        db.session.commit()
+        return seat.to_json(), 200
+    except SQLAlchemyError as err:
+        print(err, flush=True)
+        return "", 400
+
+
+def assignSeat(seatId, userId):
+    try:
+        seat = getSeatById(seatId)
         application = applicationService.getApplicationByUserId(userId)
-        seat.assignedApplication = application
+        seat.application = application
         db.session.add(application)
         db.session.commit()
         return application.seat.to_json(), 200
@@ -46,10 +58,10 @@ def assignSeat(roomId, seatId, userId):
         return "", 400
 
 
-def removeStudentFromSeat(roomId, seatId):
+def removeStudentFromSeat(seatId):
     try:
-        seat = getSeatById(roomId, seatId)
-        seat.assignedApplication = None
+        seat = getSeatById(seatId)
+        seat.application = None
         db.session.add(seat)
         db.session.commit()
         return seat.to_json(), 200

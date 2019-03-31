@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { lowerIncludes } from '../../utils/searchBarFilter';
 import { searchBarEvent } from '../SearchBar';
+import { ISeat } from '../Seats';
 import { fetchAllRooms } from './actions';
 import Presentational from './Presentational';
 
@@ -16,13 +16,6 @@ export interface IRoom {
     count: number;
     seats: ISeat[];
   };
-}
-
-export interface ISeat {
-  id: string;
-  info: string;
-  roomId: number;
-  user?: IUser;
 }
 
 export interface IStateProps {

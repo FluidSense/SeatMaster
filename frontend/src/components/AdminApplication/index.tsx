@@ -6,11 +6,11 @@ import { IStore } from '../../store';
 import { fetchAllApplications } from '../AdminApplicationOverview/actions';
 import { IApplication } from '../Application';
 import { removeStudent } from '../AssignSeat/actions';
-import { APP_NOT_FOUND } from '../commonConstants';
 import { updateSingleApplication } from '../EditApplication/actions';
 import LoadingPageSpinner from '../LoadingPageSpinner';
 import Page404 from '../Page404';
-import { IRoom, ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
+import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import { resetPageStatus } from './actions';
 import Presentational from './Presentational';
@@ -28,7 +28,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  removeStudentFromSeat: (roomId: number, seatId: string) => void;
+  removeStudentFromSeat: (seatId: number) => void;
   fetchApplications: () => void;
   fetchRooms: () => void;
   resetStatus: () => void;
@@ -70,12 +70,12 @@ class AdminApplication extends Component<Props, IState> {
     if (!(applications.length && rooms)) return <LoadingPageSpinner />;
     if (!application) return <Page404 />;
     return (
-       <Presentational
+      <Presentational
         application={application}
         rooms={rooms}
         removeStudentFromSeat={removeStudentFromSeat}
         updateApplication={updateApplication}
-       />
+      />
     );
   }
 }
@@ -88,8 +88,8 @@ const mapStateToProps = (state: IStore) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchApplications: () => dispatch(fetchAllApplications()),
   fetchRooms: () => dispatch(fetchAllRooms()),
-  removeStudentFromSeat: (roomId: number, seatId: string) =>
-    dispatch(removeStudent(roomId, seatId)),
+  removeStudentFromSeat: (seatId: number) =>
+    dispatch(removeStudent(seatId)),
   resetStatus: () => dispatch(resetPageStatus()),
   updateApplication: (id: number, app: IPostAdminApplicationForm) => {
     return dispatch(updateSingleApplication(id, app));

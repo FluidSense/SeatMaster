@@ -24,7 +24,7 @@ describe('Create season', () => {
     Date.now = jest.fn(() => new Date(Date.UTC(2017, 0, 1)).valueOf());
     const wrapper = mount(
     <Provider store={mockStore}>
-      <CreateSeason />
+      <CreateSeason match={{ params: { id:'-1' } }} location={{ season: undefined }}/>
     </Provider>);
     const season = wrapper.find(CreateSeason);
     expect(season.length).toBe(1);
@@ -35,15 +35,17 @@ describe('Create season', () => {
   it('Check if creating is available', () => {
     const wrapper = mount(
     <Provider store={mockStore}>
-      <CreateSeason />
+      <CreateSeason match={{ params: { id:'-1' } }} location={{ season: undefined }}/>
     </Provider>);
     const component = wrapper.find('_CreateSeason');
     const state: IState = component.state();
+    component.setState({ fetched: true });
+    const season = state.season;
     const body = JSON.stringify({
-      newPeriodEnd: state.periodEnd.format(format),
-      newPeriodStart: state.periodStart.format(format),
-      newRoomEnd: state.roomEnd.format(format),
-      newRoomStart: state.roomStart.format(format),
+      newPeriodEnd: season.applicationPeriodEnd.format(format),
+      newPeriodStart: season.applicationPeriodStart.format(format),
+      newRoomEnd: season.end.format(format),
+      newRoomStart: season.start.format(format),
     });
     const newSeasonButton = wrapper.find('#new-season-btn').hostNodes();
     newSeasonButton.simulate('click');

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { IPostSeat, IUser } from '../../API/interfaces';
+import { IStore } from '../../store';
 import { createSeatAction, deleteSeatAction, updateSeatAction } from './actions';
 import Presentational from './Presentational';
 
 export interface ISeat {
-  id: string;
+  id: number;
   info: string;
+  name?: string;
   roomId: number;
+  user?: IUser;
 }
 
 interface IState {
@@ -21,12 +25,16 @@ interface IProps {
 }
 
 interface IDispatchProps {
-  createSeat: (data: ISeat, roomId: number) => void;
-  deleteSeat: (roomId: number, seatId: string) => void;
-  updateSeat: (roomId: number, oldSeatId: string, newSeat: ISeat) => void;
+  createSeat: (data: IPostSeat, roomId: number) => void;
+  deleteSeat: (seatId: number) => void;
+  updateSeat: (seatId: number, newName: string) => void;
 }
 
-type Props = IDispatchProps & IProps;
+interface IStateProps {
+  latestSeatId: number;
+}
+
+type Props = IDispatchProps & IStateProps & IProps;
 
 // tslint:disable-next-line:class-name
 class _Container extends Component<Props, IState> {
@@ -45,7 +53,6 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { roomId, seats } = this.state;
-
     return (
       <Presentational
         roomId={roomId}
@@ -59,18 +66,29 @@ class _Container extends Component<Props, IState> {
 
   private create = () => {
     const { seats, roomId } = this.state;
-    const { createSeat } = this.props;
-    let nextID = 'A1';
+    const { createSeat, latestSeatId } = this.props;
+    let nextName = 'A1';
     if (seats.length > 0) {
+      const lastSeatName = seats[seats.length - 1].name || 'A1';
       // Splits id in letters and numbers
-      const idParts = seats[seats.length - 1].id.split(/([0-9]+)/);
+      const idParts = lastSeatName.split(/([0-9]+)/);
+      // If there is no number parts we make one!
+      idParts[1] = idParts[1] || '1';
       // Creates new id by incrementing the number on the last id
-      nextID = `${idParts[0]}${parseInt(idParts[1], 10) + 1}`;
+      nextName = `${idParts[0]}${parseInt(idParts[1], 10) + 1}`;
     }
 
-    const seat: ISeat = {
-      id: nextID,
+    const seatToPost: IPostSeat = {
       info: '',
+      name: nextName,
+      // tslint:disable-next-line:object-shorthand-properties-first
+      roomId,
+    };
+
+    const seatForState: ISeat = {
+      id: latestSeatId + 1,
+      info: '',
+      name: nextName,
       // tslint:disable-next-line:object-shorthand-properties-first
       roomId,
     };
@@ -78,48 +96,47 @@ class _Container extends Component<Props, IState> {
     this.setState(prevState => ({
       seats: [
         ...prevState.seats,
-        seat,
+        seatForState,
       ],
     }));
-
-    createSeat(seat, roomId);
+    createSeat(seatToPost, roomId);
   }
 
-  private delete = (id: string) => {
+  private delete = (id: number) => {
     const { deleteSeat } = this.props;
-    const { roomId } = this.state;
     this.setState(prevState => ({
       seats: prevState.seats.filter(seat => seat.id !== id),
     }));
-    deleteSeat(roomId, id);
+    deleteSeat(id);
   }
 
-  private update = (oldId: string, newId: string) => {
+  private update = (seatId: number, newName: string) => {
     const { updateSeat } = this.props;
     const { roomId } = this.state;
 
     const newSeat: ISeat = {
-      id: newId,
+      id: seatId,
       info: '',
+      name: newName,
       // tslint:disable-next-line:object-shorthand-properties-first
       roomId,
     };
-    updateSeat(roomId, oldId, newSeat);
+    updateSeat(seatId, newName);
   }
 }
 
+const mapStateToProps = (state: IStore) => ({
+  latestSeatId: state.latestSeatId.latestId,
+});
+
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: any) => ({
-  createSeat: (data: ISeat) => dispatch(createSeatAction(data)),
-  deleteSeat: (roomId: number, seatId: string) => dispatch(deleteSeatAction(roomId, seatId)),
-  updateSeat: (
-    roomId: number,
-    oldId: string,
-    newSeat: ISeat,
-  ) => dispatch(updateSeatAction(roomId, oldId, newSeat)),
+  createSeat: (data: IPostSeat) => dispatch(createSeatAction(data)),
+  deleteSeat: (seatId: number) => dispatch(deleteSeatAction(seatId)),
+  updateSeat: (seatId: number, newName: string) => dispatch(updateSeatAction(seatId, newName)),
 });
 
 const Container = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(_Container);
 

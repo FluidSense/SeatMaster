@@ -1,5 +1,6 @@
 import { IUser } from '../API/interfaces';
-import { IRoom, ISeat } from '../components/ViewRooms';
+import { ISeat } from '../components/Seats';
+import { IRoom } from '../components/ViewRooms';
 
 export const headers = [
   { label: 'Full Name', key: 'fullname' },

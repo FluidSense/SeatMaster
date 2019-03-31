@@ -21,13 +21,7 @@ export interface IPostApplicationSeason {
 
 export interface IPutUserOnSeat {
   userId: number;
-  roomId: number;
-  seatId: string;
-}
-
-export interface IRemoveStudentFromSeat {
-  roomId: number;
-  seatId: string;
+  seatId: number;
 }
 
 export interface IPostRoom {
@@ -35,9 +29,10 @@ export interface IPostRoom {
   info: string;
 }
 
-export interface IRemoveStudentFromSeat {
+export interface IPostSeat {
+  name: string;
+  info: string;
   roomId: number;
-  seatId: string;
 }
 
 // FIXME Move this to a fitting place and export the hell out of it
