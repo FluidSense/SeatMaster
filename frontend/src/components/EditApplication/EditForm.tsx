@@ -34,67 +34,67 @@ class EditForm extends React.Component<IProps, IEditState> {
       isAdmin,
       application,
       isAdmin ? this.updateApplicationFormData : undefined,
-      );
+    );
     return (
       <form onSubmit={this.submitForm}>
-      <SkjemaGruppe className="edit-application">
-        <Input
-          label="Name"
-          bredde="L"
-          name="name"
-          value={application.user.fullname}
-          disabled={true}
-        />
-        {secureFields}
-        <Input
-          label="E-Mail"
-          bredde="L"
-          name="email"
-          value={application.user.email}
-          disabled={true}
-        />
-        <Input
-          label="Partner username"
-          bredde="L"
-          name="partnerUsername"
-          defaultValue={partnerName}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-        <Input
-          label="Preferred room"
-          bredde="L"
-          name="preferredRoom"
-          defaultValue={application.preferredRoom}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-        <Checkbox
-          label="Seat Rollover"
-          name="seatRollover"
-          defaultChecked={application.seatRollover}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-        <Input
-          label="Needs"
-          bredde="L"
-          id="edit-needs"
-          name="needs"
-          defaultValue={application.needs}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-        <Input
-          label="Comments"
-          bredde="L"
-          name="comments"
-          defaultValue={application.comments}
-          onChangeCapture={this.updateApplicationFormData}
-        />
-      </SkjemaGruppe>
-      <KnappBase
-        id="submit-application"
-        type="hoved"
-        htmlType="submit"
-      >
-        Save
+        <SkjemaGruppe className="edit-application">
+          <Input
+            label="Name"
+            bredde="L"
+            name="name"
+            value={application.user.fullname}
+            disabled={true}
+          />
+          {secureFields}
+          <Input
+            label="E-Mail"
+            bredde="L"
+            name="email"
+            value={application.user.email}
+            disabled={true}
+          />
+          <Input
+            label="Partner username"
+            bredde="L"
+            name="partnerUsername"
+            defaultValue={partnerName}
+            onChangeCapture={this.updateApplicationFormData}
+          />
+          <Input
+            label="Preferred room"
+            bredde="L"
+            name="preferredRoom"
+            defaultValue={application.preferredRoom}
+            onChangeCapture={this.updateApplicationFormData}
+          />
+          <Checkbox
+            label="Seat Rollover"
+            name="seatRollover"
+            defaultChecked={application.seatRollover}
+            onChangeCapture={this.updateApplicationFormData}
+          />
+          <Input
+            label="Needs"
+            bredde="L"
+            id="edit-needs"
+            name="needs"
+            defaultValue={application.needs}
+            onChangeCapture={this.updateApplicationFormData}
+          />
+          <Input
+            label="Comments"
+            bredde="L"
+            name="comments"
+            defaultValue={application.comments}
+            onChangeCapture={this.updateApplicationFormData}
+          />
+        </SkjemaGruppe>
+        <KnappBase
+          id="submit-application"
+          type="hoved"
+          htmlType="submit"
+        >
+          Save
       </KnappBase>
       </form>
     );
