@@ -18,7 +18,7 @@ interface IState {
 interface IProps {
   accept: () => void;
   assignUserToSeat: (seat: ISeat) => void;
-  checkSeat: (room: IRoom, seatId: ISeat) => void;
+  checkSeat: (seatId: ISeat) => void;
   modalOpen: boolean;
   rooms: IRoom[];
   seatInfo?: ISeat;
@@ -90,10 +90,10 @@ class Presentational extends React.Component<IProps, IState> {
   private setSeat = async (e: React.FormEvent) => {
     const { selectedRoom } = this.state;
     const eventTarget = e.target as HTMLFormElement;
-    const selectedSeatID = eventTarget.value;
+    const selectedSeatID = parseInt(eventTarget.value, 10);
     if (!selectedRoom) return;
     const selectedSeat = selectedRoom.seats.seats.filter(obj => obj.id === selectedSeatID)[0];
-    await this.props.checkSeat(selectedRoom, selectedSeat);
+    await this.props.checkSeat(selectedSeat);
     this.setState({ selectedSeat });
   }
 

@@ -71,7 +71,7 @@ class _Container extends React.Component<Props, IOwnState> {
     if (user) assignSeat(user, seat);
   }
 
-  private checkIfSeatOccupied = async (room: IRoom, seat: ISeat) => {
+  private checkIfSeatOccupied = async (seat: ISeat) => {
     const { fetchSeatInfo } = this.props;
     await fetchSeatInfo(seat.id);
   }

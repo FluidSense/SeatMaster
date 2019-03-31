@@ -128,13 +128,11 @@ class TestSeat(TestCase):
             'Accept': mimetype,
             'AccessToken': self.accessToken
         }
-        data = dict(
-            seatId=1,
-        )
+        seatId = 1
         response = self.app.test_client().put(
             "http://localhost:5000/seat/removeStudent",
             headers=headers,
-            data=json.dumps(data))
+            data=json.dumps(seatId))
 
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data

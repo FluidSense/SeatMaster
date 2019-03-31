@@ -57,8 +57,7 @@ def assignSeat():
 @requiresAdmin
 def removeStudentFromSeat():
     if request.is_json:
-        form = request.get_json()
-        seatId = form.get("seatId")
+        seatId = request.get_json()
         responseText, statusCode = seatService.removeStudentFromSeat(seatId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
