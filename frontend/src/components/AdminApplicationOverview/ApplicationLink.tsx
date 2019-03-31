@@ -33,7 +33,7 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
   const status = application.status;
   const { seat } = application;
   const roomName = seat ? getRoomNameFromId(rooms, seat) : '';
-  const seatId = seat ? seat.id : '';
+  const seatName = seat ? seat.name : '';
   const link = (panelProps: any) => (
     <NavLink
       to={{ pathname: panelProps.href, application: { ...application }, rooms: [...rooms] }}
@@ -55,7 +55,7 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
         </div>
         <div className="link-status"><Element>{_LINK_APP_STATUS}</Element>{status}</div>
         <div className="link-room"><Element>{_LINK_ROOM_STATUS}</Element>{roomName}</div>
-        <div className="link-seat"><Element>{_LINK_SEAT_STATUS}</Element>{seatId}</div>
+        <div className="link-seat"><Element>{_LINK_SEAT_STATUS}</Element>{seatName}</div>
       </div>
     </LenkepanelBase>
   );

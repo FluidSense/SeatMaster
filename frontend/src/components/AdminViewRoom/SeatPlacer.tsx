@@ -37,7 +37,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
     if (seat.user) {
       return (
         <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-          <PanelBase border={true}>{seat.id}</PanelBase>
+          <PanelBase border={true}>{seat.name}</PanelBase>
           <PanelBase border={true}>{seat.user.username}</PanelBase>
           <KnappBase type="fare" onClick={this.delete}>X</KnappBase>
         </Panel>

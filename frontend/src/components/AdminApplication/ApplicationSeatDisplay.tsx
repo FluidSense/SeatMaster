@@ -27,7 +27,7 @@ const ApplicationSeatDisplay: React.FunctionComponent<IProps> = (props) => {
       <Input
         label={'Seat'}
         disabled={true}
-        value={seat.id}
+        value={seat.name}
       />
       <KnappBase type="fare" onClick={onClick}>
         {_REMOVE_FROM_SEAT}
