@@ -7,6 +7,7 @@ import { IRoom } from '../ViewRooms';
 import AcceptApplication from './AcceptApplication';
 import './adminapplication.css';
 import ApplicationSeatDisplay from './ApplicationSeatDisplay';
+import SetWaitingList from './SetWaitingList';
 
 interface IProps {
   rooms: IRoom[];
@@ -38,6 +39,11 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         />
       </div>
       <div className="center-div">
+        <SetWaitingList
+          seat={application.seat}
+          updateApplication={updateApplication}
+          application={application}
+        />
         <AcceptApplication application={application} updateApplication={updateApplication}/>
       </div>
     </div>
