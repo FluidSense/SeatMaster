@@ -1,26 +1,26 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '.';
 import Seat from './Seat';
 import './seats.css';
-import { _SEATS_EXPAND } from './strings';
+import { _INVALID_NAME, _SEATS_EXPAND } from './strings';
 
 interface IProps {
-  deleteSeat: (id: string) => void;
+  deleteSeat: (id: number) => void;
   seats: ISeat[];
   createSeat: () => void;
   roomId: number;
-  updateSeat: (oldId: string, newId: string) => void;
+  updateSeat: (seatId: number, newName: string) => void;
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
   const { seats, createSeat, deleteSeat, updateSeat } = props;
-
   const seatElements = seats.map(seat => (
     <Seat
-      user={seat.user}
       id={seat.id}
+      name={seat.name || _INVALID_NAME}
+      user={seat.user}
       key={seat.id}
       deleteSelf={deleteSeat}
       updateSelf={updateSeat}

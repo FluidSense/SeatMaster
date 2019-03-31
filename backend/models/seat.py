@@ -3,23 +3,25 @@ from shared import db
 
 class Seat(db.Model):
     __tablename__ = "seats"
-    __table_args__ = (
-        db.UniqueConstraint("room_id", "seat_id"),
-    )
+
+    id = db.Column(
+        "seat_id",
+        db.Integer,
+        primary_key=True)
 
     room_id = db.Column(
-        db.ForeignKey('rooms.room_id'),
-        primary_key=True,
+        db.ForeignKey("rooms.room_id"),
+        nullable=False,
     )
 
-    seat_id = db.Column(
-        "seat_id",
-        db.String(2),
-        primary_key=True,
+    seat_name = db.Column(
+        "seat_name",
+        db.String(10),
         unique=False)
 
     room = db.relationship(
         "Room",
+        uselist=False,
         back_populates="seats")
 
     info = db.Column(
@@ -27,25 +29,26 @@ class Seat(db.Model):
         db.String(),
         nullable=True)
 
-    assignedApplication = db.relationship(
+    application = db.relationship(
         "Application",
         uselist=False,
-        backref="Application"
+        back_populates="seat"
     )
 
-    def __init__(self, id, room, info):
-        self.seat_id = id
+    def __init__(self, name, room, info):
+        self.seat_name = name
         self.room = room
         self.info = info
 
     def to_json(self, refer_user=True):
         seatDict = {
-            "id": self.seat_id,
+            "id": self.id,
+            "name": self.seat_name,
             "info": self.info,
             "roomId": self.room.id,
         }
         if refer_user:
-            seatDict["user"] = self.assignedApplication.user.to_json() if self.assignedApplication else None
+            seatDict["user"] = self.application.user.to_json() if self.application else None
         return seatDict
 
     def __str__(self):

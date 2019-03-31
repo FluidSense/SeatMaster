@@ -6,7 +6,7 @@ import Presentational from '../../components/ApplicationStatus/Presentational';
 const _APP_APPROVED = 'Your application has been accepted';
 const _APP_DENIED = 'Your application has been denied';
 const _APP_NOT_FOUND = 'We can&#x27;t find an application linked to you';
-const _APP_SUBMITTED = 'You have submitted and account, it is currently being processed';
+const _APP_SUBMITTED = 'You have submitted an application, it is currently being processed';
 
 describe('ApplicationStatus', () => {
   it('Application approoved renders correctly', () => {

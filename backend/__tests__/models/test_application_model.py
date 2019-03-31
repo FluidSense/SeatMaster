@@ -96,7 +96,7 @@ def test_application_connect_to_seat(db_session):
     room = Room("D1", "kek")
     db_session.add(room)
     seat = Seat(
-        id="D1",
+        name="D1",
         room=room,
         info="")
     db_session.add(seat)
@@ -116,8 +116,9 @@ def test_application_connect_to_seat(db_session):
     db_session.add(application)
     db_session.commit()
     application.room_id = seat.room_id
-    application.seat_id = seat.seat_id
-    assert application.seat == seat
+    application.seat_id = seat.id
+    assert application.seat is seat
+    assert seat.application is application
 
 
 def test_application_connect_to_season(db_session):
@@ -194,7 +195,7 @@ def test_cascading_partnerApplication(db_session):
         rank=Rank.WRITING_MASTER,
         status=ApplicationStatus.SUBMITTED,
         applicationSeason=season
-        )
+    )
     db_session.add(user1)
     db_session.add(user2)
     db_session.add(application1)
@@ -225,17 +226,22 @@ def test_cascading_seat(db_session):
         applicationSeason=season
     )
     room = Room(name="room", info="info")
-    seat = Seat(id="d1", room=room, info="info")
-    application.room_id = seat.room_id
-    application.seat_id = seat.seat_id
+    seat = Seat(name="d1", room=room, info="info")
     db_session.add(user)
     db_session.add(application)
     db_session.add(room)
     db_session.add(seat)
     db_session.commit()
-    db_session.expire_all()
+    application.room_id = seat.room_id
+    application.seat_id = seat.id
+    assert application.seat is seat
+
     db_session.delete(application)
     db_session.commit()
+    db_session.expire_all()
+
     dbseat = db_session.query(Seat).first()
+    print(user.application)
     assert dbseat == seat
+    assert dbseat.application is None
     assert user.application is None

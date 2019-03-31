@@ -36,6 +36,7 @@ export const RoutesAdmin = () => {
           <Route exact={true} path="/admin/applications/:id" component={AdminApplication} />
           <Route path="/admin/applications/:id/edit" component={EditApplication} />
           <Route path="/admin/create-season" component={CreateSeason} />
+          <Route path="/admin/seasons/update-season/:id" component={CreateSeason} />
           <Route exact={true} path="/admin/rooms" component={ViewRooms} />
           <Route exact={true} path="/admin/rooms/create-room" component={AdminRoom} />
           <Route exact={true} path="/admin/rooms/:id" component={AdminViewRoom} />

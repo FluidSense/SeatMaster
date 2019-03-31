@@ -12,7 +12,7 @@ import SetWaitingList from './SetWaitingList';
 interface IProps {
   rooms: IRoom[];
   application: IApplication;
-  removeStudentFromSeat: (roomId: number, seatId: string) => void;
+  removeStudentFromSeat: (seatId: number) => void;
   updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
@@ -44,7 +44,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           updateApplication={updateApplication}
           application={application}
         />
-        <AcceptApplication application={application} updateApplication={updateApplication}/>
+        <AcceptApplication application={application} updateApplication={updateApplication} />
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 879dd56cf0a9
+Revision ID: 6d1dfb46b307
 Revises: 
-Create Date: 2019-03-25 15:29:14.584280
+Create Date: 2019-03-31 16:38:47.631397
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '879dd56cf0a9'
+revision = '6d1dfb46b307'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,28 +43,30 @@ def upgrade():
     sa.UniqueConstraint('username')
     )
     op.create_table('seats',
+    sa.Column('seat_id', sa.Integer(), nullable=False),
     sa.Column('room_id', sa.Integer(), nullable=False),
-    sa.Column('seat_id', sa.String(length=2), nullable=False),
+    sa.Column('seat_name', sa.String(length=10), nullable=True),
     sa.Column('info', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.room_id'], ),
-    sa.PrimaryKeyConstraint('room_id', 'seat_id'),
-    sa.UniqueConstraint('room_id', 'seat_id')
+    sa.PrimaryKeyConstraint('seat_id')
     )
     op.create_table('application',
     sa.Column('application_id', sa.Integer(), nullable=False),
     sa.Column('needs', sa.String(), nullable=False),
-    sa.Column('status', sa.Enum('SUBMITTED', 'APPROVED', 'DECLINED', name='applicationstatus'), nullable=False),
+    sa.Column('status', sa.Enum('SUBMITTED', 'APPROVED', 'DECLINED', 'WAITING_LIST', name='applicationstatus'), nullable=False),
     sa.Column('rank', sa.Enum('WRITING_MASTER', 'PROJECT_ASSIGNMENT', 'MASTER_STUDENT', 'BACHELOR_STUDENT', 'OTHER', name='rank'), nullable=True),
     sa.Column('comments', sa.String(length=100), nullable=True),
+    sa.Column('applicationSeasonId', sa.Integer(), nullable=True),
+    sa.Column('queuePlacement', sa.Integer(), nullable=True),
     sa.Column('userid', sa.Integer(), nullable=True),
     sa.Column('applies_with', sa.String(length=50), nullable=True),
     sa.Column('partnerApplicationId', sa.Integer(), nullable=True),
     sa.Column('preferredRoom', sa.String(length=50), nullable=True),
     sa.Column('seatRollover', sa.Boolean(), nullable=True),
-    sa.Column('room_id', sa.Integer(), nullable=True),
-    sa.Column('seat_id', sa.String(), nullable=True),
+    sa.Column('seat_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['applicationSeasonId'], ['application_season.application_season_id'], ),
     sa.ForeignKeyConstraint(['partnerApplicationId'], ['application.application_id'], ),
-    sa.ForeignKeyConstraint(['room_id', 'seat_id'], ['seats.room_id', 'seats.seat_id'], ),
+    sa.ForeignKeyConstraint(['seat_id'], ['seats.seat_id'], ),
     sa.ForeignKeyConstraint(['userid'], ['users.userid'], ),
     sa.PrimaryKeyConstraint('application_id')
     )

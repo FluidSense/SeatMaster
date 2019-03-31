@@ -1,29 +1,29 @@
 import moment, { Moment } from 'moment';
 import { AnyAction } from 'redux';
-import { SUBMITTED_APPLICATION_SEASON } from '../CreateSeason/strings';
-import { SET_APPLICATION_SEASON } from './constants';
+import {
+  FETCHED_APPLICATION_SEASON,
+  RESET_SUBMIT,
+  SET_APPLICATION_SEASON,
+  SUBMITTED_APPLICATION_SEASON,
+  SUBMITTED_APPLICATION_SEASON_FAILED,
+  UPDATE_APPLICATION_SEASON,
+} from './constants';
 
 export interface IApplicationSeason {
   applicationPeriodEnd: Moment;
   applicationPeriodStart: Moment;
+  id: number;
   start: Moment;
   end: Moment;
 }
 
 export interface IApplicationSeasonState {
-  currentSeason: IApplicationSeason;
+  currentSeason?: IApplicationSeason;
   submitted?: boolean;
 }
 
-const minDate = moment(1970);
-
 export const initialState = {
-  currentSeason: {
-    applicationPeriodEnd: minDate,
-    applicationPeriodStart: minDate,
-    end: minDate,
-    start: minDate,
-  },
+  currentSeason: undefined,
 };
 
 export const applicationSeasonReducer = (
@@ -33,25 +33,53 @@ export const applicationSeasonReducer = (
   const { type, payload } = action;
   switch (type) {
     case SET_APPLICATION_SEASON:
-      const {
-        applicationPeriodEnd,
-        applicationPeriodStart,
-        start,
-        end,
-      } = payload;
       return {
         ...state,
         currentSeason: {
-          applicationPeriodEnd: moment(applicationPeriodEnd),
-          applicationPeriodStart: moment(applicationPeriodStart),
-          end: moment(end),
-          start: moment(start),
+          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
+          applicationPeriodStart: moment(payload.applicationPeriodStart),
+          end: moment(payload.end),
+          id: payload.id,
+          start: moment(payload.start),
         },
       };
     case SUBMITTED_APPLICATION_SEASON:
       return {
         ...state,
+        currentSeason: {
+          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
+          applicationPeriodStart: moment(payload.applicationPeriodStart),
+          end: moment(payload.end),
+          id: payload.id,
+          start: moment(payload.start),
+        },
+        submitted: true,
+      };
+    case SUBMITTED_APPLICATION_SEASON_FAILED:
+      return {
+        ...state,
+        submitted: false,
+      };
+    case FETCHED_APPLICATION_SEASON:
+      return {
+        ...state,
+        currentSeason: {
+          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
+          applicationPeriodStart: moment(payload.applicationPeriodStart),
+          end: moment(payload.end),
+          id: payload.id,
+          start: moment(payload.start),
+        },
+      };
+    case UPDATE_APPLICATION_SEASON:
+      return {
+        ...state,
         submitted: payload,
+      };
+    case RESET_SUBMIT:
+      return {
+        ...state,
+        submitted: undefined,
       };
     default:
       return state;

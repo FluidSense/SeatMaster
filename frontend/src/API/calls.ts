@@ -1,6 +1,7 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
-import { IRoom, ISeat } from '../components/ViewRooms';
+import { ISeat } from '../components/Seats';
+import { IRoom } from '../components/ViewRooms';
 import {
   deleteJson,
   elevatedDeleteJson,
@@ -36,16 +37,24 @@ import {
   IPostApplicationForm,
   IPostApplicationSeason,
   IPostRoom,
+  IPostSeat,
   IPutUserOnSeat,
-  IRemoveStudentFromSeat,
   IUser,
 } from './interfaces';
 
 export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_URL);
 
+export const getSeasonFromId = (id: number): PromiseLike<IApplicationSeason> =>
+  getJson(`${SEASON_URL}${id}`);
+
 export const postSeason = (data: IPostApplicationSeason):
   PromiseLike<IApplicationSeason> => {
   return elevatedPostJson(SEASON_URL, data);
+};
+
+export const putSeason = (data: IPostApplicationSeason, id: number):
+  PromiseLike<IApplicationSeason> => {
+  return elevatedPutJson(`${SEASON_URL}${id}`, data);
 };
 
 export const getApplicationFormBySelf = ():
@@ -129,20 +138,24 @@ export const putUserOnSeat = (data: IPutUserOnSeat): PromiseLike<ISeat> => {
   return elevatedPutJson(ASSIGN_SEAT_URL, data);
 };
 
-export const removeStudentFromSeat = (data: IRemoveStudentFromSeat): PromiseLike<ISeat> => {
-  return elevatedPutJson(REMOVE_STUDENT_FROM_SEAT_URL, data);
+export const removeStudentFromSeat = (seatId: number): PromiseLike<ISeat> => {
+  return elevatedPutJson(REMOVE_STUDENT_FROM_SEAT_URL, seatId);
 };
 
-export const getSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
-  return elevatedGetJson(`${GET_SEAT_URL}${roomId}/${seatId}`);
+export const getSeat = (seatId: number): PromiseLike<ISeat> => {
+  return elevatedGetJson(`${GET_SEAT_URL}${seatId}`);
 };
 
-export const postSeat = (data: ISeat): PromiseLike<ISeat> => {
+export const postSeat = (data: IPostSeat): PromiseLike<ISeat> => {
   return elevatedPostJson(SEAT_URL, data);
 };
 
-export const deleteSeat = (roomId: number, seatId: string): PromiseLike<ISeat> => {
-  return elevatedDeleteJson(SEAT_URL, roomId, seatId);
+export const deleteSeat = (seatId: number): PromiseLike<ISeat> => {
+  return elevatedDeleteJson(SEAT_URL, seatId);
+};
+
+export const updateSeatName = (seatId: number, newName: string): PromiseLike<ISeat> => {
+  return elevatedPutJson(`${SEAT_URL}${seatId}`, newName);
 };
 
 export const getAllUsers = (): PromiseLike<[IUser]> => {
