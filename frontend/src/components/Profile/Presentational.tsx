@@ -3,6 +3,7 @@ import Modal from 'nav-frontend-modal';
 import { Normaltekst, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
 import { User } from 'oidc-client';
 import * as React from 'react';
+import userManager from '../../utils/userManager';
 import { _PROFILE_DELETE_WARNING, _PROFILE_INFORMATION_TEXT } from './constants';
 
 interface IDispatchProps {
@@ -110,6 +111,7 @@ export class Presentational extends React.Component<IProps, IState> {
 
     if (user && !user.expired) {
       await deleteAndRemoveUser();
+      userManager.signoutRedirect();
     }
   }
 
