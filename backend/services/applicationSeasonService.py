@@ -17,9 +17,7 @@ def getPreviousSeason():
     comingSeasons = db.session.query(ApplicationSeason).all()
     try:
         # Find season with second closest application start date to today, by comparing date differences
-        return sorted(comingSeasons,
-                      key=lambda season: season.applicationPeriodStart - datetime.today(),
-                      default=None)[1]
+        return sorted(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today())[1]
     except IndexError:
         return None
 

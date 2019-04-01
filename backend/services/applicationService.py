@@ -29,12 +29,12 @@ def getApplicationByUserId(userid):
     return userApplication
 
 
-def getPreviousApplicationByUserId(userid):
+def getPreviousApplication(userid):
     season = getPreviousSeason()
     if(not season):
         return None
     userApplication = db.session.query(Application).filter(Application.userid == userid) \
-        .join(ApplicationSeason).filter(Application.applicationSeason.id == season.id).first()
+        .join(ApplicationSeason).filter(Application.applicationSeason == season).first()
     return userApplication
 
 

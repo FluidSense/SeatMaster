@@ -211,6 +211,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_get_all_applications(self):
+        createBasicSeason(db.session)
         season = createBasicSeason(db.session)
         headers = {
             'Authorization': self.token,
@@ -424,6 +425,7 @@ class TestApplication(TestCase):
 
     @mock_authentication_context
     def test_update_application_with_partner(self):
+        createBasicSeason(db.session)
         season = createBasicSeason(db.session)
         headers = {
             'Authorization': self.token,
@@ -471,6 +473,45 @@ class TestApplication(TestCase):
         )
         assert testApplication1.partnerApplication is None
         assert testApplication2.partnerApplication is None
+
+    @mock_authentication_context
+    def test_get_previousApplication(self):
+        firstSeason = createBasicSeason(db.session)
+        currentSeason = createBasicSeason(db.session)
+        headers = {
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
+        }
+        testuser1 = User(username="Frank", sub="sub", email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="uuid", email="email", fullname="Schmemail")
+        db.session.add(testuser1)
+        db.session.add(testuser2)
+        db.session.commit()
+        testApplication1 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser1,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=firstSeason,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication2 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser2,
+            partnerUsername="Monster",
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=currentSeason,
+            comments="Not Pepsi, but Pepsi Max")
+        db.session.add(testApplication1)
+        db.session.add(testApplication2)
+        db.session.commit()
+        response = self.app.test_client().get(
+            f'http://localhost:5000/application/getPreviousApplicationByUser/{testuser1.id}', headers=headers)
+        assert response.status == "200 OK"
+        assert json.loads(response.data) == testApplication1.to_json()
 
     def tearDown(self):
         self.postgres.stop()
