@@ -65,7 +65,6 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
     <_Container
       createRoom={[Function]}
       deleteRoom={[Function]}
-      fetchRoomInfo={[Function]}
       location={
         Object {
           "room": undefined,
@@ -77,7 +76,6 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
       <Presentational
         buttonDisabled={true}
         deleteRoom={[Function]}
-        fetchRoom={[Function]}
         modalOpen={false}
         onClick={[Function]}
         room={
@@ -114,20 +112,6 @@ exports[`Admin room functions renders correctly without rooms 1`] = `
                 </h1>
               </TypografiBase>
             </Sidetittel>
-            <CSVButton
-              fetchRoomInfo={[Function]}
-              room={
-                Object {
-                  "id": -1,
-                  "info": "",
-                  "name": "",
-                  "seats": Object {
-                    "count": 0,
-                    "seats": Array [],
-                  },
-                }
-              }
-            />
           </div>
           <Input
             bredde="XL"
