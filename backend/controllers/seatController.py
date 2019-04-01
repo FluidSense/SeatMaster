@@ -61,3 +61,10 @@ def removeStudentFromSeat():
         responseText, statusCode = seatService.removeStudentFromSeat(seatId)
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
+
+
+@seat.route("/removeAllStudents", methods=["POST"])
+@requiresAdmin
+def removeAllStudentsFromSeats():
+        responseText, statusCode = seatService.removeAllStudentsFromSeats()
+        return make_response(jsonify(responseText), statusCode)
