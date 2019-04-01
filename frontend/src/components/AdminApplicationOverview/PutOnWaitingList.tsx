@@ -49,7 +49,7 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
     return (
       <div>
         <KnappBase
-          type="flat"
+          type="hoved"
           htmlType="submit"
           onClick={this.toggleModal}
           className="waiting-list-button"
