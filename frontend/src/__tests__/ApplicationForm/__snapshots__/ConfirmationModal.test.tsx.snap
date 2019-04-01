@@ -2,7 +2,7 @@
 
 exports[`application form confirmation modal renders correctly 1`] = `
 <ModalWrapper
-  closeButton={true}
+  closeButton={false}
   closeTimeoutMS={0}
   contentLabel="Form submitted"
   isOpen={true}

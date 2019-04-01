@@ -17,7 +17,7 @@ export const ConfirmationModal: React.FunctionComponent<IProps> = (props) => {
     <Modal
       isOpen={props.modalIsOpen}
       onRequestClose={closeModal}
-      closeButton={true}
+      closeButton={false}
       contentLabel="Form submitted"
     >
       <div style={{ padding: '2rem 2.5rem' }} className="modalContent">
