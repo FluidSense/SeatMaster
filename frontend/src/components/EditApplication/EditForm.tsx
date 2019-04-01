@@ -1,35 +1,62 @@
 import KnappBase from 'nav-frontend-knapper';
-import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
+import ApplicationFormComments from '../ApplicationForm/ApplicationFormComments';
+import ApplicationFormPersonal from '../ApplicationForm/ApplicationFormPersonal';
+import ApplicationFormPreferences from '../ApplicationForm/ApplicationFormPreferences';
+import { IFormCheckboxStates, IFormState } from '../ApplicationForm/Presentational';
+import { IRoom } from '../ViewRooms';
 import { SecureFields } from './SecureFields';
+import { _EDITING_INFO_TEXT, _SAVE_BUTTON } from './strings';
 
 interface IProps {
   application: IApplication;
   isAdmin: boolean;
-  finalize: (state: IEditState) => void;
+  rooms: IRoom[];
+  finalize: (state: IPostAdminApplicationForm) => void;
 }
 
-export interface IEditState {
-  name: string;
-  masterStatus: string;
-  email: string;
-  partnerUsername: string;
-  preferredRoom: string;
-  seatRollover: boolean;
-  needs: string;
-  comments: string;
-  [x: string]: string | boolean;
-}
+type State = IFormState & IFormCheckboxStates;
 
-class EditForm extends React.Component<IProps, IEditState> {
+class EditForm extends React.Component<IProps, State> {
+  constructor(props: IProps) {
+    super(props);
+    const { application } = props;
+    const { user, partnerApplication, seatRollover, needs, comments, preferredRoom } = application;
+    let partner = '';
+    if (partnerApplication && partnerApplication.user) {
+      partner = partnerApplication.user.username;
+    }
+    this.state = {
+      comments: comments || '',
+      email: user.email,
+      hasNeeds: needs !== undefined && needs.length > 0,
+      hasPartner: partner.length > 0,
+      name: user.fullname,
+      needs: needs || '',
+      partnerUsername: partner,
+      preferredRoom: preferredRoom || '',
+      rank: application.rank,
+      seatRollover: seatRollover || false,
+    };
+  }
 
   public render() {
-    const { application, isAdmin } = this.props;
+    const { application, isAdmin, rooms } = this.props;
+    const {
+      name,
+      email,
+      partnerUsername,
+      hasNeeds,
+      hasPartner,
+      preferredRoom,
+      needs,
+      comments,
+      seatRollover,
+    } = this.state;
     if (!(application && application.user)) return null;
-    const partnerApplication = application.partnerApplication;
-    const partner = partnerApplication ? partnerApplication.user : undefined;
-    const partnerName = partner ? partner.username : '';
     const secureFields = SecureFields(
       isAdmin,
       application,
@@ -37,56 +64,29 @@ class EditForm extends React.Component<IProps, IEditState> {
     );
     return (
       <form onSubmit={this.submitForm}>
+        <p style={{ fontStyle: 'italic' }} >{_EDITING_INFO_TEXT}</p>
         <SkjemaGruppe className="edit-application">
-          <Input
-            label="Name"
-            bredde="L"
-            name="name"
-            value={application.user.fullname}
-            disabled={true}
+          <ApplicationFormPersonal
+            isAdmin={isAdmin}
+            fullname={name}
+            email={email}
           />
           {secureFields}
-          <Input
-            label="E-Mail"
-            bredde="L"
-            name="email"
-            value={application.user.email}
-            disabled={true}
+          <ApplicationFormPreferences
+            isAdmin={isAdmin}
+            updateApplicationFormData={this.updateApplicationFormData}
+            rooms={rooms}
+            room={preferredRoom}
+            hasPartner={hasPartner}
+            wantsSeat={seatRollover}
+            partner={partnerUsername}
           />
-          <Input
-            label="Partner username"
-            bredde="L"
-            name="partnerUsername"
-            defaultValue={partnerName}
-            onChangeCapture={this.updateApplicationFormData}
-          />
-          <Input
-            label="Preferred room"
-            bredde="L"
-            name="preferredRoom"
-            defaultValue={application.preferredRoom}
-            onChangeCapture={this.updateApplicationFormData}
-          />
-          <Checkbox
-            label="Seat Rollover"
-            name="seatRollover"
-            defaultChecked={application.seatRollover}
-            onChangeCapture={this.updateApplicationFormData}
-          />
-          <Input
-            label="Needs"
-            bredde="L"
-            id="edit-needs"
-            name="needs"
-            defaultValue={application.needs}
-            onChangeCapture={this.updateApplicationFormData}
-          />
-          <Input
-            label="Comments"
-            bredde="L"
-            name="comments"
-            defaultValue={application.comments}
-            onChangeCapture={this.updateApplicationFormData}
+          <ApplicationFormComments
+            isAdmin={isAdmin}
+            needs={needs}
+            hasNeeds={hasNeeds}
+            comments={comments}
+            updateApplicationFormData={this.updateApplicationFormData}
           />
         </SkjemaGruppe>
         <KnappBase
@@ -94,7 +94,7 @@ class EditForm extends React.Component<IProps, IEditState> {
           type="hoved"
           htmlType="submit"
         >
-          Save
+          {_SAVE_BUTTON}
         </KnappBase>
       </form>
     );
@@ -110,7 +110,16 @@ class EditForm extends React.Component<IProps, IEditState> {
 
   private submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    this.props.finalize(this.state);
+
+    const body: IPostAdminApplicationForm = {
+      comments: this.state.comments,
+      needs: this.state.needs,
+      partnerUsername: this.state.partnerUsername,
+      preferredRoom: this.state.preferredRoom,
+      rank: this.state.rank,
+      seatRollover: this.state.seatRollover,
+    };
+    this.props.finalize(body);
   }
 
 }

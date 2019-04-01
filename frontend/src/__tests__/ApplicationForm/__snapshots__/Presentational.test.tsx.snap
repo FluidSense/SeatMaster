@@ -15,14 +15,18 @@ exports[`application form renders correctly 1`] = `
     >
       Additional information about your courses at NTNU will be gathered for the purpose of finding your master status.
     </p>
-    <ApplicationFormPersonal />
+    <ApplicationFormPersonal
+      isAdmin={false}
+    />
     <ApplicationFormPreferences
-      partner={false}
+      hasPartner={false}
+      isAdmin={false}
       rooms={Array []}
       updateApplicationFormData={[Function]}
     />
     <ApplicationFormComments
-      needs={false}
+      hasNeeds={false}
+      isAdmin={false}
       updateApplicationFormData={[Function]}
     />
     <KnappBase

@@ -7,6 +7,7 @@ import { IApplication } from '../Application/index';
 import InfoPanel from './InfoPanel';
 import InformationList from './InformationList';
 import {
+  _APPLICATION_INFO_TEXT,
   _COMMENTS,
   _EDIT_APPLICATION,
   _EMAIL,
@@ -68,9 +69,7 @@ const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
   return (
     <div id="application-review">
       <Sidetittel>{title ? title : _REVIEW_APPLICATION}</Sidetittel>
-      <p style={{ fontStyle: 'italic' }} >
-      If any of the information is wrong, add a comment or edit the information.
-      </p>
+      <p style={{ fontStyle: 'italic' }} >{_APPLICATION_INFO_TEXT}</p>
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>
