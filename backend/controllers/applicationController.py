@@ -77,8 +77,10 @@ def registerApplication():
         )
         if "seat" in responseText:
             del responseText["seat"]
+            del responseText["previousSeat"]
         if "partnerApplication" in responseText and "seat" in responseText["partnerApplication"]:
             del responseText["partnerApplication"]["seat"]
+            del responseText["partnerApplication"]["previousSeat"]
         return make_response(jsonify(responseText), statusCode)
     return abort(400)
 
@@ -132,5 +134,6 @@ def waitingListByIdList():
 def filterOnStatus(applicationJson):
     if not applicationJson["status"] == ApplicationStatus.APPROVED.name:
         del applicationJson["seat"]
+        del applicationJson["previousSeat"]
         return applicationJson
     return applicationJson

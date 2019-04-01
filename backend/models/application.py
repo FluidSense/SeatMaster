@@ -106,6 +106,10 @@ class Application(db.Model):
         back_populates="application"
     )
 
+    previousSeat = db.Column(
+        db.String(100),
+    )
+
     def __init__(self, status, needs, user, partnerUsername, preferredRoom,
                  seatRollover, applicationSeason, comments, rank=Rank.OTHER):
         self.status = status
@@ -127,6 +131,7 @@ class Application(db.Model):
             "rank": self.rank.name,
             "preferredRoom": self.preferredRoom,
             "seatRollover": self.seatRollover,
+            "previousSeat": self.previousSeat,
             "seat": self.seat.to_json(False) if self.seat else None,
             "user": self.user.to_json() if self.user else None,
         }

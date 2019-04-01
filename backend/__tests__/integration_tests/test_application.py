@@ -186,6 +186,7 @@ class TestApplication(TestCase):
             seatRollover=True,
             seat=None,
             rank="OTHER",
+            previousSeat=None,
             partnerApplication={
                 "needs": "Fanta is better than solo",
                 "comments": "Bruh wtf",
@@ -195,6 +196,7 @@ class TestApplication(TestCase):
                 "seatRollover": True,
                 "rank": "WRITING_MASTER",
                 "seat": None,
+                "previousSeat": None,
                 "user": {
                     "id": testuser1.id,
                     "username": testuser1.username,
@@ -418,6 +420,7 @@ class TestApplication(TestCase):
             seat=None,
             preferredRoom="d1",
             seatRollover=True,
+            previousSeat=None,
         ), 200)
         assert expectedResponse.status == response.status
         assert json.loads(expectedResponse.data) == json.loads(response.data)
