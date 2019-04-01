@@ -6,6 +6,7 @@ export const _CREATE_NEW_SEASON = 'Create new application season';
 export const _ROOM_END_TOO_EARLY = 'Room period ends before it starts';
 export const _SEASON_END_TOO_EARLY = 'The application season ends before it starts';
 export const _NEW_APPLICATION_SEASON = 'New Application Season';
-export const _ERROR_MESSAGE = 'Something went wrong';
-
-export const SUBMITTED_APPLICATION_SEASON = 'SUBMITTED_APPLICATION_SEASON';
+export const _UPDATE_APPLICATION_SEASON = 'Update Application Season';
+export const _ERROR_MESSAGE = 'Could not connect to the server';
+export const _UPDATE_CURRENT_SEASON = 'Update current season';
+export const _EXISTING_CURRENT_SEASON = 'There already exists a season';

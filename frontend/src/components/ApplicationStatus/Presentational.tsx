@@ -44,6 +44,8 @@ const selectEtikettText = (applicationStatus: string) => {
   return etikettText;
 };
 
+export type EtikettTypes = 'suksess' | 'info' | 'advarsel' | 'fokus';
+
 const selectEtikettType = (applicationStatus: string) => {
   let etikettType: 'suksess' | 'info' | 'advarsel' | 'fokus' = ETIKETT_WARNING;
 

@@ -1,18 +1,20 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
+import { Redirect } from 'react-router';
 import { postApplicationForm } from '../../API/calls';
+import { IApplication } from '../Application';
 import { IRegisteredUserState } from '../RegisterUser/reducer';
 import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-
 import { _ALERT_USER_ERROR } from './Strings';
 
 interface IProps {
   userInformation: IRegisteredUserState;
   rooms: IRoom[];
+  application?: IApplication;
   changeModal: (modalOpen: boolean) => void;
   getRooms: () => void;
 }
@@ -51,8 +53,9 @@ export class Presentational extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { userInformation } = this.props;
+    const { userInformation, application } = this.props;
     const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
+    if (application) return <Redirect to="/" />;
     return (
       <>
         {alertBox}

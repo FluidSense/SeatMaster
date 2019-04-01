@@ -17,6 +17,7 @@ import {
   DELETE_ALL_USERS_URL,
   DELETE_USER_URL,
   GET_ALL_APPLICATIONS_URL,
+  GET_ALL_SEASONS_URL,
   GET_ALL_USERS_URL,
   GET_APPLICATION_BY_ID_URL,
   GET_APPLICATION_BY_SELF_URL,
@@ -44,9 +45,20 @@ import {
 
 export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_URL);
 
+export const getAllSeasons = (): PromiseLike<IApplicationSeason[]> =>
+  elevatedGetJson(GET_ALL_SEASONS_URL);
+
+export const getSeasonFromId = (id: number): PromiseLike<IApplicationSeason> =>
+  getJson(`${SEASON_URL}${id}`);
+
 export const postSeason = (data: IPostApplicationSeason):
   PromiseLike<IApplicationSeason> => {
   return elevatedPostJson(SEASON_URL, data);
+};
+
+export const putSeason = (data: IPostApplicationSeason, id: number):
+  PromiseLike<IApplicationSeason> => {
+  return elevatedPutJson(`${SEASON_URL}${id}`, data);
 };
 
 export const getApplicationFormBySelf = ():

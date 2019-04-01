@@ -22,6 +22,7 @@ export const DELETE_ALL_USERS_URL = `${BASEPATH}user/deleteAll`;
 
 // Season
 export const SEASON_URL = `${BASEPATH}season/`;
+export const GET_ALL_SEASONS_URL = `${SEASON_URL}all`;
 
 // Seat
 export const ASSIGN_SEAT_URL = `${BASEPATH}seat/assignSeat`;

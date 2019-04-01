@@ -30,7 +30,7 @@ describe('Presentation ApplicationSeason', () => {
        applicationSeason={startedSeason}
        currentDate={today}
     />);
-    expect(wrapper.find(EtikettBase).first().html()).toContain('Currently open for applications.');
+    expect(wrapper.find(EtikettBase).first().html()).toContain('Currently open for applications');
   });
 
   it('tests season ended if date is after today season', () => {

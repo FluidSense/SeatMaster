@@ -4,7 +4,7 @@ import { IApplication } from '../Application';
 import { APP_APPROVED, APP_WAITING } from '../commonConstants';
 import Modal from '../Modal';
 import './adminApplicationOverview.css';
-import { _WAITING_LIST_WARNING } from './constants';
+import { _WAITING_LIST_WARNING } from './constants';
 import { _PUT_ON_WAITING_LIST } from './strings';
 
 interface IProps {
@@ -36,7 +36,7 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
       return app.status !== APP_WAITING && app.status !== APP_APPROVED ? true : false;
     });
     const waiterStudents = waiters.map((app, i) =>
-    <li key={i}>{app.user.username}</li>);
+      <li key={i}>{app.user.username}</li>);
     const modalText = (
       <>
         <p>{_WAITING_LIST_WARNING}</p>
@@ -46,13 +46,13 @@ export class PutOnWaitingList extends React.Component<IProps, IState> {
       </>
     );
 
-    return(
+    return (
       <div>
         <KnappBase
           type="flat"
           htmlType="submit"
           onClick={this.toggleModal}
-          id="waiting-list-button"
+          className="waiting-list-button"
         >
           {_PUT_ON_WAITING_LIST}
         </KnappBase>
