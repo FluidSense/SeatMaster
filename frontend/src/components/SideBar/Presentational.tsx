@@ -1,12 +1,21 @@
 import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { isMobile } from '../../utils/layoutManager';
 import { IRegisteredUserState } from '../RegisterUser/reducer';
+import { ISideBarState } from './reducer';
 import './sideBar.css';
 
-interface IProps {
+interface IStateProps {
   userInformation: IRegisteredUserState;
+  sideBar: ISideBarState;
 }
+
+interface IDispatchProps {
+  toggleSideBar: () => void;
+}
+
+type Props = IStateProps & IDispatchProps;
 
 interface IUrl {
   url: string;
@@ -30,11 +39,11 @@ const adminUrls: IUrl[] = [
   { url: '/admin/students/', title: 'Students' },
 ];
 
-const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { userInformation } = props;
-
+const Presentational: React.FunctionComponent<Props> = (props) => {
+  const { userInformation, sideBar, toggleSideBar } = props;
+  if (!sideBar.open && isMobile) return null;
   const userUrlList = userUrls.map(url => (
-    <li key={userUrls.indexOf(url)}>
+    <li key={userUrls.indexOf(url)} onClick={toggleSideBar}>
       <NavLink to={url.url} exact={true}>
         {url.title}
       </NavLink>
@@ -54,7 +63,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   }
 
   const adminUrlList = adminUrls.map(url => (
-    <li key={adminUrls.indexOf(url)}>
+    <li key={adminUrls.indexOf(url)} onClick={toggleSideBar}>
       <NavLink to={url.url} exact={true}>
         {url.title}
       </NavLink>
