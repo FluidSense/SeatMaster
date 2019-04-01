@@ -36,7 +36,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
 
     if (seat.user) {
       return (
-        <Panel border={true} style={{ display: 'flex', width: '35%' }}>
+        <Panel border={true}>
           <PanelBase border={true}>{seat.name}</PanelBase>
           <PanelBase border={true}>{seat.user.username}</PanelBase>
           <KnappBase type="fare" onClick={this.delete}>X</KnappBase>
@@ -46,13 +46,18 @@ class SeatPlacer extends React.Component<IProps, IState> {
     if (!users) return null;
     const userOptions = this.usersToOption(users);
     return (
-      <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-        <PanelBase border={true}>{seat.name}</PanelBase>
-        <Select label="" onChangeCapture={this.selectUser}>
+      <Panel className="room-assign-seat" border={true}>
+        <PanelBase className="room-panel-seat" border={true}>{seat.name}</PanelBase>
+        <Select className="room-select-seat" bredde="l" label="" onChangeCapture={this.selectUser}>
           <option value="">Select user</option>
           {userOptions}
         </Select>
-        <KnappBase type="hoved" disabled={selectedUser ? false : true} onClick={this.assign}>
+        <KnappBase
+          className="room-assign-seat"
+          type="hoved"
+          disabled={selectedUser ? false : true}
+          onClick={this.assign}
+        >
           {_ASSIGN_SEAT}
         </KnappBase>
       </Panel>

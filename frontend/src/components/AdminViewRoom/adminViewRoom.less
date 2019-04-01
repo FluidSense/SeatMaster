@@ -1,0 +1,22 @@
+.room-assign-seat {
+  display: grid !important;
+  width: 70%;
+  grid-template-columns: 10% 5% 15% 30% 40%;
+  justify-content: space-around !important;
+  align-items: center;
+  margin-top: 1rem;
+  .room-panel-seat {
+    text-align: center;
+    grid-column: 1;
+  }
+  .room-select-seat {
+    grid-column: 3 /span 2;
+    margin-bottom: 0;
+    label {
+      display: none;
+    }
+  }
+  .room-assign-seat {
+    grid-column: 5;
+  }
+}
