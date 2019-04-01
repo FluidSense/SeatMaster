@@ -32,7 +32,6 @@ interface IProps {
   showAlert: boolean;
   alertMessage?: string;
   roomExists: boolean;
-  fetchRoom: (roomId: number) => void;
   modalOpen: boolean;
   toggleModal: () => void;
 }
@@ -55,7 +54,6 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     deleteRoom,
     showAlert,
     alertMessage,
-    fetchRoom,
     modalOpen,
     toggleModal,
   } = props;
@@ -95,7 +93,6 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
     <div className="main-content">
       <div className="title-and-button">
         <Sidetittel>{titleText}</Sidetittel>
-        <CSVButton room={room} fetchRoomInfo={fetchRoom} />
       </div>
       {displayAlert}
       <Input

@@ -34,7 +34,6 @@ interface IDispatchProps {
   createRoom: (data: IPostRoom) => void;
   updateRoom: (data: IPostRoom, id: number) => void;
   deleteRoom: (id: number) => void;
-  fetchRoomInfo: (id: number) => void;
   reset: () => void;
 }
 
@@ -97,7 +96,7 @@ class _Container extends Component<Props, IState> {
 
   public render() {
     const { buttonDisabled, room, showAlert, modalOpen } = this.state;
-    const { submitted, reset, error, fetchRoomInfo } = this.props;
+    const { submitted, reset, error } = this.props;
     const roomExists = room.id !== -1;
     const onClick = roomExists ? this.update : this.create;
 
@@ -110,7 +109,6 @@ class _Container extends Component<Props, IState> {
         alertMessage={error}
         buttonDisabled={buttonDisabled}
         deleteRoom={this.delete}
-        fetchRoom={fetchRoomInfo}
         onClick={onClick}
         room={room}
         roomExists={roomExists}
@@ -180,7 +178,6 @@ const mapStateToProps = (state: IStore) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   createRoom: (data: IPostRoom) => dispatch(createRoomAction(data)),
   deleteRoom: (id: number) => dispatch(deleteRoomAction(id)),
-  fetchRoomInfo: (roomId: number) => dispatch(fetchRoomInformation(roomId)),
   reset: () => dispatch(resetPage()),
   updateRoom: (data: IPostRoom, id: number) => dispatch(updateRoomAction(data, id)),
 });
