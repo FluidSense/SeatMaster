@@ -72,7 +72,6 @@ export class Presentational extends React.Component<IProps, IState> {
 
     const usersList = this.props.filteredStudents.map((user) => {
       const checked = this.props.usersToBeDeleted.includes(user.id);
-      console.log(checked);
       return (
         <UserLink
           checked={checked}
