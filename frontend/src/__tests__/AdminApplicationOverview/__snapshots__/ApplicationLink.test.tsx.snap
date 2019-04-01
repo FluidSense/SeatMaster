@@ -14,9 +14,16 @@ exports[`Renders roomlink correctly Renders a room link correctly 1`] = `
       className="link-name"
     >
       <Element>
-        Name
+        Username
       </Element>
       Kek
+    </div>
+    <div
+      className="link-full-name"
+    >
+      <Element>
+        Full name
+      </Element>
     </div>
     <div
       className="link-master"
