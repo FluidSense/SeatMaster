@@ -33,7 +33,8 @@ class Application(db.Model):
 
     applicationSeasonId = db.Column(
         "applicationSeasonId",
-        db.ForeignKey("application_season.application_season_id")
+        db.ForeignKey("application_season.application_season_id"),
+        nullable=False,
     )
 
     applicationSeason = db.relationship(
@@ -53,7 +54,8 @@ class Application(db.Model):
 
     userid = db.Column(
         db.Integer,
-        db.ForeignKey("users.userid")
+        db.ForeignKey("users.userid"),
+        nullable=False,
     )
 
     user = db.relationship(
@@ -80,6 +82,12 @@ class Application(db.Model):
     preferredRoom = db.Column(
         "preferredRoom",
         db.String(50)
+    )
+
+    db.UniqueConstraint(
+        "applicationSeasonId",
+        "userid",
+        name="uix"
     )
 
     seatRollover = db.Column(
@@ -134,4 +142,4 @@ class Application(db.Model):
         return json.dumps(self.to_json())
 
     def userEditableFields(self):
-        return ["comments", "needs", "preferredRoom", "seatRollover"]
+        return ["comments", "needs", "preferredRoom", "seatRollover", "partnerUsername"]

@@ -13,7 +13,11 @@ const SeatPicker: React.FunctionComponent<IProps> = (props) => {
 
   if (seats) {
     const options = seats.map((seat: ISeat) => {
-      return <option key={seat.id} label={seat.name}>{seat.id}</option>;
+      const seatInputValue =
+        seat.user
+          ? `${seat.name} - ${seat.user.fullname}`
+          : `${seat.name}`;
+      return <option key={seat.id} label={seatInputValue}>{seat.id}</option>;
     });
     options.unshift(defaultOption);
     return (

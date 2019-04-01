@@ -114,8 +114,12 @@ def setWaitingListByIds(ids):
 def connectApplication(application):
     partnerApplication = getApplicationByUsername(application.partnerUsername)
     if(not partnerApplication):
-        return
-    if(partnerApplication.partnerUsername == application.user.username):
+        if(application.partnerApplication):
+            application.partnerApplication.partnerApplication = None
+            application.partnerApplication = None
+            db.session.add(application)
+            db.session.commit()
+    elif(partnerApplication.partnerUsername == application.user.username):
         application.partnerApplication = partnerApplication
         partnerApplication.partnerApplication = application
         db.session.add(application, partnerApplication)
