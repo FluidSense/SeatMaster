@@ -25,7 +25,7 @@ interface IUserStates {
 
 type Props = IUserStates & IDispatchProps;
 
-const _TITLE = 'My Status';
+export const _STATUS_TITLE = 'My Status';
 
 export class Presentational extends React.Component<Props, {}> {
   public render() {
@@ -38,7 +38,7 @@ export class Presentational extends React.Component<Props, {}> {
       : <ApplicationReview application={application}/>;
     return (
       <div className="main-content">
-        <Sidetittel>{_TITLE}</Sidetittel>
+        <Sidetittel>{_STATUS_TITLE}</Sidetittel>
         <ApplicationSeason />
         <ApplicationStatus />
         {statusContent}

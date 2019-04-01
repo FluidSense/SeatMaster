@@ -5,7 +5,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
 import * as React from 'react';
 import Presentational from '../../components/ApplicationForm/Presentational';
-import { _ALERT_USER_ERROR, POST_FORM_DATA } from '../../components/ApplicationForm/Strings';
+import { _ALERT_USER_ERROR, POST_FORM_DATA } from '../../components/ApplicationForm/strings';
 import { IRegisteredUserState } from '../../components/RegisterUser/reducer';
 
 jest.mock('../../store', () => ({
