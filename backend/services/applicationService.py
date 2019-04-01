@@ -1,4 +1,5 @@
 from models.application import Application
+from models.applicationSeason import ApplicationSeason
 from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
@@ -7,22 +8,30 @@ from services.applicationSeasonService import getCurrentOrNext
 
 
 def getAllApplications():
-    applications = db.session.query(Application).all()
+    season = getCurrentOrNext()
+    applications = db.session.query(Application) \
+        .join(ApplicationSeason).filter(Application.applicationSeason == season).all()
     return applications
 
 
 def getApplicationById(id):
-    userApplication = db.session.query(Application).get(id)
+    season = getCurrentOrNext()
+    userApplication = db.session.query(Application).get(id) \
+        .join(ApplicationSeason).filter(Application.applicationSeason == season).first()
     return userApplication
 
 
 def getApplicationByUserId(userid):
-    userApplication = db.session.query(Application).filter(Application.userid == userid).first()
+    userApplication = db.session.query(Application).filter(Application.userid == userid) \
+        .join(ApplicationSeason).filter(Application.applicationSeason == season).first()
     return userApplication
 
 
 def getApplicationByUsername(username):
-    userApplication = db.session.query(Application).join(User).filter(User.username == username).first()
+    season = getCurrentOrNext()
+    userApplication = db.session.query(Application) \
+        .join(User).filter(User.username == username) \
+        .join(ApplicationSeason).filter(Application.applicationSeason == season).first()
     return userApplication
 
 
