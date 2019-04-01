@@ -51,7 +51,7 @@ def assignSeat(seatId, userId):
         seat = getSeatById(seatId)
         application = applicationService.getApplicationByUserId(userId)
         if application and application.seat:
-            application.previousSeat = json.dumps(application.seat.to_json(refer_user=False)) if application.seat else None
+            application.previousSeat = json.dumps(application.seat.to_json(refer_user=False))
         seat.application = application
         db.session.add(application)
         db.session.commit()
