@@ -4,11 +4,14 @@ from main import create_app
 from shared import db
 from models.room import Room
 from models.seat import Seat
+from models.user import User
+from models.application import Application
 from flask import jsonify, make_response
 import json
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
 from __tests__.testUtils.models import createApplication
+from utils.enums import ApplicationStatus
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
 
@@ -138,6 +141,49 @@ class TestSeat(TestCase):
         assert jsonify(seat.to_json()).data == response.data
         assert seat.application is None
         assert application.seat is None
+
+    @mock_authentication_context
+    def test_remove_all_students_from_seat(self):
+        room, seat = createSeatAndRoom()
+        room2, seat2 = createSeatAndRoom()
+        application1 = createApplication(db.session)
+        user = User(username="username2", sub="sub", email="email2", fullname="fullname2")
+        application2 = Application(
+            ApplicationStatus.APPROVED,
+            "Fanta is better than solo",
+            user=user,
+            partnerUsername="Monster",
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=application1.applicationSeason,
+            comments="Not Pepsi, but Pepsi Max")
+        db.session.add(user)
+        db.session.add(application2)
+        seat.application = application1
+        seat2.application = application2
+        db.session.add(seat)
+        db.session.add(seat2)
+        db.session.commit()
+
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype,
+            'AccessToken': self.accessToken
+        }
+        seatId = 1
+        response = self.app.test_client().post(
+            "http://localhost:5000/seat/removeAllStudents",
+            headers=headers,
+            data=json.dumps(seatId))
+
+        assert "200 OK" == response.status
+        assert seat.application is None
+        assert seat2.application is None
+        assert application1.seat is None
+        assert application2.seat is None
+        assert application1.status is ApplicationStatus.SUBMITTED
+        assert application2.status is ApplicationStatus.SUBMITTED
 
     @mock_authentication_context
     def test_rename_seat(self):
