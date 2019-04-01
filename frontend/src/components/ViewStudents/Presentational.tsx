@@ -4,10 +4,10 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
+import Modal from '../Modal';
 import SearchBar, { searchBarEvent } from '../SearchBar';
 import { FETCHING_STUDENTS } from './constants';
-import DeleteButton from './DeleteButton';
-import { _CHECK_ALL_CHECKBOXES, _DELETE_STUDENTS, _VIEW_STUDENTS_TITLE } from './strings';
+import { _CHECK_ALL_CHECKBOXES, _DELETE_STUDENTS, _DELETING_STUDENTS_WARNING, _VIEW_STUDENTS_TITLE } from './strings';
 import UserLink from './UserLink';
 
 interface IProps {
@@ -23,73 +23,96 @@ interface IProps {
   checkAll: (all: boolean) => void;
 }
 
-const Presentational: React.FunctionComponent<IProps> = (props) => {
-  let checkbox = null;
-  const {
-    users,
-    deleteStudent,
-    deleteStudents,
-    disableButton,
-    fetching,
-    userToBeDeleted,
-    usersToBeDeleted,
-    checkAll,
-    filterStudents,
-    filteredStudents,
-  } = props;
-  if (fetching === FETCHING_STUDENTS) return <TitleAndSpinner title={_VIEW_STUDENTS_TITLE}/>;
+interface IState {
+  modalOpen: boolean;
+}
 
-  const addAllUsers = (event: React.ChangeEvent<HTMLInputElement>) => {
-    checkAll(!event.target.checked);
-  };
-
-  const deleteSeveralStudents = () => {
-    deleteStudent(usersToBeDeleted);
-  };
-
-  const checkedAll = users.length === usersToBeDeleted.length;
-  if (users.length === filteredStudents.length) {
-    checkbox = (
-      <Checkbox checked={checkedAll} onChange={addAllUsers} label={_CHECK_ALL_CHECKBOXES} />
-    );
+export class Presentational extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      modalOpen: false,
+    };
   }
 
-  const onClick =
-    users.length === userToBeDeleted.length ?
-      deleteStudents :
-      deleteSeveralStudents;
+  public addAllUsers = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.props.checkAll(!event.target.checked);
+  }
 
-  const studentTitle = (
-    <>
-      <div className="title-and-button">
-        <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
-        <DeleteButton  users={users}/>
-        <KnappBase id="delete-students" type="fare" disabled={disableButton} onClick={onClick}>
-          {_DELETE_STUDENTS}
-        </KnappBase>
-      </div>
-      <SearchBar filterFunction={filterStudents} disabled={checkedAll}/>
-      {checkbox}
-    </>
-  );
+  public deleteSeveralStudents = () => {
+    this.props.deleteStudent(this.props.usersToBeDeleted);
+  }
 
-  const usersList = filteredStudents.map((user) => {
-    const checked = usersToBeDeleted.includes(user.id);
-    return (
-      <UserLink
-        checked={checked}
-        addUser={userToBeDeleted}
-        key={user.id}
-        user={user}
-      />);
-  });
+  public onClick = () => {
+    const clicked = this.props.users.length === this.props.userToBeDeleted.length ?
+      this.props.deleteStudent :
+      this.deleteSeveralStudents;
+  }
 
-  return (
-    <div className="main-content">
-      {studentTitle}
-      {usersList}
+  public render () {
+    let checkbox = null;
+    const checkedAll = this.props.users.length === this.props.usersToBeDeleted.length;
+    // tslint:disable-next-line:max-line-length
+    if (this.props.fetching === FETCHING_STUDENTS) return <TitleAndSpinner title={_VIEW_STUDENTS_TITLE}/>;
+    if (this.props.users.length === this.props.filteredStudents.length) {
+      checkbox = (
+        <Checkbox checked={checkedAll} onChange={this.addAllUsers} label={_CHECK_ALL_CHECKBOXES} />
+      );
+    }
+
+    const usersList = this.props.filteredStudents.map((user) => {
+      const checked = this.props.usersToBeDeleted.includes(user.id);
+      return (
+        <UserLink
+          checked={checked}
+          addUser={this.props.userToBeDeleted}
+          key={user.id}
+          user={user}
+        />);
+    });
+
+    const modalText = (
+      <>
+        <p>{_DELETING_STUDENTS_WARNING}</p>
+        <ul>
+          {usersList}
+        </ul>
+      </>
+    );
+
+    return(
+      <div className="main-content">
+        <>
+          <div className="title-and-button">
+            <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
+            <KnappBase
+              id="delete-students"
+              type="fare"
+              disabled={this.props.disableButton}
+              onClick={this.toggleModal}
+            >
+              {_DELETE_STUDENTS}
+            </KnappBase>
+            <Modal
+              modalOpen={this.state.modalOpen}
+              toggleModal={this.toggleModal}
+              accept={this.onClick}
+              close={this.toggleModal}
+            >
+              {modalText}
+            </Modal>
+          </div>
+          <SearchBar filterFunction={this.props.filterStudents} disabled={checkedAll}/>
+          {checkbox}
+        </>
+        {usersList}
     </div>
-  );
-};
+    );
+  }
+  private toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({ modalOpen: !modalOpen });
+  }
+}
 
 export default Presentational;
