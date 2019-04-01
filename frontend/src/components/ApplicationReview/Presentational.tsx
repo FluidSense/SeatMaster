@@ -8,7 +8,6 @@ import { _NEW_APPLICATION } from './strings';
 
 interface IStateProps {
   application?: IApplication;
-  userInfo: IRegisteredUserState;
 }
 
 const Presentational: React.FunctionComponent<IStateProps> = (props) => {
@@ -22,7 +21,7 @@ const Presentational: React.FunctionComponent<IStateProps> = (props) => {
     );
   }
   return (
-    <ApplicationOverview application={application} pathToEdit={'/edit'}/>
+    <ApplicationOverview application={application} pathToEdit={'/edit'} isAdmin={false} />
   );
 };
 

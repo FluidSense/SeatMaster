@@ -16,6 +16,7 @@ import { resetPageStatus } from './actions';
 import Presentational from './Presentational';
 
 interface IStateProps {
+  isAdmin?: boolean;
   rooms: IRoom[];
   seatInfo?: ISeat;
   modalOpen: boolean;
@@ -64,7 +65,7 @@ class AdminApplication extends Component<Props, IState> {
   }
 
   public render() {
-    const { removeStudentFromSeat, applications, rooms, updateApplication } = this.props;
+    const { removeStudentFromSeat, applications, rooms, updateApplication, isAdmin } = this.props;
     const { id } = this.props.match.params;
     const application = applications.find(app => app.id === Number(id));
     if (!(applications.length && rooms)) return <LoadingPageSpinner />;
@@ -75,6 +76,7 @@ class AdminApplication extends Component<Props, IState> {
         rooms={rooms}
         removeStudentFromSeat={removeStudentFromSeat}
         updateApplication={updateApplication}
+        isAdmin={isAdmin}
       />
     );
   }
@@ -82,6 +84,7 @@ class AdminApplication extends Component<Props, IState> {
 
 const mapStateToProps = (state: IStore) => ({
   applications: state.applications.applications,
+  isAdmin: state.userInformation.admin,
   rooms: state.rooms.rooms,
 });
 

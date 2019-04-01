@@ -20,6 +20,7 @@ exports[`Application review presentational Renders correctly 1`] = `
       },
     }
   }
+  isAdmin={false}
   pathToEdit="/edit"
 />
 `;
