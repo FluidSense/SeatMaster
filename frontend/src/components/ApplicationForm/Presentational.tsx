@@ -9,7 +9,7 @@ import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { _ALERT_USER_ERROR } from './Strings';
+import { _ALERT_USER_ERROR } from './strings';
 
 interface IProps {
   userInformation: IRegisteredUserState;
