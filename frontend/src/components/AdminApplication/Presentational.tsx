@@ -38,7 +38,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           removeFromSeat={removeStudentFromSeat}
         />
       </div>
-      <div className="center-div">
+      <div className="split-buttons">
         <SetWaitingList
           seat={application.seat}
           updateApplication={updateApplication}

@@ -1,5 +1,6 @@
 import { Input } from 'nav-frontend-skjema';
 import React, { ChangeEvent, FunctionComponent } from 'react';
+import './searchBar.css';
 
 interface IProps {
   filterFunction: (event: searchBarEvent) => void;

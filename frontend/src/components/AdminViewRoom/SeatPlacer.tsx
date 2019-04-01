@@ -4,7 +4,7 @@ import { Select } from 'nav-frontend-skjema';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
 import { ISeat } from '../Seats';
-import { _ASSIGN_SEAT } from './strings';
+import { _ASSIGN_SEAT, _UNASSIGN_SEAT } from './strings';
 
 interface IProps {
   seat: ISeat;
@@ -36,23 +36,30 @@ class SeatPlacer extends React.Component<IProps, IState> {
 
     if (seat.user) {
       return (
-        <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-          <PanelBase border={true}>{seat.name}</PanelBase>
-          <PanelBase border={true}>{seat.user.fullname}</PanelBase>
-          <KnappBase type="fare" onClick={this.delete}>X</KnappBase>
+        <Panel className="room-assign-seat"  border={true}>
+          <PanelBase className="room-panel-seat" border={true}>{seat.name}</PanelBase>
+          <PanelBase className="room-user-panel-seat" border={true}>{seat.user.fullname}</PanelBase>
+          <KnappBase className="room-assign-seat" type="fare" onClick={this.delete}>
+            {_UNASSIGN_SEAT}
+          </KnappBase>
         </Panel>
       );
     }
     if (!users) return null;
     const userOptions = this.usersToOption(users);
     return (
-      <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-        <PanelBase border={true}>{seat.name}</PanelBase>
-        <Select label="" onChangeCapture={this.selectUser}>
+      <Panel className="room-assign-seat" border={true}>
+        <PanelBase className="room-panel-seat" border={true}>{seat.name}</PanelBase>
+        <Select className="room-select-seat" bredde="m" label="" onChangeCapture={this.selectUser}>
           <option value="">Select user</option>
           {userOptions}
         </Select>
-        <KnappBase type="hoved" disabled={selectedUser ? false : true} onClick={this.assign}>
+        <KnappBase
+          className="room-assign-seat"
+          type="hoved"
+          disabled={selectedUser ? false : true}
+          onClick={this.assign}
+        >
           {_ASSIGN_SEAT}
         </KnappBase>
       </Panel>

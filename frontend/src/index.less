@@ -13,6 +13,7 @@ body {
 
 .title-and-button {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   .knapp {
@@ -50,11 +51,12 @@ body {
   height: inherit;
   display: grid;
   min-height: 90%;
-  grid-template-columns: 20% 5% 65% 10%;
+  grid-template-columns: 20% 5% 70% 5%;
 }
 
 .main-content {
   grid-column: 3;
+  margin-bottom: 2rem;
 }
 
 .loading-page-spinner {
@@ -64,6 +66,10 @@ body {
 .typo-sidetittel {
   margin-top: 1em !important;
   margin-bottom: 0.5em !important;
+}
+
+.typo-innholdstittel {
+  margin-bottom: 1rem !important;
 }
 
 .etikett {
