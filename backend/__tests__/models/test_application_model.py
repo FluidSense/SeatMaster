@@ -4,7 +4,9 @@ from models.room import Room
 from models.seat import Seat
 from models.applicationSeason import ApplicationSeason
 from utils.enums import Rank, ApplicationStatus
-from __tests__.testUtils.models import createBasicSeason
+from __tests__.testUtils.models import createBasicSeason, createUser
+from pytest import raises
+from sqlalchemy.exc import IntegrityError
 
 
 def test_add_application_without_partner(db_session):
@@ -245,3 +247,35 @@ def test_cascading_seat(db_session):
     assert dbseat == seat
     assert dbseat.application is None
     assert user.application is None
+
+
+def test_multiple_applications_on_applicationSeason_should_fail(db_session):
+    season = createBasicSeason(db_session)
+    user = createUser(db_session)
+    application1 = Application(
+        needs="needs",
+        user=user,
+        partnerUsername="partnerUsername",
+        comments="comments",
+        preferredRoom="pref",
+        seatRollover=True,
+        rank=Rank.WRITING_MASTER,
+        status=ApplicationStatus.SUBMITTED,
+        applicationSeason=season
+    )
+    db_session.add(application1)
+    db_session.commit()
+    with raises(IntegrityError):
+        application2 = Application(
+            needs="needs",
+            user=user,
+            partnerUsername="partnerUsername",
+            comments="comments",
+            preferredRoom="pref",
+            seatRollover=True,
+            rank=Rank.WRITING_MASTER,
+            status=ApplicationStatus.SUBMITTED,
+            applicationSeason=season
+        )
+        db_session.add(application2)
+        db_session.commit()
