@@ -142,4 +142,4 @@ class Application(db.Model):
         return json.dumps(self.to_json())
 
     def userEditableFields(self):
-        return ["comments", "needs", "preferredRoom", "seatRollover"]
+        return ["comments", "needs", "preferredRoom", "seatRollover", "partnerUsername"]
