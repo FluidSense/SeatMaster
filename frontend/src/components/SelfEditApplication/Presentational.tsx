@@ -1,7 +1,6 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Redirect } from 'react-router';
-import { UserState } from 'redux-oidc';
 import { IPostApplicationForm } from '../../API/interfaces';
 import { FETCHING_APPLICATION_DATA } from '../AdminApplicationOverview/constants';
 import { IApplication } from '../Application';

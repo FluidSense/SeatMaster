@@ -1,5 +1,5 @@
 import { Select } from 'nav-frontend-skjema';
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { IRoom } from '../ViewRooms';
 
 interface IProps {

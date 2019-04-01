@@ -1,4 +1,3 @@
-import moment, { Moment } from 'moment';
 import { AnyAction } from 'redux';
 import { TOGGLE_SIDE_BAR } from './constants';
 

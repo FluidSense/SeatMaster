@@ -8,7 +8,6 @@ import { IRoom } from '../ViewRooms';
 import {
   createRoomAction,
   deleteRoomAction,
-  fetchRoomInformation,
   resetPage,
   updateRoomAction,
 } from './actions';

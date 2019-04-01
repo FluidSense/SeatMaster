@@ -2,7 +2,6 @@ import KnappBase from 'nav-frontend-knapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IApplication } from '../Application';
-import { APP_NOT_FOUND } from '../commonConstants';
 import { IRegisteredUserState } from './../RegisterUser/reducer';
 import ApplicationOverview from './ApplicationOverview';
 import { _NEW_APPLICATION } from './strings';
