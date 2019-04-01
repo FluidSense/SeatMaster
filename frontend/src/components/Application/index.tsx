@@ -1,7 +1,7 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { IUser } from '../../API/interfaces';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import Presentational from './Presentational';
 
 export interface IPartnerApplication {

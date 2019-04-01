@@ -40,7 +40,11 @@ def deleteUser(id):
         db.session.delete(user)
         db.session.commit()
         return user.to_json(), 200
-    except(SQLAlchemyError):
+    except SQLAlchemyError as err:
+        print(err, flush=True)
+        return "", 400
+    except AssertionError as err:
+        print(err, flush=True)
         return "", 400
 
 

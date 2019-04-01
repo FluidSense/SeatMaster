@@ -1,0 +1,3 @@
+export const FETCHING_APPLICATION_SEASONS = 'FETCHING_APPLICATION_SEASONS';
+export const FETCHED_APPLICATION_SEASONS = 'FETCHED_APPLICATION_SEASONS';
+export const ROUTE_TO = '/admin/seasons/update-season/';

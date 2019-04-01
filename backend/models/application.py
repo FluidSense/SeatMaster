@@ -33,7 +33,8 @@ class Application(db.Model):
 
     applicationSeasonId = db.Column(
         "applicationSeasonId",
-        db.ForeignKey("application_season.application_season_id")
+        db.ForeignKey("application_season.application_season_id"),
+        nullable=False,
     )
 
     applicationSeason = db.relationship(
@@ -53,7 +54,8 @@ class Application(db.Model):
 
     userid = db.Column(
         db.Integer,
-        db.ForeignKey("users.userid")
+        db.ForeignKey("users.userid"),
+        nullable=False,
     )
 
     user = db.relationship(
@@ -82,27 +84,27 @@ class Application(db.Model):
         db.String(50)
     )
 
+    db.UniqueConstraint(
+        "applicationSeasonId",
+        "userid",
+        name="uix"
+    )
+
     seatRollover = db.Column(
         "seatRollover",
         db.Boolean()
     )
 
-    room_id = db.Column(db.Integer)
-
-    seat_id = db.Column(db.String)
-
-    __table_args__ = (
-        db.ForeignKeyConstraint(
-            [room_id, seat_id],
-            [Seat.room_id, Seat.seat_id]),
-        {}
+    seat_id = db.Column(
+        db.Integer,
+        db.ForeignKey('seats.seat_id')
     )
 
     seat = db.relationship(
         Seat,
         uselist=False,
-        foreign_keys='[Seat.room_id, Seat.seat_id]',
-        primaryjoin='Application.room_id==Seat.room_id and Application.seat_id == Seat.seat_id')
+        back_populates="application"
+    )
 
     def __init__(self, status, needs, user, partnerUsername, preferredRoom,
                  seatRollover, applicationSeason, comments, rank=Rank.OTHER):
@@ -140,4 +142,4 @@ class Application(db.Model):
         return json.dumps(self.to_json())
 
     def userEditableFields(self):
-        return ["comments", "needs", "preferredRoom", "seatRollover"]
+        return ["comments", "needs", "preferredRoom", "seatRollover", "partnerUsername"]

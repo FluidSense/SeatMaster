@@ -3,8 +3,9 @@ import { ThunkDispatch } from 'redux-thunk';
 import { IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { fetchAllApplications } from '../AdminApplicationOverview/actions';
+import { fetchRoomInformation } from '../AdminRoom/actions';
 import { assignUserToSeat, removeStudent } from '../AssignSeat/actions';
-import { ISeat } from '../ViewRooms';
+import { ISeat } from '../Seats';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import Presentational from './Presentational';
 
@@ -15,7 +16,8 @@ const mapStateToProps = (state: IStore) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   assign: (user: IUser, seat: ISeat) => dispatch(assignUserToSeat(user, seat)),
-  delete: (seat: ISeat) => dispatch(removeStudent(seat.roomId, seat.id)),
+  delete: (seat: ISeat) => dispatch(removeStudent(seat.id)),
+  fetchRoom: (roomId: number) => dispatch(fetchRoomInformation(roomId)),
   fetchRooms: () => dispatch(fetchAllRooms()),
   getAllApplications: () => dispatch(fetchAllApplications()),
 });

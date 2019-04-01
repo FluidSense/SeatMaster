@@ -11,6 +11,7 @@ export const GET_APPLICATION_BY_ID_URL = `${BASEPATH}application/`;
 export const GET_ALL_APPLICATIONS_URL = `${BASEPATH}application/all`;
 export const GET_APPLICATION_BY_USERID_URL = `${BASEPATH}application/byUser/`;
 export const POST_APPLICATION_APPROVE_LIST = `${BASEPATH}application/approveList`;
+export const POST_WAITING_LIST = `${BASEPATH}application/waitingList`;
 
 // User
 export const GET_USER_URL = `${BASEPATH}user/`;
@@ -21,6 +22,7 @@ export const DELETE_ALL_USERS_URL = `${BASEPATH}user/deleteAll`;
 
 // Season
 export const SEASON_URL = `${BASEPATH}season/`;
+export const GET_ALL_SEASONS_URL = `${SEASON_URL}all`;
 
 // Seat
 export const ASSIGN_SEAT_URL = `${BASEPATH}seat/assignSeat`;

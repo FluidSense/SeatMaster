@@ -26,16 +26,26 @@ const adminState = {
 };
 
 describe('Sidebar Presentational', () => {
-
+  const toggleSideBar = () => null;
   it('Renders only user view', () => {
     const mockUser = userState;
-    const component = shallow(<Presentational userInformation={mockUser} />);
+    const component = shallow(
+      <Presentational
+        sideBar={{ open: false }}
+        toggleSideBar={toggleSideBar}
+        userInformation={mockUser}
+      />);
     expect(component.find(Systemtittel).render().text()).toEqual('User navigation');
   });
 
   it('Renders user view and admin view', () => {
     const mockUser = adminState;
-    const component = shallow(<Presentational userInformation={mockUser} />);
+    const component = shallow(
+      <Presentational
+        sideBar={{ open: false }}
+        toggleSideBar={toggleSideBar}
+        userInformation={mockUser}
+      />);
     expect(component.find('.user-title').render().text()).toEqual('User navigation');
     expect(component.find('.admin-title').render().text()).toEqual('Administrator tools');
   });

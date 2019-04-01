@@ -1,5 +1,4 @@
 import moment, { Moment } from 'moment';
-import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -7,8 +6,11 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IPostApplicationSeason } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { timeFormatToBackend } from '../../utils/timeFormatter';
+import { fetchSeasonById } from '../ApplicationSeason/actions';
+import { IApplicationSeason } from '../ApplicationSeason/reducer';
 import DateInputField from '../DateInputField';
-import { postNewSeason } from './actions';
+import { postNewSeason, putNewSeason, resetSubmit } from './actions';
 import './createSeason.css';
 import Presentational from './Presentational';
 import {
@@ -22,24 +24,36 @@ import {
 } from './strings';
 
 export interface IState {
-  periodStart: Moment;
-  periodEnd: Moment;
-  roomStart: Moment;
-  roomEnd: Moment;
+  season: IApplicationSeason;
   showAlert: boolean;
-  [key: string]: Moment | boolean;
+  fetched: boolean;
+}
+
+interface ILinkProps {
+  location: {
+    season?: IApplicationSeason;
+  };
+  match: {
+    params: {
+      id: string;
+    };
+  };
 }
 
 export interface IStateProps {
+  currentSeason?: IApplicationSeason;
   submitted?: boolean;
 }
 
 export interface IDispatchProps {
   submitNewSeason: (season: IPostApplicationSeason) =>
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
+  fetchSeason: (id: number) => void;
+  updateSeason: (body: any, id: number) => void;
+  reset: () => void;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & ILinkProps;
 
 // Need to be in this order to match the proper fields
 const inputTextArray = [
@@ -48,9 +62,6 @@ const inputTextArray = [
   _ROOM_START,
   _ROOM_END,
 ];
-
-const errorObjectSeasonEndTooEarly = { feilmelding: _SEASON_END_TOO_EARLY };
-const errorObjectRoomEndTooEarly = { feilmelding: _ROOM_END_TOO_EARLY };
 
 export const setTime = (day: Moment) => {
   const newDay = moment(day);
@@ -61,9 +72,6 @@ export const setTime = (day: Moment) => {
   return newDay;
 };
 
-// Format to match backend model
-export const format = 'YYYY-MM-DD HH:mm:ss.SSS';
-
 // tslint:disable-next-line:class-name
 class _CreateSeason extends Component<Props, IState> {
   constructor(props: Props) {
@@ -71,66 +79,91 @@ class _CreateSeason extends Component<Props, IState> {
     const currentTime = setTime(moment());
     const nextMonth = setTime(moment().add(1, 'month'));
     this.state = {
-      periodEnd: nextMonth,
-      periodStart: currentTime,
-      roomEnd: nextMonth,
-      roomStart: currentTime,
+      fetched: false,
+      season: {
+        applicationPeriodEnd: nextMonth,
+        applicationPeriodStart: currentTime,
+        end: nextMonth,
+        id: 0,
+        start: currentTime,
+      },
       showAlert: false,
     };
   }
 
+  public componentDidMount = async () => {
+    const {
+      fetchSeason,
+      location,
+      match,
+    } = this.props;
+    const locationSeason = location.season;
+    const urlId = match.params.id;
+    if (locationSeason) {
+      this.setState({ season: locationSeason });
+    } else if (urlId) {
+      await fetchSeason(Number(urlId));
+    }
+    this.setState({ fetched: true });
+  }
+
+  public componentWillUnmount = () => {
+    this.props.reset();
+  }
+
   public componentDidUpdate = (prevProps: Props) => {
     const { showAlert } = this.state;
-    const { submitted } = this.props;
-    if (!submitted && !prevProps.submitted === undefined) {
+    const { submitted, currentSeason, reset } = this.props;
+    if (currentSeason && prevProps !== this.props) {
+      this.setState({ season: currentSeason });
+    }
+    if (submitted === false && prevProps.submitted === undefined) {
       this.setState({ showAlert: true });
     }
     if (showAlert) {
-      setTimeout(() => this.setState({ showAlert: false }), 5000);
+      setTimeout(() => {
+        this.setState({ showAlert: false });
+        reset();
+      },         5000);
     }
   }
 
   public render() {
-    const { periodEnd, periodStart, roomEnd, roomStart, showAlert } = this.state;
     const { submitted } = this.props;
-    const errorPeriodEndBeforeStart =
-      periodEnd <= periodStart
-        ? errorObjectSeasonEndTooEarly
-        : undefined;
+    if (submitted) return (<Redirect to="/admin/seasons" />);
+    const { season, showAlert, fetched } = this.state;
 
-    const errorApplicationEndBeforeStart =
-      roomEnd <= roomStart
-        ? errorObjectRoomEndTooEarly
-        : undefined;
-
-    const buttonDisable =
-      errorPeriodEndBeforeStart !== undefined
-      || errorApplicationEndBeforeStart !== undefined;
-
-    const alertFail = showAlert
-      ? this.createAlert(_ERROR_MESSAGE)
-      : undefined;
-
-    if (submitted) return (<Redirect to="/admin" />);
+    const submitSeason = season.id ? this.updateApplicationSeason : this.submitApplicationSeason;
     return (
       <Presentational
-        buttonDisable={buttonDisable}
-        alertApplicationEndBeforeStart={errorApplicationEndBeforeStart}
-        alertPeriodEndBeforeStart={errorPeriodEndBeforeStart}
         createFields={this.createFields}
-        postApplicationSeason={this.submitApplicationSeason}
-        alertFail={alertFail}
+        submitSeason={submitSeason}
+        showAlert={showAlert}
+        season={season}
+        fetched={fetched}
       />
     );
   }
 
-  private submitApplicationSeason = () => {
-    const { periodEnd, periodStart, roomEnd, roomStart } = this.state;
+  private updateApplicationSeason = () => {
+    const { season } = this.state;
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
     const body = {
-      newPeriodEnd: periodEnd.format(format),
-      newPeriodStart: periodStart.format(format),
-      newRoomEnd: roomEnd.format(format),
-      newRoomStart: roomStart.format(format),
+      newPeriodEnd: applicationPeriodEnd.format(timeFormatToBackend),
+      newPeriodStart: applicationPeriodStart.format(timeFormatToBackend),
+      newRoomEnd: end.format(timeFormatToBackend),
+      newRoomStart: start.format(timeFormatToBackend),
+    };
+    this.props.updateSeason(body, season.id);
+  }
+
+  private submitApplicationSeason = () => {
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = this.state.season;
+    const body = {
+      newPeriodEnd: applicationPeriodEnd.format(timeFormatToBackend),
+      newPeriodStart: applicationPeriodStart.format(timeFormatToBackend),
+      newRoomEnd: end.format(timeFormatToBackend),
+      newRoomStart: start.format(timeFormatToBackend),
     };
     this.props.submitNewSeason(body);
   }
@@ -147,14 +180,23 @@ class _CreateSeason extends Component<Props, IState> {
     );
   }
 
-  private createAlert = (text: string) =>
-    <AlertStripe type="advarsel" solid={true}> {text} </AlertStripe>
+  private setDate = (key: string, time: Moment) => {
+    const { season } = this.state;
+    const updatedSeason = { ...season, [key]: time };
+    this.setState({ season: updatedSeason });
+  }
 
-  private createFields = (index: number, end: number) => {
-    const { periodStart, periodEnd, roomStart, roomEnd } = this.state;
-    const stateEntries = Object.entries({ periodStart, periodEnd, roomStart, roomEnd });
+  private createFields = (index: number, indexEnd: number) => {
+    const { applicationPeriodEnd, applicationPeriodStart, end, start } = this.state.season;
+    const stateEntries = Object.entries({
+      applicationPeriodStart,
+      // It is needed to have it in this order for the proper error messages
+      // tslint:disable-next-line:object-literal-sort-keys
+      applicationPeriodEnd,
+      start,
+      end });
     const fields = [];
-    for (let i = index; i < end; i += 1) {
+    for (let i = index; i < indexEnd; i += 1) {
       fields.push(this.createDateInputField(
         inputTextArray[i],
         stateEntries[i][0],
@@ -163,16 +205,18 @@ class _CreateSeason extends Component<Props, IState> {
     }
     return fields;
   }
-
-  private setDate = (key: string, time: Moment) => this.setState({ [key]: time });
 }
 
 const mapStateToProps = (state: IStore) => ({
+  currentSeason: state.applicationSeason.currentSeason,
   submitted: state.applicationSeason.submitted,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  fetchSeason: (id: number) => dispatch(fetchSeasonById(id)),
+  reset: () => dispatch(resetSubmit()),
   submitNewSeason: (body: any) => dispatch(postNewSeason(body)),
+  updateSeason: (body: any, id: number) => dispatch(putNewSeason(body, id)),
 });
 
 const CreateSeason = connect(

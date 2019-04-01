@@ -8,7 +8,7 @@ from unittest import TestCase
 from flask import jsonify, make_response
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken, decodedToken
-from __tests__.testUtils.models import createBasicSeason
+from __tests__.testUtils.models import createBasicSeason, createUser
 from controllers.applicationController import filterOnStatus
 from utils.enums import ApplicationStatus
 
@@ -27,9 +27,7 @@ class TestApplication(TestCase):
     @mock_authentication_context
     def test_new_application_without_partner(self):
         createBasicSeason(db.session)
-        testuser = User(username="Frank", sub=decodedToken.get("sub"), email="email", fullname="Franky Frank")
-        db.session.add(testuser)
-        db.session.commit()
+        testuser = createUser(db.session)
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
@@ -55,7 +53,7 @@ class TestApplication(TestCase):
             comments="Not Pepsi, but Pepsi Max",
             id=1,
             status="SUBMITTED",
-            user={"id": 1, "username": testuser.username, "email": "email", "fullname": "Franky Frank"},
+            user={"id": 1, "username": testuser.username, "email": "email", "fullname": testuser.fullname},
             partnerApplication={},
             rank="WRITING_MASTER",
             preferredRoom="d1",
@@ -371,6 +369,108 @@ class TestApplication(TestCase):
         app2["status"] = "WAITING_LIST"
         assert approvedApplications.status == "200 OK"
         assert json.loads(approvedApplications.data) == json.loads(jsonify([app1, app2]).data)
+
+    @mock_authentication_context
+    def test_update_application(self):
+        season = createBasicSeason(db.session)
+        testuser = createUser(db.session)
+        testApplication = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser,
+            partnerUsername="Frank",
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=season,
+            comments="Not Pepsi, but Pepsi Max")
+        db.session.add(testApplication)
+        db.session.commit()
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype,
+            'Authorization': self.token,
+            'AccessToken': self.accessToken
+        }
+        response = self.app.test_client().put(
+            'http://localhost:5000/application/1',
+            headers=headers,
+            data=json.dumps(dict(
+                username=testuser.username,
+                needs="Pepsi is better than coke",
+                comments="Not Pepsi, but Pepsi Max",
+                partnerUsername="",
+                preferredRoom="d1",
+                seatRollover=True,
+                aRandomfield=True,
+            )
+            )
+        )
+        expectedResponse = make_response(jsonify(
+            needs="Pepsi is better than coke",
+            comments="Not Pepsi, but Pepsi Max",
+            id=1,
+            status="SUBMITTED",
+            user={"id": 1, "username": testuser.username, "email": testuser.email, "fullname": testuser.fullname},
+            partnerApplication={},
+            rank="OTHER",
+            seat=None,
+            preferredRoom="d1",
+            seatRollover=True,
+        ), 200)
+        assert expectedResponse.status == response.status
+        assert json.loads(expectedResponse.data) == json.loads(response.data)
+        assert testApplication.to_json() == json.loads(response.data)
+
+    @mock_authentication_context
+    def test_update_application_with_partner(self):
+        season = createBasicSeason(db.session)
+        headers = {
+            'Authorization': self.token,
+            'AccessToken': self.accessToken,
+            'Content-type': 'application/json'
+        }
+        testuser1 = User(username="Frank", sub="sub", email="email", fullname="Franky Frank")
+        testuser2 = User(username="Monster", sub="uuid", email="email", fullname="Schmemail")
+        db.session.add(testuser1)
+        db.session.add(testuser2)
+        db.session.commit()
+        testApplication1 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser1,
+            partnerUsername=testuser2.username,
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=season,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication2 = Application(
+            ApplicationStatus.SUBMITTED,
+            "Fanta is better than solo",
+            user=testuser2,
+            partnerUsername=testuser1.username,
+            preferredRoom="d1",
+            seatRollover=True,
+            applicationSeason=season,
+            comments="Not Pepsi, but Pepsi Max")
+        testApplication1.partnerApplication = testApplication2
+        testApplication2.partnerApplication = testApplication1
+        db.session.add(testApplication1)
+        db.session.add(testApplication2)
+        db.session.commit()
+        assert testApplication1.partnerApplication is testApplication2
+        assert testApplication2.partnerApplication is testApplication1
+        self.app.test_client().put(
+            'http://localhost:5000/application/1',
+            headers=headers,
+            data=json.dumps(
+                dict(
+                    partnerUsername="",
+                )
+            )
+        )
+        assert testApplication1.partnerApplication is None
+        assert testApplication2.partnerApplication is None
 
     def tearDown(self):
         self.postgres.stop()

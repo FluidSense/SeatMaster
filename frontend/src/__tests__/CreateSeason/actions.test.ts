@@ -2,8 +2,11 @@
 import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import {
+  SUBMITTED_APPLICATION_SEASON,
+  SUBMITTED_APPLICATION_SEASON_FAILED,
+} from '../../components/ApplicationSeason/constants';
 import * as actions from '../../components/CreateSeason/actions';
-import { SUBMITTED_APPLICATION_SEASON } from '../../components/CreateSeason/strings';
 
 const middlewares = [thunk];
 const mockStoreFunc = configureMockStore(middlewares);
@@ -41,7 +44,7 @@ describe('actions', () => {
     });
 
     const expectedAction = {
-      payload: true,
+      payload: testApplicationSeason,
       type: SUBMITTED_APPLICATION_SEASON,
     };
     await mockStore.dispatch<any>(actions.postNewSeason(postSeason));
@@ -54,8 +57,7 @@ describe('actions', () => {
       status: 400,
     });
     const expectedAction = {
-      payload: false,
-      type: SUBMITTED_APPLICATION_SEASON,
+      type: SUBMITTED_APPLICATION_SEASON_FAILED,
     };
     await mockStore.dispatch<any>(actions.postNewSeason(postSeason));
     expect(mockStore.getActions()).toContainEqual(expectedAction);
