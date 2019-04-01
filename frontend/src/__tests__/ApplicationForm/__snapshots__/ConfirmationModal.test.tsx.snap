@@ -33,7 +33,7 @@ exports[`application form confirmation modal renders correctly 1`] = `
         spinner={false}
         type="hoved"
       >
-        Go home
+        Ok
       </KnappBase>
     </Link>
   </div>
