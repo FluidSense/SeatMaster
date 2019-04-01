@@ -21,7 +21,7 @@ export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (prop
   return (
     <>
       <Undertittel>Preferences</Undertittel>
-      <SkjemaGruppe >
+      <SkjemaGruppe>
         <Select
           label="Choose preferred room"
           bredde="xxl"

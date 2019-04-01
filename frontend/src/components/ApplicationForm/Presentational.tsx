@@ -9,7 +9,7 @@ import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { _ALERT_USER_ERROR } from './strings';
+import { _ALERT_USER_ERROR, _SUBMIT_BUTTON } from './strings';
 
 interface IProps {
   userInformation: IRegisteredUserState;
@@ -87,7 +87,7 @@ export class Presentational extends React.Component<IProps, IState> {
             autoDisableVedSpinner={true}
             spinner={this.state.loading}
           >
-            Submit
+            {_SUBMIT_BUTTON}
           </KnappBase>
         </form>
       </>

@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-
 import KnappBase from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { _ALERT_USER_SUBMISSION } from './strings';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { _ALERT_USER_SUBMISSION, _SUBMIT_BUTTON_MODAL } from './strings';
 
 interface IProps {
   modalIsOpen: boolean;
@@ -24,7 +23,9 @@ export const ConfirmationModal: React.FunctionComponent<IProps> = (props) => {
         {_ALERT_USER_SUBMISSION}
         <br />
         <Link to="/">
-          <KnappBase type="hoved" htmlType="submit" autoDisableVedSpinner={true}>Go home</KnappBase>
+          <KnappBase type="hoved" htmlType="submit" autoDisableVedSpinner={true}>
+            {_SUBMIT_BUTTON_MODAL}
+          </KnappBase>
         </Link>
       </div>
     </Modal>
