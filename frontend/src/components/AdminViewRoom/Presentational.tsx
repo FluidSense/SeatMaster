@@ -3,6 +3,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Redirect } from 'react-router';
 import { IUser } from '../../API/interfaces';
+import CSVButton from '../AdminRoom/CSVButton';
 import { IApplication } from '../Application';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
@@ -24,6 +25,7 @@ interface IDispatchProps {
   delete: (seat: ISeat) => void;
   getAllApplications: () => void;
   fetchRooms: () => void;
+  fetchRoom: (roomId: number) => void;
 }
 
 interface IState {
@@ -52,7 +54,7 @@ class Presentational extends React.Component<Props, IState> {
   }
 
   public render() {
-    const { applications, rooms } = this.props;
+    const { applications, rooms, fetchRoom } = this.props;
     const roomId = parseInt(this.props.match.params.id, 10);
     const { redirect } = this.state;
     const room = rooms.find(iterroom => iterroom.id === roomId);
@@ -69,6 +71,7 @@ class Presentational extends React.Component<Props, IState> {
       <div className="main-content">
         <div className="title-and-button">
           <Sidetittel>{room.name}</Sidetittel>
+          <CSVButton room={room} fetchRoomInfo={fetchRoom} />
           <KnappBase type="hoved" onClick={this.setRedirect}>
             {_EDIT_ROOM_BUTTON}
           </KnappBase>
