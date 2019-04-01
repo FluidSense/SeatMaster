@@ -5,7 +5,7 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IApplication } from '../Application';
-import { APP_SUBMITTED } from '../commonConstants';
+import { APP_SUBMITTED, APP_APPROVED } from '../commonConstants';
 import { updateSingleApplication } from '../EditApplication/actions';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
@@ -26,6 +26,7 @@ interface IOwnProps {
 }
 
 interface IStateProps {
+  applications: IApplication[];
   seatInfo?: ISeat;
 }
 
@@ -80,7 +81,7 @@ class _Container extends React.Component<Props, IOwnState> {
   }
 
   private changeStudentSeats = async () => {
-    const { application, seatInfo, assignSeat, updateApplication } = this.props;
+    const { application, seatInfo, assignSeat, updateApplication, applications } = this.props;
     if (!seatInfo || !seatInfo.user || !application || !application.user) {
       return;
     }
@@ -95,13 +96,17 @@ class _Container extends React.Component<Props, IOwnState> {
     } else {
       // If the current student is not assigned anything, but room is occupied, take
       await assignSeat(currentUser, newSeat);
-      await updateApplication(occupiedSeatUser.id, { status: APP_SUBMITTED });
+      const userApp = applications.find(app => app.user.id === occupiedSeatUser.id);
+      if (userApp && userApp.status === APP_APPROVED) {
+        await updateApplication(occupiedSeatUser.id, { status: APP_SUBMITTED });
+      }
     }
     this.toggleModal();
   }
 }
 
 const mapStateToProps = (state: IStore) => ({
+  applications: state.applications.applications,
   seatInfo: state.assignSeat.seat,
 });
 
