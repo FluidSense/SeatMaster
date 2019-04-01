@@ -1,16 +1,24 @@
 .edit-lower-row {
-  display:flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   margin-bottom: 3rem;
 }
 
-.assign-seat {
-  margin-right:1rem;
+.current-seat-info {
+  margin-bottom: 1rem;
+  p {
+    margin-bottom: 0.5rem;
+  }
 }
 
-.center-div {
-  display:flex;
-  justify-content: center;
-  align-items: center;
+.split-buttons {
+  display: flex;
+  justify-content: flex-end;
+  .knapp {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
 }
 
 .revoke-approve-btn {
