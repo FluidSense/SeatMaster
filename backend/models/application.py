@@ -107,7 +107,7 @@ class Application(db.Model):
     )
 
     previousSeat = db.Column(
-        db.String(100),
+        db.String(400),
     )
 
     def __init__(self, status, needs, user, partnerUsername, preferredRoom,

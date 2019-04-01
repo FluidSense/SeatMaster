@@ -6,6 +6,7 @@ seat = Blueprint("seat", __name__, url_prefix="/seat")
 
 
 @seat.route("/<id>")
+@requiresAdmin
 def getSeat(id):
     seat = seatService.getSeatById(id)
     return jsonify(seat.to_json()) if seat else Response("{}", 200)

@@ -162,6 +162,31 @@ class TestSeat(TestCase):
         assert seat.seat_name == newName
         assert seat.seat_name != oldName
 
+    @mock_authentication_context
+    def test_previous_seat(self):
+        room, seat = createSeatAndRoom()
+        application = createApplication()
+        seat.application = application
+        db.session.add(seat)
+        db.session.commit()
+
+        mimetype = 'application/json'
+        headers = {
+            'Content-Type': mimetype,
+            'Accept': mimetype,
+            'AccessToken': self.accessToken
+        }
+        seatId = 1
+        response = self.app.test_client().put(
+            "http://localhost:5000/seat/removeStudent",
+            headers=headers,
+            data=json.dumps(seatId))
+
+        assert "200 OK" == response.status
+        assert seat.to_json(refer_user=False) == json.loads(application.previousSeat)
+        assert seat.application is None
+        assert application.seat is None
+
     def tearDown(self):
         self.postgres.stop()
         self.ctx.pop()
