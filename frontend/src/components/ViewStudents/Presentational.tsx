@@ -81,7 +81,7 @@ export class Presentational extends React.Component<IProps, IState> {
         />);
     });
 
-    const thoseWhomWillBeYEETed = this.props.usersToBeDeleted.map((id, i) => {
+    const deletePromptList = this.props.usersToBeDeleted.map((id, i) => {
       const user = this.props.users.find(iteruser => iteruser.id === id);
       if (user) return <li key={i}>{user.username}</li>;
     });
@@ -90,7 +90,7 @@ export class Presentational extends React.Component<IProps, IState> {
       <>
         <p>{_DELETING_STUDENTS_WARNING}</p>
         <ul>
-          {thoseWhomWillBeYEETed}
+          {deletePromptList}
         </ul>
       </>
     );
