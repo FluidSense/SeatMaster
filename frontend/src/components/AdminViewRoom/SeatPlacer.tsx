@@ -38,7 +38,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
       return (
         <Panel className="room-assign-seat"  border={true}>
           <PanelBase className="room-panel-seat" border={true}>{seat.name}</PanelBase>
-          <PanelBase className="room-user-panel-seat" border={true}>{seat.user.username}</PanelBase>
+          <PanelBase className="room-user-panel-seat" border={true}>{seat.user.fullname}</PanelBase>
           <KnappBase className="room-assign-seat" type="fare" onClick={this.delete}>
             {_UNASSIGN_SEAT}
           </KnappBase>
@@ -67,7 +67,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
   }
 
   private usersToOption = (users: IUser[]) => users.map((user, index) => {
-    return <option key={index} value={user.id}>{user.username}</option>;
+    return <option key={index} value={user.id}>{user.fullname}</option>;
   })
 
   private selectUser = (e: React.FormEvent) => {

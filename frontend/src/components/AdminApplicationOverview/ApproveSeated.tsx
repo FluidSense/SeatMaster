@@ -3,8 +3,7 @@ import React from 'react';
 import { IApplication } from '../Application';
 import { APP_APPROVED } from '../commonConstants';
 import Modal from '../Modal';
-import { _APPROVE_STUDENTS_WARNING } from './constants';
-import { _APPROVE_APPLICATIONS } from './strings';
+import { _APPROVE_APPLICATIONS, _APPROVE_STUDENTS_WARNING } from './strings';
 
 interface IProps {
   applications: IApplication[];
@@ -35,7 +34,7 @@ export class ApproveSeated extends React.Component<IProps, IState> {
       return app.seat && app.status !== APP_APPROVED ? true : false;
     });
     const approvingStudents = approved.map((app, i) =>
-    <li key={i}>{app.user.username}</li>);
+    <li key={i}>{app.user.fullname}</li>);
     const modalText = (
       <>
         <p>{_APPROVE_STUDENTS_WARNING}</p>
