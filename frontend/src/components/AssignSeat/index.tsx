@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { IUser } from '../../API/interfaces';
+import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IApplication } from '../Application';
+import { APP_SUBMITTED } from '../commonConstants';
+import { updateSingleApplication } from '../EditApplication/actions';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import { assignUserToSeat, checkSeatIsOccupied, removeStudent } from './actions';
@@ -15,6 +17,7 @@ interface IDispatchProps {
     ThunkAction<Promise<void>, {}, {}, AnyAction>;
   fetchSeatInfo: (seatId: number) => void;
   removeStudentFromSeat: (roomId: number, seatId: string) => void;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
 interface IOwnProps {
@@ -77,7 +80,7 @@ class _Container extends React.Component<Props, IOwnState> {
   }
 
   private changeStudentSeats = async () => {
-    const { application, seatInfo, assignSeat } = this.props;
+    const { application, seatInfo, assignSeat, updateApplication } = this.props;
     if (!seatInfo || !seatInfo.user || !application || !application.user) {
       return;
     }
@@ -92,6 +95,7 @@ class _Container extends React.Component<Props, IOwnState> {
     } else {
       // If the current student is not assigned anything, but room is occupied, take
       await assignSeat(currentUser, newSeat);
+      await updateApplication(occupiedSeatUser.id, { status: APP_SUBMITTED });
     }
     this.toggleModal();
   }
@@ -108,6 +112,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     dispatch(checkSeatIsOccupied(seatId)),
   removeStudentFromSeat: (seatId: number) =>
     dispatch(removeStudent(seatId)),
+  updateApplication: (id: number, app: IPostAdminApplicationForm) =>
+    dispatch(updateSingleApplication(id, app)),
 });
 
 const Container = connect(
