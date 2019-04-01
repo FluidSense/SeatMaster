@@ -32,6 +32,12 @@ def getApplicationByUser(userid):
     userApplication = applicationService.getApplicationByUserId(userid)
     return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
 
+@application.route("/getPreviousApplicationByUser/<userid>")
+@requiresAdmin
+def getPreviousApplicationByUser(userid):
+    userApplication = applicationService.getPreviousApplication(userid)
+    return jsonify(userApplication.to_json()) if userApplication else Response(json.dumps({}), 200)
+
 
 @application.route("/all")
 @requiresAdmin

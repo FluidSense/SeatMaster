@@ -4,7 +4,7 @@ from models.user import User
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
 from utils.enums import ApplicationStatus
-from services.applicationSeasonService import getCurrentOrNext
+from services.applicationSeasonService import getCurrentOrNext, getPreviousSeason
 
 
 def getAllApplications():
@@ -16,14 +16,25 @@ def getAllApplications():
 
 def getApplicationById(id):
     season = getCurrentOrNext()
-    userApplication = db.session.query(Application).get(id) \
+    userApplication = db.session.query(Application) \
+        .filter(Application.id == id) \
         .join(ApplicationSeason).filter(Application.applicationSeason == season).first()
     return userApplication
 
 
 def getApplicationByUserId(userid):
+    season = getCurrentOrNext()
     userApplication = db.session.query(Application).filter(Application.userid == userid) \
         .join(ApplicationSeason).filter(Application.applicationSeason == season).first()
+    return userApplication
+
+
+def getPreviousApplicationByUserId(userid):
+    season = getPreviousSeason()
+    if(not season):
+        return None
+    userApplication = db.session.query(Application).filter(Application.userid == userid) \
+        .join(ApplicationSeason).filter(Application.applicationSeason.id == season.id).first()
     return userApplication
 
 
