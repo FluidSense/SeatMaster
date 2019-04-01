@@ -25,6 +25,9 @@ describe('admin application container', () => {
       rooms: {
         rooms: [],
       },
+      userInformation: {
+        admin: false,
+      },
     });
     const wrapper = mount(
       <Provider store={store}>
@@ -75,6 +78,9 @@ describe('admin application container', () => {
       assignSeat: { seat: seat1 },
       rooms: {
         rooms: [room],
+      },
+      userInformation: {
+        admin: false,
       },
     });
     const wrapper = mount(

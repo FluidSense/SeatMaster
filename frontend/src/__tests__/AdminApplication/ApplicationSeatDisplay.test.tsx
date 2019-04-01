@@ -1,18 +1,20 @@
 import { shallow } from 'enzyme';
-import { Input } from 'nav-frontend-skjema';
+import { Panel } from 'nav-frontend-paneler';
 import React from 'react';
 import ApplicationSeatDisplay from '../../components/AdminApplication/ApplicationSeatDisplay';
-import { IRoom, ISeat } from '../../components/ViewRooms';
+import { ISeat } from '../../components/Seats';
+import { IRoom } from '../../components/ViewRooms';
 
 describe('application seat display', () => {
+  const doNothing = () => null;
   it('renders null if no props', () => {
-    const wrapper = shallow(<ApplicationSeatDisplay />);
+    const wrapper = shallow(<ApplicationSeatDisplay removeFromSeat={doNothing} />);
     expect(wrapper.isEmptyRender()).toBeTruthy();
   });
 
   it('renders if both room and seat', () => {
     const seat: ISeat = {
-      id: '1C',
+      id: 1,
       info: 'Is wrong number',
       roomId: 1,
     };
@@ -21,12 +23,17 @@ describe('application seat display', () => {
       info:'Woah',
       name:'Psyched!',
       seats: {
-        count:1,
+        count: 1,
         seats: [seat],
       },
     };
-    const wrapper = shallow(<ApplicationSeatDisplay seat={seat} room={room} />);
-    const infoPanels = wrapper.find(Input);
+    const wrapper = shallow(
+      <ApplicationSeatDisplay
+        removeFromSeat={doNothing}
+        seat={seat}
+        room={room}
+      />);
+    const infoPanels = wrapper.find(Panel);
     expect(infoPanels.length).toBe(2);
   });
 });

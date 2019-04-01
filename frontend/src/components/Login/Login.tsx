@@ -10,7 +10,7 @@ export const Login: React.FunctionComponent<{}> = (props) => {
   };
   const onClickAction = (event: React.MouseEvent) => doLogin(event);
   return (
-    <>
+    <div id="login-screen">
       <img src={IDILOGO} id="ntnuLogo" />
       <div className="mainContent">
         <h1>
@@ -32,6 +32,6 @@ export const Login: React.FunctionComponent<{}> = (props) => {
           Log in
         </KnappBase>
       </div>
-    </>
+    </div>
   );
 };

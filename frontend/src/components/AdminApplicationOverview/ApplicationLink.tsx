@@ -3,16 +3,16 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { IApplication } from '../Application';
-import { APP_APPROVED, APP_DENIED, APP_NOT_FOUND, APP_SUBMITTED } from '../commonConstants';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import { ROUTE_TO } from './constants';
 import {
   _LINK_APP_STATUS,
   _LINK_MASTER_STATUS,
-  _LINK_NAME_TITLE,
+  _LINK_NAME_FULLNAME,
   _LINK_ROOM_STATUS,
   _LINK_SEAT_STATUS,
+  _LINK_USERNAME_TITLE,
 } from './strings';
 
 interface IProps {
@@ -48,7 +48,11 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
       href={`${ROUTE_TO}${application.id}`}
     >
       <div className="lenkepanel-applications">
-        <div className="link-name"><Element>{_LINK_NAME_TITLE}</Element>{user.username}</div>
+        <div className="link-name"><Element>{_LINK_USERNAME_TITLE}</Element>{user.username}</div>
+        <div className="link-full-name">
+          <Element>{_LINK_NAME_FULLNAME}</Element>
+          {user.fullname}
+        </div>
         <div className="link-master">
           <Element>{_LINK_MASTER_STATUS}</Element>
           {application.rank}

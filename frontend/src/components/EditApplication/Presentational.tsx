@@ -4,6 +4,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IApplication } from '../Application';
+import { IRoom } from '../ViewRooms';
 import { redirectUrl } from './constants';
 import './editApplication.css';
 import EditForm from './EditForm';
@@ -16,6 +17,7 @@ interface IDispatchProps {
 interface IStateProps {
   applications: IApplication[];
   matchId: string;
+  rooms: IRoom[];
   status: number;
 }
 
@@ -28,7 +30,7 @@ export const editAlert = (
 );
 
 const Presentational: React.FunctionComponent<Props> = (props) => {
-  const { applications, matchId, status, resetStatus } = props;
+  const { applications, matchId, status, resetStatus, rooms } = props;
 
   const application = applications.filter(app => app.id === parseInt(matchId, 10))[0];
 
@@ -50,6 +52,7 @@ const Presentational: React.FunctionComponent<Props> = (props) => {
       application={application}
       finalize={finalize}
       isAdmin={true}
+      rooms={rooms}
     />
     </div>
   );

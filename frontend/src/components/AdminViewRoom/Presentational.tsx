@@ -1,5 +1,6 @@
 import KnappBase from 'nav-frontend-knapper';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Panel } from 'nav-frontend-paneler';
+import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Redirect } from 'react-router';
 import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
@@ -8,7 +9,7 @@ import { IApplication } from '../Application';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import SeatPlacer from './SeatPlacer';
-import { _EDIT_ROOM_BUTTON } from './strings';
+import { _EDIT_ROOM_BUTTON, _INFO_SUB_TITLE } from './strings';
 
 interface IStateProps {
   match: {
@@ -69,6 +70,12 @@ class Presentational extends React.Component<Props, IState> {
         />);
     }
 
+    const information = (
+      <>
+        <Innholdstittel>{_INFO_SUB_TITLE}</Innholdstittel>
+        <Panel>{room.info}</Panel>
+      </>);
+
     return (
       <div className="main-content">
         <div className="title-and-button">
@@ -78,11 +85,10 @@ class Presentational extends React.Component<Props, IState> {
             {_EDIT_ROOM_BUTTON}
           </KnappBase>
         </div>
-        <h2>Info</h2>
-        <p>{room.info}</p>
-        <div>
-          {seats}
-        </div>
+          {information}
+          <div style={{ width: '60%' }}>
+            {seats}
+          </div>
       </div>
     );
   }

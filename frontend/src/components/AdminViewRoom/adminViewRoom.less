@@ -1,0 +1,38 @@
+.room-assign-seat {
+  display: grid !important;
+  grid-template-columns: 15% 10% 30% 10% 35%;
+  align-items: center;
+  margin-top: 1rem;
+  .room-panel-seat {
+    text-align: center;
+    grid-column: 1;
+  }
+
+  .room-select-seat {
+    text-align: center;
+    margin-bottom: 0;
+    width: 100%;
+    grid-column: 3;
+    label {
+      display: none;
+    }
+  }
+
+  .room-user-panel-seat {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    text-align: center;
+    margin-bottom: 0;
+    width: 100%;
+    grid-column: 3;
+    label {
+      display: none;
+    }
+  }
+
+  .room-assign-seat {
+    grid-column: 5;
+    width: 100%;
+    text-align: center !important
+  }
+}

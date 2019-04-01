@@ -10,6 +10,7 @@ import { updateSingleApplication } from '../EditApplication/actions';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import { assignUserToSeat, checkSeatIsOccupied, removeStudent } from './actions';
+import './assignSeat.css';
 import Presentational from './Presentational';
 
 interface IDispatchProps {

@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-
 import KnappBase from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { _ALERT_USER_SUBMISSION } from './Strings';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { _ALERT_USER_SUBMISSION } from './strings';
 
 interface IProps {
   modalIsOpen: boolean;

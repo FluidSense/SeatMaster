@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Application from '../Application/index';
 import FAQ from '../FAQ';
+import Footer from '../Footer';
 import Header from '../Header';
 import Home from '../Home';
 import Page404 from '../Page404';
@@ -28,6 +29,7 @@ export const RoutesUser = () => {
           <Route path="/" component={Page404} />
         </Switch>
       </div>
+      <Footer />
     </>
   );
 };

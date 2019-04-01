@@ -8,6 +8,7 @@ import { assignUserToSeat, removeStudent } from '../AssignSeat/actions';
 import { updateSingleApplication } from '../EditApplication/actions';
 import { ISeat } from '../Seats';
 import { fetchAllRooms } from '../ViewRooms/actions';
+import './adminViewRoom.css';
 import Presentational from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({

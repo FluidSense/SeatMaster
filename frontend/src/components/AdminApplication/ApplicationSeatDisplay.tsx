@@ -1,6 +1,6 @@
 import KnappBase from 'nav-frontend-knapper';
-import { Input } from 'nav-frontend-skjema';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Panel } from 'nav-frontend-paneler';
+import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
@@ -12,26 +12,29 @@ interface IProps {
   removeFromSeat: (seatId: number) => void;
 }
 
+const assignedPanel = (label: string, value: string | number) => (
+  <div className="current-seat-info">
+    <Element>{label}</Element>
+    <Panel>{value}</Panel>
+  </div>);
+
 const ApplicationSeatDisplay: React.FunctionComponent<IProps> = (props) => {
   const { room, seat, removeFromSeat } = props;
   if (!(room && seat)) return null;
+  const seatName = seat.name !== undefined && seat.name !== '' ? seat.name : seat.id;
   const onClick = () => removeFromSeat(seat.id);
   return (
-    <div className="application-room">
+    <div>
       <Innholdstittel>{_CURRENT_SEAT}</Innholdstittel>
-      <Input
-        label={'Room'}
-        disabled={true}
-        value={room.name}
-      />
-      <Input
-        label={'Seat'}
-        disabled={true}
-        value={seat.name}
-      />
-      <KnappBase type="fare" onClick={onClick}>
-        {_REMOVE_FROM_SEAT}
-      </KnappBase>
+      <div id="application-current-seat">
+        <div>
+          {assignedPanel('Room', room.name)}
+          {assignedPanel('Seat', seatName)}
+        </div>
+        <KnappBase type="fare" onClick={onClick}>
+          {_REMOVE_FROM_SEAT}
+        </KnappBase>
+      </div>
     </div>
   );
 };

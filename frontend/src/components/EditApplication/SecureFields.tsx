@@ -1,4 +1,5 @@
 import { Input, Select } from 'nav-frontend-skjema';
+import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { IApplication } from '../Application';
 import { MASTER_STATUS } from './constants';
@@ -15,27 +16,29 @@ export const SecureFields = (
   if (!(application && application.user)) return null;
   if (isAdmin && update) {
     return (
-      <>
+      <div>
         <Select
           label="Master status"
           name="rank"
+          bredde="xl"
           defaultValue={application.rank}
           onChangeCapture={update}
         >
           {options}
         </Select>
-      </>
+      </div>
     );
   }
   return (
-      <>
+      <div>
+        <Undertittel>Master Status</Undertittel>
         <Input
           label="Master status"
-          bredde="L"
+          bredde="XL"
           name="masterStatus"
           value={application.rank}
           disabled={true}
         />
-      </>
+      </div>
   );
 };

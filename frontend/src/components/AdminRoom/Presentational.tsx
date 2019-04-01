@@ -7,7 +7,6 @@ import { ETIKETT_WARNING } from '../commonConstants';
 import Modal from '../Modal';
 import Seats from '../Seats';
 import { IRoom } from '../ViewRooms';
-import CSVButton from './CSVButton';
 import {
   _ALERT_CREATED_MESSAGE,
   _BUTTON_CREATE_ROOM,

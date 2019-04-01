@@ -10,6 +10,7 @@ import ApplicationSeatDisplay from './ApplicationSeatDisplay';
 import SetWaitingList from './SetWaitingList';
 
 interface IProps {
+  isAdmin?: boolean;
   rooms: IRoom[];
   application: IApplication;
   removeStudentFromSeat: (seatId: number) => void;
@@ -17,7 +18,7 @@ interface IProps {
 }
 
 const Presentational: React.FunctionComponent<IProps> = (props) => {
-  const { application, rooms, removeStudentFromSeat, updateApplication } = props;
+  const { application, rooms, removeStudentFromSeat, updateApplication, isAdmin } = props;
   if (!(application && rooms)) return null;
   const givenSeat = application.seat;
   const givenRoomId = givenSeat ? givenSeat.roomId : 0;
@@ -29,6 +30,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
         application={application}
         title={application.user ? application.user.fullname : ''}
         pathToEdit={`/admin/applications/${application.id}/edit`}
+        isAdmin={isAdmin}
       />
       <div className="edit-lower-row">
         <AssignSeat rooms={rooms} application={application} />
@@ -38,7 +40,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
           removeFromSeat={removeStudentFromSeat}
         />
       </div>
-      <div className="center-div">
+      <div className="split-buttons">
         <SetWaitingList
           seat={application.seat}
           updateApplication={updateApplication}

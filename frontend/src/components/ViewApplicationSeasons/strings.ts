@@ -1,6 +1,3 @@
-import { Moment } from 'moment';
-import { formatLink } from '../../utils/timeFormatter';
-
 export const _SEASON_TITLE = 'Application Seasons';
 export const _LINK_STATUS = 'Status';
 export const _LINK_ENDING = 'Ending';
