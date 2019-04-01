@@ -5,7 +5,7 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { IApplication } from '../Application';
-import { APP_SUBMITTED, APP_APPROVED } from '../commonConstants';
+import { APP_APPROVED, APP_SUBMITTED } from '../commonConstants';
 import { updateSingleApplication } from '../EditApplication/actions';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
