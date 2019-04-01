@@ -7,7 +7,12 @@ import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
 import Modal from '../Modal';
 import SearchBar, { searchBarEvent } from '../SearchBar';
 import { FETCHING_STUDENTS } from './constants';
-import { _CHECK_ALL_CHECKBOXES, _DELETE_STUDENTS, _DELETING_STUDENTS_WARNING, _VIEW_STUDENTS_TITLE } from './strings';
+import {
+  _CHECK_ALL_CHECKBOXES,
+  _DELETE_STUDENTS,
+  _DELETING_STUDENTS_WARNING,
+  _VIEW_STUDENTS_TITLE,
+} from './strings';
 import UserLink from './UserLink';
 
 interface IProps {
@@ -44,16 +49,21 @@ export class Presentational extends React.Component<IProps, IState> {
   }
 
   public onClick = () => {
-    const clicked = this.props.users.length === this.props.userToBeDeleted.length ?
-      this.props.deleteStudent :
-      this.deleteSeveralStudents;
+    this.props.users.length === this.props.userToBeDeleted.length ?
+      this.props.deleteStudent(this.props.usersToBeDeleted) :
+      this.deleteSeveralStudents();
+    this.toggleModal();
   }
 
   public render () {
     let checkbox = null;
+
     const checkedAll = this.props.users.length === this.props.usersToBeDeleted.length;
-    // tslint:disable-next-line:max-line-length
-    if (this.props.fetching === FETCHING_STUDENTS) return <TitleAndSpinner title={_VIEW_STUDENTS_TITLE}/>;
+
+    if (this.props.fetching === FETCHING_STUDENTS) {
+      return <TitleAndSpinner title={_VIEW_STUDENTS_TITLE}/>;
+    }
+
     if (this.props.users.length === this.props.filteredStudents.length) {
       checkbox = (
         <Checkbox checked={checkedAll} onChange={this.addAllUsers} label={_CHECK_ALL_CHECKBOXES} />
@@ -62,6 +72,7 @@ export class Presentational extends React.Component<IProps, IState> {
 
     const usersList = this.props.filteredStudents.map((user) => {
       const checked = this.props.usersToBeDeleted.includes(user.id);
+      console.log(checked);
       return (
         <UserLink
           checked={checked}
@@ -71,11 +82,16 @@ export class Presentational extends React.Component<IProps, IState> {
         />);
     });
 
+    const thoseWhomWillBeYEETed = this.props.usersToBeDeleted.map((id, i) => {
+      const user = this.props.users.find(iteruser => iteruser.id === id);
+      if (user) return <li key={i}>{user.username}</li>;
+    });
+
     const modalText = (
       <>
         <p>{_DELETING_STUDENTS_WARNING}</p>
         <ul>
-          {usersList}
+          {thoseWhomWillBeYEETed}
         </ul>
       </>
     );
