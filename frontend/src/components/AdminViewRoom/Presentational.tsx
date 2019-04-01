@@ -83,10 +83,10 @@ class Presentational extends React.Component<Props, IState> {
             {_EDIT_ROOM_BUTTON}
           </KnappBase>
         </div>
-        {information}
-        <div>
-          {seats}
-        </div>
+          {information}
+          <div style={{ width: '60%' }}>
+            {seats}
+          </div>
       </div>
     );
   }
