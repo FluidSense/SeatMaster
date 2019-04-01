@@ -43,7 +43,7 @@ export class Application extends React.Component<{}, IState> {
     );
   }
 
-  private changeModal = (modalOpen: boolean) => { this.setState({ modalIsOpen: modalOpen }); };
+  private changeModal = () => { this.setState({ modalIsOpen: !this.state.modalIsOpen }); };
 }
 
 export default Application;

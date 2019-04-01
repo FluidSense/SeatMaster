@@ -95,6 +95,7 @@ describe('application form', () => {
   it('renders correctly', () => {
     const wrapper = shallow(
       <Presentational
+        modalIsOpen={false}
         userInformation={userInfo}
         changeModal={changeModalMock}
         rooms={[]}
