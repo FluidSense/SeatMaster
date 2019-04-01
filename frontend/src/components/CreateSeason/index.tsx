@@ -1,5 +1,4 @@
 import moment, { Moment } from 'moment';
-import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -7,6 +6,7 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { IPostApplicationSeason } from '../../API/interfaces';
 import { IStore } from '../../store';
+import { timeFormatToBackend } from '../../utils/timeFormatter';
 import { fetchSeasonById } from '../ApplicationSeason/actions';
 import { IApplicationSeason } from '../ApplicationSeason/reducer';
 import DateInputField from '../DateInputField';
@@ -53,7 +53,6 @@ export interface IDispatchProps {
   reset: () => void;
 }
 
-type AlertStripeTypes = 'advarsel' | 'suksess' | 'info' | 'nav-ansatt' | 'stopp';
 type Props = IStateProps & IDispatchProps & ILinkProps;
 
 // Need to be in this order to match the proper fields
@@ -72,9 +71,6 @@ export const setTime = (day: Moment) => {
   });
   return newDay;
 };
-
-// Format to match backend model
-export const format = 'YYYY-MM-DD HH:mm:ss.SSS';
 
 // tslint:disable-next-line:class-name
 class _CreateSeason extends Component<Props, IState> {
@@ -104,11 +100,11 @@ class _CreateSeason extends Component<Props, IState> {
     const locationSeason = location.season;
     const urlId = match.params.id;
     if (locationSeason) {
-      this.setState({ season: locationSeason, fetched: true });
-    } else {
+      this.setState({ season: locationSeason });
+    } else if (urlId) {
       await fetchSeason(Number(urlId));
-      this.setState({ fetched: true });
     }
+    this.setState({ fetched: true });
   }
 
   public componentWillUnmount = () => {
@@ -134,7 +130,7 @@ class _CreateSeason extends Component<Props, IState> {
 
   public render() {
     const { submitted } = this.props;
-    if (submitted) return (<Redirect to="/admin/applications" />);
+    if (submitted) return (<Redirect to="/admin/seasons" />);
     const { season, showAlert, fetched } = this.state;
 
     const submitSeason = season.id ? this.updateApplicationSeason : this.submitApplicationSeason;
@@ -153,10 +149,10 @@ class _CreateSeason extends Component<Props, IState> {
     const { season } = this.state;
     const { applicationPeriodEnd, applicationPeriodStart, end, start } = season;
     const body = {
-      newPeriodEnd: applicationPeriodEnd.format(format),
-      newPeriodStart: applicationPeriodStart.format(format),
-      newRoomEnd: end.format(format),
-      newRoomStart: start.format(format),
+      newPeriodEnd: applicationPeriodEnd.format(timeFormatToBackend),
+      newPeriodStart: applicationPeriodStart.format(timeFormatToBackend),
+      newRoomEnd: end.format(timeFormatToBackend),
+      newRoomStart: start.format(timeFormatToBackend),
     };
     this.props.updateSeason(body, season.id);
   }
@@ -164,10 +160,10 @@ class _CreateSeason extends Component<Props, IState> {
   private submitApplicationSeason = () => {
     const { applicationPeriodEnd, applicationPeriodStart, end, start } = this.state.season;
     const body = {
-      newPeriodEnd: applicationPeriodEnd.format(format),
-      newPeriodStart: applicationPeriodStart.format(format),
-      newRoomEnd: end.format(format),
-      newRoomStart: start.format(format),
+      newPeriodEnd: applicationPeriodEnd.format(timeFormatToBackend),
+      newPeriodStart: applicationPeriodStart.format(timeFormatToBackend),
+      newRoomEnd: end.format(timeFormatToBackend),
+      newRoomStart: start.format(timeFormatToBackend),
     };
     this.props.submitNewSeason(body);
   }

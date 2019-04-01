@@ -25,7 +25,7 @@ const userUrls: IUrl[] = [
 
 const adminUrls: IUrl[] = [
   { url: '/admin/rooms/', title: 'Rooms' },
-  { url: '/admin/create-season/', title: 'Create Season' },
+  { url: '/admin/seasons/', title: 'Application seasons' },
   { url: '/admin/applications/', title: 'Applications' },
   { url: '/admin/students/', title: 'Students' },
 ];

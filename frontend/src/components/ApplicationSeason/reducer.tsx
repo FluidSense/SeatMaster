@@ -1,5 +1,6 @@
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import { AnyAction } from 'redux';
+import { parseSeason } from '../ViewApplicationSeasons/reducer';
 import {
   FETCHED_APPLICATION_SEASON,
   RESET_SUBMIT,
@@ -35,24 +36,12 @@ export const applicationSeasonReducer = (
     case SET_APPLICATION_SEASON:
       return {
         ...state,
-        currentSeason: {
-          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
-          applicationPeriodStart: moment(payload.applicationPeriodStart),
-          end: moment(payload.end),
-          id: payload.id,
-          start: moment(payload.start),
-        },
+        currentSeason: parseSeason(payload),
       };
     case SUBMITTED_APPLICATION_SEASON:
       return {
         ...state,
-        currentSeason: {
-          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
-          applicationPeriodStart: moment(payload.applicationPeriodStart),
-          end: moment(payload.end),
-          id: payload.id,
-          start: moment(payload.start),
-        },
+        currentSeason: parseSeason(payload),
         submitted: true,
       };
     case SUBMITTED_APPLICATION_SEASON_FAILED:
@@ -63,13 +52,7 @@ export const applicationSeasonReducer = (
     case FETCHED_APPLICATION_SEASON:
       return {
         ...state,
-        currentSeason: {
-          applicationPeriodEnd: moment(payload.applicationPeriodEnd),
-          applicationPeriodStart: moment(payload.applicationPeriodStart),
-          end: moment(payload.end),
-          id: payload.id,
-          start: moment(payload.start),
-        },
+        currentSeason: parseSeason(payload),
       };
     case UPDATE_APPLICATION_SEASON:
       return {

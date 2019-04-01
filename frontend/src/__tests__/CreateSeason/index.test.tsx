@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { SEASON_URL } from '../../API/constants';
-import CreateSeason, { format, IState, setTime } from '../../components/CreateSeason/index';
+import CreateSeason, { IState, setTime } from '../../components/CreateSeason/index';
 import Presentational from '../../components/CreateSeason/Presentational';
+import { timeFormatToBackend } from '../../utils/timeFormatter';
 
 fetchMock.mock(SEASON_URL, 201);
 
@@ -42,10 +43,10 @@ describe('Create season', () => {
     component.setState({ fetched: true });
     const season = state.season;
     const body = JSON.stringify({
-      newPeriodEnd: season.applicationPeriodEnd.format(format),
-      newPeriodStart: season.applicationPeriodStart.format(format),
-      newRoomEnd: season.end.format(format),
-      newRoomStart: season.start.format(format),
+      newPeriodEnd: season.applicationPeriodEnd.format(timeFormatToBackend),
+      newPeriodStart: season.applicationPeriodStart.format(timeFormatToBackend),
+      newRoomEnd: season.end.format(timeFormatToBackend),
+      newRoomStart: season.start.format(timeFormatToBackend),
     });
     const newSeasonButton = wrapper.find('#new-season-btn').hostNodes();
     newSeasonButton.simulate('click');

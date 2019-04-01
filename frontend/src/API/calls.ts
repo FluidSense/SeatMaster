@@ -17,6 +17,7 @@ import {
   DELETE_ALL_USERS_URL,
   DELETE_USER_URL,
   GET_ALL_APPLICATIONS_URL,
+  GET_ALL_SEASONS_URL,
   GET_ALL_USERS_URL,
   GET_APPLICATION_BY_ID_URL,
   GET_APPLICATION_BY_SELF_URL,
@@ -43,6 +44,9 @@ import {
 } from './interfaces';
 
 export const getSeason = (): PromiseLike<IApplicationSeason> => getJson(SEASON_URL);
+
+export const getAllSeasons = (): PromiseLike<IApplicationSeason[]> =>
+  elevatedGetJson(GET_ALL_SEASONS_URL);
 
 export const getSeasonFromId = (id: number): PromiseLike<IApplicationSeason> =>
   getJson(`${SEASON_URL}${id}`);
