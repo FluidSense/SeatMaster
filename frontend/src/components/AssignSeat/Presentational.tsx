@@ -41,7 +41,7 @@ class Presentational extends React.Component<IProps, IState> {
       <>
         <p>{_CHANGE_STUDENT_WARNING}</p>
         <ul>
-          <li>{occupyingUser ? occupyingUser.username : ''}</li>
+          <li>{occupyingUser ? occupyingUser.fullname : ''}</li>
         </ul>
       </>
     );

@@ -83,7 +83,7 @@ export class Presentational extends React.Component<IProps, IState> {
 
     const deletePromptList = this.props.usersToBeDeleted.map((id, i) => {
       const user = this.props.users.find(iteruser => iteruser.id === id);
-      if (user) return <li key={i}>{user.username}</li>;
+      if (user) return <li key={i}>{user.fullname}</li>;
     });
 
     const modalText = (
