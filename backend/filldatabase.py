@@ -9,12 +9,6 @@ from main import app
 from utils.enums import Rank
 
 with app.app_context():
-    the_annoying_user = User("usrnam", "sub1", "email@epost.no", "lening glenin")
-    the_annoyinger_user = User("putnam", "sub2", "email@epost.no", "putnin mutnin")
-    db.session.add(the_annoying_user)
-    db.session.add(the_annoyinger_user)
-    db.session.commit()
-    test_user = db.session.query(User).filter_by(username="usrnam").first()
 
     starttime = datetime.now() + timedelta(days=+5)
     endtime = starttime + timedelta(days=+150)
@@ -22,6 +16,16 @@ with app.app_context():
     acceptend = starttime + timedelta(days=+7)
 
     some_applicationseason = ApplicationSeason(starttime, endtime, acceptstart, acceptend)
+
+    db.session.add(some_applicationseason)
+    db.session.commit()
+    the_annoying_user = User("usrnam", "sub1", "email@epost.no", "lening glenin")
+    the_annoyinger_user = User("putnam", "sub2", "email@epost.no", "putnin mutnin")
+    db.session.add(the_annoying_user)
+    db.session.add(the_annoyinger_user)
+    db.session.commit()
+    test_user = db.session.query(User).filter_by(username="usrnam").first()
+
 
     application1 = applicationService.registerApplication(
         user=the_annoying_user,
@@ -42,8 +46,6 @@ with app.app_context():
         rank=Rank.OTHER,
     )
 
-    db.session.add(some_applicationseason)
-    db.session.commit()
 
     room1 = Room("Space Commaner", "Is very big and nice, though the screen doesn't always work")
     room2 = Room("Shit room", "Its pretty shit")
