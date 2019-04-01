@@ -8,6 +8,7 @@ import Application from '../Application/index';
 import CreateSeason from '../CreateSeason';
 import EditApplication from '../EditApplication';
 import FAQ from '../FAQ';
+import Footer from '../Footer';
 import Header from '../Header';
 import Home from '../Home';
 import Page404 from '../Page404';
@@ -50,6 +51,7 @@ export const RoutesAdmin = () => {
           <Route path="/" component={Page404} />
         </Switch>
       </div>
+      <Footer />
     </>
   );
 };
