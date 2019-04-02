@@ -6,6 +6,7 @@ import { Redirect } from 'react-router';
 import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
 import CSVButton from '../AdminRoom/CSVButton';
 import { IApplication } from '../Application';
+import MailLink from '../Mail/MailLink';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import SeatPlacer from './SeatPlacer';
@@ -84,6 +85,7 @@ class Presentational extends React.Component<Props, IState> {
           <KnappBase type="hoved" onClick={this.setRedirect}>
             {_EDIT_ROOM_BUTTON}
           </KnappBase>
+          <MailLink recipient={room} mailType="ROOM"/>
         </div>
           {information}
           <div style={{ width: '60%' }}>

@@ -11,6 +11,7 @@ import FAQ from '../FAQ';
 import Footer from '../Footer';
 import Header from '../Header';
 import Home from '../Home';
+import Mail from '../Mail';
 import Page404 from '../Page404';
 import Profile from '../Profile';
 import Rooms from '../Rooms';
@@ -46,6 +47,7 @@ export const RoutesAdmin = () => {
           <Route exact={true} path="/admin/seasons/create-season" component={CreateSeason} />
           <Route path="/admin/seasons/update-season/:id" component={CreateSeason} />
           <Route exact={true} path="/admin/students/" component={ViewStudents} />
+          <Route exact={true} path="/mail" component={Mail} />
 
           <Redirect from="/registerUser" to="/" />
           <Route path="/" component={Page404} />

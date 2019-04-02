@@ -3,6 +3,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { IUser } from '../../API/interfaces';
+import MailLink from '../Mail/MailLink';
 import {
   _CHECKBOX_LABEL,
   _USER_APPLICATION_STATUS,
@@ -30,18 +31,19 @@ const UserPanel: React.FunctionComponent<IProps> = (props) => {
       />
       <Panel border={true} id="panel-users" >
         <div className="users-panel">
-          <div className="user-name">
+          <div>
             <Element>{_USER_FULL_NAME}</Element>
             <Normaltekst>{user.fullname}</Normaltekst>
           </div>
-          <div className="user-username">
+          <div>
             <Element>{_USER_USERNAME}</Element>
             <Normaltekst>{user.username}</Normaltekst>
           </div>
-          <div className="user-email">
+          <div>
             <Element>{_USER_EMAIL}</Element>
             <Normaltekst>{user.email}</Normaltekst>
           </div>
+        <MailLink recipient={user} mailType="DIRECT"/>
         </div>
       </Panel>
     </div>
