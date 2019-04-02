@@ -9,14 +9,17 @@ import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { _ALERT_USER_ERROR } from './strings';
+import ConfirmationModal from './ConfirmationModal';
+import { _ALERT_USER_ERROR, _SUBMIT_BUTTON } from './strings';
 
 interface IProps {
   userInformation: IRegisteredUserState;
   rooms: IRoom[];
   application?: IApplication;
-  changeModal: (modalOpen: boolean) => void;
+  changeModal: () => void;
+  modalIsOpen: boolean;
   getRooms: () => void;
+  setApplication: (application: IApplication) => void;
 }
 
 export interface IFormState {
@@ -65,7 +68,7 @@ export class Presentational extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { userInformation, rooms, application } = this.props;
+    const { userInformation, rooms, application, modalIsOpen, changeModal } = this.props;
     const { hasPartner, hasNeeds, loading } = this.state;
     const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
     if (application) return <Redirect to="/" />;
@@ -96,16 +99,22 @@ export class Presentational extends React.Component<IProps, IState> {
             updateApplicationFormData={this.updateApplicationFormData}
             hasNeeds={hasNeeds}
           />
-          <KnappBase
-            id="submit-application"
-            type="hoved"
-            htmlType="submit"
-            autoDisableVedSpinner={true}
-            spinner={loading}
-          >
-            Submit
-          </KnappBase>
         </form>
+        <KnappBase
+          id="submit-application"
+          type="hoved"
+          htmlType="submit"
+          autoDisableVedSpinner={true}
+          spinner={loading}
+          onClick={changeModal}
+        >
+          {_SUBMIT_BUTTON}
+        </KnappBase>
+        <ConfirmationModal
+          modalIsOpen={modalIsOpen}
+          changeModal={changeModal}
+          accept={this.onSubmitForm}
+        />
       </>
     );
   }
@@ -118,8 +127,7 @@ export class Presentational extends React.Component<IProps, IState> {
     this.setState({ [name]: value });
   }
 
-  private onSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
+  private onSubmitForm = () => {
     this.setState({ loading: true });
 
     postApplicationForm({
@@ -131,8 +139,9 @@ export class Presentational extends React.Component<IProps, IState> {
     })
       .then(
         // On fullfilled promise:
-        () => {
-          this.props.changeModal(true);
+        (result) => {
+          this.props.setApplication(result);
+          this.props.changeModal();
           this.setState({ loading: false, error: '' });
         },
         // On rejected promise:

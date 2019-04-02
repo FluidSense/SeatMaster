@@ -1,18 +1,15 @@
 import * as React from 'react';
 import ApplicationForm from '../ApplicationForm';
-import ConfirmationModal from './../ApplicationForm/ConfirmationModal';
 
 interface IProps {
   modalIsOpen: boolean;
-  changeModal: (modalOpen: boolean) => void;
+  changeModal: () => void;
 }
 
 export const Presentational: React.FunctionComponent<IProps> = (props) => {
+  const { modalIsOpen, changeModal } = props;
   return (
-    <>
-      <ConfirmationModal modalIsOpen={props.modalIsOpen} changeModal={props.changeModal} />
-      <ApplicationForm changeModal={props.changeModal} />
-    </>
+    <ApplicationForm modalIsOpen={modalIsOpen} changeModal={changeModal} />
   );
 };
 

@@ -2,7 +2,7 @@
 
 exports[`application form confirmation modal renders correctly 1`] = `
 <ModalWrapper
-  closeButton={true}
+  closeButton={false}
   closeTimeoutMS={0}
   contentLabel="Form submitted"
   isOpen={true}
@@ -17,7 +17,7 @@ exports[`application form confirmation modal renders correctly 1`] = `
       }
     }
   >
-    Your application has been submitted and will be processed. You can see its status on the home page.
+    Your application will be submitted if you continue, and it will be processed. You can see its status on the home page.
     <br />
     <Link
       replace={false}
@@ -33,7 +33,7 @@ exports[`application form confirmation modal renders correctly 1`] = `
         spinner={false}
         type="hoved"
       >
-        Go home
+        Ok
       </KnappBase>
     </Link>
   </div>
