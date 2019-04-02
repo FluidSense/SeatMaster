@@ -78,7 +78,7 @@ class EditForm extends React.Component<IProps, State> {
             rooms={rooms}
             room={preferredRoom}
             hasPartner={hasPartner}
-            wantsSeat={seatRollover}
+            wantsSeatRollover={seatRollover}
             partner={partnerUsername}
           />
           <ApplicationFormComments

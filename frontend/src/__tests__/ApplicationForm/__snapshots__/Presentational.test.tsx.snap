@@ -23,6 +23,7 @@ exports[`application form renders correctly 1`] = `
       isAdmin={false}
       rooms={Array []}
       updateApplicationFormData={[Function]}
+      wantsSeatRollover={false}
     />
     <ApplicationFormComments
       hasNeeds={false}

@@ -69,7 +69,7 @@ export class Presentational extends React.Component<IProps, IState> {
 
   public render() {
     const { userInformation, rooms, application, modalIsOpen, changeModal } = this.props;
-    const { hasPartner, hasNeeds, loading } = this.state;
+    const { hasPartner, hasNeeds, loading, seatRollover } = this.state;
     const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
     if (application) return <Redirect to="/" />;
     return (
@@ -89,6 +89,7 @@ export class Presentational extends React.Component<IProps, IState> {
             email={userInformation.email}
           />
           <ApplicationFormPreferences
+            wantsSeatRollover={seatRollover}
             isAdmin={false}
             updateApplicationFormData={this.updateApplicationFormData}
             rooms={rooms}
