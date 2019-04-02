@@ -35,7 +35,7 @@ def registerUser():
 
             userIsAdmin = False
             try:
-                userIsAdmin = dataporten.checkIfAdmin(accessToken)
+                userIsAdmin = dataporten.checkIfAdmin(response.get("username", ""))
             except HTTPError:
                 userIsAdmin = False
             response['admin'] = userIsAdmin
@@ -68,7 +68,7 @@ def getSelf():
 
     userIsAdmin = False
     try:
-        userIsAdmin = dataporten.checkIfAdmin(accessToken)
+        userIsAdmin = dataporten.checkIfAdmin(user.username)
     except HTTPError:
         userIsAdmin = False
     userJson = user.to_json()
