@@ -10,7 +10,7 @@ from flask import jsonify, make_response
 import json
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
-from __tests__.testUtils.models import createApplication
+from __tests__.testUtils.models import createApplication, createUser
 from utils.enums import ApplicationStatus
 # Class-based test to keep test db alive during all tests,
 # else testing.postgresql takes it down.
@@ -38,6 +38,7 @@ class TestSeat(TestCase):
 
     @mock_authentication_context
     def test_get_seat(self):
+        createUser(db.session)
         room, seat = createSeatAndRoom()
         headers = {
             'AccessToken': self.accessToken,
@@ -51,6 +52,7 @@ class TestSeat(TestCase):
 
     @mock_authentication_context
     def test_delete_seat(self):
+        createUser(db.session)
         headers = {
             'AccessToken': self.accessToken,
             'Authorization': self.token
@@ -64,6 +66,7 @@ class TestSeat(TestCase):
 
     @mock_authentication_context
     def test_create_seat(self):
+        createUser(db.session)
         room, seat = createSeatAndRoom()
         mimetype = 'application/json'
         headers = {
@@ -188,6 +191,7 @@ class TestSeat(TestCase):
     @mock_authentication_context
     def test_rename_seat(self):
         room, seat = createSeatAndRoom()
+        createUser(db.session)
         oldName = seat.seat_name
         newName = "New Name"
         seatId = seat.id
@@ -202,7 +206,6 @@ class TestSeat(TestCase):
             "http://localhost:5000/seat/" + str(seatId),
             headers=headers,
             data=json.dumps(newName))
-        print(response.data, flush=True)
         assert "200 OK" == response.status
         assert jsonify(seat.to_json()).data == response.data
         assert seat.seat_name == newName

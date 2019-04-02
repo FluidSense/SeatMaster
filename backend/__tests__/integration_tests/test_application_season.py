@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import json
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
+from __tests__.testUtils.models import createUser
 
 
 # Class-based test to keep test db alive during all tests,
@@ -43,6 +44,7 @@ class TestApplicationSeason(TestCase):
 
     @mock_authentication_context
     def test_new_application_season(self):
+        createUser(db.session)
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,

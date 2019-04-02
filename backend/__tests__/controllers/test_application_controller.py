@@ -11,44 +11,44 @@ from utils.enums import ApplicationStatus
 from __tests__.testUtils.constants import accessToken
 
 
-def test_getApplication_with_no_application(mocker):
+def test_getApplication_with_no_application(mocker, client):
     mock_authentication(mocker)
     mocker.patch.object(applicationService, "getApplicationById")
     applicationService.getApplicationById.return_value = {}
     with app.app_context():
-        response = applicationController.getApplication(123)
+        response = client.get(url_for("application.getApplication", id=123))
         assert "200 OK" == response.status
         assert b'{}' == response.data
 
 
-def test_getApplication_with_application(mocker):
+def test_getApplication_with_application(mocker, client):
     mock_authentication(mocker)
-    application = createApplication()
+    application=createApplication()
     mocker.patch.object(applicationService, "getApplicationById")
     with app.app_context():
-        applicationService.getApplicationById.return_value = createApplication()
-        response = applicationController.getApplication(123)
+        applicationService.getApplicationById.return_value=createApplication()
+        response = client.get(url_for("application.getApplication", id=123))
         assert "200 OK" == response.status
         assert jsonify(application.to_json()).data == response.data
 
 
-def test_getApplicationByUser_with_no_application(mocker):
+def test_getApplicationByUser_with_no_application(mocker, client):
     mock_authentication(mocker)
     mocker.patch.object(applicationService, "getApplicationByUserId")
-    applicationService.getApplicationByUserId.return_value = {}
+    applicationService.getApplicationByUserId.return_value={}
     with app.app_context():
-        response = applicationController.getApplicationByUser(123)
+        response = client.get(url_for("application.getApplicationByUser", userid=123))
         assert "200 OK" == response.status
         assert b'{}' == response.data
 
 
-def test_getApplicationByUser_with_application(mocker):
+def test_getApplicationByUser_with_application(mocker, client):
     mock_authentication(mocker)
-    application = createApplication()
+    application=createApplication()
     mocker.patch.object(applicationService, "getApplicationByUserId")
-    applicationService.getApplicationByUserId.return_value = createApplication()
+    applicationService.getApplicationByUserId.return_value=createApplication()
     with app.app_context():
-        response = applicationController.getApplicationByUser(123)
+        response = client.get(url_for("application.getApplicationByUser", userid=123))
         assert "200 OK" == response.status
         assert jsonify(application.to_json()).data == response.data
 
@@ -69,16 +69,16 @@ def registerApplicationMock(comments, user, needs, partnerUsername, preferredRoo
 
 def test_registerNewApplication(mocker, client):
     mock_authentication(mocker)
-    mimetype = 'application/json'
-    headers = {
+    mimetype='application/json'
+    headers={
         'Content-Type': mimetype,
         'Accept': mimetype,
         "AccessToken": f'Bearer {accessToken}'
     }
     mocker.patch.object(applicationService, "registerApplication")
-    applicationService.registerApplication = registerApplicationMock
+    applicationService.registerApplication=registerApplicationMock
     with app.app_context():
-        response = client.post(
+        response=client.post(
             url_for('application.registerApplication'),
             headers=headers,
             data=json.dumps(dict(
