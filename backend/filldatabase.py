@@ -33,7 +33,6 @@ with app.app_context():
     db.session.commit()
     test_user = db.session.query(User).filter_by(username="usrnam").first()
 
-
     application1 = applicationService.registerApplication(
         user=the_annoying_user,
         partnerUsername=the_annoyinger_user.username,
