@@ -2,15 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { IPostAdminApplicationForm } from '../../API/interfaces';
 import { IStore } from '../../store';
 import { lowerIncludes } from '../../utils/searchBarFilter';
 import { IApplication } from '../Application';
+import { updateSingleApplication } from '../EditApplication/actions';
 import { searchBarEvent } from '../SearchBar';
 import { IRoom } from '../ViewRooms';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import {
   approveAllApplications,
   fetchAllApplications,
+  removeAllApplications,
   waitingListAllApplications,
 } from './actions';
 import Presentational from './Presentational';
@@ -27,6 +30,8 @@ interface IDispatchProps {
   approve: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
   close: () => void;
   putWaiting: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
+  removeFromSeat: (ids: number[]) => ThunkAction<void, {}, {}, AnyAction>;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
 interface IState {
@@ -40,7 +45,7 @@ type Props = IStateProps & IDispatchProps;
 class _Container extends React.Component<Props, IState> {
   constructor(props: Props) {
     super(props);
-    this.state =  {
+    this.state = {
       applications: this.props.applications,
       filteredApplications: this.props.applications,
     };
@@ -67,6 +72,8 @@ class _Container extends React.Component<Props, IState> {
         fetching={this.props.fetching}
         approve={this.props.approve}
         putWaiting={this.props.putWaiting}
+        removeFromSeat={this.props.removeFromSeat}
+        updateApplication={this.props.updateApplication}
       />);
   }
 
@@ -77,8 +84,8 @@ class _Container extends React.Component<Props, IState> {
       const { user } = application;
       if (user) {
         if (lowerIncludes(user.username, value)
-        || lowerIncludes(user.email, value)
-        || lowerIncludes(user.fullname, value)
+          || lowerIncludes(user.email, value)
+          || lowerIncludes(user.fullname, value)
         ) return application;
       }
     });
@@ -97,6 +104,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   getAllApplications: () => dispatch(fetchAllApplications()),
   getRooms: () => dispatch(fetchAllRooms()),
   putWaiting: (ids: number[]) => dispatch(waitingListAllApplications(ids)),
+  removeFromSeat: (ids: number[]) => dispatch(removeAllApplications(ids)),
+  updateApplication: (id: number, app: IPostAdminApplicationForm) =>
+    dispatch(updateSingleApplication(id, app)),
 });
 
 const Container = connect(

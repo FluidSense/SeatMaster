@@ -4,12 +4,14 @@ import {
   getAllApplications,
   postAdminApplicationApproveList,
   postAdminApplicationWaitingList,
+  postRemoveAllFromSeat,
 } from '../../API/calls';
 import { IApplication } from '../Application';
 import {
   APPROVE_ALL_APPLICATIONS,
   FAILED_TO_RETRIEVE_ALL_APPLICATIONS,
   GET_ALL_APPLICATIONS,
+  REMOVE_APPROVED_FROM_SEAT,
   WAITING_LIST_ALL_APPLICAITONS,
 } from './constants';
 
@@ -26,6 +28,10 @@ const approvedAllApplications = (payload: IApplication[]) => ({
 const waitAllApplications = (payload: IApplication[]) => ({
   payload,
   type: WAITING_LIST_ALL_APPLICAITONS,
+});
+
+const removedAllApplications = () => ({
+  type: REMOVE_APPROVED_FROM_SEAT,
 });
 
 const failedToRetrieveApplications = () => ({ type: FAILED_TO_RETRIEVE_ALL_APPLICATIONS });
@@ -45,6 +51,14 @@ export const waitingListAllApplications = (ids: number[]):
       dispatch(waitAllApplications(result));
     }
   };
+
+export const removeAllApplications = (ids: number[]):
+ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {
+  const result = await postRemoveAllFromSeat(ids);
+  if (result) {
+    dispatch(removedAllApplications());
+  }
+};
 
 export const fetchAllApplications = ():
   ThunkAction<Promise<void>, {}, {}, AnyAction> => async (dispatch: Dispatch) => {

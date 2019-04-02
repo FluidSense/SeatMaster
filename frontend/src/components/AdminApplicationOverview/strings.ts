@@ -10,3 +10,5 @@ export const _LINK_NAME_FULLNAME = 'Full name';
 export const _WAITING_LIST_WARNING =
   'This will put the following applicants on the waiting list:';
 export const _APPROVE_STUDENTS_WARNING = 'This will approve the current applicants:';
+export const _REMOVE_ALL_APPROVED = 'This will remove ALL applicants from their seat';
+export const _REMOVE_FROM_SEAT = 'Unseat people';

@@ -77,4 +77,4 @@ def removeAllStudentsFromSeats():
         if(application.seat):
             response = removeStudentFromSeat(application.seat.id)
             application.status = ApplicationStatus.SUBMITTED if response[0] else application.status
-    return "", 200
+    return "{}", 200

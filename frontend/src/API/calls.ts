@@ -29,6 +29,7 @@ import {
   POST_APPLICATION_APPROVE_LIST,
   POST_FORM_DATA_URL,
   POST_NEW_USER_URL,
+  POST_REMOVE_ALL_APPROVED,
   POST_WAITING_LIST,
   REMOVE_STUDENT_FROM_SEAT_URL,
   ROOM_URL,
@@ -96,6 +97,11 @@ export const putApplicationForm = (data: IPostApplicationForm):
 export const postAdminApplicationApproveList = (ids: number[]):
   PromiseLike<IApplication[]> => {
   return elevatedPostJson(POST_APPLICATION_APPROVE_LIST, { ids });
+};
+
+export const postRemoveAllFromSeat = (ids: number[]):
+  PromiseLike<IApplication[]> => {
+  return elevatedPostJson(POST_REMOVE_ALL_APPROVED, { ids });
 };
 
 export const postAdminApplicationWaitingList = (ids: number[]):
