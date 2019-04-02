@@ -10,6 +10,7 @@ from controllers.applicationSeasonController import applicationSeason
 from controllers.roomController import room
 from controllers.seatController import seat
 from controllers.userController import user
+from controllers.mailController import mail
 # You can change these values in the .env-filen
 USER = os.getenv("POSTGRES_USER")
 PASSWORD = os.getenv("POSTGRES_PASSWORD")
@@ -45,6 +46,7 @@ def register_blueprints(app):
     app.register_blueprint(room, url_prefix="/room")
     app.register_blueprint(seat)
     app.register_blueprint(user)
+    app.register_blueprint(mail)
 
 
 app = create_app()
