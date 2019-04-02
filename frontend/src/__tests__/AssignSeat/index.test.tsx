@@ -10,7 +10,7 @@ import { mockApplication } from '../AdminApplicationOverview/Presentational.test
 describe('assign seat index', () => {
   const seat1 = {
     id: 'b2',
-    info: 'WARNING: Seat is actually a dildo if you are brave enough',
+    info: 'This is a seat',
     roomId: 2,
     user: {
       admin: false,
@@ -23,7 +23,7 @@ describe('assign seat index', () => {
   };
   const app = mockApplication(1);
   const mockStore = configureMockStore([thunk]);
-  const store = mockStore({ rooms: { rooms: [] }, assignSeat: { seat: seat1 } });
+  const store = mockStore({ rooms: { rooms: [] }, assignSeat: { seat: seat1 }, applications: [] });
   it('renders correctly', () => {
     const wrapper = mount(
       <Provider store={store} >

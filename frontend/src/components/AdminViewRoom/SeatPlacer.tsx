@@ -2,13 +2,17 @@ import KnappBase from 'nav-frontend-knapper';
 import PanelBase, { Panel } from 'nav-frontend-paneler';
 import { Select } from 'nav-frontend-skjema';
 import React from 'react';
-import { IUser } from '../../API/interfaces';
+import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
+import { IApplication } from '../Application';
+import { APP_APPROVED, APP_SUBMITTED } from '../commonConstants';
 import { ISeat } from '../Seats';
-import { _ASSIGN_SEAT } from './strings';
+import { _ASSIGN_SEAT, _UNASSIGN_SEAT } from './strings';
 
 interface IProps {
+  applications?: IApplication[];
   seat: ISeat;
   users?: IUser[];
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
   assign: (user: IUser, seat: ISeat) => void;
   delete: (seat: ISeat) => void;
 }
@@ -36,23 +40,30 @@ class SeatPlacer extends React.Component<IProps, IState> {
 
     if (seat.user) {
       return (
-        <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-          <PanelBase border={true}>{seat.name}</PanelBase>
-          <PanelBase border={true}>{seat.user.username}</PanelBase>
-          <KnappBase type="fare" onClick={this.delete}>X</KnappBase>
+        <Panel className="room-assign-seat"  border={true}>
+          <PanelBase className="room-panel-seat" border={true}>{seat.name}</PanelBase>
+          <PanelBase className="room-user-panel-seat" border={true}>{seat.user.fullname}</PanelBase>
+          <KnappBase className="room-assign-seat" type="fare" onClick={this.delete}>
+            {_UNASSIGN_SEAT}
+          </KnappBase>
         </Panel>
       );
     }
     if (!users) return null;
     const userOptions = this.usersToOption(users);
     return (
-      <Panel border={true} style={{ display: 'flex', width: '35%' }}>
-        <PanelBase border={true}>{seat.name}</PanelBase>
-        <Select label="" onChangeCapture={this.selectUser}>
+      <Panel className="room-assign-seat" border={true}>
+        <PanelBase className="room-panel-seat" border={true}>{seat.name}</PanelBase>
+        <Select className="room-select-seat" bredde="m" label="" onChangeCapture={this.selectUser}>
           <option value="">Select user</option>
           {userOptions}
         </Select>
-        <KnappBase type="hoved" disabled={selectedUser ? false : true} onClick={this.assign}>
+        <KnappBase
+          className="room-assign-seat"
+          type="hoved"
+          disabled={selectedUser ? false : true}
+          onClick={this.assign}
+        >
           {_ASSIGN_SEAT}
         </KnappBase>
       </Panel>
@@ -60,7 +71,7 @@ class SeatPlacer extends React.Component<IProps, IState> {
   }
 
   private usersToOption = (users: IUser[]) => users.map((user, index) => {
-    return <option key={index} value={user.id}>{user.username}</option>;
+    return <option key={index} value={user.id}>{user.fullname}</option>;
   })
 
   private selectUser = (e: React.FormEvent) => {
@@ -80,8 +91,17 @@ class SeatPlacer extends React.Component<IProps, IState> {
 
   private delete = (e: React.FormEvent) => {
     e.preventDefault();
-    const seat = this.props.seat;
-    if (seat && seat.user) this.props.delete(seat);
+    const { seat, applications, updateApplication } = this.props;
+    if (seat && seat.user) {
+      this.props.delete(seat);
+      const userId = seat.user.id;
+      if (applications) {
+        const userApp = applications.find(app => app.user.id === userId);
+        if (userApp && userApp.status === APP_APPROVED) {
+          updateApplication(userApp.id, { status: APP_SUBMITTED });
+        }
+      }
+    }
   }
 }
 

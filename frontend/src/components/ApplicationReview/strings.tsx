@@ -10,3 +10,8 @@ export const _EDIT_APPLICATION = 'Edit Application';
 export const _MASTER_STATUS = 'Master status';
 export const _REVIEW_APPLICATION = 'Review Application';
 export const _NEW_APPLICATION = 'New Application';
+export const _CONNECTED_INFO = 'If you submitted a partner username,'
+ + ' your partners username will appear here when they submit yours.';
+export const _USER_NO_PARTNER = 'User has no partner';
+export const _APPLICATION_INFO_TEXT = 'If any of the information is wrong' +
+', add a comment or edit the information.';

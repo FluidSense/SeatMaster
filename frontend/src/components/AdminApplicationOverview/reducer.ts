@@ -8,13 +8,17 @@ import {
   UNSUCCESSFULL_APPLICATION_UPDATE,
 } from '../EditApplication/constants';
 import { ISeat } from '../Seats';
-import { REMOVE_STUDENT_SUCCESS, SUCCESSFULL_SEAT_ASSIGNMENT } from './../AssignSeat/constants';
+import {
+  REMOVE_STUDENT_SUCCESS,
+  SUCCESSFULL_SEAT_ASSIGNMENT,
+} from './../AssignSeat/constants';
 import {
   APPROVE_ALL_APPLICATIONS,
   FETCHED_APPLICATION_DATA,
   FETCHING_APPLICATION_DATA,
   GET_ALL_APPLICATIONS,
   REMOVE_APPLICATION_DATA,
+  REMOVE_APPROVED_FROM_SEAT,
   SET_APPLICATION_DATA,
   WAITING_LIST_ALL_APPLICAITONS,
 } from './constants';
@@ -168,6 +172,12 @@ export const ApplicationReducer = (
         };
       }
       return { ...state };
+    }
+    case REMOVE_APPROVED_FROM_SEAT: {
+      return {
+        ...state,
+        applications: state.applications.map(app => app.seat ? { ...app, seat: undefined } : app),
+      };
     }
     default:
       return { ...state };

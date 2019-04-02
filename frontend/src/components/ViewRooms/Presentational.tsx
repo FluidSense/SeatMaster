@@ -13,12 +13,17 @@ interface IProps extends IStateProps {
   filterRooms: (event: searchBarEvent) => void;
 }
 
-const createRoom = (onClick: () => void) => (
-  <div className="title-and-button">
-    <Sidetittel>{_VIEW_ROOM_TITLE}</Sidetittel>
-    <KnappBase id="redirect-new-room" type="hoved" onClick={onClick}>
-      {_CREATE_ROOM_BUTTON}
-    </KnappBase>
+const createRoom = (onClick: () => void, filterRooms: (event: searchBarEvent) => void) => (
+  <div>
+    <div className="title-and-button">
+      <Sidetittel>{_VIEW_ROOM_TITLE}</Sidetittel>
+    </div>
+      <SearchBar filterFunction={filterRooms}/>
+      <div className="single-button">
+        <KnappBase id="redirect-new-room" type="hoved" onClick={onClick}>
+          {_CREATE_ROOM_BUTTON}
+        </KnappBase>
+      </div>
   </div>
 );
 
@@ -28,8 +33,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   if (!rooms || !rooms.length) {
     return (
       <div className="main-content">
-        {createRoom(onClick)}
-        <SearchBar filterFunction={filterRooms}/>
+        {createRoom(onClick, filterRooms)}
       </div>);
   }
   const roomList = rooms.map(room => (
@@ -37,8 +41,7 @@ const Presentational: React.FunctionComponent<IProps> = (props) => {
   ));
   return (
     <div className="main-content">
-      {createRoom(onClick)}
-      <SearchBar filterFunction={filterRooms}/>
+      {createRoom(onClick, filterRooms)}
       {roomList}
     </div>
   );

@@ -3,6 +3,7 @@ from services import roomService
 from shared import db
 from sqlalchemy.exc import SQLAlchemyError
 from services import applicationService
+from utils.enums import ApplicationStatus
 
 
 def getSeatById(id):
@@ -68,3 +69,12 @@ def removeStudentFromSeat(seatId):
     except SQLAlchemyError as err:
         print(err)
         return "", 400
+
+
+def removeAllStudentsFromSeats():
+    applications = applicationService.getAllApplications()
+    for application in applications:
+        if(application.seat):
+            response = removeStudentFromSeat(application.seat.id)
+            application.status = ApplicationStatus.SUBMITTED if response[0] else application.status
+    return "{}", 200

@@ -1,59 +1,85 @@
-import * as React from 'react';
-
 import { Checkbox, Input, Select, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
+import * as React from 'react';
 import { IRoom } from '../ViewRooms';
+import {
+  _CHECKBOX_PARTNER,
+  _CHECKBOX_SEAT,
+  _LABEL_PARTNER,
+  _LABEL_ROOM,
+  _LABEL_SELECTOR,
+  _PREFERENCES_SUB_TITLE,
+} from './strings';
 
 interface IProps {
-  updateApplicationFormData: (item: React.FormEvent) => any;
-  partner: boolean;
+  hasPartner: boolean;
+  wantsSeatRollover: boolean;
+  partner?: string;
   rooms: IRoom[];
+  room?: string;
+  isAdmin: boolean;
+  updateApplicationFormData: (item: React.FormEvent) => any;
 }
+
+const title = <Undertittel>{_PREFERENCES_SUB_TITLE}</Undertittel>;
 
 const roomsToOptions = (rooms: IRoom[]) => {
   return rooms.map(room => <option value={room.name} key={room.id}>{room.name}</option>);
 };
 
 export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (props) => {
-  const { updateApplicationFormData, rooms } = props;
+  const { updateApplicationFormData, rooms, room, hasPartner, isAdmin, wantsSeatRollover } = props;
+  const partner = props.partner ? props.partner : '';
   const onUpdateForm = (item: React.FormEvent) => updateApplicationFormData(item);
   const roomOptions = roomsToOptions(rooms);
+  const initialValue = room ? room : 'initial';
+  const subTitle = isAdmin ? null : title;
+
+  const partnerCheckbox = isAdmin ? null : (
+    <Checkbox
+      label={_CHECKBOX_PARTNER}
+      name="hasPartner"
+      key="hasPartner"
+      checked={hasPartner}
+      onChangeCapture={onUpdateForm}
+    />);
   return (
-    <>
-      <Undertittel>Preferences</Undertittel>
-      <SkjemaGruppe >
+    <div className="form-preferences-info">
+      {subTitle}
+      <SkjemaGruppe className="preferences-sub-group">
         <Select
-          label="Choose preferred room"
-          bredde="xxl"
-          name="room"
-          defaultValue="initial"
+          label={_LABEL_ROOM}
+          bredde="l"
+          name="preferredRoom"
+          defaultValue={initialValue}
           onChangeCapture={onUpdateForm}
         >
-          <option disabled={true} value="initial" hidden={true} >Select room</option>
+          <option disabled={true} value="initial" hidden={true} >{_LABEL_SELECTOR}</option>
           {roomOptions}
         </Select>
-        <Checkbox
-          label="I wish to sit with my partner"
-          name="partner"
-          key="partner"
-          onChangeCapture={onUpdateForm}
-        />
-        <Input
-          label="Partner username"
-          bredde="M"
-          name="partnerUsername"
-          key="partnerUsername"
-          disabled={!props.partner ? true : false}
-          onChangeCapture={onUpdateForm}
-        />
-        <Checkbox
-          label="I would like to keep my seat from the previous semester"
-          name="keepSeat"
-          key="keepSeat"
-          onChangeCapture={onUpdateForm}
-        />
+        <div className="form-partner-info">
+          {partnerCheckbox}
+          <Input
+            label={_LABEL_PARTNER}
+            bredde="L"
+            defaultValue={partner}
+            name="partnerUsername"
+            key="partnerUsername"
+            disabled={!isAdmin && !hasPartner}
+            onChangeCapture={onUpdateForm}
+          />
+        </div>
+        <div className="form-seat-rollover">
+          <Checkbox
+            label={_CHECKBOX_SEAT}
+            name="seatRollover"
+            key="seatRollover"
+            checked={wantsSeatRollover}
+            onChangeCapture={onUpdateForm}
+          />
+        </div>
       </SkjemaGruppe>
-    </>
+    </div>
   );
 };
 

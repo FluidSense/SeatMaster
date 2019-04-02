@@ -34,8 +34,7 @@ def updateRoom(id, form):
     try:
         room = getRoomById(id)
         for field in form.keys():
-            if(form[field]):
-                setattr(room, field, form[field])
+            setattr(room, field, form[field])
         db.session.add(room)
         db.session.commit()
         return room.to_json(), 200

@@ -6,7 +6,9 @@ import { boolToString } from '../../utils/typeFormatter';
 import { IApplication } from '../Application/index';
 import InfoPanel from './InfoPanel';
 import InformationList from './InformationList';
+import PartnerPanel from './PartnerPanel';
 import {
+  _APPLICATION_INFO_TEXT,
   _COMMENTS,
   _EDIT_APPLICATION,
   _EMAIL,
@@ -25,6 +27,7 @@ interface IProps {
   application: IApplication;
   title?: string;
   pathToEdit?: string;
+  isAdmin?: boolean;
 }
 
 export interface IInformationObject {
@@ -40,37 +43,34 @@ export interface IUserInfoObject {
 }
 
 export interface IRoomInfoObject {
-  [_PARTNER]?: string;
   [_PREFERRED_ROOM]?: string;
+  [_PARTNER]?: JSX.Element;
   [_SEAT_ROLLOVER]?: string;
 }
 
 const ApplicationOverview: React.FunctionComponent<IProps> = (props) => {
-  const { application, title } = props;
-  let partnerObject;
+  const { application, title, isAdmin } = props;
   if (!application.user) return null;
   const userInfoObject: IUserInfoObject = {
     [_NAME]: application.user.fullname,
     [_EMAIL]: application.user.email,
     [_MASTER_STATUS]: application.rank,
   };
-  if (application.partnerApplication && application.partnerApplication.user) {
-    partnerObject = application.partnerApplication.user !== undefined
-      ? application.partnerApplication.user.fullname
-      : undefined;
-  }
 
   const roomInfoObject: IRoomInfoObject = {
-    [_PARTNER]: partnerObject,
     [_PREFERRED_ROOM]: application.preferredRoom,
+    [_PARTNER]: (
+    <PartnerPanel
+      key={125153}
+      isAdmin={isAdmin}
+      partnerApplication={application.partnerApplication}
+    />),
     [_SEAT_ROLLOVER]: boolToString(application.seatRollover),
   };
   return (
     <div id="application-review">
       <Sidetittel>{title ? title : _REVIEW_APPLICATION}</Sidetittel>
-      <p style={{ fontStyle: 'italic' }} >
-      If any of the information is wrong, add a comment or edit the information.
-      </p>
+      <p style={{ fontStyle: 'italic' }} >{_APPLICATION_INFO_TEXT}</p>
       <div id="user-information">{<InformationList information={userInfoObject} />}</div>
       <div id="room-information">{<InformationList information={roomInfoObject} />}</div>
       <div className={'needs-information'}>

@@ -1,18 +1,13 @@
-html {
-  min-height: 100%;
-  height: 100%;
-}
-
-body {
+html, body {
   margin: 0;
-  min-height: inherit;
-  height: inherit;
+  height: 100%;
   background-color: #F2F2F2;
   font-family: 'Source Sans Pro', sans-serif;
 }
 
 .title-and-button {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   .knapp {
@@ -29,7 +24,7 @@ body {
 .lenkepanel-applications {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(5, 20%);
+  grid-template-columns: 10% 25% 20% 20% 15% auto;
 }
 
 .modalContent .knapp {
@@ -40,21 +35,22 @@ body {
 }
 
 #root {
-  min-height: inherit;
-  height: inherit;
-  display: flex;
-  flex-direction: column;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
 }
 
 .main-page {
   height: inherit;
   display: grid;
   min-height: 90%;
-  grid-template-columns: 20% 5% 65% 10%;
+  grid-template-columns: 20% 5% 70% 5%;
 }
 
 .main-content {
   grid-column: 3;
+  margin-bottom: 2rem;
 }
 
 .loading-page-spinner {
@@ -64,6 +60,10 @@ body {
 .typo-sidetittel {
   margin-top: 1em !important;
   margin-bottom: 0.5em !important;
+}
+
+.typo-innholdstittel {
+  margin-bottom: 1rem !important;
 }
 
 .etikett {
@@ -76,6 +76,10 @@ body {
 
 .page-title {
   margin-bottom: 2rem !important;
+}
+
+.single-button {
+  margin: 1rem 0;
 }
 
 @media only screen and (max-width: 600px) {
@@ -108,3 +112,4 @@ body {
 @import "~nav-frontend-veilederpanel-style";
 @import "~nav-frontend-ekspanderbartpanel-style";
 @import "~nav-frontend-spinner-style";
+@import "~nav-frontend-hjelpetekst-style";

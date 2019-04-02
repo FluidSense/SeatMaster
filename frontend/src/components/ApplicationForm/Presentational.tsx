@@ -9,42 +9,57 @@ import { IRoom } from '../ViewRooms';
 import ApplicationFormComments from './ApplicationFormComments';
 import ApplicationFormPersonal from './ApplicationFormPersonal';
 import ApplicationFormPreferences from './ApplicationFormPreferences';
-import { _ALERT_USER_ERROR } from './Strings';
+import ConfirmationModal from './ConfirmationModal';
+import { _ALERT_USER_ERROR, _SUBMIT_BUTTON } from './strings';
 
 interface IProps {
   userInformation: IRegisteredUserState;
   rooms: IRoom[];
   application?: IApplication;
-  changeModal: (modalOpen: boolean) => void;
+  changeModal: () => void;
+  modalIsOpen: boolean;
   getRooms: () => void;
+  setApplication: (application: IApplication) => void;
 }
 
-interface IState {
-  room: string;
-  partner: boolean;
+export interface IFormState {
+  comments: string;
+  email: string;
+  name: string;
+  needs: string;
   partnerUsername: string;
-  needs: boolean;
-  needsText: string;
-  infoText: string;
-  keepSeat: boolean;
-  loading: boolean;
+  preferredRoom: string;
+  rank: string;
+  seatRollover: boolean;
+  [x: string]: boolean | string;
+}
+
+export interface IFormCheckboxStates {
+  hasPartner: boolean;
+  hasNeeds: boolean;
+}
+
+interface IState extends IFormState, IFormCheckboxStates {
   error: string;
-  [key: string]: string | boolean | IRoom | undefined;
+  loading: boolean;
 }
 
 export class Presentational extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      comments: '',
+      email: '',
       error: '',
-      infoText: '',
-      keepSeat: false,
+      hasNeeds: false,
+      hasPartner: false,
       loading: false,
-      needs: false,
-      needsText: '',
-      partner: false,
+      name: '',
+      needs: '',
       partnerUsername: '',
-      room: '',
+      preferredRoom: '',
+      rank: '',
+      seatRollover: false,
     };
   }
 
@@ -53,7 +68,8 @@ export class Presentational extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { userInformation, application } = this.props;
+    const { userInformation, rooms, application, modalIsOpen, changeModal } = this.props;
+    const { hasPartner, hasNeeds, loading, seatRollover } = this.state;
     const alertBox = this.state.error ? this.alertUser(_ALERT_USER_ERROR) : undefined;
     if (application) return <Redirect to="/" />;
     return (
@@ -63,33 +79,43 @@ export class Presentational extends React.Component<IProps, IState> {
           onSubmit={this.onSubmitForm}
           id="new-application-form"
         >
-          <p style={{ fontStyle:'italic' }}>
-          Additional information about your courses at NTNU
-          will be gathered for the purpose of finding your master status.
+          <p style={{ fontStyle: 'italic' }}>
+            Additional information about your courses at NTNU
+            will be gathered for the purpose of finding your master status.
           </p>
           <ApplicationFormPersonal
+            isAdmin={false}
             fullname={userInformation.fullname}
             email={userInformation.email}
           />
           <ApplicationFormPreferences
+            wantsSeatRollover={seatRollover}
+            isAdmin={false}
             updateApplicationFormData={this.updateApplicationFormData}
-            partner={this.state.partner}
-            rooms={this.props.rooms}
+            rooms={rooms}
+            hasPartner={hasPartner}
           />
           <ApplicationFormComments
+            isAdmin={false}
             updateApplicationFormData={this.updateApplicationFormData}
-            needs={this.state.needs}
+            hasNeeds={hasNeeds}
           />
-          <KnappBase
-            id="submit-application"
-            type="hoved"
-            htmlType="submit"
-            autoDisableVedSpinner={true}
-            spinner={this.state.loading}
-          >
-            Submit
-          </KnappBase>
         </form>
+        <KnappBase
+          id="submit-application"
+          type="hoved"
+          htmlType="submit"
+          autoDisableVedSpinner={true}
+          spinner={loading}
+          onClick={changeModal}
+        >
+          {_SUBMIT_BUTTON}
+        </KnappBase>
+        <ConfirmationModal
+          modalIsOpen={modalIsOpen}
+          changeModal={changeModal}
+          accept={this.onSubmitForm}
+        />
       </>
     );
   }
@@ -102,21 +128,21 @@ export class Presentational extends React.Component<IProps, IState> {
     this.setState({ [name]: value });
   }
 
-  private onSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
+  private onSubmitForm = () => {
     this.setState({ loading: true });
 
     postApplicationForm({
-      comments: this.state.infoText,
-      needs: this.state.needs ? this.state.needsText : '',
+      comments: this.state.comments,
+      needs: this.state.needs,
       partnerUsername: this.state.partnerUsername,
-      preferredRoom: this.state.room,
-      seatRollover: this.state.keepSeat,
+      preferredRoom: this.state.preferredRoom,
+      seatRollover: this.state.seatRollover,
     })
       .then(
         // On fullfilled promise:
-        () => {
-          this.props.changeModal(true);
+        (result) => {
+          this.props.setApplication(result);
+          this.props.changeModal();
           this.setState({ loading: false, error: '' });
         },
         // On rejected promise:

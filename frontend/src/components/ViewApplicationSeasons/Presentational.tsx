@@ -5,7 +5,7 @@ import { IApplicationSeason } from '../ApplicationSeason/reducer';
 import { TitleAndSpinner } from '../LoadingPageSpinner/TitleAndSpinner';
 import { FETCHING_APPLICATION_SEASONS } from './constants';
 import SeasonLink from './SeasonLink';
-import { _SEASON_TITLE } from './strings';
+import { _NEW_SEASON, _SEASON_TITLE } from './strings';
 
 interface IProps {
   onClick: any;
@@ -25,8 +25,10 @@ const Presentational: FunctionComponent<IProps> = (props) => {
     <div className="main-content">
       <div className="title-and-button">
         <Sidetittel>{_SEASON_TITLE}</Sidetittel>
+      </div>
+      <div className="single-button">
         <KnappBase id="redirect-new-room" type="hoved" onClick={onClick}>
-          {'Create new application season'}
+          {_NEW_SEASON}
         </KnappBase>
       </div>
       {seasonList}

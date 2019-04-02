@@ -1,14 +1,16 @@
 import KnappBase from 'nav-frontend-knapper';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Panel } from 'nav-frontend-paneler';
+import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Redirect } from 'react-router';
-import { IUser } from '../../API/interfaces';
+import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
 import CSVButton from '../AdminRoom/CSVButton';
 import { IApplication } from '../Application';
+import MailLink from '../Mail/MailLink';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import SeatPlacer from './SeatPlacer';
-import { _EDIT_ROOM_BUTTON } from './strings';
+import { _EDIT_ROOM_BUTTON, _INFO_SUB_TITLE } from './strings';
 
 interface IStateProps {
   match: {
@@ -26,6 +28,7 @@ interface IDispatchProps {
   getAllApplications: () => void;
   fetchRooms: () => void;
   fetchRoom: (roomId: number) => void;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
 }
 
 interface IState {
@@ -67,6 +70,12 @@ class Presentational extends React.Component<Props, IState> {
         />);
     }
 
+    const information = (
+      <>
+        <Innholdstittel>{_INFO_SUB_TITLE}</Innholdstittel>
+        <Panel>{room.info}</Panel>
+      </>);
+
     return (
       <div className="main-content">
         <div className="title-and-button">
@@ -75,10 +84,10 @@ class Presentational extends React.Component<Props, IState> {
           <KnappBase type="hoved" onClick={this.setRedirect}>
             {_EDIT_ROOM_BUTTON}
           </KnappBase>
+          <MailLink recipient={room} mailType="ROOM" />
         </div>
-        <h2>Info</h2>
-        <p>{room.info}</p>
-        <div>
+        {information}
+        <div style={{ width: '60%' }}>
           {seats}
         </div>
       </div>
@@ -105,6 +114,8 @@ class Presentational extends React.Component<Props, IState> {
           seat={seat}
           users={users}
           assign={this.props.assign}
+          applications={this.props.applications}
+          updateApplication={this.props.updateApplication}
         />
       );
     });

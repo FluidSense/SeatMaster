@@ -13,7 +13,7 @@ import {
   _DELETING_STUDENTS_WARNING,
   _VIEW_STUDENTS_TITLE,
 } from './strings';
-import UserLink from './UserLink';
+import UserPanel from './UserPanel';
 
 interface IProps {
   deleteStudent: (students: number[]) => void;
@@ -33,7 +33,7 @@ interface IState {
 }
 
 export class Presentational extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       modalOpen: false,
@@ -55,13 +55,13 @@ export class Presentational extends React.Component<IProps, IState> {
     this.toggleModal();
   }
 
-  public render () {
+  public render() {
     let checkbox = null;
 
     const checkedAll = this.props.users.length === this.props.usersToBeDeleted.length;
 
     if (this.props.fetching === FETCHING_STUDENTS) {
-      return <TitleAndSpinner title={_VIEW_STUDENTS_TITLE}/>;
+      return <TitleAndSpinner title={_VIEW_STUDENTS_TITLE} />;
     }
 
     if (this.props.users.length === this.props.filteredStudents.length) {
@@ -70,10 +70,10 @@ export class Presentational extends React.Component<IProps, IState> {
       );
     }
 
-    const usersList = this.props.filteredStudents.map((user) => {
+    const usersList = this.props.filteredStudents.map((user) => {
       const checked = this.props.usersToBeDeleted.includes(user.id);
       return (
-        <UserLink
+        <UserPanel
           checked={checked}
           addUser={this.props.userToBeDeleted}
           key={user.id}
@@ -81,9 +81,9 @@ export class Presentational extends React.Component<IProps, IState> {
         />);
     });
 
-    const deletePromptList = this.props.usersToBeDeleted.map((id, i) => {
+    const deletePromptList = this.props.usersToBeDeleted.map((id, i) => {
       const user = this.props.users.find(iteruser => iteruser.id === id);
-      if (user) return <li key={i}>{user.username}</li>;
+      if (user) return <li key={i}>{user.fullname}</li>;
     });
 
     const modalText = (
@@ -95,19 +95,11 @@ export class Presentational extends React.Component<IProps, IState> {
       </>
     );
 
-    return(
+    return (
       <div className="main-content">
         <>
           <div className="title-and-button">
             <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
-            <KnappBase
-              id="delete-students"
-              type="fare"
-              disabled={this.props.disableButton}
-              onClick={this.toggleModal}
-            >
-              {_DELETE_STUDENTS}
-            </KnappBase>
             <Modal
               modalOpen={this.state.modalOpen}
               toggleModal={this.toggleModal}
@@ -117,11 +109,21 @@ export class Presentational extends React.Component<IProps, IState> {
               {modalText}
             </Modal>
           </div>
-          <SearchBar filterFunction={this.props.filterStudents} disabled={checkedAll}/>
+          <SearchBar filterFunction={this.props.filterStudents} disabled={checkedAll} />
           {checkbox}
+          <div className="single-button">
+            <KnappBase
+                id="delete-students"
+                type="fare"
+                disabled={this.props.disableButton}
+                onClick={this.toggleModal}
+            >
+                {_DELETE_STUDENTS}
+            </KnappBase>
+          </div>
         </>
         {usersList}
-    </div>
+      </div>
     );
   }
   private toggleModal = () => {

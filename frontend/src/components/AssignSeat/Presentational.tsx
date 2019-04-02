@@ -41,20 +41,21 @@ class Presentational extends React.Component<IProps, IState> {
       <>
         <p>{_CHANGE_STUDENT_WARNING}</p>
         <ul>
-          <li>{occupyingUser ? occupyingUser.username : ''}</li>
+          <li>{occupyingUser ? occupyingUser.fullname : ''}</li>
         </ul>
       </>
     );
     return (
-      <>
-        <div className="assign-seat">
-          <Innholdstittel>{_TITLE}</Innholdstittel>
-          <form onSubmit={this.submitSeatSelection}>
-            <RoomPicker rooms={rooms} setSelected={this.setRoom} />
-            <SeatPicker
-              seats={selectedRoom ? selectedRoom.seats.seats : undefined}
-              setSelected={this.setSeat}
-            />
+      <div>
+        <Innholdstittel>{_TITLE}</Innholdstittel>
+          <form id="assign-seat-form" onSubmit={this.submitSeatSelection}>
+            <div className="assign-seat">
+              <RoomPicker rooms={rooms} setSelected={this.setRoom} />
+              <SeatPicker
+                seats={selectedRoom ? selectedRoom.seats.seats : undefined}
+                setSelected={this.setSeat}
+              />
+            </div>
             <KnappBase
               id="submit-application"
               type="hoved"
@@ -66,7 +67,6 @@ class Presentational extends React.Component<IProps, IState> {
               {_TITLE}
             </KnappBase>
           </form>
-        </div>
         <Modal
           modalOpen={modalOpen}
           toggleModal={toggleModal}
@@ -75,7 +75,7 @@ class Presentational extends React.Component<IProps, IState> {
         >
           {modalText}
         </Modal>
-      </>
+      </div>
     );
   }
 

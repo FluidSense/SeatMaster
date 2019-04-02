@@ -1,5 +1,6 @@
 import { IApplication } from '../components/Application';
 import { IApplicationSeason } from '../components/ApplicationSeason/reducer';
+import { IMail } from '../components/Mail';
 import { ISeat } from '../components/Seats';
 import { IRoom } from '../components/ViewRooms';
 import {
@@ -9,7 +10,6 @@ import {
   elevatedPostJson,
   elevatedPutJson,
   getJson,
-  postJson,
   putJson,
 } from './callDefinitions';
 import {
@@ -24,9 +24,12 @@ import {
   GET_APPLICATION_BY_USERID_URL,
   GET_SEAT_URL,
   GET_USER_URL,
+  MAIL_TO_LIST,
+  MAIL_TO_STUDENT,
   POST_APPLICATION_APPROVE_LIST,
   POST_FORM_DATA_URL,
   POST_NEW_USER_URL,
+  POST_REMOVE_ALL_APPROVED,
   POST_WAITING_LIST,
   REMOVE_STUDENT_FROM_SEAT_URL,
   ROOM_URL,
@@ -94,6 +97,11 @@ export const putApplicationForm = (data: IPostApplicationForm):
 export const postAdminApplicationApproveList = (ids: number[]):
   PromiseLike<IApplication[]> => {
   return elevatedPostJson(POST_APPLICATION_APPROVE_LIST, { ids });
+};
+
+export const postRemoveAllFromSeat = (ids: number[]):
+  PromiseLike<IApplication[]> => {
+  return elevatedPostJson(POST_REMOVE_ALL_APPROVED, { ids });
 };
 
 export const postAdminApplicationWaitingList = (ids: number[]):
@@ -172,4 +180,12 @@ export const deleteSingleUser = (id: number): PromiseLike<IUser> => {
 
 export const deleteAllUsers = (): PromiseLike<[IUser]> => {
   return elevatedDeleteJson(DELETE_ALL_USERS_URL);
+};
+
+export const mailList = (mail: IMail): PromiseLike<IMail> => {
+  return elevatedPostJson(`${MAIL_TO_LIST}`, mail);
+};
+
+export const mailStudent = (mail: IMail): PromiseLike<IMail> => {
+  return elevatedPostJson(`${MAIL_TO_STUDENT}${mail.ids[0]}`, mail);
 };

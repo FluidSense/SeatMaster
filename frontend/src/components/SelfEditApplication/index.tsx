@@ -8,6 +8,7 @@ import EditApplication from './Presentational';
 
 const mapStateToProps = (state: IStore) => ({
   application: state.applications.registeredApplication,
+  rooms: state.rooms.rooms,
   status: state.applications.api.status,
 });
 

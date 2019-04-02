@@ -8,7 +8,7 @@ export interface IPostApplicationForm {
 }
 
 export interface IPostAdminApplicationForm extends IPostApplicationForm {
-  masterStatus?: string;
+  rank?: string;
   status?: string;
 }
 
