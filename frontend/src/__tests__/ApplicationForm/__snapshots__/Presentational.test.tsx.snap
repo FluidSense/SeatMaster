@@ -29,19 +29,25 @@ exports[`application form renders correctly 1`] = `
       isAdmin={false}
       updateApplicationFormData={[Function]}
     />
-    <KnappBase
-      autoDisableVedSpinner={true}
-      className={null}
-      disabled={false}
-      htmlType="submit"
-      id="submit-application"
-      inaktivKlasseVedDisabled={false}
-      mini={false}
-      spinner={false}
-      type="hoved"
-    >
-      Submit
-    </KnappBase>
   </form>
+  <KnappBase
+    autoDisableVedSpinner={true}
+    className={null}
+    disabled={false}
+    htmlType="submit"
+    id="submit-application"
+    inaktivKlasseVedDisabled={false}
+    mini={false}
+    onClick={[Function]}
+    spinner={false}
+    type="hoved"
+  >
+    Submit
+  </KnappBase>
+  <ConfirmationModal
+    accept={[Function]}
+    changeModal={[Function]}
+    modalIsOpen={false}
+  />
 </Fragment>
 `;

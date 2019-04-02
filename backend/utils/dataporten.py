@@ -40,6 +40,8 @@ def getRank(accessToken):
     for subjectId in MASTER_STUDIES:
         if(subjectId in groupIds):
             return Rank.MASTER_STUDENT
+    if("fc:fs:fs:prg:ntnu.no:MTDT" in groupIds and "fc:fs:fs:emne:ntnu.no:TDT4290:1" in groupIds):
+        return Rank.MASTER_STUDENT
     for subjectId in BACHELOR_STUDIES:
         if(subjectId in groupIds):
             return Rank.BACHELOR_STUDENT
