@@ -13,7 +13,7 @@ import {
 
 interface IProps {
   hasPartner: boolean;
-  wantsSeat?: boolean;
+  wantsSeatRollover: boolean;
   partner?: string;
   rooms: IRoom[];
   room?: string;
@@ -28,8 +28,7 @@ const roomsToOptions = (rooms: IRoom[]) => {
 };
 
 export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (props) => {
-  const { updateApplicationFormData, rooms, room, hasPartner, isAdmin } = props;
-  const wantsSeat = props.wantsSeat ? props.wantsSeat : false;
+  const { updateApplicationFormData, rooms, room, hasPartner, isAdmin, wantsSeatRollover } = props;
   const partner = props.partner ? props.partner : '';
   const onUpdateForm = (item: React.FormEvent) => updateApplicationFormData(item);
   const roomOptions = roomsToOptions(rooms);
@@ -75,7 +74,7 @@ export const ApplicationFormPreferences: React.FunctionComponent<IProps> = (prop
             label={_CHECKBOX_SEAT}
             name="seatRollover"
             key="seatRollover"
-            checked={wantsSeat}
+            checked={wantsSeatRollover}
             onChangeCapture={onUpdateForm}
           />
         </div>

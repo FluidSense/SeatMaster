@@ -28,6 +28,7 @@ export const GET_ALL_SEASONS_URL = `${SEASON_URL}all`;
 export const ASSIGN_SEAT_URL = `${BASEPATH}seat/assignSeat`;
 export const REMOVE_STUDENT_FROM_SEAT_URL = `${BASEPATH}seat/removeStudent`;
 export const GET_SEAT_URL = `${BASEPATH}seat/`;
+export const POST_REMOVE_ALL_APPROVED = `${BASEPATH}seat/removeAllStudents`;
 
 // Mail
 export const MAIL_TO_STUDENT = `${BASEPATH}mail/`;

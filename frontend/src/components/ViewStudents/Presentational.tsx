@@ -100,14 +100,6 @@ export class Presentational extends React.Component<IProps, IState> {
         <>
           <div className="title-and-button">
             <Sidetittel>{_VIEW_STUDENTS_TITLE}</Sidetittel>
-            <KnappBase
-              id="delete-students"
-              type="fare"
-              disabled={this.props.disableButton}
-              onClick={this.toggleModal}
-            >
-              {_DELETE_STUDENTS}
-            </KnappBase>
             <Modal
               modalOpen={this.state.modalOpen}
               toggleModal={this.toggleModal}
@@ -119,6 +111,16 @@ export class Presentational extends React.Component<IProps, IState> {
           </div>
           <SearchBar filterFunction={this.props.filterStudents} disabled={checkedAll} />
           {checkbox}
+          <div className="single-button">
+            <KnappBase
+                id="delete-students"
+                type="fare"
+                disabled={this.props.disableButton}
+                onClick={this.toggleModal}
+            >
+                {_DELETE_STUDENTS}
+            </KnappBase>
+          </div>
         </>
         {usersList}
       </div>

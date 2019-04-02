@@ -29,7 +29,6 @@ interface IDispatchProps {
   fetchRooms: () => void;
   fetchRoom: (roomId: number) => void;
   updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
-
 }
 
 interface IState {
@@ -85,12 +84,12 @@ class Presentational extends React.Component<Props, IState> {
           <KnappBase type="hoved" onClick={this.setRedirect}>
             {_EDIT_ROOM_BUTTON}
           </KnappBase>
-          <MailLink recipient={room} mailType="ROOM"/>
+          <MailLink recipient={room} mailType="ROOM" />
         </div>
-          {information}
-          <div style={{ width: '60%' }}>
-            {seats}
-          </div>
+        {information}
+        <div style={{ width: '60%' }}>
+          {seats}
+        </div>
       </div>
     );
   }

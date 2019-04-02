@@ -8,7 +8,8 @@ dateFormat = ("%Y-%m-%d %H:%M:%S.%f")
 
 
 def getCurrentOrNext():
-    comingSeasons = db.session.query(ApplicationSeason).filter(ApplicationSeason.end > datetime.today()).all()
+    seasons = db.session.query(ApplicationSeason)
+    comingSeasons = seasons.filter(ApplicationSeason.applicationPeriodEnd > datetime.today()).all()
     # Find season with closest application start date to today, by comparing date differences
     return min(comingSeasons, key=lambda season: season.applicationPeriodStart - datetime.today(), default=None)
 
