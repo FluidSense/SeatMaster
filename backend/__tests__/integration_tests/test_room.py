@@ -7,6 +7,7 @@ import json
 from unittest import TestCase
 from __tests__.testUtils.authentication import mock_authentication_context
 from __tests__.testUtils.constants import token, accessToken
+from __tests__.testUtils.models import createUser
 
 
 def createRoom():
@@ -36,6 +37,7 @@ class TestRoom(TestCase):
 
     @mock_authentication_context
     def test_delete_seat(self):
+        createUser(db.session)
         headers = {
             'Authorization': self.token,
             'Accesstoken': self.accessToken
@@ -49,6 +51,7 @@ class TestRoom(TestCase):
 
     @mock_authentication_context
     def test_create_room(self):
+        createUser(db.session)
         mimetype = 'application/json'
         headers = {
             'Content-Type': mimetype,
@@ -74,6 +77,7 @@ class TestRoom(TestCase):
 
     @mock_authentication_context
     def test_updateRoom_success(self):
+        createUser(db.session)
         room = createRoom()
         mimetype = 'application/json'
         headers = {
@@ -95,6 +99,7 @@ class TestRoom(TestCase):
         assert room.info == 'nice ship dude'
 
     def test_create_rooms_and_get_all(self):
+        createUser(db.session)
         room1 = createRoom()
         room2 = createRoom()
         roomList = [room1, room2]

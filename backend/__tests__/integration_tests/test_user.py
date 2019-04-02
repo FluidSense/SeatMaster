@@ -7,7 +7,7 @@ from flask import jsonify
 from unittest import TestCase
 from jose import jwt
 import json
-from __tests__.testUtils.constants import accessToken, token, decodedToken, testGroups
+from __tests__.testUtils.constants import accessToken, token, decodedToken, LDAPGroupsResponse
 from __tests__.testUtils.authentication import mock_authentication_context
 
 
@@ -45,7 +45,7 @@ class TestRoom(TestCase):
         user = createUser()
         mock_decode = mock_jwt_decode()
         with patch.object(jwt, "decode", mock_decode), \
-                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
+                patch("utils.dataporten.getLDAPGroups", lambda x: LDAPGroupsResponse):
             response = self.app.test_client().get(
                 "http://localhost:5000/user/",
                 headers={
@@ -101,7 +101,7 @@ class TestRoom(TestCase):
 
         with patch.object(jwt, "decode", mock_decode), \
                 patch("utils.dataporten.getDataportenUserInfo", mock_dataporten), \
-                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
+                patch("utils.dataporten.getLDAPGroups", lambda x: LDAPGroupsResponse):
             response = self.app.test_client().post(
                 "http://localhost:5000/user/",
                 headers=headers)

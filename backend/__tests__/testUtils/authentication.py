@@ -1,4 +1,4 @@
-from __tests__.testUtils.constants import decodedToken, token, accessToken, testGroups
+from __tests__.testUtils.constants import decodedToken, token, accessToken, testGroups, LDAPGroupsResponse
 from models.user import User
 from unittest.mock import Mock, patch
 from functools import wraps
@@ -34,6 +34,7 @@ def mock_authentication(mocker):
     mocker.patch("auth.get_token_auth_header", lambda x: token)
     mocker.patch("auth.getAccessToken", mock_access_token)
     mocker.patch("services.userService.getUserFromSub", lambda x: user)
+    mocker.patch("utils.dataporten.getLDAPGroups", lambda x: LDAPGroupsResponse)
 
 
 def mock_authentication_context(f):
@@ -56,7 +57,9 @@ def mock_authentication_context(f):
         with patch("utils.dataporten.getDataportenUserInfo", mock_dataporten_getUserInfo), \
                 patch("jose.jwt.decode", mock_decode), \
                 patch("jose.jwt.get_unverified_header", lambda x: decodedToken), \
-                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups):
+                patch("utils.dataporten.getDataportenGroups", lambda x: testGroups), \
+                patch("utils.dataporten.getLDAPGroups", lambda x: LDAPGroupsResponse), \
+                patch("auth.get_token_auth_header", lambda x: token):
             return f(*args, **kwargs)
 
     return decorator

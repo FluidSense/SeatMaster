@@ -1,5 +1,5 @@
 import json
-from flask import Response, request, _request_ctx_stack
+from flask import Response, request, _request_ctx_stack, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
@@ -83,7 +83,6 @@ def requiresIdToken(verify=True):
 
                 except jwt.ExpiredSignatureError:
                     return Response("{'error': 'Token_expired'}", 401)
-
                 except jwt.JWTClaimsError:
                     return Response("{'error': 'Invalid_claims'}", 401)
                 except Exception:
@@ -115,13 +114,15 @@ def requiresUser(f):
 
 def requiresAdmin(f):
     @wraps(f)
+    @requiresUser
     def decorated(*args, **kwargs):
         try:
-            accessToken = get_token_auth_header("AccessToken")
-            isAdmin = dataporten.checkIfAdmin(accessToken)
-        except (HTTPError, TypeError):
-            return Response("{'error':'Access token not valid'}", 401)
+            user = _request_ctx_stack.top.user
+            isAdmin = dataporten.checkIfAdmin(user.username)
+        except (HTTPError, TypeError) as e:
+            print(e)
+            return abort(401)
         if not isAdmin:
-            return Response("{'error':'Access Denied'}", 403)
+            return abort(403)
         return f(*args, **kwargs)
     return decorated

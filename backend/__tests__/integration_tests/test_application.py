@@ -221,6 +221,7 @@ class TestApplication(TestCase):
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()
+        createUser(db.session)
         testApplication1 = Application(
             ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
@@ -261,6 +262,7 @@ class TestApplication(TestCase):
         db.session.add(testuser2)
         db.session.add(testuser3)
         db.session.commit()
+        createUser(db.session)
         testApplication1 = Application(
             ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
@@ -323,6 +325,7 @@ class TestApplication(TestCase):
         db.session.add(testuser2)
         db.session.add(testuser3)
         db.session.commit()
+        createUser(db.session)
         testApplication1 = Application(
             ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
@@ -435,6 +438,7 @@ class TestApplication(TestCase):
         db.session.add(testuser1)
         db.session.add(testuser2)
         db.session.commit()
+        createUser(db.session)
         testApplication1 = Application(
             ApplicationStatus.SUBMITTED,
             "Fanta is better than solo",
