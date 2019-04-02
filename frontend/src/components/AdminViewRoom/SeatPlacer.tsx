@@ -2,13 +2,17 @@ import KnappBase from 'nav-frontend-knapper';
 import PanelBase, { Panel } from 'nav-frontend-paneler';
 import { Select } from 'nav-frontend-skjema';
 import React from 'react';
-import { IUser } from '../../API/interfaces';
+import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
+import { IApplication } from '../Application';
+import { APP_APPROVED, APP_SUBMITTED } from '../commonConstants';
 import { ISeat } from '../Seats';
 import { _ASSIGN_SEAT, _UNASSIGN_SEAT } from './strings';
 
 interface IProps {
+  applications?: IApplication[];
   seat: ISeat;
   users?: IUser[];
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
   assign: (user: IUser, seat: ISeat) => void;
   delete: (seat: ISeat) => void;
 }
@@ -87,8 +91,17 @@ class SeatPlacer extends React.Component<IProps, IState> {
 
   private delete = (e: React.FormEvent) => {
     e.preventDefault();
-    const seat = this.props.seat;
-    if (seat && seat.user) this.props.delete(seat);
+    const { seat, applications, updateApplication } = this.props;
+    if (seat && seat.user) {
+      this.props.delete(seat);
+      const userId = seat.user.id;
+      if (applications) {
+        const userApp = applications.find(app => app.user.id === userId);
+        if (userApp && userApp.status === APP_APPROVED) {
+          updateApplication(userApp.id, { status: APP_SUBMITTED });
+        }
+      }
+    }
   }
 }
 

@@ -24,6 +24,15 @@ with app.app_context():
     db.session.commit()
     test_user = db.session.query(User).filter_by(username="usrnam").first()
 
+    db.session.add(some_applicationseason)
+    db.session.commit()
+    the_annoying_user = User("usrnam", "sub1", "email@epost.no", "lening glenin")
+    the_annoyinger_user = User("putnam", "sub2", "email@epost.no", "putnin mutnin")
+    db.session.add(the_annoying_user)
+    db.session.add(the_annoyinger_user)
+    db.session.commit()
+    test_user = db.session.query(User).filter_by(username="usrnam").first()
+
     application1 = applicationService.registerApplication(
         user=the_annoying_user,
         partnerUsername=the_annoyinger_user.username,

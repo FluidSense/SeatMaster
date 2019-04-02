@@ -2,6 +2,7 @@ import React from 'react';
 import { ISeat } from '../Seats';
 import { IRoom } from '../ViewRooms';
 import './applicationaccepted.css';
+import { _ROOM_INFO, _ROOM_NAME, _SEAT_NAME } from './strings';
 
 interface IProps {
   seat: ISeat;
@@ -15,18 +16,15 @@ const SeatDisplay: React.FunctionComponent<IProps> = (props) => {
     <div id="accepted-app-info">
       <div id="given-room">
         <p>
-          <span style={{ fontWeight: 'bolder' }}>Room:</span> {room.name}
+          <span style={{ fontWeight: 'bolder' }}>{_ROOM_NAME}</span> {room.name}
         </p>
         <p>
-          <span style={{ fontWeight: 'bold' }}>Room info:</span> {room.info}
+          <span style={{ fontWeight: 'bold' }}>{_ROOM_INFO}</span> {room.info}
         </p>
       </div>
       <div id="given-seat">
         <p>
-          <span style={{ fontWeight: 'bolder' }}>Seat:</span> {seat.id}
-        </p>
-        <p>
-          <span style={{ fontWeight: 'bold' }}>Seat info:</span> {seat.info}
+          <span style={{ fontWeight: 'bolder' }}>{_SEAT_NAME}</span> {seat.name}
         </p>
       </div>
     </div>

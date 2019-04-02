@@ -3,7 +3,7 @@ import { Panel } from 'nav-frontend-paneler';
 import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Redirect } from 'react-router';
-import { IUser } from '../../API/interfaces';
+import { IPostAdminApplicationForm, IUser } from '../../API/interfaces';
 import CSVButton from '../AdminRoom/CSVButton';
 import { IApplication } from '../Application';
 import { ISeat } from '../Seats';
@@ -27,6 +27,8 @@ interface IDispatchProps {
   getAllApplications: () => void;
   fetchRooms: () => void;
   fetchRoom: (roomId: number) => void;
+  updateApplication: (id: number, app: IPostAdminApplicationForm) => void;
+
 }
 
 interface IState {
@@ -111,6 +113,8 @@ class Presentational extends React.Component<Props, IState> {
           seat={seat}
           users={users}
           assign={this.props.assign}
+          applications={this.props.applications}
+          updateApplication={this.props.updateApplication}
         />
       );
     });
