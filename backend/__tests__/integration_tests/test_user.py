@@ -7,7 +7,7 @@ from flask import jsonify
 from unittest import TestCase
 from jose import jwt
 import json
-from __tests__.testUtils.constants import accessToken, token, decodedToken, testGroups, LDAPGroupsResponse
+from __tests__.testUtils.constants import accessToken, token, decodedToken, LDAPGroupsResponse
 from __tests__.testUtils.authentication import mock_authentication_context
 
 

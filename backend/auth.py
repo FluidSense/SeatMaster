@@ -83,7 +83,6 @@ def requiresIdToken(verify=True):
 
                 except jwt.ExpiredSignatureError:
                     return Response("{'error': 'Token_expired'}", 401)
-
                 except jwt.JWTClaimsError:
                     return Response("{'error': 'Invalid_claims'}", 401)
                 except Exception:
@@ -118,12 +117,12 @@ def requiresAdmin(f):
     @requiresUser
     def decorated(*args, **kwargs):
         try:
-            user =_request_ctx_stack.top.user
+            user = _request_ctx_stack.top.user
             isAdmin = dataporten.checkIfAdmin(user.username)
         except (HTTPError, TypeError) as e:
             print(e)
             return abort(401)
         if not isAdmin:
-            return abort(403) 
+            return abort(403)
         return f(*args, **kwargs)
     return decorated
