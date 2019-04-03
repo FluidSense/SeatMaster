@@ -156,3 +156,8 @@ testGroups = [
     },
 
 ]
+
+LDAPGroupsResponse = [
+        "idi_masterplassadmin",
+        "fs_student_ntnu"
+]

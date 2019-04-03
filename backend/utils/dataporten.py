@@ -18,14 +18,15 @@ def getDataportenGroups(token):
     return json.load(result)
 
 
-def checkIfAdmin(accessToken):
-    groups = {}
-    groups = getDataportenGroups(accessToken)
-    for group in groups:
-        # TODO: Make call to actual admin BAS endpoint
-        if(group.get('id', None) == "fc:org:ntnu.no:unit:631000"):
-            return True
-    return False
+def getLDAPGroups(username):
+    request = urllib.request.Request(f"http://data.idi.ntnu.no/v1/ldap/user/{username}")
+    result = urllib.request.urlopen(request)
+    return json.load(result).get("groups", [])
+
+
+def checkIfAdmin(username):
+    groups = getLDAPGroups(username)
+    return "idi_masterplassadmin" in groups
 
 
 def getRank(accessToken):
