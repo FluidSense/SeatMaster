@@ -1,5 +1,3 @@
-import json
-import random
 import os
 from flask import Flask
 from shared import db
@@ -50,14 +48,6 @@ def register_blueprints(app):
 
 
 app = create_app()
-
-
-@app.route("/copypasta", methods=["GET"])
-def copyPasta():
-    with open("./static/reddit.txt") as f:
-        output = f.read()
-    output = output.split("\n\n")
-    return json.dumps({'copyPasta': random.choice(output)})
 
 
 if __name__ == '__main__':
