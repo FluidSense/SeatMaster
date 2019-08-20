@@ -66,7 +66,7 @@ class Presentational extends React.Component<Props, IState> {
     if (redirect) {
       return (
         <Redirect
-          to={{ room, pathname: `/admin/rooms/${room.id}/update-room` }}
+          to={{ state: {room}, pathname: `/admin/rooms/${room.id}/update-room` }}
         />);
     }
 

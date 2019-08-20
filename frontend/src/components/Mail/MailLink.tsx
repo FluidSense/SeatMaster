@@ -15,7 +15,13 @@ const MailLink: React.FunctionComponent<IProps> = (props) => {
   return (
     <NavLink
       className={`knapp knapp-hoved ${className ? className : ''}`}
-      to={{ mailType, pathname: '/mail', recipient: { ...recipient } }}
+      to={{
+        pathname: '/mail',
+        state: {
+          mailType,
+          recipient: { ...recipient }
+        }
+     }}
     >
       Send Mail
     </NavLink>

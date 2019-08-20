@@ -15,7 +15,7 @@ const RoomLink: React.FunctionComponent<IProps> = (props) => {
   const seats = room.seats.count !== undefined ? room.seats.count : 0;
   const link = (panelProps: any) => (
     <NavLink
-      to={{ pathname: panelProps.href, room: { ...room } }}
+      to={{ pathname: panelProps.href, state: {room: { ...room } }}}
       className="lenkepanel lenkepanel--border"
     >
       {panelProps.children}

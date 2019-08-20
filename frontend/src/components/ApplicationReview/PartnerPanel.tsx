@@ -21,7 +21,7 @@ const PartnerPanel: React.FunctionComponent<IProps> = (props) => {
       const url = `/admin/applications/${partnerApplication.id}/`;
       const link = (panelProps: any) => (
         <NavLink
-            to={{ pathname: panelProps.href, application: { ...partnerApplication } }}
+            to={{ pathname: panelProps.href, state: {application: { ...partnerApplication } }}}
             className="lenkepanel lenkepanel--border"
         >
           {panelProps.children}

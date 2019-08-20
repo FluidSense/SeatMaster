@@ -36,7 +36,7 @@ const ApplicationLink: React.FunctionComponent<IProps> = (props) => {
   const seatName = seat ? seat.name : '';
   const link = (panelProps: any) => (
     <NavLink
-      to={{ pathname: panelProps.href, application: { ...application }, rooms: [...rooms] }}
+      to={{ pathname: panelProps.href, state: {application: { ...application }, rooms: [...rooms] }}}
       className="lenkepanel lenkepanel--border"
     >
       {panelProps.children}

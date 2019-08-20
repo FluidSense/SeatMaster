@@ -63,7 +63,7 @@ const SeasonLink: FunctionComponent<IProps> = (props) => {
   }
   const link = (panelProps: any) => (
     <NavLink
-      to={{ pathname: panelProps.href, season: { ...props.season } }}
+      to={{ pathname: panelProps.href, state: {season: { ...props.season } }}}
       className="lenkepanel lenkepanel--border"
     >
       {panelProps.children}
