@@ -7,6 +7,7 @@ import { resetAppStatus } from '../EditApplication/actions';
 import { updateSelfApplication } from './actions';
 import { fetchAllRooms } from '../ViewRooms/actions';
 import { IRoom } from '../ViewRooms';
+import { IApplication } from '../Application';
 import EditApplication from './Presentational';
 
 interface IDispatchProps {
@@ -16,7 +17,9 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
+  application?: IApplication
   rooms?: IRoom[];
+  status: number;
 }
 
 interface IOwnState {
@@ -40,11 +43,20 @@ class _Container extends React.Component<Props, IOwnState>{
   }
 
   public render(){
+    const { rooms, application, status, resetStatus, updateApplication } = this.props;
+    if (!rooms || rooms.length == 0) {
+      console.error("Could not get rooms");
+    }
+    if (!application) {
+      return "Something went wrong with retrieving your application. Please try again later.";
+    }
     return (
       <EditApplication
-        rooms={this.props.rooms}
-        application={this.props.application}
-        status={this.props.status}
+        resetStatus={resetStatus}
+        updateApplication={updateApplication}
+        rooms={rooms ? rooms : []}
+        application={application}
+        status={status}
       />
     );
   }
